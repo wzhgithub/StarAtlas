@@ -14,3 +14,4 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 start_atlas_server/start_atlas_server
+start_atlas_server/go.sum

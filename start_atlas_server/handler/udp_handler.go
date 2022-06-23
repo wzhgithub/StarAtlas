@@ -14,6 +14,9 @@ const (
 var LimitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
 
+type UDPData struct {
+}
+
 func UdpServer(port int) {
 	log.Println("start listening on port:", port)
 	conn, err := net.ListenUDP("udp", &net.UDPAddr{
