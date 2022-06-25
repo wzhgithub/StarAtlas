@@ -15,3 +15,5 @@
 # vendor/
 start_atlas_server/start_atlas_server
 start_atlas_server/go.sum
+start_atlas_server/gin_log.log
+start_atlas_server/go.sum
