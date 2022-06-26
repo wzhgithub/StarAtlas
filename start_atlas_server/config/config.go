@@ -1,17 +1,29 @@
 package config
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/viper"
 )
 
-func init() {
-	viper.SetConfigFile("./config.yaml") // 指定配置文件路径
-	viper.AddConfigPath(".")             // 设置配置文件和可执行二进制文件在用一个目录
+type Config struct {
+	DB      string `mapstructure:"db_name"`
+	Uri     string `mapstructure:"db_uri"`
+	UDPPort int    `mapstructure:"udp_port"`
+}
 
-	err := viper.ReadInConfig() // 查找并读取配置文件
-	if err != nil {             // 处理读取配置文件的错误
-		panic(fmt.Errorf("Fatal error config file: %s \n", err.Error()))
+var CommonConfig Config
+
+func Init(path string) error {
+	log.Println("p:", path)
+	viper.SetConfigFile(path)
+	// 查找并读取配置文件
+	if err := viper.ReadInConfig(); err != nil {
+		return err
 	}
+
+	if err := viper.Unmarshal(&CommonConfig); err != nil {
+		return err
+	}
+	return nil
 }

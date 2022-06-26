@@ -3,25 +3,35 @@ package main
 import (
 	"flag"
 	"fmt"
-	_ "start_atlas_server/db"
+	"log"
+	"start_atlas_server/config"
+	"start_atlas_server/db"
 	"start_atlas_server/handler"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-var udpPort int
+var configPath string
 
 func init() {
-	flag.IntVar(&udpPort, "port", 8080, "Port to listen on")
+	flag.StringVar(&configPath, "path", "./config.yaml", "yaml文件加载路径")
 }
 
 func main() {
 	flag.Parse()
-	go handler.UdpDataRev(udpPort)
+	err := config.Init(configPath)
+	log.Println("c", config.CommonConfig)
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = db.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
+	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()
 	router := gin.New()
-
 	// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter
 	// By default gin.DefaultWriter = os.Stdout
 	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
