@@ -13,7 +13,7 @@ services:
       - data:/data/db
   myapp:
     image: star_atlas_server:latest 
-    network_mode: "host"
     container_name: "star_atlas_server"
     ports:
       - 9999:9999
+      - 9191:9191/udp  # udp listener
