@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
+	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	go.mongodb.org/mongo-driver v1.7.0
 )
 

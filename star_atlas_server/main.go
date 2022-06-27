@@ -3,13 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"star_atlas_server/config"
 	"star_atlas_server/db"
 	"star_atlas_server/handler"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
 )
 
 var configPath string
@@ -21,13 +21,13 @@ func init() {
 func main() {
 	flag.Parse()
 	err := config.Init(configPath)
-	log.Println("c", config.CommonConfig)
+	glog.Info("c", config.CommonConfig)
 	if err != nil {
-		log.Fatal(err)
+		glog.Fatalf(err.Error())
 	}
 	err = db.Init()
 	if err != nil {
-		log.Fatal(err)
+		glog.Fatal(err)
 	}
 	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()

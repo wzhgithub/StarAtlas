@@ -21,4 +21,4 @@ ENV GIN_MODE=release
 
 EXPOSE 9999
 
-ENTRYPOINT ["./star_atlas_server"]
+ENTRYPOINT ["./star_atlas_server", "-log_dir=./", "-alsologtostderr"]

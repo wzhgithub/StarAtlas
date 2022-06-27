@@ -5,6 +5,8 @@ import (
 	"net"
 	"os"
 	"star_atlas_server/model"
+
+	"github.com/golang/glog"
 )
 
 const (
@@ -16,7 +18,7 @@ var limitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
 
 func UdpDataRev(port int) {
-	log.Println("start listening on port:", port)
+	glog.Info("start listening on port:", port)
 	conn, err := net.ListenUDP("udp", &net.UDPAddr{
 		IP:   net.IPv4(0, 0, 0, 0),
 		Port: port,
