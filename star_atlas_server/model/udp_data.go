@@ -1,5 +1,7 @@
 package model
 
+import "encoding/binary"
+
 type DeviceData struct {
 	Name string // 10bytes
 	ID   uint8
@@ -54,6 +56,34 @@ type VMCData struct {
 	TaskSet      []*Task
 }
 
+func parseCPUDevice(bytes []byte) []*DeviceData {
+	l := len(bytes)
+	s := binary.BigEndian.Uint16(bytes[0:2])
+	e := binary.BigEndian.Uint16(bytes[l-2 : l])
+	if (l-4)%21 == 0 && s == 0xeba0 && e == 0xebaa {
+		// arr := make([]*DeviceData, (l-4)/21)
+		for i := 0; i < l-2; i = i + 21 {
+			//todo
+		}
+	}
+	return nil
+}
+
+func parseGPUDevice(bytes []byte) []*DeviceData {
+
+	return nil
+}
+
+func parseFPGADevice(bytes []byte) []*DeviceData {
+
+	return nil
+}
+
+func parseDSPDevice(bytes []byte) []*DeviceData {
+
+	return nil
+}
+
 // todo
 func parseTask(bytes []byte) (*Task, error) {
 	return nil, nil
@@ -61,8 +91,36 @@ func parseTask(bytes []byte) (*Task, error) {
 
 // todo
 func parse(bytes []byte) (*VMCData, error) {
-
-	return nil, nil
+	v := &VMCData{
+		frameHeader:    bytes[0],
+		length:         binary.BigEndian.Uint16(bytes[1:3]),
+		protoType:      bytes[3],
+		VMCName:        string(bytes[4:14]),
+		VMCID:          bytes[15],
+		CPUNumber:      bytes[16],
+		DSPNumber:      bytes[17],
+		GPUNumber:      bytes[18],
+		FPAGNumber:     bytes[19],
+		SwitchID:       bytes[20],
+		TotalMemory:    binary.BigEndian.Uint16(bytes[21:23]),
+		TotalDisk:      binary.BigEndian.Uint16(bytes[23:25]),
+		MemoryUsage:    bytes[25],
+		TotalCPUUsage:  0,
+		TotalDSPUsage:  0,
+		TotalGPUUsage:  0,
+		TotalDiskUsage: 0,
+		CPUSet:         parseCPUDevice(bytes[26 : 26+1+21*bytes[16]+2+1]),
+		DSPSet:         []*DeviceData{},
+		GPUSet:         []*DeviceData{},
+		FPGASet:        []*DeviceData{},
+		APPNum:         0,
+		APPName:        "",
+		TaskNum:        0,
+		TaskPeriod:     0,
+		TaskDispatch:   0,
+		TaskSet:        []*Task{},
+	}
+	return v, nil
 }
 
 // read bytes from udp
