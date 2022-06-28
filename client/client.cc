@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include <arpa/inet.h> 
+
 using namespace std;
 
 tyepdef enum {
@@ -19,7 +21,7 @@ uint16_t g_device_tag[] = {
 };
 
 class Device {
-public:
+private:
   uint8_t m_device_type;
 
   // all device
@@ -39,8 +41,26 @@ public:
   uint8_t m_cpu_rate;
 
 public:
-  int pack(char* buf, size_t sz)  {
-    return 0;
+  Device(uint8_t type, uint8_t );
+
+
+public:
+  size_t pack(char* buf)  {
+    char* p = buf;
+    *((uint16_t*))p=htons( g_device_tag[m_device_type*2] );
+    p+=2;
+
+    switch( m_device_type) {
+    case eCPU:
+    case eDSP:
+      {
+        ;
+        break;
+      }
+    }
+    *((uint16_t*))p=htons( g_device_tag[m_device_type*2+1] );
+    p+=2;
+    return (p-buf);
   }
 };
 
@@ -102,7 +122,6 @@ public:
   // block
   uint8_t m_total_block;
   Block* m_pblock;
-
 
 public:
 };
