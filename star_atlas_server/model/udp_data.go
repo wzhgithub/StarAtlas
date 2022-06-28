@@ -61,10 +61,23 @@ func parseCPUDevice(bytes []byte) []*DeviceData {
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
 	if (l-4)%21 == 0 && s == 0xeba0 && e == 0xebaa {
-		// arr := make([]*DeviceData, (l-4)/21)
-		for i := 0; i < l-2; i = i + 21 {
-			//todo
+		arr := make([]*DeviceData, (l-4)/21)
+		for i := 2; i < l-1; i = i + 21 {
+
+			DeviceData := &DeviceData{
+				Name:                string(bytes[i : i+10]),
+				ID:                  bytes[i+10],
+				Type:                bytes[i+11],
+				Num:                 bytes[i+12],
+				IntComputingPower:   binary.BigEndian.Uint16(bytes[i+13 : i+15]),
+				FloatComputingPower: binary.BigEndian.Uint16(bytes[i+15 : i+17]),
+				TotalMemory:         binary.BigEndian.Uint16(bytes[i+17 : i+19]),
+				MemoryUsage:         bytes[i+19],
+				Usage:               bytes[i+20],
+			}
+			arr = append(arr, DeviceData)
 		}
+		return arr
 	}
 	return nil
 }
