@@ -60,7 +60,11 @@ type VMCData struct {
 	APPInfo []*App
 }
 
-func parseCPUDevice(bytes []byte) []*DeviceData {
+func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
+	if end <= start {
+		return nil
+	}
+	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
@@ -86,8 +90,11 @@ func parseCPUDevice(bytes []byte) []*DeviceData {
 	return nil
 }
 
-func parseGPUDevice(bytes []byte) []*DeviceData {
-
+func parseGPUDevice(bytes []byte, start, end int) []*DeviceData {
+	if end <= start {
+		return nil
+	}
+	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
@@ -113,8 +120,11 @@ func parseGPUDevice(bytes []byte) []*DeviceData {
 	return nil
 }
 
-func parseFPGADevice(bytes []byte) []*DeviceData {
-
+func parseFPGADevice(bytes []byte, start, end int) []*DeviceData {
+	if end <= start {
+		return nil
+	}
+	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
@@ -134,8 +144,11 @@ func parseFPGADevice(bytes []byte) []*DeviceData {
 	return nil
 }
 
-func parseDSPDevice(bytes []byte) []*DeviceData {
-
+func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
+	if end <= start {
+		return nil
+	}
+	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
@@ -161,7 +174,7 @@ func parseDSPDevice(bytes []byte) []*DeviceData {
 	return nil
 }
 
-func parseTask(bytes []byte) []*Task {
+func parseTask(bytes []byte, start, end int) []*Task {
 	l := len(bytes)
 	arr := make([]*Task, 6)
 	t := &Task{
@@ -185,7 +198,11 @@ func parseTask(bytes []byte) []*Task {
 	return arr
 }
 
-func parseApp(bytes []byte) []*App {
+func parseApp(bytes []byte, start, end int) []*App {
+	if end <= start {
+		return nil
+	}
+	bytes = bytes[start:end]
 	length := len(bytes)
 	if length%86 == 0 {
 		arr := make([]*App, length/86)
@@ -195,7 +212,7 @@ func parseApp(bytes []byte) []*App {
 				TaskNum:      bytes[i+10],
 				TaskPeriod:   binary.BigEndian.Uint16(bytes[i+11 : i+13]),
 				TaskDispatch: binary.BigEndian.Uint16(bytes[i+13 : i+15]),
-				TaskSet:      parseTask(bytes[i+15 : i+86]),
+				TaskSet:      parseTask(bytes, i+15, i+86),
 			}
 			arr = append(arr, a)
 		}
@@ -204,16 +221,26 @@ func parseApp(bytes []byte) []*App {
 	return nil
 }
 
+func calcStartEnd(start int, num uint8, l int) (int, int) {
+	if num == 0 {
+		return start, start
+	}
+
+	return start, 2 + l*int(num) + 2
+}
+
 // todo
 func parse(bytes []byte) (*VMCData, error) {
 
-	cpuEnd := 26 + 2 + 21*uint8(bytes[16]) + 2
-	dspStart := cpuEnd
-	dspEnd := cpuEnd + 2 + 21*uint8(bytes[17]) + 2
-	gpusStart := dspEnd
-	gpusEnd := dspEnd + 2 + 19*uint8(bytes[18]) + 2
-	fpgaStart := gpusEnd
-	fpgaEnd := gpusEnd + 2 + 12*uint8(bytes[19]) + 2
+	l := len(bytes)
+	cpuStart, cpuEnd := calcStartEnd(26, uint8(bytes[16]), 21)
+	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[17]), 21)
+	gpusStart, gpusEnd := calcStartEnd(dspEnd, uint8(bytes[18]), 19)
+	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[19]), 12)
+	appIdx := cpuStart
+	if cpuStart < fpgaEnd {
+		appIdx = fpgaEnd
+	}
 
 	v := &VMCData{
 		frameHeader:    bytes[0],
@@ -233,12 +260,12 @@ func parse(bytes []byte) (*VMCData, error) {
 		TotalDSPUsage:  0,
 		TotalGPUUsage:  0,
 		TotalDiskUsage: 0,
-		CPUSet:         parseCPUDevice(bytes[26:cpuEnd]),
-		DSPSet:         parseDSPDevice(bytes[dspStart:dspEnd]),
-		GPUSet:         parseGPUDevice(bytes[gpusStart:gpusEnd]),
-		FPGASet:        parseFPGADevice(bytes[fpgaStart:fpgaEnd]),
-		APPNum:         bytes[fpgaEnd],
-		APPInfo:        parseApp(bytes[fpgaEnd:]),
+		CPUSet:         parseCPUDevice(bytes, cpuStart, cpuEnd),
+		DSPSet:         parseDSPDevice(bytes, dspStart, dspEnd),
+		GPUSet:         parseGPUDevice(bytes, gpusStart, gpusEnd),
+		FPGASet:        parseFPGADevice(bytes, fpgaStart, fpgaEnd),
+		APPNum:         bytes[appIdx],
+		APPInfo:        parseApp(bytes, appIdx+1, l),
 	}
 	return v, nil
 }
