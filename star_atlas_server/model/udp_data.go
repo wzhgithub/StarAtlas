@@ -1,6 +1,10 @@
 package model
 
-import "encoding/binary"
+import (
+	"encoding/binary"
+
+	"github.com/golang/glog"
+)
 
 type DeviceData struct {
 	Name string // 10bytes
@@ -226,9 +230,13 @@ func parse(bytes []byte) (*VMCData, error) {
 
 	l := len(bytes)
 	cpuStart, cpuEnd := calcStartEnd(26, uint8(bytes[16]), 21)
+	glog.Infof("cpu start:%d cpu end:%d", cpuStart, cpuEnd)
 	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[17]), 21)
+	glog.Infof("dsp start:%d dsp end:%d", dspStart, dspEnd)
 	gpusStart, gpusEnd := calcStartEnd(dspEnd, uint8(bytes[18]), 19)
+	glog.Infof("gpu start:%d gpus end:%d", gpusStart, gpusEnd)
 	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[19]), 12)
+	glog.Infof("fpgaStart:%d fpgaEnd:%d", fpgaStart, fpgaEnd)
 	appIdx := cpuStart
 	if cpuStart < fpgaEnd {
 		appIdx = fpgaEnd
