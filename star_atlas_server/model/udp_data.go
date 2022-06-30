@@ -177,15 +177,7 @@ func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
 func parseTask(bytes []byte, start, end int) []*Task {
 	l := len(bytes)
 	arr := make([]*Task, 6)
-	t := &Task{
-		Name:        string(bytes[0:2]),
-		TaskType:    bytes[2],
-		TaskStatus:  bytes[3],
-		ExecuteTime: bytes[4],
-	}
-	arr = append(arr, t)
-
-	for i := 5; i < l; i = i + 13 {
+	for i := 0; i < l; i = i + 13 {
 		t := &Task{
 			Name:        string(bytes[i : 10+i]),
 			TaskType:    bytes[10+i],
