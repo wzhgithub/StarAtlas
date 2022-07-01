@@ -1,8 +1,7 @@
 package config
 
 import (
-	"log"
-
+	"github.com/golang/glog"
 	"github.com/spf13/viper"
 )
 
@@ -15,7 +14,7 @@ type Config struct {
 var CommonConfig Config
 
 func Init(path string) error {
-	log.Println("p:", path)
+	glog.Infoln("p:", path)
 	viper.SetConfigFile(path)
 	// 查找并读取配置文件
 	if err := viper.ReadInConfig(); err != nil {

@@ -1,0 +1,3 @@
+db_name: test
+db_uri: mongodb://docker:mongopw@mongodb:27017 
+udp_port: 9191

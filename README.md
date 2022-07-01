@@ -1,16 +1,9 @@
 # StarAtlas
 
-## base gin service
+- ## star_atlas_server base gin service
 ```
-├── LICENSE
-├── README.md
-├── asr
-├── frontend
-└── start_atlas_server
-    ├── go.mod
-    ├── go.sum
-    ├── handler
-    │   └── test_handler.go
-    ├── main.go
-    └── start_atlas_server
+work_dir: star_atlas_server
+requirement: docker 
+build: sh build.sh
+run: docker compose up -d
 ```
