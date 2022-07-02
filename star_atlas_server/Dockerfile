@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod tidy &&  go build .
 
 RUN mkdir publish && cp star_atlas_server publish && cp config.yaml publish
 
