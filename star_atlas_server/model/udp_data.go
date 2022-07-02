@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/binary"
+	"fmt"
 
 	"github.com/golang/glog"
 )
@@ -72,9 +73,10 @@ func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
+	glog.Infof("l:%d s:%d e:%d\n", l, s, e)
 	if (l-4)%21 == 0 && s == 0xeba0 && e == 0xebaa {
 		arr := make([]*DeviceData, (l-4)/21)
-		for i := 2; i < l-1; i = i + 21 {
+		for i := 2; i < l; i = i + 21 {
 
 			DeviceData := &DeviceData{
 				Name:                string(bytes[i : i+10]),
@@ -104,7 +106,7 @@ func parseGPUDevice(bytes []byte, start, end int) []*DeviceData {
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
 	if (l-4)%19 == 0 && s == 0xebc0 && e == 0xebcc {
 		arr := make([]*DeviceData, (l-4)/19)
-		for i := 2; i < l-1; i = i + 19 {
+		for i := 2; i < l; i = i + 19 {
 
 			DeviceData := &DeviceData{
 				Name:                string(bytes[i : i+10]),
@@ -158,7 +160,7 @@ func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
 	if (l-4)%21 == 0 && s == 0xebb0 && e == 0xebbb {
 		arr := make([]*DeviceData, (l-4)/21)
-		for i := 2; i < l-1; i = i + 21 {
+		for i := 2; i < l; i = i + 21 {
 
 			DeviceData := &DeviceData{
 				Name:                string(bytes[i : i+10]),
@@ -219,24 +221,26 @@ func parseApp(bytes []byte, start, end int) []*App {
 
 func calcStartEnd(start int, num uint8, l int) (int, int) {
 	if num == 0 {
+		glog.Infof("num is zero return same as start\n")
 		return start, start
 	}
 
-	return start, 2 + l*int(num) + 2
+	glog.Infoln(fmt.Sprintf("s:%d, n:%d, l:%d", start, num, l))
+	return start, start + 1 + l*int(num) + 2 + 1
 }
 
 // todo
 func parse(bytes []byte) (*VMCData, error) {
 
 	l := len(bytes)
-	cpuStart, cpuEnd := calcStartEnd(26, uint8(bytes[16]), 21)
-	glog.Infof("cpu start:%d cpu end:%d", cpuStart, cpuEnd)
-	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[17]), 21)
-	glog.Infof("dsp start:%d dsp end:%d", dspStart, dspEnd)
-	gpusStart, gpusEnd := calcStartEnd(dspEnd, uint8(bytes[18]), 19)
-	glog.Infof("gpu start:%d gpus end:%d", gpusStart, gpusEnd)
-	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[19]), 12)
-	glog.Infof("fpgaStart:%d fpgaEnd:%d", fpgaStart, fpgaEnd)
+	cpuStart, cpuEnd := calcStartEnd(30, uint8(bytes[15]), 21)
+	glog.Infof("cpu start:%d cpu end:%d\n", cpuStart, cpuEnd)
+	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[16]), 21)
+	glog.Infof("dsp start:%d dsp end:%d\n", dspStart, dspEnd)
+	gpusStart, gpusEnd := calcStartEnd(dspEnd, uint8(bytes[17]), 19)
+	glog.Infof("gpu start:%d gpus end:%d\n", gpusStart, gpusEnd)
+	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[18]), 12)
+	glog.Infof("fpga start:%d fpga end:%d\n", fpgaStart, fpgaEnd)
 	appIdx := cpuStart
 	if cpuStart < fpgaEnd {
 		appIdx = fpgaEnd
@@ -247,19 +251,19 @@ func parse(bytes []byte) (*VMCData, error) {
 		length:         binary.BigEndian.Uint16(bytes[1:3]),
 		protoType:      bytes[3],
 		VMCName:        string(bytes[4:14]),
-		VMCID:          bytes[15],
-		CPUNumber:      bytes[16],
-		DSPNumber:      bytes[17],
-		GPUNumber:      bytes[18],
-		FPAGNumber:     bytes[19],
+		VMCID:          bytes[14],
+		CPUNumber:      bytes[15],
+		DSPNumber:      bytes[16],
+		GPUNumber:      bytes[17],
+		FPAGNumber:     bytes[18],
 		SwitchID:       bytes[20],
 		TotalMemory:    binary.BigEndian.Uint16(bytes[21:23]),
 		TotalDisk:      binary.BigEndian.Uint16(bytes[23:25]),
 		MemoryUsage:    bytes[25],
-		TotalCPUUsage:  0,
-		TotalDSPUsage:  0,
-		TotalGPUUsage:  0,
-		TotalDiskUsage: 0,
+		TotalCPUUsage:  bytes[26],
+		TotalDSPUsage:  bytes[27],
+		TotalGPUUsage:  bytes[28],
+		TotalDiskUsage: bytes[29],
 		CPUSet:         parseCPUDevice(bytes, cpuStart, cpuEnd),
 		DSPSet:         parseDSPDevice(bytes, dspStart, dspEnd),
 		GPUSet:         parseGPUDevice(bytes, gpusStart, gpusEnd),
@@ -267,6 +271,7 @@ func parse(bytes []byte) (*VMCData, error) {
 		APPNum:         bytes[appIdx],
 		APPInfo:        parseApp(bytes, appIdx+1, l),
 	}
+	glog.Infof("debug vmc:%+v\n", v)
 	return v, nil
 }
 
