@@ -14,6 +14,7 @@ services:
   myapp:
     image: star_atlas_server:latest 
     container_name: "star_atlas_server"
+    platform: "linux/amd64"
     ports:
       - 9999:9999
       - 9191:9191/udp  # udp listener
