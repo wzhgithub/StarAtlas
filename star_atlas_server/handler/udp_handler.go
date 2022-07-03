@@ -1,10 +1,11 @@
 package handler
 
 import (
-	"github.com/golang/glog"
 	"net"
 	"star_atlas_server/db"
 	"star_atlas_server/model"
+
+	"github.com/golang/glog"
 )
 
 const (
@@ -40,9 +41,8 @@ func udpProcess(conn *net.UDPConn) {
 	if err != nil {
 		glog.Errorf("failed read udp msg, error:%s\n", err.Error())
 	}
-	glog.Infof("received adddress:%s\n", *address)
+	glog.Infof("received adddress:%+v\n", address)
 	str := string(data[:n])
-	glog.Infof("received adddressfrom client data:%s\n", str)
 	limitChan <- str
 }
 
