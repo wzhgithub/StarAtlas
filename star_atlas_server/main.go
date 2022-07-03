@@ -21,7 +21,7 @@ func init() {
 func main() {
 	flag.Parse()
 	err := config.Init(configPath)
-	glog.Info("c", config.CommonConfig)
+	glog.Infof("config:%+v\n", config.CommonConfig)
 	if err != nil {
 		glog.Fatalf(err.Error())
 	}
