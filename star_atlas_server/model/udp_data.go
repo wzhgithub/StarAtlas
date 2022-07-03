@@ -7,6 +7,25 @@ import (
 	"github.com/golang/glog"
 )
 
+const (
+	cCPU_SIZE  = 21
+	cDSP_SIZE  = 21
+	cFPGA_SIZE = 12
+	cGPU_SIZE  = 19
+
+	cCPU_START  = 0xeba0
+	cCPU_END    = 0xebaa
+	cDSP_START  = 0xebb0
+	cDSP_END    = 0xebbb
+	cFPGA_START = 0xebd0
+	cFPGA_END   = 0xebdd
+	cGPU_START  = 0xebc0
+	cGPU_END    = 0xebcc
+
+	cTAST_SIZE = 13
+	cAPP_SIZE  = 94
+)
+
 type DeviceData struct {
 	Name string // 10bytes
 	ID   uint8
@@ -33,6 +52,7 @@ type App struct {
 	TaskPeriod   uint16 // 250ms
 	TaskDispatch uint16 // 100ms
 	TaskSet      []*Task
+	CurrentTask  uint8
 }
 
 type VMCData struct {
@@ -63,6 +83,7 @@ type VMCData struct {
 	FPGASet []*DeviceData // 12bytes
 	APPNum  uint8
 	APPInfo []*App
+	Sum     uint8
 }
 
 func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
@@ -74,23 +95,28 @@ func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
 	glog.Infof("l:%d s:%d e:%d\n", l, s, e)
-	if (l-4)%21 == 0 && s == 0xeba0 && e == 0xebaa {
-		arr := make([]*DeviceData, (l-4)/21)
-		for i := 2; i < l; i = i + 21 {
-
+	if (l-4)%cCPU_SIZE == 0 && s == cCPU_START && e == cCPU_END {
+		num := (l - 4) / cCPU_SIZE
+		arr := make([]*DeviceData, num)
+		ss := 2
+		for i := 0; i < num; i++ {
+			si := i*cCPU_SIZE + ss
+			glog.Infof("cpu index %d num:%d\n", si, num)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[i : i+10]),
-				ID:                  bytes[i+10],
-				Type:                bytes[i+11],
-				Num:                 bytes[i+12],
-				IntComputingPower:   binary.BigEndian.Uint16(bytes[i+13 : i+15]),
-				FloatComputingPower: binary.BigEndian.Uint16(bytes[i+15 : i+17]),
-				TotalMemory:         binary.BigEndian.Uint16(bytes[i+17 : i+19]),
-				MemoryUsage:         bytes[i+19],
-				Usage:               bytes[i+20],
+				Name:                string(bytes[si : si+10]),
+				ID:                  bytes[si+10],
+				Type:                bytes[si+11],
+				Num:                 bytes[si+12],
+				IntComputingPower:   binary.BigEndian.Uint16(bytes[si+13 : si+15]),
+				FloatComputingPower: binary.BigEndian.Uint16(bytes[si+15 : si+17]),
+				TotalMemory:         binary.BigEndian.Uint16(bytes[si+17 : si+19]),
+				MemoryUsage:         bytes[si+19],
+				Usage:               bytes[si+20],
 			}
-			arr = append(arr, DeviceData)
+			glog.Infof("cpu device %+v\n", DeviceData)
+			arr[i] = DeviceData
 		}
+
 		return arr
 	}
 	return nil
@@ -104,10 +130,13 @@ func parseGPUDevice(bytes []byte, start, end int) []*DeviceData {
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	if (l-4)%19 == 0 && s == 0xebc0 && e == 0xebcc {
-		arr := make([]*DeviceData, (l-4)/19)
-		for i := 2; i < l; i = i + 19 {
-
+	if (l-4)%cGPU_SIZE == 0 && s == cGPU_START && e == cGPU_END {
+		num := (l - 4) / cGPU_SIZE
+		arr := make([]*DeviceData, num)
+		ss := 2
+		for j := 0; j < num; j++ {
+			i := j*cGPU_SIZE + ss
+			glog.Infof("gpu i:%d num:%d\n", i, num)
 			DeviceData := &DeviceData{
 				Name:                string(bytes[i : i+10]),
 				ID:                  bytes[i+10],
@@ -119,7 +148,8 @@ func parseGPUDevice(bytes []byte, start, end int) []*DeviceData {
 				MemoryUsage:         bytes[i+17],
 				Usage:               bytes[i+18],
 			}
-			arr = append(arr, DeviceData)
+			glog.Infof("gpu: %+v\n", DeviceData)
+			arr[j] = DeviceData
 		}
 		return arr
 	}
@@ -134,15 +164,20 @@ func parseFPGADevice(bytes []byte, start, end int) []*DeviceData {
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	if (l-4)%12 == 0 && s == 0xebd0 && e == 0xebdd {
-		arr := make([]*DeviceData, (l-4)/12)
-		for i := 2; i < l-1; i = i + 12 {
+	ss := 2
+	if (l-4)%cFPGA_SIZE == 0 && s == cFPGA_START && e == cFPGA_END {
+		num := (l - 4) / cFPGA_SIZE
+		arr := make([]*DeviceData, num)
+		for j := 0; j < num; j++ {
+			i := j*cFPGA_SIZE + ss
+			glog.Infof("fpga i:%d num:%d\n", i, num)
 			DeviceData := &DeviceData{
 				Name: string(bytes[i : i+10]),
 				ID:   bytes[i+10],
 				Type: bytes[i+11],
 			}
-			arr = append(arr, DeviceData)
+			glog.Infof("fpga:%+v", DeviceData)
+			arr[j] = DeviceData
 		}
 		return arr
 	}
@@ -158,22 +193,27 @@ func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
 	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	if (l-4)%21 == 0 && s == 0xebb0 && e == 0xebbb {
-		arr := make([]*DeviceData, (l-4)/21)
-		for i := 2; i < l; i = i + 21 {
-
+	glog.Infof("l:%d s:%d e:%d\n", l, s, e)
+	if (l-4)%cDSP_SIZE == 0 && s == cDSP_START && e == cDSP_END {
+		num := (l - 4) / cDSP_SIZE
+		arr := make([]*DeviceData, num)
+		ss := 2
+		for i := 0; i < num; i++ {
+			si := i*cDSP_SIZE + ss
+			glog.Infof("dsp index %d num:%d\n", si, num)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[i : i+10]),
-				ID:                  bytes[i+10],
-				Type:                bytes[i+11],
-				Num:                 bytes[i+12],
-				IntComputingPower:   binary.BigEndian.Uint16(bytes[i+13 : i+15]),
-				FloatComputingPower: binary.BigEndian.Uint16(bytes[i+15 : i+17]),
-				TotalMemory:         binary.BigEndian.Uint16(bytes[i+17 : i+19]),
-				MemoryUsage:         bytes[i+19],
-				Usage:               bytes[i+20],
+				Name:                string(bytes[si : si+10]),
+				ID:                  bytes[si+10],
+				Type:                bytes[si+11],
+				Num:                 bytes[si+12],
+				IntComputingPower:   binary.BigEndian.Uint16(bytes[si+13 : si+15]),
+				FloatComputingPower: binary.BigEndian.Uint16(bytes[si+15 : si+17]),
+				TotalMemory:         binary.BigEndian.Uint16(bytes[si+17 : si+19]),
+				MemoryUsage:         bytes[si+19],
+				Usage:               bytes[si+20],
 			}
-			arr = append(arr, DeviceData)
+			glog.Infof("dsp device %+v\n", DeviceData)
+			arr[i] = DeviceData
 		}
 		return arr
 	}
@@ -181,16 +221,20 @@ func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
 }
 
 func parseTask(bytes []byte, start, end int) []*Task {
-	l := len(bytes)
+	bytes = bytes[start:end]
+	length := len(bytes)
+	glog.Infof("task length: %d", length)
 	arr := make([]*Task, 6)
-	for i := 0; i < l; i = i + 13 {
+	for j := 0; j < 6; j++ {
+		i := j * cTAST_SIZE
+		glog.Infof("task start index: %d", i)
 		t := &Task{
 			Name:        string(bytes[i : 10+i]),
 			TaskType:    bytes[10+i],
 			TaskStatus:  bytes[11+i],
 			ExecuteTime: bytes[12+i],
 		}
-		arr = append(arr, t)
+		arr[j] = t
 	}
 
 	return arr
@@ -202,21 +246,27 @@ func parseApp(bytes []byte, start, end int) []*App {
 	}
 	bytes = bytes[start:end]
 	length := len(bytes)
-	if length%86 == 0 {
-		arr := make([]*App, length/86)
-		for i := 0; i < length; i = i + 86 {
-			a := &App{
-				APPName:      string(bytes[i : i+10]),
-				TaskNum:      bytes[i+10],
-				TaskPeriod:   binary.BigEndian.Uint16(bytes[i+11 : i+13]),
-				TaskDispatch: binary.BigEndian.Uint16(bytes[i+13 : i+15]),
-				TaskSet:      parseTask(bytes, i+15, i+86),
-			}
-			arr = append(arr, a)
-		}
-		return arr
+	if length%cAPP_SIZE != 0 {
+		glog.Warningf("app len is illegal length %d", length)
+		return nil
 	}
-	return nil
+	cnt := length / cAPP_SIZE
+	glog.Infof("app length %d, start %d, end %d cnt %d\n", length, start, end, cnt)
+	arr := make([]*App, cnt)
+	for j := 0; j < cnt; j++ {
+		i := j * cAPP_SIZE
+		a := &App{
+			APPName:      string(bytes[i : i+10]),
+			TaskNum:      bytes[i+10],
+			TaskPeriod:   binary.BigEndian.Uint16(bytes[i+11 : i+13]),
+			TaskDispatch: binary.BigEndian.Uint16(bytes[i+13 : i+15]),
+			TaskSet:      parseTask(bytes, i+15, i+93),
+			CurrentTask:  bytes[i+93],
+		}
+		arr[j] = a
+	}
+
+	return arr
 }
 
 func calcStartEnd(start int, num uint8, l int) (int, int) {
@@ -233,7 +283,8 @@ func calcStartEnd(start int, num uint8, l int) (int, int) {
 func parse(bytes []byte) (*VMCData, error) {
 
 	l := len(bytes)
-	cpuStart, cpuEnd := calcStartEnd(30, uint8(bytes[15]), 21)
+	deviceIdx := 29
+	cpuStart, cpuEnd := calcStartEnd(deviceIdx, uint8(bytes[15]), 21)
 	glog.Infof("cpu start:%d cpu end:%d\n", cpuStart, cpuEnd)
 	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[16]), 21)
 	glog.Infof("dsp start:%d dsp end:%d\n", dspStart, dspEnd)
@@ -245,6 +296,7 @@ func parse(bytes []byte) (*VMCData, error) {
 	if cpuStart < fpgaEnd {
 		appIdx = fpgaEnd
 	}
+	glog.Infof("app idx: %d\n", appIdx)
 
 	v := &VMCData{
 		frameHeader:    bytes[0],
@@ -256,20 +308,21 @@ func parse(bytes []byte) (*VMCData, error) {
 		DSPNumber:      bytes[16],
 		GPUNumber:      bytes[17],
 		FPAGNumber:     bytes[18],
-		SwitchID:       bytes[20],
-		TotalMemory:    binary.BigEndian.Uint16(bytes[21:23]),
-		TotalDisk:      binary.BigEndian.Uint16(bytes[23:25]),
-		MemoryUsage:    bytes[25],
-		TotalCPUUsage:  bytes[26],
-		TotalDSPUsage:  bytes[27],
-		TotalGPUUsage:  bytes[28],
-		TotalDiskUsage: bytes[29],
+		SwitchID:       bytes[19],
+		TotalMemory:    binary.BigEndian.Uint16(bytes[20:22]),
+		TotalDisk:      binary.BigEndian.Uint16(bytes[22:24]),
+		MemoryUsage:    bytes[24],
+		TotalCPUUsage:  bytes[25],
+		TotalDSPUsage:  bytes[26],
+		TotalGPUUsage:  bytes[27],
+		TotalDiskUsage: bytes[28],
 		CPUSet:         parseCPUDevice(bytes, cpuStart, cpuEnd),
 		DSPSet:         parseDSPDevice(bytes, dspStart, dspEnd),
 		GPUSet:         parseGPUDevice(bytes, gpusStart, gpusEnd),
 		FPGASet:        parseFPGADevice(bytes, fpgaStart, fpgaEnd),
 		APPNum:         bytes[appIdx],
-		APPInfo:        parseApp(bytes, appIdx+1, l),
+		APPInfo:        parseApp(bytes, appIdx+1, l-1),
+		Sum:            bytes[l-1],
 	}
 	glog.Infof("debug vmc:%+v\n", v)
 	return v, nil

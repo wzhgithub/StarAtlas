@@ -55,7 +55,7 @@ func ParseData() {
 		}
 		model.NewVMCData(data)
 		//todo
-		
+
 		<-doneChan
 	}
 }
