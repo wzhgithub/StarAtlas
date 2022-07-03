@@ -147,8 +147,10 @@ public:
 public:
   void ReSet(int idx, int max_task) {
     snprintf(m_name, 10, "part_%02d", idx);
-    m_total_task = random()%max_task+1;
-    //cout<<"total task1:"<<(int)m_total_task<<endl;
+
+    //m_total_task = random()%max_task+1;
+    const uint8_t N_TASK_COUNT = 6;
+    m_total_task = N_TASK_COUNT;
     m_duration = 250;
     m_time = 100;
 
