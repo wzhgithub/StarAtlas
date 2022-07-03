@@ -26,11 +26,11 @@ type testDemo struct {
 	Pages            int    `json:"pages" bson:"pages"`
 }
 
-func test() error {
+func Test() error {
 	t := &testDemo{
 		Name:  "xxxx",
-		Pages: 0,
+		Pages: 243242,
 	}
 
-	return mgm.CollectionByName("coll_name").Create(t)
+	return mgm.CollectionByName("test_collection").Create(t)
 }

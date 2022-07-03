@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"net"
-	"star_atlas_server/model"
-
 	"github.com/golang/glog"
+	"net"
+	"star_atlas_server/db"
+	"star_atlas_server/model"
 )
 
 const (
@@ -53,9 +53,8 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		model.NewVMCData(data)
-		//todo
-
+		_, _ = model.NewVMCData(data)
+		db.Test()
 		<-doneChan
 	}
 }
