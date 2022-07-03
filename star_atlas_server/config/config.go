@@ -14,7 +14,7 @@ type Config struct {
 var CommonConfig Config
 
 func Init(path string) error {
-	glog.Infoln("p:", path)
+	glog.Infof("path:%s\n", path)
 	viper.SetConfigFile(path)
 	// 查找并读取配置文件
 	if err := viper.ReadInConfig(); err != nil {
