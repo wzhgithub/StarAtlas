@@ -17,3 +17,6 @@ start_atlas_server/start_atlas_server
 start_atlas_server/gin_log.log
 start_atlas_server/go.sum
 star_atlas_server/star_atlas_server
+
+__pycache__
+speech_recognition/sr_go_client/asrt-sdk-go
