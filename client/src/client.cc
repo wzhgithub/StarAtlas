@@ -71,8 +71,8 @@ public:
 
   int pack(char* buf)  {
     char* p = buf;
-    ((uint16_t*)p)[0] = htons(m_tag_head);
-    p+=2;
+    //((uint16_t*)p)[0] = htons(m_tag_head);
+    //p+=2;
 
     memcpy(p, m_device_name, 10);
     p+=10;
@@ -94,9 +94,8 @@ public:
     ((uint8_t*)p++)[0] = m_xpu_rate;
     }
 
-    ((uint16_t*)p)[0] = htons(m_tag_tail);
-    p+=2;
-
+    //((uint16_t*)p)[0] = htons(m_tag_tail);
+    //p+=2;
     //cout<<"name:"<<m_device_name<<"len: "<<(int)(p-buf)<<endl;
     return (int)(p-buf);
   }
@@ -147,12 +146,13 @@ public:
 public:
   void ReSet(int idx, int max_task) {
     snprintf(m_name, 10, "part_%02d", idx);
-    m_total_task = random()%max_task+1;
-    //cout<<"total task1:"<<(int)m_total_task<<endl;
+
+    //m_total_task = random()%max_task+1;
+    const uint8_t N_TASK_COUNT = 6;
+    m_total_task = N_TASK_COUNT;
     m_duration = 250;
     m_time = 100;
-
-    //cout<<"total task2:"<<(int)m_total_task<<endl;
+    cout<<"group: "<<m_name<<"; task:"<<(int)m_total_task<<endl;
     m_ptask = new Task[m_total_task];
     for (int i=1; i<=m_total_task; i++) {
       Task& tsk = m_ptask[i-1];
@@ -258,7 +258,8 @@ public:
     int cnt_max_task
   ) {
     m_tag = 0xeb;
-    m_size = 30; // init
+    //m_size = 30; // init
+    m_size = 29; // remove reserved
     m_type = 0x55;
     m_index = idx;
     snprintf(m_name, 10, "vmc_%02d", (int)m_index);
@@ -281,7 +282,11 @@ public:
     m_disk_rate = random()%100;
 
     int n_total = cnt_cpu + cnt_dsp + cnt_gpu + cnt_fpga, n_idx = 0;
-    m_size += ((cnt_cpu+cnt_dsp)*25 + cnt_gpu*23 + cnt_fpga*16);
+    m_size += ((cnt_cpu+cnt_dsp)*21 + cnt_gpu*19 + cnt_fpga*12);
+    if (cnt_cpu) m_size+=4;
+    if (cnt_dsp) m_size+=4;
+    if (cnt_gpu) m_size+=4;
+    if (cnt_fpga) m_size+=4;
 
     // device
     //cout<<"total device: "<<(int)n_total<<endl;
@@ -343,7 +348,7 @@ public:
     ((uint8_t*)p++)[0] = m_total_dsp;
     ((uint8_t*)p++)[0] = m_total_gpu;
     ((uint8_t*)p++)[0] = m_total_fpga;
-    ((uint8_t*)p++)[0] = m_total_reserved;
+    //((uint8_t*)p++)[0] = m_total_reserved;
 
     ((uint8_t*)p++)[0] = m_exchange_idx;
 
@@ -359,10 +364,26 @@ public:
     ((uint8_t*)p++)[0] = m_disk_rate;
 
     //cout<<"p head: "<<(int)(p-buf)<<endl;
-    int total_dev = m_total_cpu + m_total_dsp + m_total_gpu + m_total_fpga;
-    for (int i=0; i<total_dev; i++) {
-      p+=m_pdevices[i].pack(p);
-      //cout<<"p dev "<<i<<":"<<(int)(p-buf)<<endl;
+    int total_dev = m_total_cpu + m_total_dsp + m_total_gpu + m_total_fpga, i = 0;
+    int anDevice[] = {
+      m_total_cpu,
+      m_total_dsp,
+      m_total_gpu,
+      m_total_fpga,
+    };
+
+    for (int h=0; h<sizeof(anDevice)/sizeof(int); h++) {
+      if (anDevice[h]) {
+        ((uint16_t*)p)[0] = htons(g_device_tag[h*2]);
+        p+=2;
+      }
+      for (int j=0; j<anDevice[h]; i++,j++) {
+        p+=m_pdevices[i].pack(p);
+      }
+      if (anDevice[h]) {
+        ((uint16_t*)p)[0] = htons(g_device_tag[h*2+1]);
+        p+=2;
+      }
     }
 
     ((uint8_t*)p++)[0] = m_total_block;
@@ -393,7 +414,6 @@ int main(int argc, char* argv[]) {
       cnt_max_task = random()%6;
   cnt_max_task==0?cnt_max_task=1:0;
 
-  /*
   cout<<"idx: "<<idx<<"\n"
       <<"idx_exch: "<<idx_exch<<"\n"
       <<"cnt_cpu: "<<cnt_cpu<<"\n"
@@ -402,7 +422,6 @@ int main(int argc, char* argv[]) {
       <<"cnt_fpga: "<<cnt_fpga<<"\n"
       <<"cnt_block: "<<cnt_block<<"\n"
       <<"cnt_max_task: "<<cnt_max_task<<endl;
-      */
 
   Message msg(
     idx,

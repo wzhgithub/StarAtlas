@@ -16,6 +16,7 @@ services:
     image: star_atlas_server:latest 
     container_name: "star_atlas_server"
     restart: on-failure:10
+    platform: "linux/amd64"
     ports:
       - 9999:9999
       - 9191:9191/udp  # udp listener
