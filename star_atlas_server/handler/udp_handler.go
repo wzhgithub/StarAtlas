@@ -17,7 +17,7 @@ var limitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
 
 func UdpDataRev(port int) {
-	glog.Info("start listening on port:", port)
+	glog.Infof("start listening on port:%d\n", port)
 	conn, err := net.ListenUDP("udp", &net.UDPAddr{
 		IP:   net.IPv4(0, 0, 0, 0),
 		Port: port,
