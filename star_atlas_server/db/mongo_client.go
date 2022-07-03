@@ -18,3 +18,19 @@ func Init() error {
 
 	return nil
 }
+
+// see https://github.com/Kamva/mgm
+type testDemo struct {
+	mgm.DefaultModel `bson:",inline"`
+	Name             string `json:"name" bson:"name"`
+	Pages            int    `json:"pages" bson:"pages"`
+}
+
+func test() error {
+	t := &testDemo{
+		Name:  "xxxx",
+		Pages: 0,
+	}
+
+	return mgm.CollectionByName("coll_name").Create(t)
+}
