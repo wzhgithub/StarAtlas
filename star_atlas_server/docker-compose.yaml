@@ -11,9 +11,11 @@ services:
       - 27017:27017
     volumes:
       - data:/data/db
+    restart: on-failure:10
   myapp:
     image: star_atlas_server:latest 
     container_name: "star_atlas_server"
+    restart: on-failure:10
     platform: "linux/amd64"
     ports:
       - 9999:9999
