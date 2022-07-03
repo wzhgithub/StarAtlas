@@ -96,7 +96,6 @@ public:
 
     //((uint16_t*)p)[0] = htons(m_tag_tail);
     //p+=2;
-
     //cout<<"name:"<<m_device_name<<"len: "<<(int)(p-buf)<<endl;
     return (int)(p-buf);
   }
@@ -153,7 +152,6 @@ public:
     m_total_task = N_TASK_COUNT;
     m_duration = 250;
     m_time = 100;
-
     cout<<"group: "<<m_name<<"; task:"<<(int)m_total_task<<endl;
     m_ptask = new Task[m_total_task];
     for (int i=1; i<=m_total_task; i++) {
