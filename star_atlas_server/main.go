@@ -31,6 +31,7 @@ func main() {
 	}
 	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()
+	go handler.CollectVMCData()
 	router := gin.New()
 	// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter
 	// By default gin.DefaultWriter = os.Stdout

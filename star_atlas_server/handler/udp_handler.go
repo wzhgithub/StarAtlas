@@ -15,6 +15,7 @@ const (
 
 var limitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
+var vmcDataChan = make(chan *model.VMCData, CChanLen)
 
 func UdpDataRev(port int) {
 	glog.Infof("start listening on port:%d\n", port)
@@ -41,8 +42,9 @@ func udpProcess(conn *net.UDPConn) {
 	if err != nil {
 		glog.Errorf("failed read udp msg, error:%s\n", err.Error())
 	}
-	glog.Infof("received adddress:%+v\n", address)
+	glog.Infof("received adddress:%s\n", *address)
 	str := string(data[:n])
+	glog.Infof("received adddressfrom client data:%s\n", str)
 	limitChan <- str
 }
 
@@ -53,8 +55,23 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		_, _ = model.NewVMCData(data)
-		db.Test()
+		vmcdata, _ := model.NewVMCData(data) /*  */
+		vmcDataChan <- vmcdata
+		//todo
+
 		<-doneChan
 	}
+}
+
+func CreateDBData() {
+	for {
+		vmcdata, ok := <-vmcDataChan
+		if !ok {
+			glog.Errorf("get vmcdata err\n")
+			continue
+		}
+		db.CreateVMCData(vmcdata)
+		// TODO: wirte all of data into db
+	}
+
 }
