@@ -2,7 +2,6 @@ package db
 
 import (
 	"star_atlas_server/config"
-	"star_atlas_server/model"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
@@ -43,14 +42,4 @@ func Test() error {
 	glog.Infof("save and get test %+v", r)
 
 	return nil
-}
-
-func CreateVMCData(vmc_data *model.VMCData) error {
-	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(*vmc_data)
-}
-
-func CollectVMCData() error {
-	vmc_data := &model.VMCData{}
-	mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data)
-	return vmc_data
 }
