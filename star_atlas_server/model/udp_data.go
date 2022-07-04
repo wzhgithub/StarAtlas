@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/golang/glog"
-	"github.com/kamva/mgm/v3"
 )
 
 const (
@@ -57,24 +56,23 @@ type App struct {
 }
 
 type VMCData struct {
-	mgm.DefaultModel `bson:",inline"`
-	frameHeader      uint8
-	length           uint16
-	protoType        uint8
-	VMCName          string // 10bytes
-	VMCID            uint8
-	CPUNumber        uint8
-	DSPNumber        uint8
-	GPUNumber        uint8
-	FPAGNumber       uint8
-	SwitchID         uint8
-	TotalMemory      uint16
-	TotalDisk        uint16
-	MemoryUsage      uint8
-	TotalCPUUsage    uint8
-	TotalDSPUsage    uint8
-	TotalGPUUsage    uint8
-	TotalDiskUsage   uint8
+	frameHeader    uint8
+	length         uint16
+	protoType      uint8
+	VMCName        string // 10bytes
+	VMCID          uint8
+	CPUNumber      uint8
+	DSPNumber      uint8
+	GPUNumber      uint8
+	FPAGNumber     uint8
+	SwitchID       uint8
+	TotalMemory    uint16
+	TotalDisk      uint16
+	MemoryUsage    uint8
+	TotalCPUUsage  uint8
+	TotalDSPUsage  uint8
+	TotalGPUUsage  uint8
+	TotalDiskUsage uint8
 	// cpu
 	CPUSet []*DeviceData // 21bytes
 	// dsp
