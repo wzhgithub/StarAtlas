@@ -53,7 +53,8 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		_, _ = model.NewVMCData(data)
+		vmcdata, _ := model.NewVMCData(data)
+		vmcdata.CreateData()
 		db.Test()
 		<-doneChan
 	}

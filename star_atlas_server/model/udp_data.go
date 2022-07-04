@@ -3,8 +3,11 @@ package model
 import (
 	"encoding/binary"
 	"fmt"
+	"star_atlas_server/config"
 
 	"github.com/golang/glog"
+	"github.com/kamva/mgm/v3"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 const (
@@ -56,23 +59,24 @@ type App struct {
 }
 
 type VMCData struct {
-	frameHeader    uint8
-	length         uint16
-	protoType      uint8
-	VMCName        string // 10bytes
-	VMCID          uint8
-	CPUNumber      uint8
-	DSPNumber      uint8
-	GPUNumber      uint8
-	FPAGNumber     uint8
-	SwitchID       uint8
-	TotalMemory    uint16
-	TotalDisk      uint16
-	MemoryUsage    uint8
-	TotalCPUUsage  uint8
-	TotalDSPUsage  uint8
-	TotalGPUUsage  uint8
-	TotalDiskUsage uint8
+	mgm.DefaultModel `bson:",inline"`
+	frameHeader      uint8
+	length           uint16
+	protoType        uint8
+	VMCName          string // 10bytes
+	VMCID            uint8
+	CPUNumber        uint8
+	DSPNumber        uint8
+	GPUNumber        uint8
+	FPAGNumber       uint8
+	SwitchID         uint8
+	TotalMemory      uint16
+	TotalDisk        uint16
+	MemoryUsage      uint8
+	TotalCPUUsage    uint8
+	TotalDSPUsage    uint8
+	TotalGPUUsage    uint8
+	TotalDiskUsage   uint8
 	// cpu
 	CPUSet []*DeviceData // 21bytes
 	// dsp
@@ -331,4 +335,17 @@ func parse(bytes []byte) (*VMCData, error) {
 // read bytes from udp
 func NewVMCData(str string) (*VMCData, error) {
 	return parse([]byte(str))
+}
+
+type DBVMCDataInterface interface {
+	CreateData(vmc_data *VMCData) error
+	CollectData(vmc_data *VMCData) error
+}
+
+func (vmc_data *VMCData) CreateData() error {
+	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
+}
+
+func (vmc_data *VMCData) CollectVMCData() error {
+	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data)
 }
