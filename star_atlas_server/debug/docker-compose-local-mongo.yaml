@@ -2,6 +2,13 @@ volumes:
   data:
 
 services:
+  speech_recognition_server:
+    image: ailemondocker/asrt_service:1.3.0
+    container_name: speech_recognition_server
+    restart: on-failure:3
+    platform: "linux/amd64"
+    ports:
+      - 20001:20001/tcp
   mongodb:
     image: mongo:latest
     environment:
