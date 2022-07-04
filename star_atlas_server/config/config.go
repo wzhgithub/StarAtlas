@@ -6,9 +6,10 @@ import (
 )
 
 type Config struct {
-	DB      string `mapstructure:"db_name"`
-	Uri     string `mapstructure:"db_uri"`
-	UDPPort int    `mapstructure:"udp_port"`
+	DB        string `mapstructure:"db_name"`
+	Uri       string `mapstructure:"db_uri"`
+	UDPPort   int    `mapstructure:"udp_port"`
+	SpeechURL string `mapstructure:"speech_url"`
 }
 
 var CommonConfig Config

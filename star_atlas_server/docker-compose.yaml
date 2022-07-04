@@ -11,12 +11,19 @@ services:
       - 27017:27017
     volumes:
       - data:/data/db
-    restart: on-failure:10
-  myapp:
-    image: star_atlas_server:latest 
-    container_name: "star_atlas_server"
-    restart: on-failure:10
+    restart: on-failure:3
+  speech_recognition_server:
+    image: ailemondocker/asrt_service:1.3.0
+    container_name: speech_recognition_server
+    restart: on-failure:3
     platform: "linux/amd64"
     ports:
-      - 9999:9999
+      - 20001:20001/tcp
+  star_atlas_server:
+    image: star_atlas_server:latest 
+    container_name: "star_atlas_server"
+    restart: on-failure:3
+    platform: "linux/amd64"
+    ports:
+      - 9999:9999/tcp
       - 9191:9191/udp  # udp listener
