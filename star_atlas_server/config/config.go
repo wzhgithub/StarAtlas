@@ -6,9 +6,10 @@ import (
 )
 
 type Config struct {
-	DB      string `mapstructure:"db_name"`
-	Uri     string `mapstructure:"db_uri"`
-	UDPPort int    `mapstructure:"udp_port"`
+	DB                 string `mapstructure:"db_name"`
+	Uri                string `mapstructure:"db_uri"`
+	DBVMCDataTableName string `mapstructure:"db_vmcdata_table_name"`
+	UDPPort            int    `mapstructure:"udp_port"`
 }
 
 var CommonConfig Config
