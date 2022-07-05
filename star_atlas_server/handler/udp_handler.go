@@ -41,7 +41,7 @@ func udpProcess(conn *net.UDPConn) {
 	if err != nil {
 		glog.Errorf("failed read udp msg, error:%s\n", err.Error())
 	}
-	glog.Infof("received adddress:%+v\n", address)
+	glog.Infof("received address:%+v\n", address)
 	str := string(data[:n])
 	limitChan <- str
 }
@@ -53,9 +53,9 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		v, _ := model.NewVMCData(data)
-		// db.Test()
-		db.WriteTopoTable(v)
+		vmcData, _ := model.NewVMCData(data)
+		model.NewTopoTable(vmcData)
+		db.Test()
 		<-doneChan
 	}
 }
