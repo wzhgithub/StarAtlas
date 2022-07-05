@@ -63,31 +63,31 @@ type VMCData struct {
 	frameHeader      uint8
 	length           uint16
 	protoType        uint8
-	VMCName          string // 10bytes
-	VMCID            uint8
-	CPUNumber        uint8
-	DSPNumber        uint8
-	GPUNumber        uint8
-	FPAGNumber       uint8
-	SwitchID         uint8
-	TotalMemory      uint16
-	TotalDisk        uint16
-	MemoryUsage      uint8
-	TotalCPUUsage    uint8
-	TotalDSPUsage    uint8
-	TotalGPUUsage    uint8
-	TotalDiskUsage   uint8
+	VMCName          string `json:"vmcname" bson:"vmcname"` // 10bytes
+	VMCID            uint8  `json:"vmcid" bson:"vmcid"`
+	CPUNumber        uint8  `json:"cpunumber" bson:"cpunumber"`
+	DSPNumber        uint8  `json:"dspnumber" bson:"dspnumber"`
+	GPUNumber        uint8  `json:"gpunumber" bson:"gpunumber"`
+	FPAGNumber       uint8  `json:"fpagnumber" bson:"fpagnumber"`
+	SwitchID         uint8  `json:"switchid" bson:"switchid"`
+	TotalMemory      uint16 `json:"totalmemory" bson:"totalmemory"`
+	TotalDisk        uint16 `json:"totaldisk" bson:"totaldisk"`
+	MemoryUsage      uint8  `json:"memoryusage" bson:"memoryusage"`
+	TotalCPUUsage    uint8  `json:"totalcpuusage" bson:"totalcpuusage"`
+	TotalDSPUsage    uint8  `json:"totaldspusage" bson:"totaldspusage"`
+	TotalGPUUsage    uint8  `json:"totalgpuusage" bson:"totalgpuusage"`
+	TotalDiskUsage   uint8  `json:"totaldiskusage" bson:"totaldiskusage"`
 	// cpu
-	CPUSet []*DeviceData // 21bytes
+	CPUSet []*DeviceData `json:"cpuset" bson:"cpuset"` // 21bytes
 	// dsp
-	DSPSet []*DeviceData // 21bytes
+	DSPSet []*DeviceData `json:"dspset" bson:"dspset"` // 21bytes
 	// gpu
-	GPUSet []*DeviceData // 19bytes
+	GPUSet []*DeviceData `json:"gpuset" bson:"gpuset"` // 19bytes
 	// fpga
-	FPGASet []*DeviceData // 12bytes
-	APPNum  uint8
-	APPInfo []*App
-	Sum     uint8
+	FPGASet []*DeviceData `json:"fpgaset" bson:"fpgaset"` // 21bytes
+	APPNum  uint8         `json:"appnum" bson:"appnum"`
+	APPInfo []*App        `json:"appinfo" bson:"appinfo"`
+	Sum     uint8         `json:"sum" bson:"sum"`
 }
 
 func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
