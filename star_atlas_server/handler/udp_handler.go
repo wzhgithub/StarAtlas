@@ -54,7 +54,8 @@ func ParseData() {
 			continue
 		}
 		vmcData, _ := model.NewVMCData(data)
-		model.NewTopoTable(vmcData)
+		vmcData.CreateTopo()
+		vmcData.CollectTopo()
 		db.Test()
 		<-doneChan
 	}
