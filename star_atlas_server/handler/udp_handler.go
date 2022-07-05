@@ -53,8 +53,9 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		_, _ = model.NewVMCData(data)
-		db.Test()
+		v, _ := model.NewVMCData(data)
+		// db.Test()
+		db.WriteTopoTable(v)
 		<-doneChan
 	}
 }
