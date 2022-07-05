@@ -21,3 +21,4 @@ __pycache__
 asrt-sdk-go
 .DS_Store
 record.wav
+.idea/
