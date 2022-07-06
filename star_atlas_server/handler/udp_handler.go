@@ -41,7 +41,7 @@ func udpProcess(conn *net.UDPConn) {
 	if err != nil {
 		glog.Errorf("failed read udp msg, error:%s\n", err.Error())
 	}
-	glog.Infof("received adddress:%+v\n", address)
+	glog.Infof("received address:%+v\n", address)
 	str := string(data[:n])
 	limitChan <- str
 }
@@ -53,6 +53,10 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
+		vmcData, _ := model.NewVMCData(data)
+		var topoTable = model.TopoTable{}
+		topoTable.CreateOp(vmcData)
+		topoTable.CollectOp(vmcData)
 		vmcdata, _ := model.NewVMCData(data)
 		err := vmcdata.CreateData()
 		if err != nil {
