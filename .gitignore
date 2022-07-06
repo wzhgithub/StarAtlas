@@ -13,10 +13,14 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
-start_atlas_server/start_atlas_server
-start_atlas_server/gin_log.log
-start_atlas_server/go.sum
+star_atlas_server/gin_log.log
+star_atlas_server/go.sum
 star_atlas_server/star_atlas_server
+star_atlas_server/go.mod
+star_atlas_server/go.sum
 
 __pycache__
 asrt-sdk-go
+.DS_Store
+record.wav
+.idea/
