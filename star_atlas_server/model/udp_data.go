@@ -30,32 +30,32 @@ const (
 )
 
 type DeviceData struct {
-	Name string // 10bytes
-	ID   uint8
-	Type uint8 // ARM:0,RISC_V:1,SPARC:2,PPC:3,MIPS:4
+	Name string `json:"name" bson:"name"` // 10bytes
+	ID   uint8  `json:"id" bson:"id"`
+	Type uint8  `json:"type" bson:"type"` // ARM:0,RISC_V:1,SPARC:2,PPC:3,MIPS:4
 	// fpga don`t has below fields
-	Num                 uint8  //
-	IntComputingPower   uint16 // gpu this feild is nil
-	FloatComputingPower uint16
-	TotalMemory         uint16
-	MemoryUsage         uint8
-	Usage               uint8
+	Num                 uint8  `json:"num" bson:"num"`
+	IntComputingPower   uint16 `json:"int_computing_power" bson:"int_computing_power"` // gpu this feild is nil
+	FloatComputingPower uint16 `json:"float_computing_power" bson:"float_computing_power"`
+	TotalMemory         uint16 `json:"total_memory" bson:"total_memory"`
+	MemoryUsage         uint8  `json:"memory_usage" bson:"memory_usage"`
+	Usage               uint8  `json:"usage" bson:"usage"`
 }
 
 type Task struct {
-	Name        string
-	TaskType    uint8
-	TaskStatus  uint8
-	ExecuteTime uint8
+	Name        string `json:"name" bson:"name"`
+	TaskType    uint8  `json:"task_type" bson:"task_type"`
+	TaskStatus  uint8  `json:"task_status" bson:"task_status"`
+	ExecuteTime uint8  `json:"execute_time" bson:"execute_time"`
 }
 
 type App struct {
-	APPName      string // 10bytes
-	TaskNum      uint8  // max 6
-	TaskPeriod   uint16 // 250ms
-	TaskDispatch uint16 // 100ms
-	TaskSet      []*Task
-	CurrentTask  uint8
+	APPName      string  `json:"app_name" bson:"app_name"`           // 10bytes
+	TaskNum      uint8   `json:"task_num" bson:"task_num"`           // max 6
+	TaskPeriod   uint16  `json:"task_period" bson:"task_period"`     // 250ms
+	TaskDispatch uint16  `json:"task_dispatch" bson:"task_dispatch"` // 100ms
+	TaskSet      []*Task `json:"task_set" bson:"task_set"`
+	CurrentTask  uint8   `json:"current_task" bson:"current_task"`
 }
 
 type VMCData struct {
@@ -63,30 +63,30 @@ type VMCData struct {
 	frameHeader      uint8
 	length           uint16
 	protoType        uint8
-	VMCName          string `json:"vmcname" bson:"vmcname"` // 10bytes
-	VMCID            uint8  `json:"vmcid" bson:"vmcid"`
-	CPUNumber        uint8  `json:"cpunumber" bson:"cpunumber"`
-	DSPNumber        uint8  `json:"dspnumber" bson:"dspnumber"`
-	GPUNumber        uint8  `json:"gpunumber" bson:"gpunumber"`
-	FPAGNumber       uint8  `json:"fpagnumber" bson:"fpagnumber"`
-	SwitchID         uint8  `json:"switchid" bson:"switchid"`
-	TotalMemory      uint16 `json:"totalmemory" bson:"totalmemory"`
-	TotalDisk        uint16 `json:"totaldisk" bson:"totaldisk"`
-	MemoryUsage      uint8  `json:"memoryusage" bson:"memoryusage"`
-	TotalCPUUsage    uint8  `json:"totalcpuusage" bson:"totalcpuusage"`
-	TotalDSPUsage    uint8  `json:"totaldspusage" bson:"totaldspusage"`
-	TotalGPUUsage    uint8  `json:"totalgpuusage" bson:"totalgpuusage"`
-	TotalDiskUsage   uint8  `json:"totaldiskusage" bson:"totaldiskusage"`
+	VMCName          string `json:"vmc_name" bson:"vmc_name"` // 10bytes
+	VMCID            uint8  `json:"vmc_id" bson:"vmc_id"`
+	CPUNumber        uint8  `json:"cpu_number" bson:"cpu_number"`
+	DSPNumber        uint8  `json:"dsp_number" bson:"dsp_number"`
+	GPUNumber        uint8  `json:"gpu_number" bson:"gpu_number"`
+	FPGANumber       uint8  `json:"fpga_number" bson:"fpga_number"`
+	SwitchID         uint8  `json:"switch_id" bson:"switch_id"`
+	TotalMemory      uint16 `json:"total_memory" bson:"total_memory"`
+	TotalDisk        uint16 `json:"total_disk" bson:"total_disk"`
+	MemoryUsage      uint8  `json:"memory_usage" bson:"memory_usage"`
+	TotalCPUUsage    uint8  `json:"total_cpu_usage" bson:"total_cpu_usage"`
+	TotalDSPUsage    uint8  `json:"total_dsp_usage" bson:"total_dsp_usage"`
+	TotalGPUUsage    uint8  `json:"total_gpu_usage" bson:"total_gpu_usage"`
+	TotalDiskUsage   uint8  `json:"total_disk_usage" bson:"total_disk_usage"`
 	// cpu
-	CPUSet []*DeviceData `json:"cpuset" bson:"cpuset"` // 21bytes
+	CPUSet []*DeviceData `json:"cpu_set" bson:"cpu_set"` // 21bytes
 	// dsp
-	DSPSet []*DeviceData `json:"dspset" bson:"dspset"` // 21bytes
+	DSPSet []*DeviceData `json:"dsp_set" bson:"dsp_set"` // 21bytes
 	// gpu
-	GPUSet []*DeviceData `json:"gpuset" bson:"gpuset"` // 19bytes
+	GPUSet []*DeviceData `json:"gpu_set" bson:"gpu_set"` // 19bytes
 	// fpga
-	FPGASet []*DeviceData `json:"fpgaset" bson:"fpgaset"` // 21bytes
-	APPNum  uint8         `json:"appnum" bson:"appnum"`
-	APPInfo []*App        `json:"appinfo" bson:"appinfo"`
+	FPGASet []*DeviceData `json:"fpga_set" bson:"fpga_set"` // 21bytes
+	APPNum  uint8         `json:"app_num" bson:"app_num"`
+	APPInfo []*App        `json:"app_info" bson:"app_info"`
 	Sum     uint8         `json:"sum" bson:"sum"`
 }
 
@@ -311,7 +311,7 @@ func parse(bytes []byte) (*VMCData, error) {
 		CPUNumber:      bytes[15],
 		DSPNumber:      bytes[16],
 		GPUNumber:      bytes[17],
-		FPAGNumber:     bytes[18],
+		FPGANumber:     bytes[18],
 		SwitchID:       bytes[19],
 		TotalMemory:    binary.BigEndian.Uint16(bytes[20:22]),
 		TotalDisk:      binary.BigEndian.Uint16(bytes[22:24]),
