@@ -338,9 +338,15 @@ func NewVMCData(str string) (*VMCData, error) {
 }
 
 func (vmc_data *VMCData) CreateData() error {
+	if vmc_data == nil {
+		return fmt.Errorf("vcm data is nil")
+	}
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
 }
 
 func (vmc_data *VMCData) CollectVMCData() error {
+	if vmc_data == nil {
+		return fmt.Errorf("vcm data is nil need make one")
+	}
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data)
 }
