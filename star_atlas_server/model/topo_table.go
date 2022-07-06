@@ -45,7 +45,7 @@ func obcModuleHandler(v *VMCData) []*OBCModule {
 	obcNum := 3
 	obcModule := make([]*OBCModule, 0)
 	for i := 0; i < obcNum; i++ {
-		o := &OBCModule{uint8(i), v.CPUNumber, v.DSPNumber, v.GPUNumber, v.FPAGNumber}
+		o := &OBCModule{uint8(i), v.CPUNumber, v.DSPNumber, v.GPUNumber, v.FPGANumber}
 		obcModule = append(obcModule, o)
 	}
 	return obcModule
