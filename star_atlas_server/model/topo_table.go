@@ -43,7 +43,7 @@ type TopoTable struct {
 
 func obcModuleHandler(v *VMCData) []*OBCModule {
 	obcNum := 3
-	var obcModule []*OBCModule
+	obcModule := make([]*OBCModule, 0)
 	for i := 0; i < obcNum; i++ {
 		o := &OBCModule{uint8(i), v.CPUNumber, v.DSPNumber, v.GPUNumber, v.FPAGNumber}
 		obcModule = append(obcModule, o)
@@ -53,7 +53,7 @@ func obcModuleHandler(v *VMCData) []*OBCModule {
 
 func vmcModuleHandler(v *VMCData) []*VMCModule {
 	vmcNum := 2
-	var vmcModule []*VMCModule
+	vmcModule := make([]*VMCModule, 0)
 	for i := 0; i < vmcNum; i++ {
 		v := &VMCModule{v.VMCName, v.VMCID, obcModuleHandler(v), uint8(i)}
 		vmcModule = append(vmcModule, v)
@@ -63,7 +63,7 @@ func vmcModuleHandler(v *VMCData) []*VMCModule {
 
 func switchModuleHandler(v *VMCData) []*SwitchModule {
 	switchNum := 3
-	var switchModule []*SwitchModule
+	switchModule := make([]*SwitchModule, 0)
 	for i := 0; i < switchNum; i++ {
 		s := &SwitchModule{uint8(i), v.SwitchID, uint8(i)}
 		switchModule = append(switchModule, s)
@@ -73,7 +73,7 @@ func switchModuleHandler(v *VMCData) []*SwitchModule {
 
 func rtuModuleHandler(v *VMCData) []*RTUModule {
 	rtuNum := 3
-	var rtuModule []*RTUModule
+	rtuModule := make([]*RTUModule, 0)
 	for i := 0; i < rtuNum; i++ {
 		r := &RTUModule{Type: uint8(i), Head: uint8(i)}
 		rtuModule = append(rtuModule, r)
@@ -89,17 +89,12 @@ func NewTopoTable(v *VMCData) *TopoTable {
 	}
 }
 
-type IDBTopoTable interface {
-	CreateTopo(v *VMCData) error
-	CollectTopo(v *VMCData) error
-}
-
-func (v *VMCData) CreateTopo() error {
-	t := NewTopoTable(v)
+func (t *TopoTable) CreateOp(v *VMCData) error {
+	t = NewTopoTable(v)
 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 }
 
-func (v *VMCData) CollectTopo() error {
-	t := NewTopoTable(v)
+func (t *TopoTable) CollectOp(v *VMCData) error {
+	t = NewTopoTable(v)
 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
 }
