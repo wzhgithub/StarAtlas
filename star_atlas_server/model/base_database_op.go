@@ -7,7 +7,3 @@ type IDatabaseOperation interface {
 	CreateData() error
 	CollectData() error
 }
-
-type IDevice interface {
-	GetDeviceNum() uint
-}

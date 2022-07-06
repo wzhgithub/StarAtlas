@@ -1,21 +1,19 @@
 package model
 
 import (
-	"star_atlas_server/config"
+	"strconv"
 	"time"
 
-	"github.com/kamva/mgm/v3"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type TransferInfos struct {
 	FromId      uint16        `json:"from_id" bson:"from_id"`
-	toId        uint16        `json:"to_id" bson:"to_id"`
+	ToId        uint16        `json:"to_id" bson:"to_id"`
 	TaskType    uint8         `json:"task_type" bson:"task_type"`
 	StartTime   time.Time     `json:"start_time" bson:"start_time"`
 	EndTime     time.Time     `json:"end_time" bson:"end_time"`
-	durningTime time.Duration `json:"durning_time" bson:"durning_time"`
+	DurningTime time.Duration `json:"durning_time" bson:"durning_time"`
 }
 
 type OtherInfos struct {
@@ -40,70 +38,70 @@ type TopoTable struct {
 	TransferInfo []*TransferInfos   `json:"transfer_info" bson:"transfer_info"`
 }
 
-type Devices interface {
-	GetDeviceNums()
+func NewOtherInfos(key string, val string) *OtherInfos {
+	return &OtherInfos{key, val}
 }
 
-func getDeviceNums(d Devices) uint {
-	return d.
-}
-
-func NewTransferInfos(v *VMCData) []*TransferInfos {
-	obcNum := 3
-	obcModule := make([]*TransferInfos, 0)
-	for i := 0; i < obcNum; i++ {
-		o := &OBCModule{uint8(i), v.CPUNumber, v.DSPNumber, v.GPUNumber, v.FPGANumber}
-		obcModule = append(obcModule, o)
-	}
-	return obcModule
-}
-
-func otherInfosHandler(v *VMCData) []*OtherInfos {
-	vmcNum := 2
-	otherInfos := make([]*OtherInfos, 0)
-	for i := 0; i < vmcNum; i++ {
-		o := &OtherInfos{
-			"proto_type", string(v.protoType),
+func (v *VMCData) parseCPU(nodes []*Nodes) {
+	for i := 0; i < int(v.CPUNumber); i++ {
+		n := &Nodes{
+			uint16(i), "cpu" + strconv.Itoa(i),
+			"cpu", uint16(v.VMCID), 0, "RUN", nil,
 		}
-		otherInfos = append(otherInfos, o)
+		NewOtherInfos("cpu_type", string(v.CPUSet[i].Type))
+		nodes = append(nodes, n)
 	}
-	return otherInfos
 }
 
-func switchModuleHandler(v *VMCData) []*SwitchModule {
-	switchNum := 3
-	switchModule := make([]*SwitchModule, 0)
-	for i := 0; i < switchNum; i++ {
-		s := &SwitchModule{uint8(i), v.SwitchID, uint8(i)}
-		switchModule = append(switchModule, s)
+func (v *VMCData) parseGPU(nodes []*Nodes) {
+	for i := 0; i < int(v.GPUNumber); i++ {
+		n := &Nodes{
+			uint16(i), "gpu" + strconv.Itoa(i),
+			"gpu", uint16(v.VMCID), 0, "RUN", nil,
+		}
+		// NewOtherInfos("cpu_type", string(v.CPUSet[i].Type))
+		nodes = append(nodes, n)
 	}
-	return switchModule
 }
 
-func rtuModuleHandler(v *VMCData) []*RTUModule {
-	rtuNum := 3
-	rtuModule := make([]*RTUModule, 0)
-	for i := 0; i < rtuNum; i++ {
-		r := &RTUModule{Type: uint8(i), Head: uint8(i)}
-		rtuModule = append(rtuModule, r)
-	}
-	return rtuModule
+func (v *VMCData) parseObc(nodes []*Nodes) {
+	v.parseCPU(nodes)
+	v.parseGPU(nodes)
+}
+
+func (v *VMCData) parseVmc(nodes []*Nodes) {
+
+}
+
+func (v *VMCData) parseSwitch(nodes []*Nodes) {
+
+}
+
+func (v *VMCData) parseRtu(nodes []*Nodes) {
+
+}
+
+func NewNodes(v *VMCData) []*Nodes {
+	nodes := make([]*Nodes, 0)
+	v.parseObc(nodes)
+	v.parseVmc(nodes)
+	v.parseSwitch(nodes)
+	v.parseRtu(nodes)
+	return nodes
 }
 
 func NewTopoTable(v *VMCData) *TopoTable {
 	return &TopoTable{
-		VMCModule:    vmcModuleHandler(v),
-		SwitchModule: switchModuleHandler(v),
-		RTUModule:    rtuModuleHandler(v),
+		Node: NewNodes(v),
 	}
 }
 
-func (t *TopoTable) CreateOp(v *VMCData) error {
-	t = NewTopoTable(v)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
-}
+// func (t *TopoTable) CreateOp(v *VMCData) error {
+// 	t = NewTopoTable(v)
+// 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+// }
 
-func (t *TopoTable) CollectOp(v *VMCData) error {
-	t = NewTopoTable(v)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
-}
+// func (t *TopoTable) CollectOp(v *VMCData) error {
+// 	t = NewTopoTable(v)
+// 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+// }
