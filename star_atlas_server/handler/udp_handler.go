@@ -57,6 +57,17 @@ func ParseData() {
 		var topoTable = model.TopoTable{}
 		topoTable.CreateOp(vmcData)
 		topoTable.CollectOp(vmcData)
+		vmcdata, _ := model.NewVMCData(data)
+		err := vmcdata.CreateData()
+		if err != nil {
+			glog.Error("failed create vmcdata into db, error: %s\n", err.Error())
+		}
+
+		vmcdata_read := &model.VMCData{}
+		err = vmcdata_read.CollectVMCData()
+		if err != nil {
+			glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
+		}
 		db.Test()
 		<-doneChan
 	}
