@@ -5,3 +5,7 @@ type IDatabaseOperation interface {
 	CreateOp(v *VMCData) error
 	CollectOp(v *VMCData) error
 }
+
+type IDevice interface {
+	GetDeviceNum() uint
+}

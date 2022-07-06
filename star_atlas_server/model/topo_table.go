@@ -2,48 +2,55 @@ package model
 
 import (
 	"star_atlas_server/config"
+	"time"
 
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type OBCModule struct {
-	OBCID      uint8 `json:"obc_id" bson:"obc_id"`
-	CPUNumber  uint8 `json:"cpu_num" bson:"cpu_num"`
-	DSPNumber  uint8 `json:"dsp_num" bson:"dsp_num"`
-	GPUNumber  uint8 `json:"gpu_num" bson:"gpu_num"`
-	FPAGNumber uint8 `json:"fpag_num" bson:"fpag_num"`
+type TransferInfos struct {
+	FromId      uint16        `json:"from_id" bson:"from_id"`
+	toId        uint16        `json:"to_id" bson:"to_id"`
+	TaskType    uint8         `json:"task_type" bson:"task_type"`
+	StartTime   time.Time     `json:"start_time" bson:"start_time"`
+	EndTime     time.Time     `json:"end_time" bson:"end_time"`
+	durningTime time.Duration `json:"durning_time" bson:"durning_time"`
 }
 
-type VMCModule struct {
-	VMCName   string       `json:"vmc_name" bson:"vmc_name"`
-	VMCID     uint8        `json:"vmc_id" bson:"vmc_id"`
-	OBCModule []*OBCModule `json:"obc_module" bson:"obc_module"`
-	Next      uint8        `json:"next" bson:"next"`
+type OtherInfos struct {
+	Key   string `json:"key" bson:"key"`
+	Value string `json:"value" bson:"value"`
 }
 
-type SwitchModule struct {
-	Head     uint8 `json:"head" bson:"head"`
-	SwitchID uint8 `json:"switch_id" bson:"switch_id"`
-	Next     uint8 `json:"next" bson:"next"`
-}
-
-type RTUModule struct {
-	Type uint8 `json:"type" bson:"type"`
-	Head uint8 `json:"head" bson:"head"`
+type Nodes struct {
+	Id           uint16        `json:"id" bson:"id"`
+	Name         string        `json:"name" bson:"name"`
+	DeviceType   string        `json:"device_type" bson:"device_type"`
+	ParentId     uint16        `json:"parent_id" bson:"parent_id"`
+	UpstreamId   uint16        `json:"upstream_id" bson:"upstream_id"`
+	DeviceStatus string        `json:"device_status" bson:"device_status"`
+	OtherInfo    []*OtherInfos `json:"other_info" bson:"other_info"`
 }
 
 // see https://github.com/Kamva/mgm
 type TopoTable struct {
-	mgm.DefaultModel `bson:",inline"`
-	VMCModule        []*VMCModule    `json:"vmc_module" bson:"vmc_module"`
-	SwitchModule     []*SwitchModule `json:"switch_module" bson:"switch_module"`
-	RTUModule        []*RTUModule    `json:"rtu_module" bson:"rtu_module"`
+	TopoId       primitive.ObjectID `json:"topo_id,omitempty" bson:"topo_id,omitempty"`
+	Node         []*Nodes           `json:"node" bson:"node"`
+	TransferInfo []*TransferInfos   `json:"transfer_info" bson:"transfer_info"`
 }
 
-func obcModuleHandler(v *VMCData) []*OBCModule {
+type Devices interface {
+	GetDeviceNums()
+}
+
+func getDeviceNums(d Devices) uint {
+	return d.
+}
+
+func NewTransferInfos(v *VMCData) []*TransferInfos {
 	obcNum := 3
-	obcModule := make([]*OBCModule, 0)
+	obcModule := make([]*TransferInfos, 0)
 	for i := 0; i < obcNum; i++ {
 		o := &OBCModule{uint8(i), v.CPUNumber, v.DSPNumber, v.GPUNumber, v.FPGANumber}
 		obcModule = append(obcModule, o)
@@ -51,14 +58,16 @@ func obcModuleHandler(v *VMCData) []*OBCModule {
 	return obcModule
 }
 
-func vmcModuleHandler(v *VMCData) []*VMCModule {
+func otherInfosHandler(v *VMCData) []*OtherInfos {
 	vmcNum := 2
-	vmcModule := make([]*VMCModule, 0)
+	otherInfos := make([]*OtherInfos, 0)
 	for i := 0; i < vmcNum; i++ {
-		v := &VMCModule{v.VMCName, v.VMCID, obcModuleHandler(v), uint8(i)}
-		vmcModule = append(vmcModule, v)
+		o := &OtherInfos{
+			"proto_type", string(v.protoType),
+		}
+		otherInfos = append(otherInfos, o)
 	}
-	return vmcModule
+	return otherInfos
 }
 
 func switchModuleHandler(v *VMCData) []*SwitchModule {
