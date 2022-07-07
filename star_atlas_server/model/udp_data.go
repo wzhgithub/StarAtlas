@@ -11,22 +11,25 @@ import (
 )
 
 const (
-	cCPU_SIZE  = 21
-	cDSP_SIZE  = 21
-	cFPGA_SIZE = 12
-	cGPU_SIZE  = 19
+	cCPU_SIZE    = 21
+	cDSP_SIZE    = 21
+	cFPGA_SIZE   = 12
+	cGPU_SIZE    = 19
+	cREMOTE_SIZE = 13
+	cSWITCH_SIZE = 13
 
-	cCPU_START  = 0xeba0
-	cCPU_END    = 0xebaa
-	cDSP_START  = 0xebb0
-	cDSP_END    = 0xebbb
+	cREMOTE_START = 0xebe0
+	cSWITCH_START = 0xebf0
+	cCPU_START    = 0xeba0
+	// cCPU_END      = 0xebaa
+	cDSP_START = 0xebb0
+	// cDSP_END      = 0xebbb
 	cFPGA_START = 0xebd0
-	cFPGA_END   = 0xebdd
-	cGPU_START  = 0xebc0
-	cGPU_END    = 0xebcc
+	// cFPGA_END   = 0xebdd
+	cGPU_START = 0xebc0
+	// cGPU_END    = 0xebcc
 
-	cTAST_SIZE = 13
-	cAPP_SIZE  = 94
+	cTAST_SIZE = 12
 )
 
 type DeviceData struct {
@@ -43,19 +46,38 @@ type DeviceData struct {
 }
 
 type Task struct {
-	Name        string `json:"name" bson:"name"`
+	Name        string `json:"name" bson:"name"` // 2bytes
+	ID          uint16 `json:"id" bson:"id"`     // 2bytes
 	TaskType    uint8  `json:"task_type" bson:"task_type"`
 	TaskStatus  uint8  `json:"task_status" bson:"task_status"`
-	ExecuteTime uint8  `json:"execute_time" bson:"execute_time"`
+	ExecuteTime uint32 `json:"execute_time" bson:"execute_time"` // 4 bytes
+	StatusCode  uint8  `json:"status_code" bson:"status_code"`
+	StartTime   uint8  `json:"start_time" bson:"start_time"`
 }
 
 type App struct {
-	APPName      string  `json:"app_name" bson:"app_name"`           // 10bytes
-	TaskNum      uint8   `json:"task_num" bson:"task_num"`           // max 6
+	APPName      string  `json:"app_name" bson:"app_name"` // 10bytes
+	TaskNum      uint8   `json:"task_num" bson:"task_num"`
 	TaskPeriod   uint16  `json:"task_period" bson:"task_period"`     // 250ms
 	TaskDispatch uint16  `json:"task_dispatch" bson:"task_dispatch"` // 100ms
+	ID           uint8   `json:"id" bson:"id"`                       //
+	ResetNumber  uint8   `json:"reset_number" bson:"reset_number"`
+	BelongsTo    uint8   `json:"belongs_to" bson:"belongs_to"`
 	TaskSet      []*Task `json:"task_set" bson:"task_set"`
-	CurrentTask  uint8   `json:"current_task" bson:"current_task"`
+}
+
+type RemoteUnit struct {
+	RemoteUnitName  string `json:"remote_unit_name" bson:"remote_unit_name"`
+	RemoteUnitOrder uint8  `json:"remote_unit_order" bson:"remote_unit_order"`
+	RemoteUnitType  uint8  `json:"remote_unit_type" bson:"remote_unit_type"` // 敏感器：0；执行机构：1；载荷：2
+	LinkTo          uint8  `json:"link_to" bson:"link_to"`
+}
+
+type SwitchDevice struct {
+	SwitchName  string `json:"switch_name" bson:"switch_name"` // 10bytes
+	SwitchOrder uint8  `json:"switch_order" bson:"switch_order"`
+	SwitchType  uint8  `json:"switch_type" bson:"switch_type"` // 中心交换机：0；接入交换机：1
+	LinkTo      uint8  `json:"link_to" bson:"link_to"`
 }
 
 type VMCData struct {
@@ -77,32 +99,46 @@ type VMCData struct {
 	TotalDSPUsage    uint8  `json:"total_dsp_usage" bson:"total_dsp_usage"`
 	TotalGPUUsage    uint8  `json:"total_gpu_usage" bson:"total_gpu_usage"`
 	TotalDiskUsage   uint8  `json:"total_disk_usage" bson:"total_disk_usage"`
+	SwitchNumber     uint8  `json:"switch_number" bson:"switch_number"`
+	RemoteUnitNumber uint8  `json:"remote_unit_number" bson:"remote_unit_number"`
+
+	TotalRemoteUnitBytes uint8         `json:"total_remote_unit_bytes" bson:"total_remote_unit_bytes"`
+	RemoteUnitSet        []*RemoteUnit `json:"remote_unit_set" bson:"remote_unit_set"`
+
+	TotalSwitchDeviceBytes uint8           `json:"total_switch_device_bytes" bson:"total_switch_device_bytes"`
+	SwitchDeviceSet        []*SwitchDevice `json:"switch_device_set" bson:"switch_device_set"`
+
 	// cpu
-	CPUSet []*DeviceData `json:"cpu_set" bson:"cpu_set"` // 21bytes
+	TotalCPUBytes uint8         `json:"total_cpu_bytes" bson:"total_cpu_bytes"`
+	CPUSet        []*DeviceData `json:"cpu_set" bson:"cpu_set"` // 21bytes
 	// dsp
-	DSPSet []*DeviceData `json:"dsp_set" bson:"dsp_set"` // 21bytes
+	TotalDSPBytes uint8         `json:"total_dsp_bytes" bson:"total_dsp_bytes"`
+	DSPSet        []*DeviceData `json:"dsp_set" bson:"dsp_set"` // 21bytes
 	// gpu
-	GPUSet []*DeviceData `json:"gpu_set" bson:"gpu_set"` // 19bytes
+	TotalGPUBytes uint8         `json:"total_gpu_bytes" bson:"total_gpu_bytes"`
+	GPUSet        []*DeviceData `json:"gpu_set" bson:"gpu_set"` // 19bytes
 	// fpga
-	FPGASet []*DeviceData `json:"fpga_set" bson:"fpga_set"` // 21bytes
-	APPNum  uint8         `json:"app_num" bson:"app_num"`
-	APPInfo []*App        `json:"app_info" bson:"app_info"`
-	Sum     uint8         `json:"sum" bson:"sum"`
+	TotalFPGABytes uint8         `json:"total_fpga_bytes" bson:"total_fpga_bytes"`
+	FPGASet        []*DeviceData `json:"fpga_set" bson:"fpga_set"` // 12bytes
+	// app
+	APPNum  uint8  `json:"app_num" bson:"app_num"`
+	APPInfo []*App `json:"app_info" bson:"app_info"`
+	Sum     uint8  `json:"sum" bson:"sum"`
 }
 
-func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
+func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 	if end <= start {
-		return nil
+		return nil, 0
 	}
 	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
-	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	glog.Infof("l:%d s:%d e:%d\n", l, s, e)
-	if (l-4)%cCPU_SIZE == 0 && s == cCPU_START && e == cCPU_END {
-		num := (l - 4) / cCPU_SIZE
+	total := bytes[2]
+	glog.Infof("l:%d s:%d t:%d\n", l, s, total)
+	if (l-3)%cCPU_SIZE == 0 && s == cCPU_START {
+		num := (l - 3) / cCPU_SIZE
 		arr := make([]*DeviceData, num)
-		ss := 2
+		ss := 3
 		for i := 0; i < num; i++ {
 			si := i*cCPU_SIZE + ss
 			glog.Infof("cpu index %d num:%d\n", si, num)
@@ -121,23 +157,24 @@ func parseCPUDevice(bytes []byte, start, end int) []*DeviceData {
 			arr[i] = DeviceData
 		}
 
-		return arr
+		return arr, total
 	}
-	return nil
+	return nil, 0
 }
 
-func parseGPUDevice(bytes []byte, start, end int) []*DeviceData {
+func parseGPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 	if end <= start {
-		return nil
+		return nil, 0
 	}
 	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
-	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	if (l-4)%cGPU_SIZE == 0 && s == cGPU_START && e == cGPU_END {
-		num := (l - 4) / cGPU_SIZE
+	total := bytes[2]
+	glog.Infof("l:%d s:%d t:%d\n", l, s, total)
+	if s == cGPU_START && (l-3)%cGPU_SIZE == 0 {
+		num := (l - 3) / cGPU_SIZE
 		arr := make([]*DeviceData, num)
-		ss := 2
+		ss := 3
 		for j := 0; j < num; j++ {
 			i := j*cGPU_SIZE + ss
 			glog.Infof("gpu i:%d num:%d\n", i, num)
@@ -155,22 +192,23 @@ func parseGPUDevice(bytes []byte, start, end int) []*DeviceData {
 			glog.Infof("gpu: %+v\n", DeviceData)
 			arr[j] = DeviceData
 		}
-		return arr
+		return arr, total
 	}
-	return nil
+	return nil, 0
 }
 
-func parseFPGADevice(bytes []byte, start, end int) []*DeviceData {
+func parseFPGADevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 	if end <= start {
-		return nil
+		return nil, 0
 	}
 	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
-	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	ss := 2
-	if (l-4)%cFPGA_SIZE == 0 && s == cFPGA_START && e == cFPGA_END {
-		num := (l - 4) / cFPGA_SIZE
+	total := bytes[2]
+	glog.Infof("l:%d s:%d t:%d\n", l, s, total)
+	ss := 3
+	if (l-3)%cFPGA_SIZE == 0 && s == cFPGA_START {
+		num := (l - 3) / cFPGA_SIZE
 		arr := make([]*DeviceData, num)
 		for j := 0; j < num; j++ {
 			i := j*cFPGA_SIZE + ss
@@ -183,25 +221,25 @@ func parseFPGADevice(bytes []byte, start, end int) []*DeviceData {
 			glog.Infof("fpga:%+v", DeviceData)
 			arr[j] = DeviceData
 		}
-		return arr
+		return arr, total
 	}
 
-	return nil
+	return nil, 0
 }
 
-func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
+func parseDSPDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 	if end <= start {
-		return nil
+		return nil, 0
 	}
 	bytes = bytes[start:end]
 	l := len(bytes)
 	s := binary.BigEndian.Uint16(bytes[0:2])
-	e := binary.BigEndian.Uint16(bytes[l-2 : l])
-	glog.Infof("l:%d s:%d e:%d\n", l, s, e)
-	if (l-4)%cDSP_SIZE == 0 && s == cDSP_START && e == cDSP_END {
-		num := (l - 4) / cDSP_SIZE
+	total := bytes[2]
+	glog.Infof("l:%d s:%d total:%d\n", l, s, total)
+	if (l-3)%cDSP_SIZE == 0 && s == cDSP_START {
+		num := (l - 3) / cDSP_SIZE
 		arr := make([]*DeviceData, num)
-		ss := 2
+		ss := 3
 		for i := 0; i < num; i++ {
 			si := i*cDSP_SIZE + ss
 			glog.Infof("dsp index %d num:%d\n", si, num)
@@ -219,29 +257,40 @@ func parseDSPDevice(bytes []byte, start, end int) []*DeviceData {
 			glog.Infof("dsp device %+v\n", DeviceData)
 			arr[i] = DeviceData
 		}
-		return arr
+		return arr, total
 	}
-	return nil
+	return nil, 0
 }
 
 func parseTask(bytes []byte, start, end int) []*Task {
+	if end <= start {
+		return nil
+	}
 	bytes = bytes[start:end]
 	length := len(bytes)
 	glog.Infof("task length: %d", length)
-	arr := make([]*Task, 6)
-	for j := 0; j < 6; j++ {
-		i := j * cTAST_SIZE
-		glog.Infof("task start index: %d", i)
-		t := &Task{
-			Name:        string(bytes[i : 10+i]),
-			TaskType:    bytes[10+i],
-			TaskStatus:  bytes[11+i],
-			ExecuteTime: bytes[12+i],
+
+	if length%cTAST_SIZE == 0 {
+		taskNum := length / cTAST_SIZE
+		arr := make([]*Task, taskNum)
+		for j := 0; j < taskNum; j++ {
+			i := j * cTAST_SIZE
+			glog.Infof("task start index: %d", i)
+			t := &Task{
+				Name:        string(bytes[i : 2+i]),
+				ID:          binary.BigEndian.Uint16(bytes[i+2 : i+4]),
+				TaskType:    bytes[i+4],
+				TaskStatus:  bytes[i+5],
+				ExecuteTime: binary.BigEndian.Uint32(bytes[i+6 : i+10]),
+				StatusCode:  bytes[i+10],
+				StartTime:   bytes[i+11],
+			}
+			arr[j] = t
 		}
-		arr[j] = t
+		return arr
 	}
 
-	return arr
+	return nil
 }
 
 func parseApp(bytes []byte, start, end int) []*App {
@@ -250,27 +299,98 @@ func parseApp(bytes []byte, start, end int) []*App {
 	}
 	bytes = bytes[start:end]
 	length := len(bytes)
-	if length%cAPP_SIZE != 0 {
-		glog.Warningf("app len is illegal length %d", length)
-		return nil
-	}
-	cnt := length / cAPP_SIZE
-	glog.Infof("app length %d, start %d, end %d cnt %d\n", length, start, end, cnt)
-	arr := make([]*App, cnt)
-	for j := 0; j < cnt; j++ {
-		i := j * cAPP_SIZE
-		a := &App{
-			APPName:      string(bytes[i : i+10]),
-			TaskNum:      bytes[i+10],
-			TaskPeriod:   binary.BigEndian.Uint16(bytes[i+11 : i+13]),
-			TaskDispatch: binary.BigEndian.Uint16(bytes[i+13 : i+15]),
-			TaskSet:      parseTask(bytes, i+15, i+93),
-			CurrentTask:  bytes[i+93],
+	arr := make([]*App, 0)
+	appStart := 0
+	for {
+		glog.Infof("app start: %d", appStart)
+		if appStart >= length {
+			break
 		}
-		arr[j] = a
+		name := string(bytes[appStart : appStart+10])
+		taskNum := bytes[appStart+10]
+		runPeriod := binary.BigEndian.Uint16(bytes[appStart+11 : appStart+13])
+		dispatchTime := binary.BigEndian.Uint16(bytes[appStart+13 : appStart+15])
+		id := bytes[appStart+15]
+		resetNumber := bytes[appStart+16]
+		vmcId := bytes[appStart+17]
+		taskLen := uint8(taskNum) * cTAST_SIZE
+		taskStart := appStart + 18
+		taskEnd := taskStart + int(taskLen)
+		glog.Infof("task start: %d, task end: %d", taskStart, taskEnd)
+		a := &App{
+			APPName:      name,
+			TaskNum:      taskNum,
+			TaskPeriod:   runPeriod,
+			TaskDispatch: dispatchTime,
+			ID:           id,
+			ResetNumber:  resetNumber,
+			BelongsTo:    vmcId,
+			TaskSet:      parseTask(bytes, taskStart, taskEnd),
+		}
+		appStart = taskEnd
+
+		arr = append(arr, a)
 	}
 
 	return arr
+}
+
+func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
+	if end <= start {
+		return nil, 0
+	}
+	bytes = bytes[start:end]
+	s := binary.BigEndian.Uint16(bytes[0:2])
+	l := uint8(bytes[2])
+
+	if s == cREMOTE_START && int(l) == len(bytes)-3 && l%cREMOTE_SIZE == 0 {
+		num := l / cREMOTE_SIZE
+		idx := 3
+		arr := make([]*RemoteUnit, num)
+		for i := 0; i < int(num); i++ {
+			t := i*cREMOTE_SIZE + idx
+			r := &RemoteUnit{
+				RemoteUnitName:  string(bytes[t : t+10]),
+				RemoteUnitOrder: bytes[t+10],
+				RemoteUnitType:  bytes[t+11],
+				LinkTo:          bytes[t+12],
+			}
+			arr[i] = r
+		}
+
+		return arr, l
+	}
+
+	return nil, 0
+}
+
+func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
+	if end <= start {
+		return nil, 0
+	}
+	bytes = bytes[start:end]
+	s := binary.BigEndian.Uint16(bytes[0:2])
+	l := uint8(bytes[2])
+
+	if s == cSWITCH_START && int(l) == len(bytes)-3 && l%cSWITCH_SIZE == 0 {
+		num := l / cSWITCH_SIZE
+		idx := 3
+		arr := make([]*SwitchDevice, num)
+		for i := 0; i < int(num); i++ {
+			t := i*cSWITCH_SIZE + idx
+			r := &SwitchDevice{
+				SwitchName:  string(bytes[t : t+10]),
+				SwitchOrder: bytes[t+10],
+				SwitchType:  bytes[t+11],
+				LinkTo:      bytes[t+12],
+			}
+			arr[i] = r
+		}
+
+		return arr, l
+	}
+
+	return nil, 0
 }
 
 func calcStartEnd(start int, num uint8, l int) (int, int) {
@@ -280,15 +400,19 @@ func calcStartEnd(start int, num uint8, l int) (int, int) {
 	}
 
 	glog.Infoln(fmt.Sprintf("s:%d, n:%d, l:%d", start, num, l))
-	return start, start + 1 + l*int(num) + 2 + 1
+	return start, start + 1 + 1 + l*int(num) + 1
 }
 
 // todo
 func parse(bytes []byte) (*VMCData, error) {
 
 	l := len(bytes)
-	deviceIdx := 29
-	cpuStart, cpuEnd := calcStartEnd(deviceIdx, uint8(bytes[15]), 21)
+	deviceIdx := 31
+	remoteStart, remoteEnd := calcStartEnd(deviceIdx, uint8(bytes[30]), 13)
+	glog.Infof("remote unit start:%d cpu end:%d\n", remoteStart, remoteEnd)
+	switchStart, switchEnd := calcStartEnd(remoteEnd, uint8(bytes[29]), 13)
+	glog.Infof("switch start:%d cpu end:%d\n", switchStart, switchEnd)
+	cpuStart, cpuEnd := calcStartEnd(switchEnd, uint8(bytes[15]), 21)
 	glog.Infof("cpu start:%d cpu end:%d\n", cpuStart, cpuEnd)
 	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[16]), 21)
 	glog.Infof("dsp start:%d dsp end:%d\n", dspStart, dspEnd)
@@ -296,37 +420,61 @@ func parse(bytes []byte) (*VMCData, error) {
 	glog.Infof("gpu start:%d gpus end:%d\n", gpusStart, gpusEnd)
 	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[18]), 12)
 	glog.Infof("fpga start:%d fpga end:%d\n", fpgaStart, fpgaEnd)
-	appIdx := cpuStart
-	if cpuStart < fpgaEnd {
+	appIdx := remoteEnd
+	if remoteStart < fpgaEnd {
 		appIdx = fpgaEnd
 	}
 	glog.Infof("app idx: %d\n", appIdx)
 
+	remoteSet, totalRemoteBytes := parseRemoteUnit(bytes, remoteStart, remoteEnd)
+	switchSet, totalSwitchDeviceBytes := parseSwitch(bytes, switchStart, switchEnd)
+	cupSet, totalCpuBytes := parseCPUDevice(bytes, cpuStart, cpuEnd)
+	dspSet, totalDspDeviceBytes := parseDSPDevice(bytes, dspStart, dspEnd)
+	gpuSet, totalGpuBytes := parseGPUDevice(bytes, gpusStart, gpusEnd)
+	fpagSet, totalFpagBytes := parseFPGADevice(bytes, fpgaStart, fpgaEnd)
+
 	v := &VMCData{
-		frameHeader:    bytes[0],
-		length:         binary.BigEndian.Uint16(bytes[1:3]),
-		protoType:      bytes[3],
-		VMCName:        string(bytes[4:14]),
-		VMCID:          bytes[14],
-		CPUNumber:      bytes[15],
-		DSPNumber:      bytes[16],
-		GPUNumber:      bytes[17],
-		FPGANumber:     bytes[18],
-		SwitchID:       bytes[19],
-		TotalMemory:    binary.BigEndian.Uint16(bytes[20:22]),
-		TotalDisk:      binary.BigEndian.Uint16(bytes[22:24]),
-		MemoryUsage:    bytes[24],
-		TotalCPUUsage:  bytes[25],
-		TotalDSPUsage:  bytes[26],
-		TotalGPUUsage:  bytes[27],
-		TotalDiskUsage: bytes[28],
-		CPUSet:         parseCPUDevice(bytes, cpuStart, cpuEnd),
-		DSPSet:         parseDSPDevice(bytes, dspStart, dspEnd),
-		GPUSet:         parseGPUDevice(bytes, gpusStart, gpusEnd),
-		FPGASet:        parseFPGADevice(bytes, fpgaStart, fpgaEnd),
-		APPNum:         bytes[appIdx],
-		APPInfo:        parseApp(bytes, appIdx+1, l-1),
-		Sum:            bytes[l-1],
+		frameHeader:      bytes[0],
+		length:           binary.BigEndian.Uint16(bytes[1:3]),
+		protoType:        bytes[3],
+		VMCName:          string(bytes[4:14]),
+		VMCID:            bytes[14],
+		CPUNumber:        bytes[15],
+		DSPNumber:        bytes[16],
+		GPUNumber:        bytes[17],
+		FPGANumber:       bytes[18],
+		SwitchID:         bytes[19],
+		TotalMemory:      binary.BigEndian.Uint16(bytes[20:22]),
+		TotalDisk:        binary.BigEndian.Uint16(bytes[22:24]),
+		MemoryUsage:      bytes[24],
+		TotalCPUUsage:    bytes[25],
+		TotalDSPUsage:    bytes[26],
+		TotalGPUUsage:    bytes[27],
+		TotalDiskUsage:   bytes[28],
+		SwitchNumber:     bytes[29],
+		RemoteUnitNumber: bytes[30],
+
+		TotalRemoteUnitBytes: totalRemoteBytes,
+		RemoteUnitSet:        remoteSet,
+
+		TotalSwitchDeviceBytes: totalSwitchDeviceBytes,
+		SwitchDeviceSet:        switchSet,
+
+		TotalCPUBytes: totalCpuBytes,
+		CPUSet:        cupSet,
+
+		TotalDSPBytes: totalDspDeviceBytes,
+		DSPSet:        dspSet,
+
+		TotalGPUBytes: totalGpuBytes,
+		GPUSet:        gpuSet,
+
+		TotalFPGABytes: totalFpagBytes,
+		FPGASet:        fpagSet,
+
+		APPNum:  bytes[appIdx],
+		APPInfo: parseApp(bytes, appIdx+1, l-1),
+		Sum:     bytes[l-1],
 	}
 	glog.Infof("debug vmc:%+v\n", v)
 	return v, nil
