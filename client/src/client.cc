@@ -13,6 +13,8 @@ typedef enum {
   eDSP,
   eGPU,
   eFPGA,
+  eREMOTE,
+  eEXCHNAGE,
   eInvalid
 } EDeviceType;
 
@@ -21,6 +23,8 @@ uint16_t g_device_tag[] = {
   0xebb0, 0xebbb, // DSP 
   0xebc0, 0xebcc, // GPU
   0xebd0, 0xebdd, // FPGA
+  0xebe0, 0xeedd, // remote
+  0xebf0, 0xefdd, // exchange
   0x0, 0x0
 };
 
@@ -29,6 +33,8 @@ char gaszDevNameFmt[][10] = {
   "DSP_%02d",
   "GPU_%02d",
   "FPGA_%02d",
+  "REMO_%02d",
+  "EXCH_%02d",
   ""
 };
 
@@ -100,6 +106,34 @@ public:
     return (int)(p-buf);
   }
 };
+
+// 20220707
+class NewDevice {
+public:
+  uint8_t m_dev_type;
+
+  char m_szName[10];
+  uint8_t m_index;
+  uint8_t m_type;
+  uint8_t m_connect_to;
+
+public:
+  NewDevice() {
+    m_szName[0] = '\0';
+    m_index = m_type = m_connect_to = 0;
+  }
+
+  int pack(char* buf) {
+    char* p = buf;
+    memcpy(p, m_szName, 10);
+    p+=10;
+    ((uint8_t*)p++)[0] = m_index;
+    ((uint8_t*)p++)[0] = m_type;
+    ((uint8_t*)p++)[0] = m_connect_to;
+    return (int)(p-buf);
+  }
+};
+// 20220707
 
 class Task {
 public:
@@ -221,6 +255,12 @@ public:
   uint8_t m_gpu_rate;
   uint8_t m_disk_rate;
 
+  // changed 2022/07/07
+  uint8_t m_cnt_exchange;
+  uint8_t m_cnt_remote;
+  NewDevice* m_pnewdev;
+  // changed ended
+
   // device related
   Device* m_pdevices;
   
@@ -254,12 +294,14 @@ public:
     int cnt_dsp,
     int cnt_gpu,
     int cnt_fpga,
+    int cnt_exchange,
+    int cnt_remote,
     int cnt_block,
     int cnt_max_task
   ) {
     m_tag = 0xeb;
     //m_size = 30; // init
-    m_size = 29; // remove reserved
+    m_size = 31; // remove reserved & 20220707, add exchange, remote
     m_type = 0x55;
     m_index = idx;
     snprintf(m_name, 10, "vmc_%02d", (int)m_index);
@@ -281,12 +323,41 @@ public:
     m_gpu_rate = random()%100;
     m_disk_rate = random()%100;
 
+    // 20220707
+    int n_x=(cnt_remote+cnt_exchange), n_i=0;
+    if (n_x) {
+      m_pnewdev = new NewDevice[n_x];
+    }
+
+    if (cnt_remote) {
+      m_size+=3; // flag:2, size:1
+      for (int i=0; i<cnt_remote; i++, n_i++) {
+        NewDevice& nrd = m_pnewdev[n_i];
+        snprintf(nrd.m_szName, 10, gaszDevNameFmt[eREMOTE], i);
+        nrd.m_index = i;
+        nrd.m_type= random()%3;
+        nrd.m_connect_to= random()%10;
+      }
+    }
+
+    if (cnt_exchange) {
+      m_size+=3; // flag:2, size:1
+      for (int i=0; i<cnt_exchange; i++, n_i++) {
+        NewDevice& nrd = m_pnewdev[n_i];
+        snprintf(nrd.m_szName, 10, gaszDevNameFmt[eEXCHNAGE], i);
+        nrd.m_index = i;
+        nrd.m_type= random()%2;
+        nrd.m_connect_to= random()%10;
+      }
+    }
+    // 20220707
+
     int n_total = cnt_cpu + cnt_dsp + cnt_gpu + cnt_fpga, n_idx = 0;
     m_size += ((cnt_cpu+cnt_dsp)*21 + cnt_gpu*19 + cnt_fpga*12);
-    if (cnt_cpu) m_size+=4;
-    if (cnt_dsp) m_size+=4;
-    if (cnt_gpu) m_size+=4;
-    if (cnt_fpga) m_size+=4;
+    if (cnt_cpu) m_size+=2;
+    if (cnt_dsp) m_size+=2;
+    if (cnt_gpu) m_size+=2;
+    if (cnt_fpga) m_size+=2;
 
     // device
     //cout<<"total device: "<<(int)n_total<<endl;
@@ -362,6 +433,19 @@ public:
     ((uint8_t*)p++)[0] = m_dsp_rate;
     ((uint8_t*)p++)[0] = m_gpu_rate;
     ((uint8_t*)p++)[0] = m_disk_rate;
+
+    // 0707
+    {
+      ((uint8_t*)p++)[0] = m_cnt_exchange;
+      ((uint8_t*)p++)[0] = m_cnt_remote;
+      int total_dev = m_cnt_exchange + m_cnt_remote;
+      int anDevice[] = {
+        m_cnt_exchange,
+        m_cnt_remote,
+      };
+      
+    }
+    // 0707
 
     //cout<<"p head: "<<(int)(p-buf)<<endl;
     int total_dev = m_total_cpu + m_total_dsp + m_total_gpu + m_total_fpga, i = 0;
