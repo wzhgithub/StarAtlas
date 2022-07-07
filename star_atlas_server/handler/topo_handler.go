@@ -19,6 +19,7 @@ func TopoTable(c *gin.Context) {
 			"msg":  "Failed to collect topo from db",
 		})
 		glog.Error("Failed to collect topo from db, error: %s\n", err.Error())
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -48,6 +49,7 @@ func Delete(c *gin.Context) {
 			"msg":  "Invaild id",
 		})
 		glog.Error("Invaild id")
+		return
 	}
 	err = topo.DeleteOp(uint16(deviceId))
 	if err != nil {
