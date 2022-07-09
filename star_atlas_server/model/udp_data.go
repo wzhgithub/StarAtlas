@@ -4,7 +4,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
-	"strconv"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
@@ -539,7 +538,16 @@ func (vmc_data *VMCData) CollectVMCData(vmc_id int32) error {
 		return fmt.Errorf("vcm data is nil need make one")
 	}
 
-	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data, &options.FindOneOptions{Sort: bson.M{"_id": -1}})
+	vmcs, err := vmc_data.GetVMCList(vmc_id)
+
+	if len(vmcs) < 1 {
+		return fmt.Errorf("vcm data is empty")
+	} else {
+		*vmc_data = *vmcs[0]
+	}
+
+	return err
+	//return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data, &options.FindOneOptions{Sort: bson.M{"_id": -1}})
 }
 
 func CollectDeviceData(vmc_id int32, device_type string) ([]*DeviceData, error) {
@@ -561,16 +569,17 @@ func CollectDeviceData(vmc_id int32, device_type string) ([]*DeviceData, error) 
 	return device_data, err
 }
 
-func (vmc_data *VMCData) GetVMCList(vmcid string) ([]*VMCData, error) {
-	vmcList := make([]*VMCData, 0)
+func (vmc_data *VMCData) GetVMCList(vmcid int32) ([]*VMCData, error) {
+	vmcs := make([]*VMCData, 0)
 	if vmc_data == nil {
-		return vmcList, fmt.Errorf("vcm data is nil need make one")
-	}
-	vmcId, err := strconv.ParseUint(vmcid, 10, 8)
-	if err != nil {
-		glog.Errorf("Parse vmcid: %s faild", vmcid)
+		return vmcs, fmt.Errorf("vcm data is nil need make one")
 	}
 
-	ret := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).SimpleFind(&vmcList, bson.M{"vmc_id": vmcId})
-	return vmcList, ret
+	findOptions := options.Find()
+	findOptions.SetSort(bson.D{{Key: "updated_at", Value: -1}})
+	ret := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).SimpleFind(&vmcs, bson.M{"vmc_id": vmcid}, findOptions)
+	if len(vmcs) < 1 {
+		return vmcs, fmt.Errorf("vcms is empty")
+	}
+	return vmcs, ret
 }
