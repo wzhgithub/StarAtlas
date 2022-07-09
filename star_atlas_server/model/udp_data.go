@@ -428,7 +428,7 @@ func parse(bytes []byte) (*VMCData, error) {
 
 	remoteSet, totalRemoteBytes := parseRemoteUnit(bytes, remoteStart, remoteEnd)
 	switchSet, totalSwitchDeviceBytes := parseSwitch(bytes, switchStart, switchEnd)
-	cupSet, totalCpuBytes := parseCPUDevice(bytes, cpuStart, cpuEnd)
+	cpuSet, totalCpuBytes := parseCPUDevice(bytes, cpuStart, cpuEnd)
 	dspSet, totalDspDeviceBytes := parseDSPDevice(bytes, dspStart, dspEnd)
 	gpuSet, totalGpuBytes := parseGPUDevice(bytes, gpusStart, gpusEnd)
 	fpagSet, totalFpagBytes := parseFPGADevice(bytes, fpgaStart, fpgaEnd)
@@ -461,7 +461,7 @@ func parse(bytes []byte) (*VMCData, error) {
 		SwitchDeviceSet:        switchSet,
 
 		TotalCPUBytes: totalCpuBytes,
-		CPUSet:        cupSet,
+		CPUSet:        cpuSet,
 
 		TotalDSPBytes: totalDspDeviceBytes,
 		DSPSet:        dspSet,
