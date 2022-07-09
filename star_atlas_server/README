@@ -1,0 +1,24 @@
+#go into docker container
+docker exec -it [container_id] bash
+#connet mongo
+mongo mongodb://docker:mongopw@127.0.0.1:27017
+
+> show dbs
+admin   0.000GB
+config  0.000GB
+db      0.000GB
+local   0.000GB
+test    0.000GB
+> use db
+switched to db db
+> show collections
+myCollection
+> db.myCollection.insert({"x" :  7})
+WriteResult({ "nInserted" : 1 })
+> db.myCollection.find()
+{ "_id" : ObjectId("62c948b5137dfb20119b768e"), "x" : 1 }
+{ "_id" : ObjectId("62c951b45bede65ea6726e7a"), "x" : 3 }
+{ "_id" : ObjectId("62c95279f99036948849e06b"), "x" : 7 }
+> db.myCollection.find({"x" : 3})
+{ "_id" : ObjectId("62c951b45bede65ea6726e7a"), "x" : 3 }
+
