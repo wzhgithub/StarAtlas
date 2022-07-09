@@ -50,6 +50,7 @@ func main() {
 	}), gin.Recovery())
 
 	router.GET("/test", handler.Index)
+	router.GET("/vmcdata", handler.GetVMCData)
 	router.POST("/topo/show", handler.TopoShow)
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
