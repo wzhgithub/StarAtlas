@@ -261,6 +261,18 @@ public:
     rd.m_device_type = random()%(gDevType[typ]+1);
     // remote & exchanger
     rd.m_connect_to = connect_to;
+    if (typ==eEXCHNAGE) {
+      if (idx==0) {
+        rd.m_device_type = 0;
+        rd.m_connect_to = 0;
+      } else {
+        rd.m_device_type = 1;
+        rd.m_connect_to = 0;
+      }
+    }
+    if (typ==eREMOTE) {
+      rd.m_connect_to = 1;
+    }
 
     rd.m_cnt_core = random()%255;
     rd.m_iops = random()%65535;
@@ -446,22 +458,32 @@ public:
 };
 
 int main(int argc, char* argv[]) {
-  if (argc!=2) {
-    cerr<<"Usage: "<<argv[0]<<" /dev/stderr"<<endl;
+  if (argc==1) {
+    //cerr<<"Usage: "<<argv[0]<<" /dev/stderr"<<endl;
+    fprintf(stderr, "Usage: %s <vmc_index> <_exchange_idx>\n", argv[0]);
     exit(0);
   }
-  srand((unsigned)time(NULL));
-  int idx = random()%10,
-      idx_exch = random()%5,
-      cnt_cpu = random()%10,
-      cnt_dsp = random()%10,
-      cnt_gpu = random()%10,
-      cnt_fpga = random()%10,
-      cnt_block = random()%6,
-      cnt_max_task = random()%6,
 
-      cnt_remote = random()%10,
-      cnt_exchange= random()%10;
+  // default
+  int idx = 0,
+      idx_exch = 4,
+      cnt_remote = 4,
+      cnt_exchange = 2;
+  if (argc>=3) idx = atoi(argv[2]);
+  if (argc>=4) idx_exch = atoi(argv[3]);
+
+  srand((unsigned)time(NULL));
+  //int idx = random()%10,
+  //    idx_exch = random()%5,
+  int  cnt_cpu = random()%10+1,
+      cnt_dsp = random()%10+1,
+      cnt_gpu = random()%10+1,
+      cnt_fpga = random()%10+1,
+      cnt_block = random()%6+1,
+      cnt_max_task = random()%7;
+
+      //cnt_remote = random()%10,
+      //cnt_exchange= random()%10;
   cnt_max_task==0?cnt_max_task=1:0;
 
   cout<<"idx: "<<idx<<"\n"
