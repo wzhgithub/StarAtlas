@@ -54,7 +54,7 @@ func main() {
 	router.POST("/topo/show", handler.TopoShow)
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
-	router.GET("/topo/appshow", handler.AppShow)
+	router.POST("/topo/appshow", handler.AppShow)
 	router.Run(":9999")
 
 }
