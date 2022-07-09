@@ -164,8 +164,10 @@ public:
     snprintf(m_name, 10, "part_%02d", idx);
 
     const uint8_t N_TASK_COUNT = 6;
-    m_total_task = N_TASK_COUNT;
     m_total_task = random()%max_task+1; // 
+    if (m_total_task==0) {
+      m_total_task = N_TASK_COUNT;
+    }
     m_duration = 250;
     m_time = 100;
     m_cnt_reset = 0;
@@ -194,14 +196,16 @@ public:
   int pack(char* buf) {
     char* p = buf;
     memcpy(p, m_name, 10); p+=10;
-
     ((uint8_t*)p++)[0] = m_total_task;
     ((uint16_t*)p)[0] = htons(m_duration); p+=2;
     ((uint16_t*)p)[0] = htons(m_time); p+=2;
+
+    ((uint8_t*)p++)[0] = m_index;
+    ((uint8_t*)p++)[0] = m_cnt_reset;
+    ((uint8_t*)p++)[0] = m_vmc_idx;
     for (int i=0; i<m_total_task; i++) {
       p += m_ptask[i].pack(p);
     }
-    ((uint8_t*)p++)[0] = m_cur_task;
     return (int)(p-buf);
   }
 };
@@ -254,7 +258,7 @@ public:
 
     snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
     rd.m_device_index = idx;
-    rd.m_device_type = random%(gDevType[typ]+1);
+    rd.m_device_type = random()%(gDevType[typ]+1);
     // remote & exchanger
     rd.m_connect_to = connect_to;
 
@@ -348,7 +352,7 @@ public:
     m_total_block = cnt_block;
     m_pblock = new Block[m_total_block];
     for (int i=0; i<m_total_block; i++) {
-      m_pblock[i].ReSet(i, cnt_max_task);
+      m_pblock[i].ReSet(i, cnt_max_task, m_index);
       m_size += (16+13*m_pblock[i].m_total_task);
     }
     m_size++;
@@ -440,7 +444,10 @@ int main(int argc, char* argv[]) {
       cnt_gpu = random()%10,
       cnt_fpga = random()%10,
       cnt_block = random()%6,
-      cnt_max_task = random()%6;
+      cnt_max_task = random()%6,
+
+      cnt_remote = random()%10,
+      cnt_exchange= random()%10;
   cnt_max_task==0?cnt_max_task=1:0;
 
   cout<<"idx: "<<idx<<"\n"
@@ -459,6 +466,8 @@ int main(int argc, char* argv[]) {
     cnt_dsp,
     cnt_gpu,
     cnt_fpga,
+    cnt_exchange,
+    cnt_remote,
     cnt_block,
     cnt_max_task
   );
