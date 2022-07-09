@@ -64,7 +64,7 @@ func ParseData() {
 		}
 
 		vmcdata_read := &model.VMCData{}
-		err = vmcdata_read.CollectVMCData()
+		err = vmcdata_read.CollectVMCData(0)
 		if err != nil {
 			glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
 		}
