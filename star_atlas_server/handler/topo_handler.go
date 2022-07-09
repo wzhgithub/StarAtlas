@@ -48,13 +48,12 @@ func TopoInsert(c *gin.Context) {
 			"msg":  "InsertOp failed",
 		})
 		return
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 0,
-			"msg":  "Insert success",
-			"data": node,
-		})
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "Insert success",
+		"data": node,
+	})
 }
 
 // delete
@@ -75,11 +74,10 @@ func TopoDelete(c *gin.Context) {
 			"msg":  "DeleteOp failed",
 		})
 		return
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 0,
-			"msg":  "Delete success",
-			"data": node.Id,
-		})
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "Delete success",
+		"data": node.Id,
+	})
 }
