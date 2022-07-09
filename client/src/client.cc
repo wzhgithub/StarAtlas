@@ -446,7 +446,7 @@ public:
 
     ((uint8_t*)p++)[0] = m_total_block;
     for (int i=0; i<m_total_block; i++) {
-      cout<<"block start: "<< (int)(p-buf) <<"; "<<int(m_pblock[i].m_total_task)<<endl;
+      //cout<<"block start: "<< (int)(p-buf) <<"; "<<int(m_pblock[i].m_total_task)<<endl;
       p+=m_pblock[i].pack(p);
       //cout<<"block end: "<<int(p-buf)<<endl;
     }
@@ -486,7 +486,7 @@ int main(int argc, char* argv[]) {
       //cnt_exchange= random()%10;
   cnt_max_task==0?cnt_max_task=1:0;
 
-  cout<<"idx: "<<idx<<"\n"
+  /*cout<<"idx: "<<idx<<"\n"
       <<"idx_exch: "<<idx_exch<<"\n"
       <<"cnt_cpu: "<<cnt_cpu<<"\n"
       <<"cnt_dsp: "<<cnt_dsp<<"\n"
@@ -495,7 +495,7 @@ int main(int argc, char* argv[]) {
       <<"cnt_block: "<<cnt_block<<"\n"
       <<"cnt_remote: "<<cnt_remote<<"\n"
       <<"cnt_exchange: "<<cnt_exchange<<"\n"
-      <<"cnt_max_task: "<<cnt_max_task<<endl;
+      <<"cnt_max_task: "<<cnt_max_task<<endl;*/
 
   Message msg(
     idx,
