@@ -54,11 +54,12 @@ func ParseData() {
 			continue
 		}
 		vmcData, _ := model.NewVMCData(data)
-		var topoTable = model.TopoTable{}
-		topoTable.CreateOp(vmcData)
-		topoTable.CollectOp(vmcData)
-		vmcdata, _ := model.NewVMCData(data)
-		err := vmcdata.CreateData()
+		var topoTable = &model.TopoTable{}
+		err := topoTable.CreateOp(vmcData)
+		if err != nil {
+			glog.Error("failed create topotable into db, error: %s\n", err.Error())
+		}
+		err = vmcData.CreateData()
 		if err != nil {
 			glog.Error("failed create vmcdata into db, error: %s\n", err.Error())
 		}
