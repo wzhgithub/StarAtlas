@@ -27,6 +27,11 @@ func GetVMCData(c *gin.Context) {
 	}
 	// glog.Infof("vmcdata_read: %+v\n", vmcdata_read)
 	vmcdata_rsp := vmcdata_read.TransferVMCDataToJson()
+	if vmcdata_rsp == nil {
+		glog.Error("failed to transfer vmcdata into Json")
+		c.JSON(400, &RspJson{Success: false, Msg: "fail"})
+		return
+	}
 
 	rsp := &RspJson{}
 	rsp.Success = true

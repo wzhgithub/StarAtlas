@@ -499,6 +499,9 @@ type VMCDataJson struct {
 }
 
 func (src *VMCData) TransferVMCDataToJson() *VMCDataJson {
+	if src == nil {
+		return nil
+	}
 	dst := &VMCDataJson{}
 	dst.VMCName = src.VMCName
 	dst.VMCID = src.VMCID
