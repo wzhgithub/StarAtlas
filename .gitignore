@@ -23,4 +23,8 @@ __pycache__
 asrt-sdk-go
 .DS_Store
 record.wav
+go.mod
+go.sum
+main
+main.exe
 .idea/
