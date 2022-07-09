@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
+	"strconv"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
@@ -558,4 +559,18 @@ func CollectDeviceData(vmc_id int32, device_type string) ([]*DeviceData, error) 
 	}
 
 	return device_data, err
+}
+
+func (vmc_data *VMCData) GetVMCList(vmcid string) ([]*VMCData, error) {
+	vmcList := make([]*VMCData, 0)
+	if vmc_data == nil {
+		return vmcList, fmt.Errorf("vcm data is nil need make one")
+	}
+	vmcId, err := strconv.ParseUint(vmcid, 10, 8)
+	if err != nil {
+		glog.Errorf("Parse vmcid: %s faild", vmcid)
+	}
+
+	ret := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).SimpleFind(&vmcList, bson.M{"vmc_id": vmcId})
+	return vmcList, ret
 }

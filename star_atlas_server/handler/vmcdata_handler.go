@@ -52,3 +52,15 @@ type VMCDataRspJson struct {
 	Code    uint8             `json:"code"`
 	Msg     string            `json:"msg"`
 }
+
+func GetVMCSequence(c *gin.Context) {
+	paramPairs := c.Request.URL.Query()
+	vid, ok := paramPairs["vmcid"]
+	vmcdata_read := &model.VMCData{}
+	if ok && len(vid) > 0 {
+		vmcdata_read.GetVMCList(vid[0])
+	} else {
+		c.JSON(400, &RspJson{Success: false, Msg: "request without vmcid"})
+		return
+	}
+}
