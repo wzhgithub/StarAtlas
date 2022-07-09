@@ -2,90 +2,184 @@ package model
 
 import (
 	"star_atlas_server/config"
+	"time"
 
+	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-type OBCModule struct {
-	OBCID      uint8 `json:"obc_id" bson:"obc_id"`
-	CPUNumber  uint8 `json:"cpu_num" bson:"cpu_num"`
-	DSPNumber  uint8 `json:"dsp_num" bson:"dsp_num"`
-	GPUNumber  uint8 `json:"gpu_num" bson:"gpu_num"`
-	FPAGNumber uint8 `json:"fpag_num" bson:"fpag_num"`
+type TransferInfos struct {
+	FromId      uint16        `json:"from_id" bson:"from_id"`
+	ToId        uint16        `json:"to_id" bson:"to_id"`
+	TaskType    uint8         `json:"task_type" bson:"task_type"`
+	StartTime   time.Time     `json:"start_time" bson:"start_time"`
+	EndTime     time.Time     `json:"end_time" bson:"end_time"`
+	DurningTime time.Duration `json:"durning_time" bson:"durning_time"`
 }
 
-type VMCModule struct {
-	VMCName   string       `json:"vmc_name" bson:"vmc_name"`
-	VMCID     uint8        `json:"vmc_id" bson:"vmc_id"`
-	OBCModule []*OBCModule `json:"obc_module" bson:"obc_module"`
-	Next      uint8        `json:"next" bson:"next"`
+type OtherInfos struct {
+	Key   string `json:"key" bson:"key"`
+	Value string `json:"value" bson:"value"`
 }
 
-type SwitchModule struct {
-	Head     uint8 `json:"head" bson:"head"`
-	SwitchID uint8 `json:"switch_id" bson:"switch_id"`
-	Next     uint8 `json:"next" bson:"next"`
-}
-
-type RTUModule struct {
-	Type uint8 `json:"type" bson:"type"`
-	Head uint8 `json:"head" bson:"head"`
+type Nodes struct {
+	Id           int64         `json:"id" bson:"id"`
+	Name         string        `json:"name" bson:"name"`
+	DeviceType   string        `json:"device_type" bson:"device_type"`
+	ParentId     uint16        `json:"parent_id" bson:"parent_id"`
+	UpstreamId   uint16        `json:"upstream_id" bson:"upstream_id"`
+	DeviceStatus string        `json:"device_status" bson:"device_status"`
+	OtherInfo    []*OtherInfos `json:"other_info" bson:"other_info"`
 }
 
 // see https://github.com/Kamva/mgm
 type TopoTable struct {
-	mgm.DefaultModel `bson:",inline"`
-	VMCModule        []*VMCModule    `json:"vmc_module" bson:"vmc_module"`
-	SwitchModule     []*SwitchModule `json:"switch_module" bson:"switch_module"`
-	RTUModule        []*RTUModule    `json:"rtu_module" bson:"rtu_module"`
+	mgm.DefaultModel `json:",inline" bson:",inline"`
+	Node             []*Nodes         `json:"node" bson:"node"`
+	TransferInfo     []*TransferInfos `json:"transfer_info" bson:"transfer_info"`
 }
 
-func obcModuleHandler(v *VMCData) []*OBCModule {
-	obcNum := 3
-	obcModule := make([]*OBCModule, 0)
-	for i := 0; i < obcNum; i++ {
-		o := &OBCModule{uint8(i), v.CPUNumber, v.DSPNumber, v.GPUNumber, v.FPGANumber}
-		obcModule = append(obcModule, o)
-	}
-	return obcModule
+func NewOtherInfos(key string, val string) *OtherInfos {
+	return &OtherInfos{key, val}
 }
 
-func vmcModuleHandler(v *VMCData) []*VMCModule {
-	vmcNum := 2
-	vmcModule := make([]*VMCModule, 0)
-	for i := 0; i < vmcNum; i++ {
-		v := &VMCModule{v.VMCName, v.VMCID, obcModuleHandler(v), uint8(i)}
-		vmcModule = append(vmcModule, v)
+type pNodesArr []*Nodes
+
+func (v *VMCData) parseCPU(nodes *pNodesArr) {
+	for i := 0; i < int(v.CPUNumber); i++ {
+		n := &Nodes{
+			Id:           int64(v.CPUSet[i].ID),
+			Name:         v.CPUSet[i].Name,
+			DeviceType:   "cpu",
+			ParentId:     uint16(v.VMCID),
+			UpstreamId:   0,
+			DeviceStatus: "RUN",
+			OtherInfo:    make([]*OtherInfos, 0),
+		}
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_type", string(v.CPUSet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_cores", string(v.CPUSet[i].Num)))
+		*nodes = append(*nodes, n)
 	}
-	return vmcModule
 }
 
-func switchModuleHandler(v *VMCData) []*SwitchModule {
-	switchNum := 3
-	switchModule := make([]*SwitchModule, 0)
-	for i := 0; i < switchNum; i++ {
-		s := &SwitchModule{uint8(i), v.SwitchID, uint8(i)}
-		switchModule = append(switchModule, s)
+func (v *VMCData) parseGPU(nodes *pNodesArr) {
+	for i := 0; i < int(v.GPUNumber); i++ {
+		n := &Nodes{
+			Id:           int64(v.GPUSet[i].ID),
+			Name:         v.GPUSet[i].Name,
+			DeviceType:   "gpu",
+			ParentId:     uint16(v.VMCID),
+			UpstreamId:   0,
+			DeviceStatus: "RUN",
+			OtherInfo:    make([]*OtherInfos, 0),
+		}
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_type", string(v.GPUSet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_cores", string(v.GPUSet[i].Num)))
+		*nodes = append(*nodes, n)
 	}
-	return switchModule
 }
 
-func rtuModuleHandler(v *VMCData) []*RTUModule {
-	rtuNum := 3
-	rtuModule := make([]*RTUModule, 0)
-	for i := 0; i < rtuNum; i++ {
-		r := &RTUModule{Type: uint8(i), Head: uint8(i)}
-		rtuModule = append(rtuModule, r)
+func (v *VMCData) parseDSP(nodes *pNodesArr) {
+	for i := 0; i < int(v.DSPNumber); i++ {
+		n := &Nodes{
+			Id:           int64(v.DSPSet[i].ID),
+			Name:         v.DSPSet[i].Name,
+			DeviceType:   "dsp",
+			ParentId:     uint16(v.VMCID),
+			UpstreamId:   0,
+			DeviceStatus: "RUN",
+			OtherInfo:    make([]*OtherInfos, 0),
+		}
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_type", string(v.DSPSet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_cores", string(v.DSPSet[i].Num)))
+		*nodes = append(*nodes, n)
 	}
-	return rtuModule
+}
+
+func (v *VMCData) parseFPGA(nodes *pNodesArr) {
+	for i := 0; i < int(v.FPGANumber); i++ {
+		n := &Nodes{
+			Id:           int64(v.FPGASet[i].ID),
+			Name:         v.FPGASet[i].Name,
+			DeviceType:   "fpga",
+			ParentId:     uint16(v.VMCID),
+			UpstreamId:   0,
+			DeviceStatus: "RUN",
+			OtherInfo:    make([]*OtherInfos, 0),
+		}
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_type", string(v.FPGASet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_cores", string(v.FPGASet[i].Num)))
+		*nodes = append(*nodes, n)
+	}
+}
+
+func (v *VMCData) parseVMC(nodes *pNodesArr) {
+	v.parseCPU(nodes)
+	v.parseGPU(nodes)
+	v.parseDSP(nodes)
+	v.parseFPGA(nodes)
+	n := &Nodes{
+		Id:           int64(v.VMCID),
+		Name:         v.VMCName,
+		DeviceType:   "vmc",
+		ParentId:     uint16(v.SwitchID),
+		UpstreamId:   0,
+		DeviceStatus: "RUN",
+		OtherInfo:    make([]*OtherInfos, 0),
+	}
+	n.OtherInfo = append(n.OtherInfo, NewOtherInfos("proto_type", string(v.protoType)))
+	*nodes = append(*nodes, n)
+}
+
+func (v *VMCData) parseSwitch(nodes *pNodesArr) {
+	for i := 0; i < int(v.SwitchNumber); i++ {
+		n := &Nodes{
+			Id:           int64(v.SwitchDeviceSet[i].SwitchOrder),
+			Name:         v.SwitchDeviceSet[i].SwitchName,
+			DeviceType:   "sw",
+			ParentId:     0,
+			UpstreamId:   uint16(v.SwitchDeviceSet[i].LinkTo),
+			DeviceStatus: "RUN",
+			OtherInfo:    make([]*OtherInfos, 0),
+		}
+		(n.OtherInfo) = append(n.OtherInfo, NewOtherInfos("switch_type", string(v.SwitchDeviceSet[i].SwitchType)))
+		*nodes = append(*nodes, n)
+	}
+}
+
+func (v *VMCData) parseRTU(nodes *pNodesArr) {
+	for i := 0; i < int(v.RemoteUnitNumber); i++ {
+		n := &Nodes{
+			Id:           int64(v.RemoteUnitSet[i].RemoteUnitOrder),
+			Name:         v.RemoteUnitSet[i].RemoteUnitName,
+			DeviceType:   "rtu",
+			ParentId:     0,
+			UpstreamId:   uint16(v.RemoteUnitSet[i].LinkTo),
+			DeviceStatus: "RUN",
+			OtherInfo:    make([]*OtherInfos, 0),
+		}
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("rtu_type", string(v.RemoteUnitSet[i].RemoteUnitType)))
+		*nodes = append(*nodes, n)
+	}
+}
+
+func NewNodes(v *VMCData) pNodesArr {
+	nodes := make(pNodesArr, 0)
+	v.parseVMC(&nodes)
+	v.parseSwitch(&nodes)
+	v.parseRTU(&nodes)
+	return nodes
+}
+
+func NewTransferInfos(v *VMCData) []*TransferInfos {
+	return nil
 }
 
 func NewTopoTable(v *VMCData) *TopoTable {
 	return &TopoTable{
-		VMCModule:    vmcModuleHandler(v),
-		SwitchModule: switchModuleHandler(v),
-		RTUModule:    rtuModuleHandler(v),
+		Node:         NewNodes(v),
+		TransferInfo: NewTransferInfos(v),
 	}
 }
 
@@ -94,7 +188,31 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 }
 
-func (t *TopoTable) CollectOp(v *VMCData) error {
-	t = NewTopoTable(v)
+func (t *TopoTable) CollectOp() error {
 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+}
+
+func (t *TopoTable) InsertOp(node *Nodes) error {
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+	if err != nil {
+		glog.Error("[InsertOp] Find error")
+	}
+	t.Node = append(t.Node, node)
+	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
+}
+
+func (t *TopoTable) DeleteOp(id int64) error {
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+	if err != nil {
+		glog.Error("[DeleteOp] Find error")
+	}
+	var index int
+	for idx, node := range t.Node {
+		if node.Id == id {
+			index = idx
+			break
+		}
+	}
+	t.Node = append(t.Node[:index], t.Node[index+1:]...)
+	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
 }
