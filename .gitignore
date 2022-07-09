@@ -16,6 +16,8 @@
 star_atlas_server/gin_log.log
 star_atlas_server/go.sum
 star_atlas_server/star_atlas_server
+star_atlas_server/go.mod
+star_atlas_server/go.sum
 
 __pycache__
 asrt-sdk-go
@@ -25,3 +27,4 @@ go.mod
 go.sum
 main
 main.exe
+.idea/

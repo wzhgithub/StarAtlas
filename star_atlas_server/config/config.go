@@ -11,6 +11,7 @@ type Config struct {
 	UDPPort            int    `mapstructure:"udp_port"`
 	SpeechURL          string `mapstructure:"speech_url"`
 	DBVMCDataTableName string `mapstructure:"db_vmcdata_table_name"`
+	DBTopoTableName    string `mapstructure:"db_topo_table_name"`
 }
 
 var CommonConfig Config

@@ -3,3 +3,5 @@ db_uri: mongodb://docker:mongopw@mongodb:27017
 db_vmcdata_table_name: vmcdata
 udp_port: 9191
 speech_url: http://speech_recognition_server:20001
+db_topo_table_name: topo_table
+db_vmcdata_table_name: vmcdata

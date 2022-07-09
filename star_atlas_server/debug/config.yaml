@@ -2,4 +2,5 @@ db_name: test
 db_uri: mongodb://docker:mongopw@127.0.0.1:27017 
 udp_port: 9191
 speech_url: http://127.0.0.1:20001
+db_topo_table_name: topo_table
 db_vmcdata_table_name: vmcdata

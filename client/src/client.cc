@@ -13,6 +13,8 @@ typedef enum {
   eDSP,
   eGPU,
   eFPGA,
+  eREMOTE,
+  eEXCHNAGE,
   eInvalid
 } EDeviceType;
 
@@ -21,6 +23,8 @@ uint16_t g_device_tag[] = {
   0xebb0, 0xebbb, // DSP 
   0xebc0, 0xebcc, // GPU
   0xebd0, 0xebdd, // FPGA
+  0xebe0, 0xeedd, // remote
+  0xebf0, 0xefdd, // exchange
   0x0, 0x0
 };
 
@@ -29,6 +33,8 @@ char gaszDevNameFmt[][10] = {
   "DSP_%02d",
   "GPU_%02d",
   "FPGA_%02d",
+  "REMO_%02d",
+  "EXCH_%02d",
   ""
 };
 
@@ -37,7 +43,8 @@ uint8_t gDevType[] = {
   2,
   0,
   0,
-  0
+  2,
+  1,
 };
 
 class Device {
@@ -51,6 +58,7 @@ public:
   char m_device_name[10];
   uint8_t m_device_index;
   uint8_t m_device_type;
+  uint8_t m_connect_to; // exchange && remote
   
   // cpu & dsp & gpu
   uint8_t m_cnt_core;
@@ -67,55 +75,57 @@ public:
     m_device_name[0] = '\0';
     m_device_index = 0;
     m_device_type= 0;
+    m_connect_to = 0;
   }
 
   int pack(char* buf)  {
     char* p = buf;
-    //((uint16_t*)p)[0] = htons(m_tag_head);
-    //p+=2;
 
-    memcpy(p, m_device_name, 10);
-    p+=10;
+    memcpy(p, m_device_name, 10); p+=10;
     ((uint8_t*)p++)[0] = m_device_index;
     ((uint8_t*)p++)[0] = m_device_type;
+    if (m_dev_type==eEXCHNAGE || m_dev_type==eREMOTE) {
+      ((uint8_t*)p++)[0] = m_connect_to;
+      return int(p-buf);
+    }
 
     // cpu && dsp && gpu
     if (m_dev_type!=eFPGA) {
       ((uint8_t*)p++)[0] = m_cnt_core;
       if (m_dev_type!=eGPU) {
-        ((uint16_t*)p)[0] = htons(m_iops);
-	p+=2;
+        ((uint16_t*)p)[0] = htons(m_iops); p+=2;
       }
-      ((uint16_t*)p)[0] = htons(m_flops);
-      p+=2;
-      ((uint16_t*)p)[0] = htons(m_mem);
-      p+=2;
-    ((uint8_t*)p++)[0] = m_mem_rate;
-    ((uint8_t*)p++)[0] = m_xpu_rate;
+      ((uint16_t*)p)[0] = htons(m_flops); p+=2;
+      ((uint16_t*)p)[0] = htons(m_mem); p+=2;
+      ((uint8_t*)p++)[0] = m_mem_rate;
+      ((uint8_t*)p++)[0] = m_xpu_rate;
     }
-
-    //((uint16_t*)p)[0] = htons(m_tag_tail);
-    //p+=2;
-    //cout<<"name:"<<m_device_name<<"len: "<<(int)(p-buf)<<endl;
     return (int)(p-buf);
   }
 };
 
 class Task {
 public:
-  char m_name[10];
+  //char m_name[10];
+  char m_name[2]; // ???
+
+  uint16_t m_index;
   uint8_t m_type;
   uint8_t m_status;
-  uint8_t m_time;
+  uint32_t m_exe_time;
+  uint8_t m_ret_code;
+  uint8_t m_start_time;
 
 public:
   int pack(char* buf) {
     char* p = buf;
-    memcpy(p, m_name, 10);
-    p+=10;
+    memcpy(p, m_name, 2); p+=2;
+    ((uint16_t*)p)[0] = htons(m_index); p+=2;
     ((uint8_t*)p++)[0] = m_type;
     ((uint8_t*)p++)[0] = m_status;
-    ((uint8_t*)p++)[0] = m_time;
+    ((uint32_t*)p)[0] = htonl(m_exe_time); p+=4;
+    ((uint8_t*)p++)[0] = m_ret_code;
+    ((uint8_t*)p++)[0] = m_start_time;
     return (int)(p-buf);
   }
 };
@@ -126,7 +136,10 @@ public:
   uint8_t m_total_task;
   uint16_t m_duration;
   uint16_t m_time;
-  uint8_t m_cur_task;
+
+  uint8_t m_index;
+  uint8_t m_cnt_reset;
+  uint8_t m_vmc_idx;
 
   Task* m_ptask; // 
 
@@ -136,7 +149,9 @@ public:
     m_total_task = 0;
     m_duration = 0;
     m_time = 0;
-    m_cur_task = 0;
+    m_index = 0;
+    m_cnt_reset= 0;
+    m_vmc_idx= 0;
     m_ptask = 0;
   }
   virtual ~Block() {
@@ -144,53 +159,56 @@ public:
   }
 
 public:
-  void ReSet(int idx, int max_task) {
+  void ReSet(int idx, int max_task, int idx_vmc) {
+    m_index = (uint8_t)idx;
     snprintf(m_name, 10, "part_%02d", idx);
 
-    //m_total_task = random()%max_task+1;
     const uint8_t N_TASK_COUNT = 6;
-    m_total_task = N_TASK_COUNT;
+    m_total_task = random()%max_task+1; // 
+    if (m_total_task==0) {
+      m_total_task = N_TASK_COUNT;
+    }
     m_duration = 250;
     m_time = 100;
-    cout<<"group: "<<m_name<<"; task:"<<(int)m_total_task<<endl;
+    m_cnt_reset = 0;
+    m_vmc_idx  = idx_vmc;
     m_ptask = new Task[m_total_task];
     for (int i=1; i<=m_total_task; i++) {
       Task& tsk = m_ptask[i-1];
 
-      snprintf(tsk.m_name, 10, "task_%02d", i);
+      snprintf(tsk.m_name, 2, "%d", i);
+      tsk.m_index = uint16_t(i);
       tsk.m_type = random()%2;
 
       const uint8_t task_status[] = {
 	0, 1, 2, 3, 0xff
       }; 
       tsk.m_status = task_status[ random()%sizeof(task_status) ];
-
+      tsk.m_exe_time = 10240;
+      tsk.m_ret_code = random()%3;
       const uint8_t task_stime[] = {
 	0, 10, 40, 60, 80, 90, 
       }; 
-      tsk.m_time = i-1<sizeof(task_stime)?task_stime[i-1]:100;
+      tsk.m_start_time = i-1<sizeof(task_stime)?task_stime[i-1]:100;
     } 
-    m_cur_task = random()%m_total_task+1;
   }
 
   int pack(char* buf) {
     char* p = buf;
-    memcpy(p, m_name, 10);
-    p+=10;
-
+    memcpy(p, m_name, 10); p+=10;
     ((uint8_t*)p++)[0] = m_total_task;
-    ((uint16_t*)p)[0] = htons(m_duration);
-    p+=2;
-    ((uint16_t*)p)[0] = htons(m_time);
-    p+=2;
+    ((uint16_t*)p)[0] = htons(m_duration); p+=2;
+    ((uint16_t*)p)[0] = htons(m_time); p+=2;
+
+    ((uint8_t*)p++)[0] = m_index;
+    ((uint8_t*)p++)[0] = m_cnt_reset;
+    ((uint8_t*)p++)[0] = m_vmc_idx;
     for (int i=0; i<m_total_task; i++) {
       p += m_ptask[i].pack(p);
     }
-    ((uint8_t*)p++)[0] = m_cur_task;
     return (int)(p-buf);
   }
 };
-
 
 class Message {
 public:
@@ -221,6 +239,10 @@ public:
   uint8_t m_gpu_rate;
   uint8_t m_disk_rate;
 
+  // 0707
+  uint8_t m_cnt_exchange;
+  uint8_t m_cnt_remote;
+
   // device related
   Device* m_pdevices;
   
@@ -228,16 +250,17 @@ public:
   uint8_t m_total_block;
   Block* m_pblock;
 
-
 public:
-  void SetXPU(Device& rd, uint8_t typ, int idx) {
+  void SetXPU(Device& rd, uint8_t typ, int idx, int connect_to=0) {
     rd.m_dev_type = typ;
     rd.m_tag_head  = g_device_tag[typ*2];
     rd.m_tag_tail  = g_device_tag[typ*2+1];
 
     snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
     rd.m_device_index = idx;
-    rd.m_device_type = gDevType[typ];
+    rd.m_device_type = random()%(gDevType[typ]+1);
+    // remote & exchanger
+    rd.m_connect_to = connect_to;
 
     rd.m_cnt_core = random()%255;
     rd.m_iops = random()%65535;
@@ -254,12 +277,13 @@ public:
     int cnt_dsp,
     int cnt_gpu,
     int cnt_fpga,
+    int cnt_exchange,
+    int cnt_remote,
     int cnt_block,
     int cnt_max_task
   ) {
     m_tag = 0xeb;
-    //m_size = 30; // init
-    m_size = 29; // remove reserved
+    m_size = 31; // remove reserved & 20220707, add exchange, remote
     m_type = 0x55;
     m_index = idx;
     snprintf(m_name, 10, "vmc_%02d", (int)m_index);
@@ -281,50 +305,62 @@ public:
     m_gpu_rate = random()%100;
     m_disk_rate = random()%100;
 
-    int n_total = cnt_cpu + cnt_dsp + cnt_gpu + cnt_fpga, n_idx = 0;
-    m_size += ((cnt_cpu+cnt_dsp)*21 + cnt_gpu*19 + cnt_fpga*12);
-    if (cnt_cpu) m_size+=4;
-    if (cnt_dsp) m_size+=4;
-    if (cnt_gpu) m_size+=4;
-    if (cnt_fpga) m_size+=4;
+    m_cnt_exchange = cnt_exchange;
+    m_cnt_remote = cnt_remote;
+
+    // 20220707
+
+    int n_total = cnt_remote + cnt_exchange + cnt_cpu + cnt_dsp + cnt_gpu + cnt_fpga, n_idx = 0;
+    m_size += ((cnt_remote+cnt_exchange)*13 + (cnt_cpu+cnt_dsp)*21 + cnt_gpu*19 + cnt_fpga*12);
+    if (cnt_remote) m_size+=3;
+    if (cnt_exchange) m_size+=3;
+    if (cnt_cpu) m_size+=3;
+    if (cnt_dsp) m_size+=3;
+    if (cnt_gpu) m_size+=3;
+    if (cnt_fpga) m_size+=3;
 
     // device
     //cout<<"total device: "<<(int)n_total<<endl;
     m_pdevices = new Device[n_total];
-    for (int i=0; i<cnt_cpu; i++, n_idx++) {
-      Device& rd = m_pdevices[n_idx];
-      SetXPU(rd, eCPU, i);
-    }
+    int anDevice[] = {
+      cnt_remote,
+      cnt_exchange,
+      cnt_cpu,
+      cnt_dsp,
+      cnt_gpu,
+      cnt_fpga,
+    };
 
-    for (int i=0; i<cnt_dsp; i++, n_idx++) {
-      Device& rd = m_pdevices[n_idx];
-      SetXPU(rd, eDSP, i);
-    }
+    uint8_t aDevType[] = {
+      eREMOTE,
+      eEXCHNAGE,
+      eCPU,
+      eDSP,
+      eGPU,
+      eFPGA,
+    };
 
-    for (int i=0; i<cnt_gpu; i++, n_idx++) {
-      Device& rd = m_pdevices[n_idx];
-      SetXPU(rd, eGPU, i);
-    }
+    for (int h=0; h<sizeof(anDevice)/sizeof(int); h++) {
+      for (int i=0; i<anDevice[h]; i++, n_idx++) {
+        Device& rd = m_pdevices[n_idx];
 
-    for (int i=0; i<cnt_fpga; i++, n_idx++) {
-      Device& rd = m_pdevices[n_idx];
-      SetXPU(rd, eFPGA, i);
+        int n_conn = 0;
+        if (aDevType[h]==eREMOTE || aDevType[h]==eEXCHNAGE) n_conn = random()%256;
+        SetXPU(rd, aDevType[h], i, n_conn);
+      }
     }
 
     // block
-    //cout<<"cnt block: "<<(int)cnt_block<<endl;
     m_size++; // count of block
     m_total_block = cnt_block;
-    //cout<<"!total block: "<<(int)cnt_block<<endl;
-    //cout<<"!!total block: "<<(int)m_total_block<<endl;
     m_pblock = new Block[m_total_block];
     for (int i=0; i<m_total_block; i++) {
-      m_pblock[i].ReSet(i, cnt_max_task);
+      m_pblock[i].ReSet(i, cnt_max_task, m_index);
 
-      m_size += (16+13*m_pblock[i].m_total_task);
+      m_size += (18+12*m_pblock[i].m_total_task);
     }
-
     m_size++;
+    //cout<<"m_size: "<<m_size<<endl;
   }
 
   virtual ~Message() {
@@ -336,26 +372,21 @@ public:
     char* p = buf;
 
     ((uint8_t*)p++)[0] = m_tag;
-    ((uint16_t*)p)[0] = htons(m_size);
-    p+=2;
+    ((uint16_t*)p)[0] = htons(m_size); p+=2;
     ((uint8_t*)p++)[0] = m_type;
 
-    memcpy(p, m_name, 10);
-    p+=10;
+    memcpy(p, m_name, 10); p+=10;
     ((uint8_t*)p++)[0] = m_index;
 
     ((uint8_t*)p++)[0] = m_total_cpu;
     ((uint8_t*)p++)[0] = m_total_dsp;
     ((uint8_t*)p++)[0] = m_total_gpu;
     ((uint8_t*)p++)[0] = m_total_fpga;
-    //((uint8_t*)p++)[0] = m_total_reserved;
 
     ((uint8_t*)p++)[0] = m_exchange_idx;
 
-    ((uint16_t*)p)[0] = htons(m_total_mem);
-    p+=2;
-    ((uint16_t*)p)[0] = htons(m_total_disk);
-    p+=2;
+    ((uint16_t*)p)[0] = htons(m_total_mem); p+=2;
+    ((uint16_t*)p)[0] = htons(m_total_disk); p+=2;
 
     ((uint8_t*)p++)[0] = m_mem_rate;
     ((uint8_t*)p++)[0] = m_cpu_rate;
@@ -363,37 +394,53 @@ public:
     ((uint8_t*)p++)[0] = m_gpu_rate;
     ((uint8_t*)p++)[0] = m_disk_rate;
 
-    //cout<<"p head: "<<(int)(p-buf)<<endl;
-    int total_dev = m_total_cpu + m_total_dsp + m_total_gpu + m_total_fpga, i = 0;
+    ((uint8_t*)p++)[0] = m_cnt_exchange;
+    ((uint8_t*)p++)[0] = m_cnt_remote;
+
+    int total_dev = m_cnt_remote + m_cnt_exchange + m_total_cpu + m_total_dsp + m_total_gpu + m_total_fpga, i = 0;
     int anDevice[] = {
+      m_cnt_remote,
+      m_cnt_exchange,
       m_total_cpu,
       m_total_dsp,
       m_total_gpu,
       m_total_fpga,
     };
+    int anSize[] = {
+      13,
+      13,
+      21,
+      21,
+      19,
+      12
+    };
 
+    //cout<<"remote: "<<m_cnt_remote<<endl;
+    //cout<<"exchange: "<<m_cnt_exchange<<endl;
     for (int h=0; h<sizeof(anDevice)/sizeof(int); h++) {
-      if (anDevice[h]) {
-        ((uint16_t*)p)[0] = htons(g_device_tag[h*2]);
-        p+=2;
-      }
+      if (anDevice[h]==0) continue;
+      //cout<<"cur offset: "<< (int)(p-buf) <<endl;
+
+      ((uint16_t*)p)[0] = htons(g_device_tag[m_pdevices[i].m_dev_type*2]); p+=2;
+      //cout<<"h: "<<h<<"; device size: "<<anSize[h]*anDevice[h]<<"; count:"<<anDevice[h]<<"; pack:"<<anSize[h]<<endl;
+      ((uint8_t*)p++)[0] = anSize[h]*anDevice[h];
+      //cout<<"h: "<<h<<"; device size: "<<anSize[h]*anDevice[h]<<"; count:"<<anDevice[h]<<"; pack:"<<anSize[h]<<endl;
+
       for (int j=0; j<anDevice[h]; i++,j++) {
         p+=m_pdevices[i].pack(p);
       }
-      if (anDevice[h]) {
-        ((uint16_t*)p)[0] = htons(g_device_tag[h*2+1]);
-        p+=2;
-      }
+      //cout<<"cur offset: "<< (int)(p-buf) <<endl;
     }
 
     ((uint8_t*)p++)[0] = m_total_block;
     for (int i=0; i<m_total_block; i++) {
+      cout<<"block start: "<< (int)(p-buf) <<"; "<<int(m_pblock[i].m_total_task)<<endl;
       p+=m_pblock[i].pack(p);
-      //cout<<"p block "<<i<<":"<<(int)(p-buf)<<endl;
+      //cout<<"block end: "<<int(p-buf)<<endl;
     }
 
     ((uint8_t*)p++)[0] = 0; //crc
-    //cout<<"p crc: "<<(int)(p-buf)<<endl;
+    //cout<<"m_cur_size: "<<int(p-buf)<<endl;
     return (int)(p-buf);
   }
 };
@@ -411,7 +458,10 @@ int main(int argc, char* argv[]) {
       cnt_gpu = random()%10,
       cnt_fpga = random()%10,
       cnt_block = random()%6,
-      cnt_max_task = random()%6;
+      cnt_max_task = random()%6,
+
+      cnt_remote = random()%10,
+      cnt_exchange= random()%10;
   cnt_max_task==0?cnt_max_task=1:0;
 
   cout<<"idx: "<<idx<<"\n"
@@ -421,6 +471,8 @@ int main(int argc, char* argv[]) {
       <<"cnt_gpu: "<<cnt_gpu<<"\n"
       <<"cnt_fpga: "<<cnt_fpga<<"\n"
       <<"cnt_block: "<<cnt_block<<"\n"
+      <<"cnt_remote: "<<cnt_remote<<"\n"
+      <<"cnt_exchange: "<<cnt_exchange<<"\n"
       <<"cnt_max_task: "<<cnt_max_task<<endl;
 
   Message msg(
@@ -430,6 +482,8 @@ int main(int argc, char* argv[]) {
     cnt_dsp,
     cnt_gpu,
     cnt_fpga,
+    cnt_exchange,
+    cnt_remote,
     cnt_block,
     cnt_max_task
   );

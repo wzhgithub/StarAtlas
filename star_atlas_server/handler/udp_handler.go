@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net"
-	"star_atlas_server/db"
 	"star_atlas_server/model"
 
 	"github.com/golang/glog"
@@ -41,7 +40,7 @@ func udpProcess(conn *net.UDPConn) {
 	if err != nil {
 		glog.Errorf("failed read udp msg, error:%s\n", err.Error())
 	}
-	glog.Infof("received adddress:%+v\n", address)
+	glog.Infof("received address:%+v\n", address)
 	str := string(data[:n])
 	limitChan <- str
 }
@@ -53,8 +52,13 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		vmcdata, _ := model.NewVMCData(data)
-		err := vmcdata.CreateData()
+		vmcData, _ := model.NewVMCData(data)
+		var topoTable = &model.TopoTable{}
+		err := topoTable.CreateOp(vmcData)
+		if err != nil {
+			glog.Error("failed create topotable into db, error: %s\n", err.Error())
+		}
+		err = vmcData.CreateData()
 		if err != nil {
 			glog.Error("failed create vmcdata into db, error: %s\n", err.Error())
 		}
@@ -65,7 +69,6 @@ func ParseData() {
 			glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
 		}
 		glog.Infof("vmcdata_read: %+v\n", vmcdata_read)
-		db.Test()
 		<-doneChan
 	}
 }
