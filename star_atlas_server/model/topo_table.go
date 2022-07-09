@@ -9,6 +9,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
+const (
+	cTopoID = "topo_table"
+)
+
 type TransferInfos struct {
 	FromId      uint16        `json:"from_id" bson:"from_id"`
 	ToId        uint16        `json:"to_id" bson:"to_id"`
@@ -181,25 +185,24 @@ func NewTransferInfos(v *VMCData) []*TransferInfos {
 
 func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	return &TopoTable{
-		Id:           "topo_table",
+		Id:           cTopoID,
 		Node:         NewNodes(v, isFirst),
 		TransferInfo: NewTransferInfos(v),
 	}
 }
 
 func (t *TopoTable) CreateOp(v *VMCData) error {
-	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": "topo_table"}, t)
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": cTopoID}, t)
 	if err != nil {
-		glog.Error("[CreateOp] Find error")
+		glog.Error("[CreateOp] Find error  err:%+v", err)
 	}
 	glog.Info("[CreateOp] find return: %+v", t)
 	if t == nil {
 		t = NewTopoTable(v, true)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
-	} else {
-		t = NewTopoTable(v, false)
-		return t.UpdateOp()
 	}
+	t = NewTopoTable(v, false)
+	return t.UpdateOp()
 }
 
 func (t *TopoTable) CollectOp() error {
@@ -213,7 +216,7 @@ func (t *TopoTable) UpdateOp() error {
 func (t *TopoTable) InsertOp(node *Nodes) error {
 	err := t.CollectOp()
 	if err != nil {
-		glog.Error("[InsertOp] Find error")
+		glog.Error("[InsertOp] Find error err:%+v", err)
 	}
 	t.Node = append(t.Node, node)
 	return t.UpdateOp()
@@ -222,7 +225,7 @@ func (t *TopoTable) InsertOp(node *Nodes) error {
 func (t *TopoTable) DeleteOp(id int64) error {
 	err := t.CollectOp()
 	if err != nil {
-		glog.Error("[DeleteOp] Find error")
+		glog.Error("[DeleteOp] Find error err:%+v", err)
 	}
 	var index int
 	for idx, node := range t.Node {
