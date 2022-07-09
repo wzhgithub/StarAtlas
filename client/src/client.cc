@@ -305,6 +305,9 @@ public:
     m_gpu_rate = random()%100;
     m_disk_rate = random()%100;
 
+    m_cnt_exchange = cnt_exchange;
+    m_cnt_remote = cnt_remote;
+
     // 20220707
 
     int n_total = cnt_remote + cnt_exchange + cnt_cpu + cnt_dsp + cnt_gpu + cnt_fpga, n_idx = 0;
@@ -353,9 +356,11 @@ public:
     m_pblock = new Block[m_total_block];
     for (int i=0; i<m_total_block; i++) {
       m_pblock[i].ReSet(i, cnt_max_task, m_index);
-      m_size += (16+13*m_pblock[i].m_total_task);
+
+      m_size += (18+12*m_pblock[i].m_total_task);
     }
     m_size++;
+    //cout<<"m_size: "<<m_size<<endl;
   }
 
   virtual ~Message() {
@@ -410,23 +415,32 @@ public:
       12
     };
 
+    //cout<<"remote: "<<m_cnt_remote<<endl;
+    //cout<<"exchange: "<<m_cnt_exchange<<endl;
     for (int h=0; h<sizeof(anDevice)/sizeof(int); h++) {
       if (anDevice[h]==0) continue;
+      //cout<<"cur offset: "<< (int)(p-buf) <<endl;
 
-      ((uint16_t*)p)[0] = htons(g_device_tag[h*2]); p+=2;
+      ((uint16_t*)p)[0] = htons(g_device_tag[m_pdevices[i].m_dev_type*2]); p+=2;
+      //cout<<"h: "<<h<<"; device size: "<<anSize[h]*anDevice[h]<<"; count:"<<anDevice[h]<<"; pack:"<<anSize[h]<<endl;
       ((uint8_t*)p++)[0] = anSize[h]*anDevice[h];
+      //cout<<"h: "<<h<<"; device size: "<<anSize[h]*anDevice[h]<<"; count:"<<anDevice[h]<<"; pack:"<<anSize[h]<<endl;
 
       for (int j=0; j<anDevice[h]; i++,j++) {
         p+=m_pdevices[i].pack(p);
       }
+      //cout<<"cur offset: "<< (int)(p-buf) <<endl;
     }
 
     ((uint8_t*)p++)[0] = m_total_block;
     for (int i=0; i<m_total_block; i++) {
+      cout<<"block start: "<< (int)(p-buf) <<"; "<<int(m_pblock[i].m_total_task)<<endl;
       p+=m_pblock[i].pack(p);
+      //cout<<"block end: "<<int(p-buf)<<endl;
     }
 
     ((uint8_t*)p++)[0] = 0; //crc
+    //cout<<"m_cur_size: "<<int(p-buf)<<endl;
     return (int)(p-buf);
   }
 };
@@ -457,6 +471,8 @@ int main(int argc, char* argv[]) {
       <<"cnt_gpu: "<<cnt_gpu<<"\n"
       <<"cnt_fpga: "<<cnt_fpga<<"\n"
       <<"cnt_block: "<<cnt_block<<"\n"
+      <<"cnt_remote: "<<cnt_remote<<"\n"
+      <<"cnt_exchange: "<<cnt_exchange<<"\n"
       <<"cnt_max_task: "<<cnt_max_task<<endl;
 
   Message msg(
