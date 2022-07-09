@@ -8,6 +8,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const (
@@ -347,5 +348,5 @@ func (vmc_data *VMCData) CreateData() error {
 }
 
 func (vmc_data *VMCData) CollectVMCData() error {
-	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data)
+	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data, &options.FindOneOptions{Sort: bson.M{"_id": -1}})
 }

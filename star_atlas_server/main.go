@@ -50,6 +50,7 @@ func main() {
 	}), gin.Recovery())
 
 	router.GET("/test", handler.Index)
+	router.GET("/vmcdata", handler.GetVMCData)
 	router.Run(":9999")
 
 }
