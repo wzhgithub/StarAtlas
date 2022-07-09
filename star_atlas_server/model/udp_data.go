@@ -481,6 +481,43 @@ func parse(bytes []byte) (*VMCData, error) {
 	return v, nil
 }
 
+type VMCDataJson struct {
+	VMCName        string `json:"vmc_name" bson:"vmc_name"` // 10bytes
+	VMCID          uint8  `json:"vmc_id" bson:"vmc_id"`
+	CPUNumber      uint8  `json:"cpu_number" bson:"cpu_number"`
+	DSPNumber      uint8  `json:"dsp_number" bson:"dsp_number"`
+	GPUNumber      uint8  `json:"gpu_number" bson:"gpu_number"`
+	FPGANumber     uint8  `json:"fpga_number" bson:"fpga_number"`
+	SwitchID       uint8  `json:"switch_id" bson:"switch_id"`
+	TotalMemory    uint16 `json:"total_memory" bson:"total_memory"`
+	TotalDisk      uint16 `json:"total_disk" bson:"total_disk"`
+	MemoryUsage    uint8  `json:"memory_usage" bson:"memory_usage"`
+	TotalCPUUsage  uint8  `json:"total_cpu_usage" bson:"total_cpu_usage"`
+	TotalDSPUsage  uint8  `json:"total_dsp_usage" bson:"total_dsp_usage"`
+	TotalGPUUsage  uint8  `json:"total_gpu_usage" bson:"total_gpu_usage"`
+	TotalDiskUsage uint8  `json:"total_disk_usage" bson:"total_disk_usage"`
+}
+
+func (src *VMCData) TransferVMCDataToJson() *VMCDataJson {
+	dst := &VMCDataJson{}
+	dst.VMCName = src.VMCName
+	dst.VMCID = src.VMCID
+	dst.CPUNumber = src.CPUNumber
+	dst.DSPNumber = src.DSPNumber
+	dst.GPUNumber = src.GPUNumber
+	dst.FPGANumber = src.FPGANumber
+	dst.SwitchID = src.SwitchID
+	dst.TotalMemory = src.TotalMemory
+	dst.TotalDisk = src.TotalDisk
+	dst.MemoryUsage = src.MemoryUsage
+	dst.TotalCPUUsage = src.TotalCPUUsage
+	dst.TotalDSPUsage = src.TotalDSPUsage
+	dst.TotalGPUUsage = src.TotalGPUUsage
+	dst.TotalDiskUsage = src.TotalDiskUsage
+
+	return dst
+}
+
 // read bytes from udp
 func NewVMCData(str string) (*VMCData, error) {
 	return parse([]byte(str))
