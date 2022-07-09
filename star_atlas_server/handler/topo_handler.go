@@ -3,14 +3,14 @@ package handler
 import (
 	"net/http"
 	"star_atlas_server/model"
-	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 )
 
 // show
-func TopoTable(c *gin.Context) {
+func TopoShow(c *gin.Context) {
 	topo := &model.TopoTable{}
 	err := topo.CollectOp()
 	if err != nil {
@@ -30,63 +30,38 @@ func TopoTable(c *gin.Context) {
 }
 
 // insert
-func Insert(c *gin.Context) {
+func TopoInsert(c *gin.Context) {
 	topo := &model.TopoTable{}
-	name := c.Request.FormValue("name")
-	deviceType := c.Request.FormValue("deviceType")
-	deviceStatus := c.Request.FormValue("deviceStatus")
-	parentId, err := strconv.ParseUint(c.Request.FormValue("parentId"), 10, 16)
-	if err != nil {
+	node := &model.Nodes{}
+	if err := c.ShouldBindJSON(&node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "Parse parentId failed",
+			"msg":  "parse json failed",
 		})
-		glog.Error("Parse parentId failed")
 		return
 	}
-	upstreamId, err := strconv.ParseUint(c.Request.FormValue("upstreamId"), 10, 16)
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "Parse upstreamId failed",
-		})
-		glog.Error("Parse upstreamId failed")
-		return
-	}
-	node := &model.Nodes{
-		Id:           0,
-		Name:         name,
-		DeviceType:   deviceType,
-		ParentId:     uint16(parentId),
-		UpstreamId:   uint16(upstreamId),
-		DeviceStatus: deviceStatus,
-		OtherInfo:    nil,
-	}
-	err = topo.InsertOp(node)
-	if err != nil {
+	node.Id = time.Now().Unix()
+	node.DeviceStatus = "START"
+	if err := topo.InsertOp(node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "InsertOp failed",
 		})
 		return
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "Insert success",
+			"data": node,
+		})
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "Insert success",
-		"data": node,
-	})
-}
-
-// modify
-func Update(c *gin.Context) {
-
 }
 
 // delete
-func Delete(c *gin.Context) {
+func TopoDelete(c *gin.Context) {
 	topo := &model.TopoTable{}
-	deviceId, err := strconv.ParseUint(c.Request.FormValue("id"), 10, 16)
-	if err != nil {
+	node := &model.Nodes{}
+	if err := c.ShouldBindJSON(&node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "Invaild id",
@@ -94,17 +69,17 @@ func Delete(c *gin.Context) {
 		glog.Error("Invaild id")
 		return
 	}
-	err = topo.DeleteOp(uint16(deviceId))
-	if err != nil {
+	if err := topo.DeleteOp(node.Id); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
 			"msg":  "DeleteOp failed",
 		})
 		return
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "Delete success",
+			"data": node.Id,
+		})
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "Delete success",
-		"data": deviceId,
-	})
 }

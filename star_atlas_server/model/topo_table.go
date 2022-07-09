@@ -24,7 +24,7 @@ type OtherInfos struct {
 }
 
 type Nodes struct {
-	Id           uint16        `json:"id" bson:"id"`
+	Id           int64         `json:"id" bson:"id"`
 	Name         string        `json:"name" bson:"name"`
 	DeviceType   string        `json:"device_type" bson:"device_type"`
 	ParentId     uint16        `json:"parent_id" bson:"parent_id"`
@@ -49,7 +49,7 @@ type pNodesArr []*Nodes
 func (v *VMCData) parseCPU(nodes *pNodesArr) {
 	for i := 0; i < int(v.CPUNumber); i++ {
 		n := &Nodes{
-			Id:           uint16(v.CPUSet[i].ID),
+			Id:           int64(v.CPUSet[i].ID),
 			Name:         v.CPUSet[i].Name,
 			DeviceType:   "cpu",
 			ParentId:     uint16(v.VMCID),
@@ -66,7 +66,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 func (v *VMCData) parseGPU(nodes *pNodesArr) {
 	for i := 0; i < int(v.GPUNumber); i++ {
 		n := &Nodes{
-			Id:           uint16(v.GPUSet[i].ID),
+			Id:           int64(v.GPUSet[i].ID),
 			Name:         v.GPUSet[i].Name,
 			DeviceType:   "gpu",
 			ParentId:     uint16(v.VMCID),
@@ -83,7 +83,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 func (v *VMCData) parseDSP(nodes *pNodesArr) {
 	for i := 0; i < int(v.DSPNumber); i++ {
 		n := &Nodes{
-			Id:           uint16(v.DSPSet[i].ID),
+			Id:           int64(v.DSPSet[i].ID),
 			Name:         v.DSPSet[i].Name,
 			DeviceType:   "dsp",
 			ParentId:     uint16(v.VMCID),
@@ -100,7 +100,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 	for i := 0; i < int(v.FPGANumber); i++ {
 		n := &Nodes{
-			Id:           uint16(v.FPGASet[i].ID),
+			Id:           int64(v.FPGASet[i].ID),
 			Name:         v.FPGASet[i].Name,
 			DeviceType:   "fpga",
 			ParentId:     uint16(v.VMCID),
@@ -120,7 +120,7 @@ func (v *VMCData) parseVMC(nodes *pNodesArr) {
 	v.parseDSP(nodes)
 	v.parseFPGA(nodes)
 	n := &Nodes{
-		Id:           uint16(v.VMCID),
+		Id:           int64(v.VMCID),
 		Name:         v.VMCName,
 		DeviceType:   "vmc",
 		ParentId:     uint16(v.SwitchID),
@@ -135,7 +135,7 @@ func (v *VMCData) parseVMC(nodes *pNodesArr) {
 func (v *VMCData) parseSwitch(nodes *pNodesArr) {
 	for i := 0; i < int(v.SwitchNumber); i++ {
 		n := &Nodes{
-			Id:           uint16(v.SwitchDeviceSet[i].SwitchOrder),
+			Id:           int64(v.SwitchDeviceSet[i].SwitchOrder),
 			Name:         v.SwitchDeviceSet[i].SwitchName,
 			DeviceType:   "sw",
 			ParentId:     0,
@@ -151,7 +151,7 @@ func (v *VMCData) parseSwitch(nodes *pNodesArr) {
 func (v *VMCData) parseRTU(nodes *pNodesArr) {
 	for i := 0; i < int(v.RemoteUnitNumber); i++ {
 		n := &Nodes{
-			Id:           uint16(v.RemoteUnitSet[i].RemoteUnitOrder),
+			Id:           int64(v.RemoteUnitSet[i].RemoteUnitOrder),
 			Name:         v.RemoteUnitSet[i].RemoteUnitName,
 			DeviceType:   "rtu",
 			ParentId:     0,
@@ -198,10 +198,10 @@ func (t *TopoTable) InsertOp(node *Nodes) error {
 		glog.Error("[InsertOp] Find error")
 	}
 	t.Node = append(t.Node, node)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
 }
 
-func (t *TopoTable) DeleteOp(id uint16) error {
+func (t *TopoTable) DeleteOp(id int64) error {
 	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
 	if err != nil {
 		glog.Error("[DeleteOp] Find error")
@@ -214,5 +214,5 @@ func (t *TopoTable) DeleteOp(id uint16) error {
 		}
 	}
 	t.Node = append(t.Node[:index], t.Node[index+1:]...)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
 }

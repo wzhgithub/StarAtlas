@@ -53,11 +53,9 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		// vmcData, _ := model.NewVMCData(data)
-		// var topoTable = model.TopoTable{}
-		// topoTable.CreateOp(vmcData)
-		// topoTable.CollectOp(vmcData)
 		vmcData, _ := model.NewVMCData(data)
+		var topoTable = model.TopoTable{}
+		topoTable.CreateOp(vmcData)
 		err := vmcData.CreateData()
 		if err != nil {
 			glog.Error("failed create vmcdata into db, error: %s\n", err.Error())
