@@ -4,7 +4,9 @@ package model
 type IDatabaseOperation interface {
 	CreateOp(v *VMCData) error
 	CollectOp() error
-	DeleteOp(id uint16) error
+	InsertOp() error
+	UpdateOp() error
+	DeleteOp(id int64) error
 	CreateData() error
 	CollectData() error
 }
