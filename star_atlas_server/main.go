@@ -51,6 +51,7 @@ func main() {
 
 	router.GET("/test", handler.Index)
 	router.GET("/vmcdata", handler.GetVMCData)
+	router.GET("/devicedata", handler.GetDeviceData) // usage: http://localhost:9999/devicedata?vim_id=0&device_type=cpu
 	router.POST("/topo/show", handler.TopoShow)
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
