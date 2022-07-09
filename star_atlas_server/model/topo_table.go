@@ -181,13 +181,15 @@ func NewTransferInfos(v *VMCData) []*TransferInfos {
 
 func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	return &TopoTable{
+		Id:           "topo_table",
 		Node:         NewNodes(v, isFirst),
 		TransferInfo: NewTransferInfos(v),
 	}
 }
 
 func (t *TopoTable) CreateOp(v *VMCData) error {
-	if err := t.CollectOp(); err != nil {
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": "topo_table"}, t)
+	if err != nil {
 		glog.Error("[CreateOp] Find error")
 	}
 	glog.Info("[CreateOp] find return: %+v", t)
@@ -196,7 +198,7 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 	} else {
 		t = NewTopoTable(v, false)
-		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
+		return t.UpdateOp()
 	}
 }
 
