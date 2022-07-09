@@ -196,10 +196,10 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	if t == nil {
 		t = NewTopoTable(v, true)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
-	} else {
-		t = NewTopoTable(v, false)
-		return t.UpdateOp()
 	}
+	t = NewTopoTable(v, false)
+	return t.UpdateOp()
+
 }
 
 func (t *TopoTable) CollectOp() error {
