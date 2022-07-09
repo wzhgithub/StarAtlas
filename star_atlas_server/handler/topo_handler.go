@@ -31,7 +31,50 @@ func TopoTable(c *gin.Context) {
 
 // insert
 func Insert(c *gin.Context) {
-
+	topo := &model.TopoTable{}
+	name := c.Request.FormValue("name")
+	deviceType := c.Request.FormValue("deviceType")
+	deviceStatus := c.Request.FormValue("deviceStatus")
+	parentId, err := strconv.ParseUint(c.Request.FormValue("parentId"), 10, 16)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Parse parentId failed",
+		})
+		glog.Error("Parse parentId failed")
+		return
+	}
+	upstreamId, err := strconv.ParseUint(c.Request.FormValue("upstreamId"), 10, 16)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Parse upstreamId failed",
+		})
+		glog.Error("Parse upstreamId failed")
+		return
+	}
+	node := &model.Nodes{
+		Id:           0,
+		Name:         name,
+		DeviceType:   deviceType,
+		ParentId:     uint16(parentId),
+		UpstreamId:   uint16(upstreamId),
+		DeviceStatus: deviceStatus,
+		OtherInfo:    nil,
+	}
+	err = topo.InsertOp(node)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "InsertOp failed",
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 0,
+		"msg":  "Insert success",
+		"data": node,
+	})
 }
 
 // modify

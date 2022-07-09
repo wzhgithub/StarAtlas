@@ -192,6 +192,15 @@ func (t *TopoTable) CollectOp() error {
 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
 }
 
+func (t *TopoTable) InsertOp(node *Nodes) error {
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+	if err != nil {
+		glog.Error("[InsertOp] Find error")
+	}
+	t.Node = append(t.Node, node)
+	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+}
+
 func (t *TopoTable) DeleteOp(id uint16) error {
 	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
 	if err != nil {
