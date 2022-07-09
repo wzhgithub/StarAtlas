@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net"
-	"star_atlas_server/db"
 	"star_atlas_server/model"
 
 	"github.com/golang/glog"
@@ -68,7 +67,6 @@ func ParseData() {
 		if err != nil {
 			glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
 		}
-		db.Test()
 		<-doneChan
 	}
 }
