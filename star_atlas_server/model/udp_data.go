@@ -533,9 +533,29 @@ func (vmc_data *VMCData) CreateData() error {
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
 }
 
-func (vmc_data *VMCData) CollectVMCData() error {
+func (vmc_data *VMCData) CollectVMCData(vmc_id int32) error {
 	if vmc_data == nil {
 		return fmt.Errorf("vcm data is nil need make one")
 	}
+
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).First(bson.M{}, vmc_data, &options.FindOneOptions{Sort: bson.M{"_id": -1}})
+}
+
+func CollectDeviceData(vmc_id int32, device_type string) ([]*DeviceData, error) {
+	vmc_data := &VMCData{}
+	err := vmc_data.CollectVMCData(vmc_id)
+
+	device_data := []*DeviceData{}
+	switch device_type {
+	case "cpu":
+		device_data = vmc_data.CPUSet
+	case "gpu":
+		device_data = vmc_data.GPUSet
+	case "fpga":
+		device_data = vmc_data.FPGASet
+	case "dsp":
+		device_data = vmc_data.DSPSet
+	}
+
+	return device_data, err
 }
