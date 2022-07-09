@@ -36,6 +36,7 @@ type Nodes struct {
 // see https://github.com/Kamva/mgm
 type TopoTable struct {
 	mgm.DefaultModel `json:",inline" bson:",inline"`
+	Id               string           `json:"id" bson:"id"`
 	Node             []*Nodes         `json:"node" bson:"node"`
 	TransferInfo     []*TransferInfos `json:"transfer_info" bson:"transfer_info"`
 }
@@ -164,11 +165,13 @@ func (v *VMCData) parseRTU(nodes *pNodesArr) {
 	}
 }
 
-func NewNodes(v *VMCData) pNodesArr {
+func NewNodes(v *VMCData, isFirst bool) pNodesArr {
 	nodes := make(pNodesArr, 0)
 	v.parseVMC(&nodes)
-	v.parseSwitch(&nodes)
-	v.parseRTU(&nodes)
+	if !isFirst {
+		v.parseSwitch(&nodes)
+		v.parseRTU(&nodes)
+	}
 	return nodes
 }
 
@@ -176,33 +179,48 @@ func NewTransferInfos(v *VMCData) []*TransferInfos {
 	return nil
 }
 
-func NewTopoTable(v *VMCData) *TopoTable {
+func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	return &TopoTable{
-		Node:         NewNodes(v),
+		Id:           "topo_table",
+		Node:         NewNodes(v, isFirst),
 		TransferInfo: NewTransferInfos(v),
 	}
 }
 
 func (t *TopoTable) CreateOp(v *VMCData) error {
-	t = NewTopoTable(v)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": "topo_table"}, t)
+	if err != nil {
+		glog.Error("[CreateOp] Find error")
+	}
+	glog.Info("[CreateOp] find return: %+v", t)
+	if t == nil {
+		t = NewTopoTable(v, true)
+		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+	} else {
+		t = NewTopoTable(v, false)
+		return t.UpdateOp()
+	}
 }
 
 func (t *TopoTable) CollectOp() error {
 	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
 }
 
+func (t *TopoTable) UpdateOp() error {
+	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
+}
+
 func (t *TopoTable) InsertOp(node *Nodes) error {
-	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+	err := t.CollectOp()
 	if err != nil {
 		glog.Error("[InsertOp] Find error")
 	}
 	t.Node = append(t.Node, node)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
+	return t.UpdateOp()
 }
 
 func (t *TopoTable) DeleteOp(id int64) error {
-	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{}, t)
+	err := t.CollectOp()
 	if err != nil {
 		glog.Error("[DeleteOp] Find error")
 	}
@@ -214,5 +232,5 @@ func (t *TopoTable) DeleteOp(id int64) error {
 		}
 	}
 	t.Node = append(t.Node[:index], t.Node[index+1:]...)
-	return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Update(t)
+	return t.UpdateOp()
 }
