@@ -73,6 +73,7 @@ public:
     m_dev_type = eInvalid;
     m_tag_head = m_tag_tail = 0;
     m_device_name[0] = '\0';
+    memset(m_device_name, 0, sizeof(m_device_name));
     m_device_index = 0;
     m_device_type= 0;
     m_connect_to = 0;
@@ -117,6 +118,16 @@ public:
   uint8_t m_start_time;
 
 public:
+  Task() {
+    m_name[0] = m_name[1] = '\0';
+    m_index = 0;
+    m_status = 0;
+    m_exe_time = 0;
+    m_ret_code = 0;
+    m_start_time = 0;
+  }
+
+public:
   int pack(char* buf) {
     char* p = buf;
     memcpy(p, m_name, 2); p+=2;
@@ -146,6 +157,7 @@ public:
 public:
   Block() {
     m_name[0] = '\0';
+    memset(m_name, 0, sizeof(m_name));
     m_total_task = 0;
     m_duration = 0;
     m_time = 0;
@@ -298,6 +310,7 @@ public:
     m_size = 31; // remove reserved & 20220707, add exchange, remote
     m_type = 0x55;
     m_index = idx;
+    memset(m_name, 0, sizeof(m_name));
     snprintf(m_name, 10, "vmc_%02d", (int)m_index);
 
     m_total_cpu = cnt_cpu;
