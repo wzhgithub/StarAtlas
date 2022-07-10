@@ -65,6 +65,7 @@ type App struct {
 	ResetNumber  uint8   `json:"reset_number" bson:"reset_number"`
 	BelongsTo    uint8   `json:"belongs_to" bson:"belongs_to"`
 	TaskSet      []*Task `json:"task_set" bson:"task_set"`
+	AppStatus    uint8   `json:"app_status" bson:"app_status"`
 }
 
 type RemoteUnit struct {
@@ -125,6 +126,7 @@ type VMCData struct {
 	APPNum  uint8  `json:"app_num" bson:"app_num"`
 	APPInfo []*App `json:"app_info" bson:"app_info"`
 	Sum     uint8  `json:"sum" bson:"sum"`
+	Status  uint8  `json:"status" bson:"status"`
 }
 
 func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
@@ -263,14 +265,15 @@ func parseDSPDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 	return nil, 0
 }
 
-func parseTask(bytes []byte, start, end int) []*Task {
+func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 	if end <= start {
-		return nil
+		return nil, 1
 	}
 	bytes = bytes[start:end]
 	length := len(bytes)
 	glog.Infof("task length: %d", length)
 
+	var taskStatus uint8
 	if length%cTAST_SIZE == 0 {
 		taskNum := length / cTAST_SIZE
 		arr := make([]*Task, taskNum)
@@ -287,21 +290,23 @@ func parseTask(bytes []byte, start, end int) []*Task {
 				StartTime:   bytes[i+11],
 			}
 			arr[j] = t
+			taskStatus |= t.TaskStatus
 		}
-		return arr
+		return arr, taskStatus
 	}
 
-	return nil
+	return nil, 1
 }
 
-func parseApp(bytes []byte, start, end int) []*App {
+func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 	if end <= start {
-		return nil
+		return nil, 1
 	}
 	bytes = bytes[start:end]
 	length := len(bytes)
 	arr := make([]*App, 0)
 	appStart := 0
+	var vmcStatus uint8
 	for {
 		glog.Infof("app start: %d", appStart)
 		if appStart >= length {
@@ -318,6 +323,8 @@ func parseApp(bytes []byte, start, end int) []*App {
 		taskStart := appStart + 18
 		taskEnd := taskStart + int(taskLen)
 		glog.Infof("task start: %d, task end: %d", taskStart, taskEnd)
+		taskSet, appStatus := parseTask(bytes, taskStart, taskEnd)
+		vmcStatus |= appStatus
 		a := &App{
 			APPName:      name,
 			TaskNum:      taskNum,
@@ -326,14 +333,15 @@ func parseApp(bytes []byte, start, end int) []*App {
 			ID:           id,
 			ResetNumber:  resetNumber,
 			BelongsTo:    vmcId,
-			TaskSet:      parseTask(bytes, taskStart, taskEnd),
+			TaskSet:      taskSet,
+			AppStatus:    appStatus,
 		}
 		appStart = taskEnd
 
 		arr = append(arr, a)
 	}
 
-	return arr
+	return arr, vmcStatus
 }
 
 func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
@@ -433,6 +441,7 @@ func parse(bytes []byte) (*VMCData, error) {
 	dspSet, totalDspDeviceBytes := parseDSPDevice(bytes, dspStart, dspEnd)
 	gpuSet, totalGpuBytes := parseGPUDevice(bytes, gpusStart, gpusEnd)
 	fpagSet, totalFpagBytes := parseFPGADevice(bytes, fpgaStart, fpgaEnd)
+	appSet, vmcStatus := parseApp(bytes, appIdx+1, l-1)
 
 	v := &VMCData{
 		frameHeader:      bytes[0],
@@ -474,8 +483,9 @@ func parse(bytes []byte) (*VMCData, error) {
 		FPGASet:        fpagSet,
 
 		APPNum:  bytes[appIdx],
-		APPInfo: parseApp(bytes, appIdx+1, l-1),
+		APPInfo: appSet,
 		Sum:     bytes[l-1],
+		Status:  vmcStatus,
 	}
 	glog.Infof("debug vmc:%+v\n", v)
 	return v, nil
