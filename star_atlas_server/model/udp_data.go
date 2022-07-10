@@ -559,3 +559,10 @@ func CollectDeviceData(vmc_id int32, device_type string) ([]*DeviceData, error) 
 
 	return device_data, err
 }
+
+func CollectAppInfo(vmc_id int32) ([]*App, error) {
+	vmc_data := &VMCData{}
+	err := vmc_data.CollectVMCData(vmc_id)
+
+	return vmc_data.APPInfo, err
+}
