@@ -14,6 +14,8 @@ const (
 	cTopoID = "topo_table"
 )
 
+var deviceStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
+
 type TransferInfos struct {
 	FromId      uint16        `json:"from_id" bson:"from_id"`
 	ToId        uint16        `json:"to_id" bson:"to_id"`
@@ -60,7 +62,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 			DeviceType:   "cpu",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: "RUN",
+			DeviceStatus: deviceStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_type", fmt.Sprintf("%d", v.CPUSet[i].Type)))
@@ -77,7 +79,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 			DeviceType:   "gpu",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: "RUN",
+			DeviceStatus: deviceStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_type", fmt.Sprintf("%d", v.GPUSet[i].Type)))
@@ -94,7 +96,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 			DeviceType:   "dsp",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: "RUN",
+			DeviceStatus: deviceStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_type", fmt.Sprintf("%d", v.DSPSet[i].Type)))
@@ -111,7 +113,7 @@ func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 			DeviceType:   "fpga",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: "RUN",
+			DeviceStatus: deviceStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_type", fmt.Sprintf("%d", v.FPGASet[i].Type)))
@@ -131,7 +133,7 @@ func (v *VMCData) parseVMC(nodes *pNodesArr) {
 		DeviceType:   "vmc",
 		ParentId:     403,
 		UpstreamId:   uint16(v.SwitchID),
-		DeviceStatus: "RUN",
+		DeviceStatus: deviceStatus[v.Status],
 		OtherInfo:    make([]*OtherInfos, 0),
 	}
 	n.OtherInfo = append(n.OtherInfo, NewOtherInfos("proto_type", fmt.Sprintf("%d", v.protoType)))
