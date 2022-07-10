@@ -1,5 +1,9 @@
 #!/bin/bash
+set -ex
 rm -f star_atlas_server
-# go mod tidy
-# CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build .
+cd ../client
+sh run.sh
+cp bin/utest ../star_atlas_server
+cd -
+chmod a+x utest
 docker build --platform=linux/amd64 -t star_atlas_server .

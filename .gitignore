@@ -28,3 +28,5 @@ go.sum
 main
 main.exe
 .idea/
+star_atlas_server/utest
+client/bin/utest
