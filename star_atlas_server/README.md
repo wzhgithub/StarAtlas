@@ -1,8 +1,22 @@
-#go into docker container
-docker exec -it [container_id] bash
-#connet mongo
+# build & run 
+```shell
+./build.sh
+docker compose upd -d 
+```
+---
+# go into service docker container and run udp script
+```shell
+docker exec -it star_atlas_server /bin/bash
+sh gen_udp.sh
+```
+---
+# go into mongodb container
+```shell
+docker ps -a 
+docker exec -it [container_id] /bin/bash
+# connet mongo
+```shell 
 mongo mongodb://docker:mongopw@127.0.0.1:27017
-
 > show dbs
 admin   0.000GB
 config  0.000GB
@@ -21,4 +35,4 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : ObjectId("62c95279f99036948849e06b"), "x" : 7 }
 > db.myCollection.find({"x" : 3})
 { "_id" : ObjectId("62c951b45bede65ea6726e7a"), "x" : 3 }
-
+```

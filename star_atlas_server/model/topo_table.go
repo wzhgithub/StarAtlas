@@ -1,12 +1,17 @@
 package model
 
 import (
+	"fmt"
 	"star_atlas_server/config"
 	"time"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
+)
+
+const (
+	cTopoID = "topo_table"
 )
 
 type TransferInfos struct {
@@ -58,8 +63,8 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_type", string(v.CPUSet[i].Type)))
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_cores", string(v.CPUSet[i].Num)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_type", fmt.Sprintf("%d", v.CPUSet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_cores", fmt.Sprintf("%d", v.CPUSet[i].Num)))
 		*nodes = append(*nodes, n)
 	}
 }
@@ -75,8 +80,8 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_type", string(v.GPUSet[i].Type)))
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_cores", string(v.GPUSet[i].Num)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_type", fmt.Sprintf("%d", v.GPUSet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_cores", fmt.Sprintf("%d", v.GPUSet[i].Num)))
 		*nodes = append(*nodes, n)
 	}
 }
@@ -92,8 +97,8 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_type", string(v.DSPSet[i].Type)))
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_cores", string(v.DSPSet[i].Num)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_type", fmt.Sprintf("%d", v.DSPSet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_cores", fmt.Sprintf("%d", v.DSPSet[i].Num)))
 		*nodes = append(*nodes, n)
 	}
 }
@@ -109,8 +114,8 @@ func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_type", string(v.FPGASet[i].Type)))
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_cores", string(v.FPGASet[i].Num)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_type", fmt.Sprintf("%d", v.FPGASet[i].Type)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_cores", fmt.Sprintf("%d", v.FPGASet[i].Num)))
 		*nodes = append(*nodes, n)
 	}
 }
@@ -124,12 +129,12 @@ func (v *VMCData) parseVMC(nodes *pNodesArr) {
 		Id:           int64(v.VMCID),
 		Name:         v.VMCName,
 		DeviceType:   "vmc",
-		ParentId:     uint16(v.SwitchID),
-		UpstreamId:   0,
+		ParentId:     403,
+		UpstreamId:   uint16(v.SwitchID),
 		DeviceStatus: "RUN",
 		OtherInfo:    make([]*OtherInfos, 0),
 	}
-	n.OtherInfo = append(n.OtherInfo, NewOtherInfos("proto_type", string(v.protoType)))
+	n.OtherInfo = append(n.OtherInfo, NewOtherInfos("proto_type", fmt.Sprintf("%d", v.protoType)))
 	*nodes = append(*nodes, n)
 }
 
@@ -139,12 +144,12 @@ func (v *VMCData) parseSwitch(nodes *pNodesArr) {
 			Id:           int64(v.SwitchDeviceSet[i].SwitchOrder),
 			Name:         v.SwitchDeviceSet[i].SwitchName,
 			DeviceType:   "sw",
-			ParentId:     0,
+			ParentId:     402,
 			UpstreamId:   uint16(v.SwitchDeviceSet[i].LinkTo),
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
-		(n.OtherInfo) = append(n.OtherInfo, NewOtherInfos("switch_type", string(v.SwitchDeviceSet[i].SwitchType)))
+		(n.OtherInfo) = append(n.OtherInfo, NewOtherInfos("switch_type", fmt.Sprintf("%d", v.SwitchDeviceSet[i].SwitchType)))
 		*nodes = append(*nodes, n)
 	}
 }
@@ -155,12 +160,12 @@ func (v *VMCData) parseRTU(nodes *pNodesArr) {
 			Id:           int64(v.RemoteUnitSet[i].RemoteUnitOrder),
 			Name:         v.RemoteUnitSet[i].RemoteUnitName,
 			DeviceType:   "rtu",
-			ParentId:     0,
+			ParentId:     401,
 			UpstreamId:   uint16(v.RemoteUnitSet[i].LinkTo),
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
-		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("rtu_type", string(v.RemoteUnitSet[i].RemoteUnitType)))
+		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("rtu_type", fmt.Sprintf("%d", v.RemoteUnitSet[i].RemoteUnitType)))
 		*nodes = append(*nodes, n)
 	}
 }
@@ -181,25 +186,25 @@ func NewTransferInfos(v *VMCData) []*TransferInfos {
 
 func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	return &TopoTable{
-		Id:           "topo_table",
+		Id:           cTopoID,
 		Node:         NewNodes(v, isFirst),
 		TransferInfo: NewTransferInfos(v),
 	}
 }
 
 func (t *TopoTable) CreateOp(v *VMCData) error {
-	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": "topo_table"}, t)
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": cTopoID}, t)
 	if err != nil {
-		glog.Error("[CreateOp] Find error")
+		glog.Errorf("[CreateOp] Find error  err:%+v", err)
 	}
-	glog.Info("[CreateOp] find return: %+v", t)
-	if t == nil {
+	glog.Infof("[CreateOp] find return: %+v", t)
+	if t.Id == "" {
+		glog.Infof("[CreateOp] new topoTable")
 		t = NewTopoTable(v, true)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 	}
 	t = NewTopoTable(v, false)
 	return t.UpdateOp()
-
 }
 
 func (t *TopoTable) CollectOp() error {
@@ -213,7 +218,7 @@ func (t *TopoTable) UpdateOp() error {
 func (t *TopoTable) InsertOp(node *Nodes) error {
 	err := t.CollectOp()
 	if err != nil {
-		glog.Error("[InsertOp] Find error")
+		glog.Errorf("[InsertOp] Find error err:%+v", err)
 	}
 	t.Node = append(t.Node, node)
 	return t.UpdateOp()
@@ -222,7 +227,7 @@ func (t *TopoTable) InsertOp(node *Nodes) error {
 func (t *TopoTable) DeleteOp(id int64) error {
 	err := t.CollectOp()
 	if err != nil {
-		glog.Error("[DeleteOp] Find error")
+		glog.Errorf("[DeleteOp] Find error err:%+v", err)
 	}
 	var index int
 	for idx, node := range t.Node {
