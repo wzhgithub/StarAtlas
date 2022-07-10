@@ -52,6 +52,13 @@ func GetVMCData(c *gin.Context) {
 
 }
 
+type VMCSequenceRspJson struct {
+	Success bool              `json:"success"`
+	Data    []model.VMCStatus `json:"data"`
+	Code    uint8             `json:"code"`
+	Msg     string            `json:"msg"`
+}
+
 func GetVMCSequence(c *gin.Context) {
 	paramPairs := c.Request.URL.Query()
 	vid, ok := paramPairs["vmc_id"]
@@ -60,15 +67,50 @@ func GetVMCSequence(c *gin.Context) {
 		vmcid, err := strconv.ParseInt(vid[0], 10, 32)
 		if err != nil {
 			glog.Errorf("Parse vmcid: %s faild", vmcid)
+			c.JSON(400, &VMCSequenceRspJson{Success: false, Msg: "Parse vmcid error"})
+			return
 		}
 		vmcs, err := vmcdata_read.GetVMCList(int32(vmcid))
 
 		if err != nil && len(vmcs) == 0 {
 			glog.Errorf("get vmcid: %s faild", vmcid)
+			c.JSON(400, &VMCSequenceRspJson{Success: false, Msg: "Get vmcid error"})
+			return
 		}
 
+		rsp := &VMCSequenceRspJson{}
+		rsp.Success = true
+		for _, v := range vmcs {
+			cpuComputingPower := int16(0)
+			for _, e := range v.CPUSet {
+				cpuComputingPower += int16(e.FloatComputingPower)
+			}
+			gpuComputingPower := int16(0)
+			for _, e := range v.GPUSet {
+				gpuComputingPower += int16(e.FloatComputingPower)
+			}
+			dspComputingPower := int16(0)
+			for _, e := range v.DSPSet {
+				dspComputingPower += int16(e.IntComputingPower)
+			}
+			vmc_status := &model.VMCStatus{
+				UpdatedAt:            v.UpdatedAt,
+				CPUComputingPower:    int16(cpuComputingPower),
+				GPUComputingPower:    int16(gpuComputingPower),
+				DSPIntComputingPower: int16(dspComputingPower),
+				MomoryUsage:          int8(v.MemoryUsage),
+				DiskUsage:            int8(v.TotalDiskUsage),
+				TotalUsage:           int8(v.TotalCPUUsage),
+			}
+			rsp.Data = append(rsp.Data, *vmc_status)
+		}
+		rsp.Code = 0
+		rsp.Msg = "ok"
+
+		c.JSON(200, rsp)
+
 	} else {
-		c.JSON(400, &VMCDataRspJson{Success: false, Msg: "request without vmcid"})
+		c.JSON(400, &VMCSequenceRspJson{Success: false, Msg: "request without vmcid"})
 		return
 	}
 }

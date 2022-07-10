@@ -1,7 +1,7 @@
 # build & run 
 ```shell
 ./build.sh
-docker compose upd -d 
+docker compose up -d 
 ```
 ---
 # go into service docker container and run udp script
