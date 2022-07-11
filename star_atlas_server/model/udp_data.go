@@ -273,7 +273,7 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 	length := len(bytes)
 	glog.Infof("task length: %d", length)
 
-	var taskStatus uint8
+	var statusCode uint8
 	if length%cTAST_SIZE == 0 {
 		taskNum := length / cTAST_SIZE
 		arr := make([]*Task, taskNum)
@@ -290,9 +290,9 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 				StartTime:   bytes[i+11],
 			}
 			arr[j] = t
-			taskStatus |= t.TaskStatus
+			statusCode |= t.StatusCode
 		}
-		return arr, taskStatus
+		return arr, statusCode
 	}
 
 	return nil, 1
