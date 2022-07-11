@@ -193,7 +193,7 @@ public:
       tsk.m_type = random()%2;
 
       const uint8_t task_status[] = {
-	0, 1, 2, 3, 0xff
+	0, 1, 2, 3
       }; 
       tsk.m_status = task_status[ random()%sizeof(task_status) ];
       tsk.m_exe_time = 10240;
