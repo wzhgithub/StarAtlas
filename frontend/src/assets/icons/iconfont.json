@@ -1,0 +1,30 @@
+{
+  "id": "3514577",
+  "name": "test",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3868267",
+      "name": "基础管理",
+      "font_class": "jichuguanli",
+      "unicode": "eb63",
+      "unicode_decimal": 60259
+    },
+    {
+      "icon_id": "5838763",
+      "name": "计算",
+      "font_class": "jisuan",
+      "unicode": "e869",
+      "unicode_decimal": 59497
+    },
+    {
+      "icon_id": "26709827",
+      "name": "调度管理_1",
+      "font_class": "tiaoduguanli_1",
+      "unicode": "e7c7",
+      "unicode_decimal": 59335
+    }
+  ]
+}
