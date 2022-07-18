@@ -30,7 +30,7 @@
 
 <script>
 import countTo from "vue-count-to";
-import { oneSay } from "../api";
+import { getVMCData, getDeviceData, getAppInfo } from "../api";
 export default {
   props: ["invalue", "color", "suffix_", "titleTxt"],
   name: "topNumber",
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     async getinfo() {
-      let res = await oneSay();
+      let res = await getAppInfo(1);
       console.log(res);
     },
   },
