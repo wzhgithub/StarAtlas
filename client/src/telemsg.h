@@ -50,6 +50,14 @@ uint8_t gDevType[] = {
   1,
 };
 
+uint8_t inline crc_calculate(uint8_t* p, size_t sz) {
+  uint8_t value = 0;
+  for (size_t h=0; h<sz; h++) {
+    value += p[h];
+  }
+  return ~value;
+}
+
 class Device {
 public:
   uint8_t m_dev_type;
@@ -526,7 +534,9 @@ public:
     ((uint8_t*)p++)[0] = m_index;
     ((uint8_t*)p++)[0] = m_cpu_index;
     p+=m_msg.pack(p);
-    ((uint8_t*)p++)[0] = m_crc; // cal crc
+
+    m_crc = crc_calculate((uint8_t*)buf, m_size-1);
+    ((uint8_t*)p++)[0] = m_crc;
     return int(p-buf);
   }
 };
