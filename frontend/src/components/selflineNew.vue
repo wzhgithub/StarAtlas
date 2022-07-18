@@ -16,6 +16,7 @@ export default {
   name: "selflineNew",
   data() {
     return {
+      // lineData: [],
       category: [],
       lineData: [],
       barData: [],
