@@ -377,6 +377,8 @@ func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
 				LinkTo:          bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("remote unit %+v\n", bytes[t:t+13])
+			glog.Infof("remote unit %+v\n", r)
 		}
 
 		return arr, l
@@ -406,6 +408,8 @@ func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
 				LinkTo:      bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("switch unit %+v\n", bytes[t:t+13])
+			glog.Infof("switch unit %+v\n", r)
 		}
 
 		return arr, l

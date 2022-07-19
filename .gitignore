@@ -30,5 +30,7 @@ main.exe
 .idea/
 star_atlas_server/utest
 client/bin/utest
+star_atlas_server/trans
+client/bin/trans
 node_modules/
 frontend/package-lock.json
