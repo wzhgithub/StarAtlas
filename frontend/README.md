@@ -1,5 +1,10 @@
 # demothreejs
 
+## Mac install nodejs
+```
+brew install node
+```
+
 ## Project setup
 ```
 npm install

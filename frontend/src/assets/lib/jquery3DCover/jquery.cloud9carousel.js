@@ -25,7 +25,7 @@
  *     http://plugins.jquery.com/mousewheel/
  */
 
-; (function ($) {
+ (function ($) {
   //
   // Detect CSS transform support
   //

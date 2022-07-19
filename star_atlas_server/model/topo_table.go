@@ -175,7 +175,7 @@ func (v *VMCData) parseRTU(nodes *pNodesArr) {
 func NewNodes(v *VMCData, isFirst bool) pNodesArr {
 	nodes := make(pNodesArr, 0)
 	v.parseVMC(&nodes)
-	if !isFirst {
+	if isFirst {
 		v.parseSwitch(&nodes)
 		v.parseRTU(&nodes)
 	}
@@ -205,7 +205,7 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 		t = NewTopoTable(v, true)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 	}
-	t = NewTopoTable(v, false)
+	t.Node = append(t.Node, NewNodes(v, false)...)
 	return t.UpdateOp()
 }
 

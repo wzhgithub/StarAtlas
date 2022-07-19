@@ -2,7 +2,7 @@
 	reflection.js for jQuery v1.12
 */
 
-;(function($) {
+(function($) {
 
 	$.fn.reflect = function(options) {
 		options = $.extend({

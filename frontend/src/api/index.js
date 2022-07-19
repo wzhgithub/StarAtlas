@@ -44,3 +44,46 @@ export const getAppInfo = (vmc_id) => {
     url: `/api/appinfo?vmc_id=${vmc_id}`
   })
 }
+
+export const getVMCDataSeq = (vmc_id) => {
+  return request({
+    method: 'GET',
+    url: `/api/vmcdata/sequences?vmc_id=${vmc_id}`
+  })
+}
+
+// 获取topo图的所有节点以及连接方式
+export const getTopoShow = () => {
+  return request({
+    method: 'GET',
+    url: `/api/topo/show`
+  })
+}
+
+// 插入一个node
+// var node_json = { "name": "cpu_new", "device_type": "cpu", "parent_id": 2, "upstream_id": 0 }
+export const insertNode = (node_json) => {
+  return request({
+    method: 'POST',
+    url: '/api/topo/insert',
+    data: JSON.stringify(node_json)
+  })
+}
+
+// var id_json = { "id": 1 }
+export const deleteNode = (id_json) => {
+  return request({
+    method: 'POST',
+    url: '/api/topo/delete',
+    data: JSON.stringify(id_json)
+  })
+}
+
+// migrate_json = { "from": {"vimd_id": "1"}, "to": {"vimd_id": "2"} }
+export const failureOver = (migrate_json) => {
+  return request({
+    method: 'POST',
+    url: '/api/vmc/failure_over',
+    data: JSON.stringify(migrate_json)
+  })
+}

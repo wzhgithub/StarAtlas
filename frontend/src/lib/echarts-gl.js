@@ -14096,7 +14096,7 @@ function otherDimToDataDim (data, otherDim) {
                 : formattedValue
             )
         : colorEl + seriesName + formattedValue;
-});;
+});
 
 /***/ }),
 /* 40 */
@@ -36614,7 +36614,7 @@ function removeTextStyleInAxis(axesOpt) {
     removeTextStyleInAxis(option.grid3D);
 
     convertNormalEmphasis(option.geo3D);
-});;
+});
 
 /***/ }),
 /* 154 */
@@ -36785,7 +36785,7 @@ var AXIS_TYPES = ['value', 'category', 'time', 'log'];
         dim + 'Axis3D',
         __WEBPACK_IMPORTED_MODULE_0_echarts_lib_echarts___default.a.util.curry(axisTypeDefaulter, dim)
     );
-});;
+});
 
 /***/ }),
 /* 157 */
@@ -47282,7 +47282,7 @@ function ifCrossZero(extent) {
     var min = extent[0];
     var max = extent[1];
     return !((min > 0 && max > 0) || (min < 0 && max < 0));
-};
+}
 
 function cartesian3DLayout(seriesModel, coordSys) {
 
@@ -47383,7 +47383,7 @@ function cartesian3DLayout(seriesModel, coordSys) {
         }
     }
     return filledCount / tmp.length;
-});;
+});
 
 /***/ }),
 /* 229 */
@@ -52145,7 +52145,7 @@ var GraphSeries = __WEBPACK_IMPORTED_MODULE_0_echarts_lib_echarts___default.a.ex
     graph.update();
 
     return graph;
-});;
+});
 
 /***/ }),
 /* 265 */

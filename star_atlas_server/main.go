@@ -54,10 +54,9 @@ func main() {
 	router.GET("/devicedata", handler.GetDeviceData) // usage: http://localhost:9999/devicedata?vmc_id=0&device_type=cpu
 	router.GET("/appinfo", handler.GetAppInfo)       // usage: http://localhost:9999/appinfo?vmc_id=0
 	router.GET("/vmcdata/sequences", handler.GetVMCSequence)
-	router.POST("/topo/show", handler.TopoShow)
+	router.GET("/topo/show", handler.TopoShow)
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
-	router.GET("/topo/appshow", handler.AppShow)
 	router.POST("/vmc/failure_over", handler.FailureOver)
 	router.Run(":9999")
 

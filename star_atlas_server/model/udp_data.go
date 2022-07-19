@@ -85,12 +85,12 @@ type SwitchDevice struct {
 
 type VMCStatus struct {
 	UpdatedAt            time.Time `json:"time"`                 // 时间
-	CPUComputingPower    int16     `json:"cpuComputingPower"`    // cpu算力
-	GPUComputingPower    int16     `json:"gpuComputingPower"`    // gpu算力
-	DSPIntComputingPower int16     `json:"dspIntComputingPower"` // dsp算力
-	MomoryUsage          int8      `json:"memoryUsage"`          // 内存利用率
-	DiskUsage            int8      `json:"diskUsage"`            // 外存利用率
-	TotalUsage           int8      `json:"totalUsage"`           // 总利用率
+	CPUComputingPower    uint16    `json:"cpuComputingPower"`    // cpu算力
+	GPUComputingPower    uint16    `json:"gpuComputingPower"`    // gpu算力
+	DSPIntComputingPower uint16    `json:"dspIntComputingPower"` // dsp算力
+	MomoryUsage          uint8     `json:"memoryUsage"`          // 内存利用率
+	DiskUsage            uint8     `json:"diskUsage"`            // 外存利用率
+	TotalUsage           uint8     `json:"totalUsage"`           // 总利用率
 }
 
 type VMCData struct {
