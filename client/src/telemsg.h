@@ -32,10 +32,10 @@ uint16_t g_device_tag[] = {
 };
 
 char gaszDevNameFmt[][10] = {
-  "CPU_%02d",
-  "DSP_%02d",
-  "GPU_%02d",
-  "FPGA_%02d",
+  "CPU_%03d",
+  "DSP_%03d",
+  "GPU_%03d",
+  "FPGA_%03d",
   "REMO_%02d",
   "EXCH_%02d",
   ""
@@ -381,9 +381,12 @@ public:
       for (int i=0; i<anDevice[h]; i++, n_idx++) {
         Device& rd = m_pdevices[n_idx];
 
-        int n_conn = 0;
-        if (aDevType[h]==eREMOTE || aDevType[h]==eEXCHNAGE) n_conn = random()%256;
-        SetXPU(rd, aDevType[h], i, n_conn);
+        int n_conn = 0, xidx = m_index*100+i;
+        if (aDevType[h]==eREMOTE || aDevType[h]==eEXCHNAGE) {
+           n_conn = random()%256;
+           xidx = i;
+        }
+        SetXPU(rd, aDevType[h], xidx, n_conn);
       }
     }
 
