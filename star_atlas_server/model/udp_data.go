@@ -302,6 +302,7 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 			}
 			arr[j] = t
 			statusCode |= t.StatusCode
+			glog.Infof("task details: %+v\n", t)
 		}
 		return arr, statusCode
 	}
