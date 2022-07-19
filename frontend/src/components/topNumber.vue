@@ -30,7 +30,7 @@
 
 <script>
 import countTo from "vue-count-to";
-import { getVMCData, getDeviceData, getAppInfo, getVMCDataSeq, getTopoShow, insertNode, deleteNode } from "../api";
+import { getVMCData, getDeviceData, getAppInfo, getVMCDataSeq, getTopoShow, insertNode, deleteNode, failureOver } from "../api";
 export default {
   props: ["invalue", "color", "suffix_", "titleTxt"],
   name: "topNumber",
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     async getinfo() {
-      let res = await getVMCDataSeq(1);
+      let res = await getTopoShow();
       console.log(res);
     },
   },
