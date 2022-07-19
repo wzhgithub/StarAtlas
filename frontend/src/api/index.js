@@ -23,3 +23,24 @@ export const nameOrAll = () => {
     url: 'http://127.0.0.1:8080/'
   })
 }
+
+export const getVMCData = (vmc_id) => {
+  return request({
+    method: 'GET',
+    url: '/api/vmcdata?vmc_id=' + vmc_id
+  })
+}
+
+export const getDeviceData = (vmc_id, device_type) => {
+  return request({
+    method: 'GET',
+    url: `/api/devicedata?vmc_id=${vmc_id}&device_type=${device_type}`
+  })
+}
+
+export const getAppInfo = (vmc_id) => {
+  return request({
+    method: 'GET',
+    url: `/api/appinfo?vmc_id=${vmc_id}`
+  })
+}
