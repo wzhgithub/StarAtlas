@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
@@ -80,6 +81,16 @@ type SwitchDevice struct {
 	SwitchOrder uint8  `json:"switch_order" bson:"switch_order"`
 	SwitchType  uint8  `json:"switch_type" bson:"switch_type"` // 中心交换机：0；接入交换机：1
 	LinkTo      uint8  `json:"link_to" bson:"link_to"`
+}
+
+type VMCStatus struct {
+	UpdatedAt            time.Time `json:"time"`                 // 时间
+	CPUComputingPower    int16     `json:"cpuComputingPower"`    // cpu算力
+	GPUComputingPower    int16     `json:"gpuComputingPower"`    // gpu算力
+	DSPIntComputingPower int16     `json:"dspIntComputingPower"` // dsp算力
+	MomoryUsage          int8      `json:"memoryUsage"`          // 内存利用率
+	DiskUsage            int8      `json:"diskUsage"`            // 外存利用率
+	TotalUsage           int8      `json:"totalUsage"`           // 总利用率
 }
 
 type VMCData struct {
