@@ -279,6 +279,7 @@ public:
     rd.m_tag_head  = g_device_tag[typ*2];
     rd.m_tag_tail  = g_device_tag[typ*2+1];
 
+    memset(rd.m_device_name, 0, 10);
     snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
     rd.m_device_index = idx;
     rd.m_device_type = random()%(gDevType[typ]+1);
