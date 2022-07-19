@@ -95,26 +95,26 @@ func GetVMCSequence(c *gin.Context) {
 		rsp := &VMCSequenceRspJson{}
 		rsp.Success = true
 		for _, v := range vmcs {
-			cpuComputingPower := int16(0)
+			var cpuComputingPower uint16
 			for _, e := range v.CPUSet {
-				cpuComputingPower += int16(e.FloatComputingPower)
+				cpuComputingPower += e.FloatComputingPower
 			}
-			gpuComputingPower := int16(0)
+			var gpuComputingPower uint16
 			for _, e := range v.GPUSet {
-				gpuComputingPower += int16(e.FloatComputingPower)
+				gpuComputingPower += e.FloatComputingPower
 			}
-			dspComputingPower := int16(0)
+			var dspComputingPower uint16
 			for _, e := range v.DSPSet {
-				dspComputingPower += int16(e.IntComputingPower)
+				dspComputingPower += e.IntComputingPower
 			}
 			vmc_status := &model.VMCStatus{
 				UpdatedAt:            v.UpdatedAt,
-				CPUComputingPower:    int16(cpuComputingPower),
-				GPUComputingPower:    int16(gpuComputingPower),
-				DSPIntComputingPower: int16(dspComputingPower),
-				MomoryUsage:          int8(v.MemoryUsage),
-				DiskUsage:            int8(v.TotalDiskUsage),
-				TotalUsage:           int8(v.TotalCPUUsage),
+				CPUComputingPower:    cpuComputingPower,
+				GPUComputingPower:    gpuComputingPower,
+				DSPIntComputingPower: dspComputingPower,
+				MomoryUsage:          v.MemoryUsage,
+				DiskUsage:            v.TotalDiskUsage,
+				TotalUsage:           v.TotalCPUUsage,
 			}
 			rsp.Data = append(rsp.Data, *vmc_status)
 		}

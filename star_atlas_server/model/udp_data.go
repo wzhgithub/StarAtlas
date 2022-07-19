@@ -85,12 +85,12 @@ type SwitchDevice struct {
 
 type VMCStatus struct {
 	UpdatedAt            time.Time `json:"time"`                 // 时间
-	CPUComputingPower    int16     `json:"cpuComputingPower"`    // cpu算力
-	GPUComputingPower    int16     `json:"gpuComputingPower"`    // gpu算力
-	DSPIntComputingPower int16     `json:"dspIntComputingPower"` // dsp算力
-	MomoryUsage          int8      `json:"memoryUsage"`          // 内存利用率
-	DiskUsage            int8      `json:"diskUsage"`            // 外存利用率
-	TotalUsage           int8      `json:"totalUsage"`           // 总利用率
+	CPUComputingPower    uint16    `json:"cpuComputingPower"`    // cpu算力
+	GPUComputingPower    uint16    `json:"gpuComputingPower"`    // gpu算力
+	DSPIntComputingPower uint16    `json:"dspIntComputingPower"` // dsp算力
+	MomoryUsage          uint8     `json:"memoryUsage"`          // 内存利用率
+	DiskUsage            uint8     `json:"diskUsage"`            // 外存利用率
+	TotalUsage           uint8     `json:"totalUsage"`           // 总利用率
 }
 
 type VMCData struct {
@@ -302,6 +302,7 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 			}
 			arr[j] = t
 			statusCode |= t.StatusCode
+			glog.Infof("task details: %+v\n", t)
 		}
 		return arr, statusCode
 	}
@@ -376,6 +377,8 @@ func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
 				LinkTo:          bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("remote unit %+v\n", bytes[t:t+13])
+			glog.Infof("remote unit %+v\n", r)
 		}
 
 		return arr, l
@@ -405,6 +408,8 @@ func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
 				LinkTo:      bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("switch unit %+v\n", bytes[t:t+13])
+			glog.Infof("switch unit %+v\n", r)
 		}
 
 		return arr, l
