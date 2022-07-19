@@ -94,11 +94,10 @@ func FailureOver(c *gin.Context) {
 		return
 	}
 
-	mockBin := ""
-	arg1 := ""
-	arg2 := ""
-	arg3 := ""
-	cmd := exec.Command(mockBin, arg1, arg2, arg3)
+	mockBin := "./trans"
+	arg1 := req.From.VimdID
+	arg2 := req.To.VimdID
+	cmd := exec.Command(mockBin, arg1, arg2)
 	stdout, err := cmd.Output()
 	if err != nil {
 		glog.Errorf("run command:%+v failed err:%s\n", cmd, err.Error())
