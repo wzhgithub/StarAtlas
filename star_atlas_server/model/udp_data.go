@@ -349,7 +349,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 			AppStatus:    appStatus,
 		}
 		appStart = taskEnd
-
+		glog.Infof("app details: %+v\n", a)
 		arr = append(arr, a)
 	}
 

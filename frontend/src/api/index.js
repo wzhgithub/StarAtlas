@@ -24,6 +24,7 @@ export const nameOrAll = () => {
   })
 }
 
+// 根据vmc_id获取vmc具体信息 getVMCData(1)
 export const getVMCData = (vmc_id) => {
   return request({
     method: 'GET',
@@ -31,6 +32,7 @@ export const getVMCData = (vmc_id) => {
   })
 }
 
+// 根据vmc_id和设备的类型获取vmc具体信息 getDeviceData(1, 'cpu')
 export const getDeviceData = (vmc_id, device_type) => {
   return request({
     method: 'GET',
@@ -38,6 +40,7 @@ export const getDeviceData = (vmc_id, device_type) => {
   })
 }
 
+// 根据vmc_id获取vmc分区任务 getAppInfo(1)
 export const getAppInfo = (vmc_id) => {
   return request({
     method: 'GET',
@@ -45,6 +48,7 @@ export const getAppInfo = (vmc_id) => {
   })
 }
 
+// 根据vmc_id或者折线图数据 getVMCDataSeq(1)
 export const getVMCDataSeq = (vmc_id) => {
   return request({
     method: 'GET',
@@ -70,6 +74,7 @@ export const insertNode = (node_json) => {
   })
 }
 
+// 删除一个node
 // var id_json = { "id": 1 }
 export const deleteNode = (id_json) => {
   return request({
@@ -79,6 +84,7 @@ export const deleteNode = (id_json) => {
   })
 }
 
+// 任务迁移
 // migrate_json = { "from": {"vimd_id": "1"}, "to": {"vimd_id": "2"} }
 export const failureOver = (migrate_json) => {
   return request({
