@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcc -Isrc src/client_new.cc  -std=c++11 -lstdc++ -o bin/utest
+gcc -Isrc -Isrc/third_party/rapidjson/include src/client_new.cc src/common/*.cc  -std=c++11 -lstdc++ -o bin/utest

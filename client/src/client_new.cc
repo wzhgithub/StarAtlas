@@ -1,12 +1,6 @@
 #include "telemsg.h"
-#include <cassert>
-#include <dirent.h>
-#include <unistd.h>
-#include <linux/limits.h>
-#include <sys/stat.h>
-#include <vector>
-
-using namespace std;
+#include "common/utils.h"
+#include <functional>
 
 const char* szConfBasePath = "conf/topology";
 const char* szConfArray[] = {
@@ -15,26 +9,7 @@ const char* szConfArray[] = {
   "tasks.json",
 };
 const char* szVmcPrefix = "vmc_";
-
-size_t get_vmc_conf(const char* dir_name, vector<string>& arr) {
-  size_t sz = arr.size();
-  struct stat s;
-  lstat(dir_name, &s);
-  assert (S_ISDIR(s.st_mode));
-  DIR* dir;
-  dir = opendir(dir_name);
-
-  struct dirent* filename;
-  while ((filename = readdir(dir))!=NULL) {
-    if(strncmp(filename->d_name, "vmc", 3)!=0) {
-      continue;
-    }
-    string s(dir_name);
-    arr.emplace_back(s + filename->d_name);
-  }
-
-  return arr.size()-sz;
-}
+constexpr size_t nConf = sizeof(szConfArray)/sizeof(const char*);
 
 int main(int argc, char* argv[]) {
   if (argc==1) {
@@ -49,26 +24,19 @@ int main(int argc, char* argv[]) {
   }
 
   char dir[PATH_MAX] = {0};
-  int n = readlink("/proc/self/exe", dir, PATH_MAX);
-  char* p = dir, *plast = dir;
-  for (; ;) {
-    for (; p[0] && p[0]!='/'; p++) {
-    }
-    if (p[0]) plast = ++p;
-    else break;
-  }
-  n = snprintf(plast, PATH_MAX-(plast-dir), "%s/%s/", szConfBasePath, curConf);
+  char *p = nullptr, *plast = get_cur_dir(dir, PATH_MAX);
+  int n = snprintf(plast, PATH_MAX-(plast-dir), "%s/%s/", szConfBasePath, curConf);
   p = plast + n;
-  constexpr size_t sz = sizeof(szConfArray)/sizeof(const char*);
   vector<string> arrConf;
-  for (size_t h=0; h<sz; h++) {
+  for (size_t h=0; h<nConf; h++) {
     snprintf(p, PATH_MAX-(p-dir), "%s", szConfArray[h]);
     arrConf.push_back(dir);
   }
   p[0] = '\0';
   get_vmc_conf(dir, arrConf);
   size_t h=0;
-  for (; h<; h++) {
+  for (; h<arrConf.size(); h++) {
+    cout<<arrConf[h]<<endl;
   }
   exit(0);
 

@@ -1,0 +1,36 @@
+#include "utils.h"
+
+
+char* get_cur_dir(char* dir, size_t sz) {
+  int n = readlink("/proc/self/exe", dir, sz);
+  char* p = dir, *plast = dir;
+  for (; ;) {
+    for (; p[0] && p[0]!='/'; p++) {
+    }
+    if (p[0]) plast = ++p;
+    else break;
+  }
+  return plast;
+}
+
+size_t get_vmc_conf(const char* dir_name, vector<string>& arr) {
+  size_t sz = arr.size();
+  struct stat s;
+  lstat(dir_name, &s);
+  assert (S_ISDIR(s.st_mode));
+  DIR* dir;
+  dir = opendir(dir_name);
+
+  struct dirent* filename;
+  while ((filename = readdir(dir))!=NULL) {
+    if(strncmp(filename->d_name, "vmc", 3)!=0) {
+      continue;
+    }
+    string s(dir_name);
+    arr.emplace_back(s + filename->d_name);
+  }
+
+  return arr.size()-sz;
+}
+
+
