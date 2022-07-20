@@ -11,7 +11,7 @@ import (
 )
 
 type FailureOverInfo struct {
-	VimdID string `json:"vimd_id" bson:"vimd_id"`
+	VMCID  string `json:"vmc_id" bson:"vmc_id"`
 	AppID  string `json:"app_id" bson:"app_id"`
 	TaskID string `json:"task_id" bson:"task_id"`
 }

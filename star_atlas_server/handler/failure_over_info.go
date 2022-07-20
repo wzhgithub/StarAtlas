@@ -18,17 +18,7 @@ import (
 // @Success 200 {object} model.Account
 // @Failure 400 {object} model.HTTPError
 // @Router /accounts/{id} [get]
-func GetAppInfo(c *gin.Context) {
-	fail_over_type := c.Query("fail_over_type")
-	src, dst := 0, 0
-	switch fail_over_type {
-	case "vmc":
-		src, dst := 0, 0
-	case "app":
-		device_data = vmc_data.GPUSet
-	case "task":
-		device_data = vmc_data.FPGASet
-	}
+func GetFailureOverInfo(c *gin.Context) {
 	vmc_id_64, _ := strconv.ParseInt(c.Query("vmc_id"), 10, 64)
 	vmc_id := int32(vmc_id_64)
 
@@ -40,10 +30,5 @@ func GetAppInfo(c *gin.Context) {
 		return
 	}
 
-	var apps []model.App
-	for _, v := range app_info_list {
-		apps = append(apps, *v)
-	}
-	c.JSON(200, model.NewCommonResponseSucc(apps))
-
+	c.JSON(200, model.NewCommonResponseSucc(""))
 }
