@@ -19,16 +19,6 @@ import (
 // @Failure 400 {object} model.HTTPError
 // @Router /accounts/{id} [get]
 func GetAppInfo(c *gin.Context) {
-	fail_over_type := c.Query("fail_over_type")
-	src, dst := 0, 0
-	switch fail_over_type {
-	case "vmc":
-		src, dst := 0, 0
-	case "app":
-		device_data = vmc_data.GPUSet
-	case "task":
-		device_data = vmc_data.FPGASet
-	}
 	vmc_id_64, _ := strconv.ParseInt(c.Query("vmc_id"), 10, 64)
 	vmc_id := int32(vmc_id_64)
 

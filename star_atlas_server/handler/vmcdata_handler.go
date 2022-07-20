@@ -18,8 +18,10 @@ type FailureOverInfo struct {
 
 type FailureOverRequest struct {
 	mgm.DefaultModel `bson:",inline"`
+	Type             string          `json:"type" bson:"type"`
 	From             FailureOverInfo `json:"from" bson:"from"`
 	To               FailureOverInfo `json:"to" bson:"to"`
+	Status           bool            `json:"status" bson:"status"`
 }
 
 type VMCDataRspJson struct {
@@ -137,8 +139,8 @@ func FailureOver(c *gin.Context) {
 	}
 
 	mockBin := "./trans"
-	arg1 := req.From.VimdID
-	arg2 := req.To.VimdID
+	arg1 := req.From.VMCID
+	arg2 := req.To.VMCID
 	cmd := exec.Command(mockBin, arg1, arg2)
 	stdout, err := cmd.Output()
 	if err != nil {

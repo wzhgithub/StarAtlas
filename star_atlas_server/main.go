@@ -58,6 +58,8 @@ func main() {
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
 	router.POST("/vmc/failure_over", handler.FailureOver)
+	router.GET("/vmcdata/get_failure_over_info", handler.GetFailureOverInfo)
+	router.GET("/vmcdata/get_failure_over_vmcdata", handler.GetFailureOverVMCData)
 	router.Run(":9999")
 
 }
