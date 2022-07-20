@@ -14,15 +14,16 @@ const (
 	cTopoID = "topo_table"
 )
 
-var deviceStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
+// var appStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
+var vmcStatus = []string{"TIMEOUT", "ERROR", "RUN", "RUN"}
 
 type TransferInfos struct {
-	FromId      uint16        `json:"from_id" bson:"from_id"`
-	ToId        uint16        `json:"to_id" bson:"to_id"`
-	TaskType    uint8         `json:"task_type" bson:"task_type"`
-	StartTime   time.Time     `json:"start_time" bson:"start_time"`
-	EndTime     time.Time     `json:"end_time" bson:"end_time"`
-	DurningTime time.Duration `json:"durning_time" bson:"durning_time"`
+	FromId     uint16        `json:"from_id" bson:"from_id"`
+	ToId       uint16        `json:"to_id" bson:"to_id"`
+	TaskType   uint8         `json:"task_type" bson:"task_type"`
+	StartTime  time.Time     `json:"start_time" bson:"start_time"`
+	EndTime    time.Time     `json:"end_time" bson:"end_time"`
+	DuringTime time.Duration `json:"during_time" bson:"during_time"`
 }
 
 type OtherInfos struct {
@@ -62,7 +63,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 			DeviceType:   "cpu",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: deviceStatus[v.Status],
+			DeviceStatus: vmcStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("cpu_type", fmt.Sprintf("%d", v.CPUSet[i].Type)))
@@ -79,7 +80,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 			DeviceType:   "gpu",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: deviceStatus[v.Status],
+			DeviceStatus: vmcStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("gpu_type", fmt.Sprintf("%d", v.GPUSet[i].Type)))
@@ -96,7 +97,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 			DeviceType:   "dsp",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: deviceStatus[v.Status],
+			DeviceStatus: vmcStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("dsp_type", fmt.Sprintf("%d", v.DSPSet[i].Type)))
@@ -113,7 +114,7 @@ func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 			DeviceType:   "fpga",
 			ParentId:     uint16(v.VMCID),
 			UpstreamId:   0,
-			DeviceStatus: deviceStatus[v.Status],
+			DeviceStatus: vmcStatus[v.Status],
 			OtherInfo:    make([]*OtherInfos, 0),
 		}
 		n.OtherInfo = append(n.OtherInfo, NewOtherInfos("fpga_type", fmt.Sprintf("%d", v.FPGASet[i].Type)))
@@ -131,9 +132,9 @@ func (v *VMCData) parseVMC(nodes *pNodesArr) {
 		Id:           int64(v.VMCID),
 		Name:         v.VMCName,
 		DeviceType:   "vmc",
-		ParentId:     403,
+		ParentId:     0,
 		UpstreamId:   uint16(v.SwitchID),
-		DeviceStatus: deviceStatus[v.Status],
+		DeviceStatus: vmcStatus[v.Status],
 		OtherInfo:    make([]*OtherInfos, 0),
 	}
 	n.OtherInfo = append(n.OtherInfo, NewOtherInfos("proto_type", fmt.Sprintf("%d", v.protoType)))
@@ -146,7 +147,7 @@ func (v *VMCData) parseSwitch(nodes *pNodesArr) {
 			Id:           int64(v.SwitchDeviceSet[i].SwitchOrder),
 			Name:         v.SwitchDeviceSet[i].SwitchName,
 			DeviceType:   "sw",
-			ParentId:     402,
+			ParentId:     0,
 			UpstreamId:   uint16(v.SwitchDeviceSet[i].LinkTo),
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
@@ -162,7 +163,7 @@ func (v *VMCData) parseRTU(nodes *pNodesArr) {
 			Id:           int64(v.RemoteUnitSet[i].RemoteUnitOrder),
 			Name:         v.RemoteUnitSet[i].RemoteUnitName,
 			DeviceType:   "rtu",
-			ParentId:     401,
+			ParentId:     0,
 			UpstreamId:   uint16(v.RemoteUnitSet[i].LinkTo),
 			DeviceStatus: "RUN",
 			OtherInfo:    make([]*OtherInfos, 0),
@@ -240,4 +241,34 @@ func (t *TopoTable) DeleteOp(id int64) error {
 	}
 	t.Node = append(t.Node[:index], t.Node[index+1:]...)
 	return t.UpdateOp()
+}
+
+func (t *TopoTable) GetVmcStatus(vmc_id int64) (string, error) {
+	for _, node := range t.Node {
+		if node.Id == vmc_id {
+			return node.DeviceStatus, nil
+		}
+	}
+	return "", fmt.Errorf("vmc_id: %d is not found in topo_table", vmc_id)
+}
+
+func (t *TopoTable) GetBackupId(vmc_id int64) ([]int64, error) {
+	backupId := make([]int64, 0)
+	var switchId uint16
+	for _, node := range t.Node {
+		if node.Id == vmc_id {
+			switchId = node.UpstreamId
+		}
+	}
+	for _, node := range t.Node {
+		if node.UpstreamId == switchId &&
+			node.DeviceType == "vmc" &&
+			node.Id != vmc_id {
+			backupId = append(backupId, node.Id)
+		}
+	}
+	if len(backupId) > 0 {
+		return backupId, nil
+	}
+	return backupId, fmt.Errorf("vmc_id: %d doesn't have other vmcs in the same switch: %d", vmc_id, switchId)
 }
