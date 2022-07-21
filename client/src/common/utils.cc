@@ -33,4 +33,11 @@ size_t get_vmc_conf(const char* dir_name, vector<string>& arr) {
   return arr.size()-sz;
 }
 
+uint8_t crc_calculate(uint8_t* p, size_t sz) {
+  uint8_t value = 0;
+  for (size_t h=0; h<sz; h++) {
+    value += p[h];
+  }
+  return ~value;
+}
 

@@ -1,8 +1,6 @@
 #ifndef _PROTO_DEVICE_INCLUDED_
 #define _PROTO_DEVICE_INCLUDED_
 
-#include <arpa/inet.h>
-
 typedef enum {
   eCPU = 0x0,
   eDSP,
@@ -33,22 +31,32 @@ char gaszDevNameFmt[][10] = {
   ""
 };
 
+uint8_t gDevType[] = {
+  4, // ARM:0,RISC_V:1,SPARC:2,PPC:3,MIPS:4
+  2, // 6701:0,6678:1,8024:2
+  0, // NVIDIA AGX:0
+  0, // FPGA, reserved
+  2, // sensor：0；executor：1；load：2
+  1, // central：0；access：1
+};
+
 class Device {
 private:
-  uint8_t m_dev_type;
+  uint8_t m_device_type;
 
   // all device
   uint16_t m_tag_head;
   uint16_t m_tag_tail;
 
-  char m_device_name[10];
+# define _LEN_DEV_NAME_ 10
+  char m_device_name[_LEN_DEV_NAME_];
   uint8_t m_device_index;
-  uint8_t m_device_type;
+  uint8_t m_device_subtype;
   uint8_t m_connect_to; // exchange && remote
   
   // cpu & dsp & gpu
   uint8_t m_cnt_core;
-  uint16_t m_iops;   // only cpu & dsp
+  uint16_t m_inops;   // only cpu & dsp
   uint16_t m_flops;
   uint16_t m_mem;
   uint8_t m_mem_rate;
@@ -62,9 +70,11 @@ public:
   bool parseSwitch(const char* filename);
   bool parseRemote(const char* filename);
 
-  void set(uint8_t typ, int idx, const char* name=nullptr, 
+  void init(uint8_t typ, int idx, const char* name=nullptr, 
     uint8_t sub_type =0xFF, int connect_to = 0);
-  void update();
+  void setBasic(uint8_t core, uint16_t m_inops, uint16_t m_flops, uint16_t mem); // fix propery?
+
+  void updateRate(uint8_t mem_rate, uint8_t xpu_rate);
   int pack(char* buf);  
 };
 

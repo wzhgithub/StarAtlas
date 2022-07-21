@@ -4,13 +4,21 @@
 
 #include <random>
 
+#include <arpa/inet.h>
+
 Device::Device() {
-  m_dev_type = eInvalid;
+  m_device_type = eInvalid;
   m_tag_head = m_tag_tail = 0;
   memset(m_device_name, 0, sizeof(m_device_name));
   m_device_index = 0;
-  m_device_type= 0;
+  m_device_subtype= 0;
   m_connect_to = 0;
+
+  m_cnt_core = 0;
+  m_inops = m_flops = 0;
+  m_mem = 0;
+  m_mem_rate = 0;
+  m_xpu_rate = 0;
 }
 
 Device::~Device() {
@@ -23,64 +31,68 @@ bool Device::parseSwitch(const char* filename) {
 bool Device::parseRemote(const char* filename) {
 }
 
-void Device::set(uint8_t typ, int idx, const char* name, 
+void Device::init(uint8_t typ, int idx, const char* name, 
   uint8_t sub_type, int connect_to) {
     m_tag_head  = g_device_tag[typ*2];
     m_tag_tail  = g_device_tag[typ*2+1];
 
-    m_dev_type = typ;
+    m_device_type = typ;
     m_device_index = idx;
 
     if (!name) {
-      snprintf(m_device_name, 10, gaszDevNameFmt[typ], idx);
+      snprintf(m_device_name, _LEN_DEV_NAME_, gaszDevNameFmt[typ], idx);
     } else {
-      snprintf(m_device_name, 10, "%s", name);
+      snprintf(m_device_name, _LEN_DEV_NAME_, "%s", name);
     }
 
-    m_device_type = random()%(gDevType[typ]+1);
-    if (sub_type!=0xFF) m_device_type = sub_type;
+    m_device_subtype = random()%(gDevType[typ]+1);
+    if (sub_type!=0xFF) m_device_subtype = sub_type;
 
     // remote & exchanger
-    rd.m_connect_to = connect_to;
+    m_connect_to = connect_to;
     if (typ==eEXCHNAGE) {
       if (idx==0) {
-        rd.m_device_type = 0;
-        rd.m_connect_to = 0;
+        m_device_subtype = 0;
+        m_connect_to = 0;
       } else {
-        rd.m_device_type = 1;
-        rd.m_connect_to = 0;
+        m_device_subtype = 1;
+        m_connect_to = 0;
       }
     }
     if (typ==eREMOTE) {
-      rd.m_connect_to = 1;
+      m_connect_to = 1;
     }
-
-    rd.m_cnt_core = random()%255;
-    rd.m_iops = random()%65535;
-    rd.m_flops = random()%65535;
-    rd.m_mem= random()%65535;
-    rd.m_mem_rate = random()%100;
-    rd.m_xpu_rate = random()%100;
 }
 
+void Device::setBasic(uint8_t core, uint16_t inops, uint16_t flops, uint16_t mem) {
+  m_cnt_core = core;
+  m_inops = inops;
+  m_flops = flops;
+  m_mem = mem;
+}
 
+void Device::updateRate(uint8_t mem_rate, uint8_t xpu_rate) {
+  m_mem_rate = mem_rate;
+  m_xpu_rate = xpu_rate;
+}
 
 int Device::pack(char* buf) {
   char* p = buf;
 
-  memcpy(p, m_device_name, 10); p+=10;
+  memcpy(p, m_device_name, _LEN_DEV_NAME_);
+  p+=_LEN_DEV_NAME_;
   ((uint8_t*)p++)[0] = m_device_index;
-  ((uint8_t*)p++)[0] = m_device_type;
-  if (m_dev_type==eEXCHNAGE || m_dev_type==eREMOTE) {
+  ((uint8_t*)p++)[0] = m_device_subtype;
+  if (m_device_type==eEXCHNAGE || m_device_type==eREMOTE) {
     ((uint8_t*)p++)[0] = m_connect_to;
     return int(p-buf);
   }
 
   // cpu && dsp && gpu
-  if (m_dev_type!=eFPGA) {
+  if (m_device_type!=eFPGA) {
     ((uint8_t*)p++)[0] = m_cnt_core;
-    if (m_dev_type!=eGPU) {
-      ((uint16_t*)p)[0] = htons(m_iops); p+=2;
+    if (m_device_type!=eGPU) {
+      ((uint16_t*)p)[0] = htons(m_inops); p+=2;
     }
     ((uint16_t*)p)[0] = htons(m_flops); p+=2;
     ((uint16_t*)p)[0] = htons(m_mem); p+=2;
