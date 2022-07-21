@@ -281,21 +281,22 @@ public:
 
     memset(rd.m_device_name, 0, 10);
     snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
-    rd.m_device_index = idx%100;
+    //rd.m_device_index = idx%100;
+    rd.m_device_index = idx;
     rd.m_device_type = random()%(gDevType[typ]+1);
     // remote & exchanger
     rd.m_connect_to = connect_to;
     if (typ==eEXCHNAGE) {
       if (idx%100==0) {
         rd.m_device_type = 0;
-        rd.m_connect_to = 0;
+        rd.m_connect_to = 5000;  // hard code
       } else {
         rd.m_device_type = 1;
-        rd.m_connect_to = 0;
+        rd.m_connect_to = 5000; // hard code
       }
     }
     if (typ==eREMOTE) {
-      rd.m_connect_to = 1;
+      rd.m_connect_to = 5001; // hard code, only two switch
     }
 
     rd.m_cnt_core = random()%255;
