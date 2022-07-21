@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <vector>
+#include <fstream>
 
 #include <arpa/inet.h>
 
@@ -51,16 +52,40 @@ int Task::pack(char *buf) {
 }
 
 Partition::Partition() {
-      memset(m_name, 0, sizeof(m_name));
-    m_total_task = 0;
-    m_duration = 0;
-    m_time = 0;
-    m_index = 0;
-    m_cnt_reset= 0;
-    m_vmc_idx= 0;
-    m_ptask = 0;
-
+  memset(m_name, 0, sizeof(m_name));
+  m_total_task = 0;
+  m_duration = 0;
+  m_time = 0; // time allocate
+  m_index = 0;
+  m_cnt_reset= 0;
+  m_vmc_idx= 0;
 }
 
 Partition::~Partition() {
+}
+
+void Partition::init(int idx, const char* name) {
+  m_index = (uint8_t)idx;
+  if (!name) {
+    snprintf(m_name, _LEN_PARTITION_NAME_, "part_%02d", idx);
+  } else {
+    snprintf(m_name, _LEN_PARTITION_NAME_, "%s", name);
+  }
+}
+
+int Partition::pack(char* buf) {
+  char* p = buf;
+  memcpy(p, m_name, _LEN_PARTITION_NAME_); 
+  p+=_LEN_PARTITION_NAME_;
+  ((uint8_t*)p++)[0] = m_total_task;
+  ((uint16_t*)p)[0] = htons(m_duration); p+=2;
+  ((uint16_t*)p)[0] = htons(m_time); p+=2;
+
+  ((uint8_t*)p++)[0] = m_index;
+  ((uint8_t*)p++)[0] = m_cnt_reset;
+  ((uint8_t*)p++)[0] = m_vmc_idx;
+  for (size_t i=0; i<m_total_task; i++) {
+    p += m_task[i].pack(p);
+  }
+  return (int)(p-buf);
 }

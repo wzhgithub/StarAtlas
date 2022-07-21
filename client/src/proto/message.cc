@@ -1,71 +1,31 @@
 #ifndef _TELEMETERING_INCLUDED_
 #define _TELEMETERING_INCLUDED_
 
+#include "message.h"
 
-#include "device.h"
-#include "task.h"
+TeleMessage::TeleMessage(uint8_t idx, uint8_t idx_exchange, const char* name) {
+  m_tag = 0xeb;
+  m_size = 0; // set later
+  m_type = 0x55; // message type
+  m_index = idx;
+  memset(m_name, 0, sizeof(m_name));
+  if (!name) {
+    snprintf(m_name, _LEN_VMC_NAME_, "vmc_%02d", (int)m_index);
+  } else {
+    snprintf(m_name, _LEN_VMC_NAME_, "%s", name);
+  }
+  m_total_cpu = m_total_dsp = m_total_gpu = m_total_fpga = 0;
+  m_exchange_idx = idx_exchange;
+  m_total_mem = m_total_disk = 0;
+  m_mem_rate = m_cpu_rate = m_dsp_rate = m_gpu_rate = m_disk_rate = 0;
+  m_cnt_exchange = m_cnt_remote = 0;
+}
 
-using namespace std;
-
-class TeleMessage {
-public:
-  uint8_t m_tag; //0xeb
-  uint16_t m_size;
-  uint8_t m_type;
-
-# define _LEN_VMC_NAME_ 10
-  char m_name[_LEN_VMC_NAME_];
-  uint8_t m_index;
-
-  // device statistic
-  uint8_t m_total_cpu;
-  uint8_t m_total_dsp;
-  uint8_t m_total_gpu;
-  uint8_t m_total_fpga;
-
-  // 
-  uint8_t m_exchange_idx;
-  
-  // performence
-  uint16_t m_total_mem;
-  uint16_t m_total_disk;
-
-  uint8_t m_mem_rate;
-  uint8_t m_cpu_rate;
-  uint8_t m_dsp_rate;
-  uint8_t m_gpu_rate;
-  uint8_t m_disk_rate;
-
-  // 0707
-  uint8_t m_cnt_exchange;
-  uint8_t m_cnt_remote;
-
-  // device related
-  vector<Device> m_devices;
-  
-  // block
-  uint8_t m_total_block;
-  vector<Partition> m_block;
-
-public:
-  TeleMessage(
-    int idx, // vmc index
-    int idx_exchange,
-    int cnt_cpu,
-    int cnt_dsp,
-    int cnt_gpu,
-    int cnt_fpga,
+int idx, int idx_exchange, int cnt_cpu,
     int cnt_exchange,
     int cnt_remote,
     int cnt_block,
     int cnt_max_task
-  ) {
-    m_tag = 0xeb;
-    m_size = 31; // remove reserved & 20220707, add exchange, remote
-    m_type = 0x55;
-    m_index = idx;
-    memset(m_name, 0, sizeof(m_name));
-    snprintf(m_name, 10, "vmc_%02d", (int)m_index);
 
     m_total_cpu = cnt_cpu;
     m_total_dsp = cnt_dsp;
