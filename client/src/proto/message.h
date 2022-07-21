@@ -8,9 +8,10 @@
 #include <time.h>
 #include <fstream>
 
+#include "device.h"
+#include "task.h"
+
 using namespace std;
-
-
 
 class TeleMessage {
 public:
@@ -53,37 +54,6 @@ public:
   Block* m_pblock;
 
 public:
-  void SetXPU(Device& rd, uint8_t typ, int idx, int connect_to=0) {
-    rd.m_dev_type = typ;
-    rd.m_tag_head  = g_device_tag[typ*2];
-    rd.m_tag_tail  = g_device_tag[typ*2+1];
-
-    snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
-    rd.m_device_index = idx;
-    rd.m_device_type = random()%(gDevType[typ]+1);
-    // remote & exchanger
-    rd.m_connect_to = connect_to;
-    if (typ==eEXCHNAGE) {
-      if (idx==0) {
-        rd.m_device_type = 0;
-        rd.m_connect_to = 0;
-      } else {
-        rd.m_device_type = 1;
-        rd.m_connect_to = 0;
-      }
-    }
-    if (typ==eREMOTE) {
-      rd.m_connect_to = 1;
-    }
-
-    rd.m_cnt_core = random()%255;
-    rd.m_iops = random()%65535;
-    rd.m_flops = random()%65535;
-    rd.m_mem= random()%65535;
-    rd.m_mem_rate = random()%100;
-    rd.m_xpu_rate = random()%100;
-  }
-
   TeleMessage(
     int idx, // vmc index
     int idx_exchange,

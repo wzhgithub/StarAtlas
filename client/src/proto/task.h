@@ -18,7 +18,8 @@ public:
   virtual ~Task();
 
 public:
-  void init(uint16_t idx, uint8_t typ, const char* name=NULL);
+  void init(uint16_t idx, uint8_t typ, uint8_t status, uint8_t stt, const char* name=nullptr);
+  void updateTask(uint32_t exe_time, uint8_t ret_code);
   int pack(char* buf);
 };
 
@@ -34,23 +35,11 @@ public:
   uint8_t m_cnt_reset;
   uint8_t m_vmc_idx;
 
-  Task* m_ptask;
+  vector<Task> m_task;
 
 public:
-  Block() {
-    m_name[0] = '\0';
-    memset(m_name, 0, sizeof(m_name));
-    m_total_task = 0;
-    m_duration = 0;
-    m_time = 0;
-    m_index = 0;
-    m_cnt_reset= 0;
-    m_vmc_idx= 0;
-    m_ptask = 0;
-  }
-  virtual ~Block() {
-    delete []m_ptask;
-  }
+  Partition();
+  virtual ~Partition();
 
 public:
   void ReSet(int idx, int max_task, int idx_vmc) {
