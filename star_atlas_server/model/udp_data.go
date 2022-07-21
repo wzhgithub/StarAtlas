@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
@@ -80,6 +81,16 @@ type SwitchDevice struct {
 	SwitchOrder uint8  `json:"switch_order" bson:"switch_order"`
 	SwitchType  uint8  `json:"switch_type" bson:"switch_type"` // 中心交换机：0；接入交换机：1
 	LinkTo      uint8  `json:"link_to" bson:"link_to"`
+}
+
+type VMCStatus struct {
+	UpdatedAt            time.Time `json:"time"`                 // 时间
+	CPUComputingPower    uint16    `json:"cpuComputingPower"`    // cpu算力
+	GPUComputingPower    uint16    `json:"gpuComputingPower"`    // gpu算力
+	DSPIntComputingPower uint16    `json:"dspIntComputingPower"` // dsp算力
+	MomoryUsage          uint8     `json:"memoryUsage"`          // 内存利用率
+	DiskUsage            uint8     `json:"diskUsage"`            // 外存利用率
+	TotalUsage           uint8     `json:"totalUsage"`           // 总利用率
 }
 
 type VMCData struct {
@@ -291,6 +302,7 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 			}
 			arr[j] = t
 			statusCode |= t.StatusCode
+			glog.Infof("task details: %+v\n", t)
 		}
 		return arr, statusCode
 	}
@@ -337,7 +349,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 			AppStatus:    appStatus,
 		}
 		appStart = taskEnd
-
+		glog.Infof("app details: %+v\n", a)
 		arr = append(arr, a)
 	}
 
@@ -365,6 +377,8 @@ func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
 				LinkTo:          bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("remote unit %+v\n", bytes[t:t+13])
+			glog.Infof("remote unit %+v\n", r)
 		}
 
 		return arr, l
@@ -394,6 +408,8 @@ func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
 				LinkTo:      bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("switch unit %+v\n", bytes[t:t+13])
+			glog.Infof("switch unit %+v\n", r)
 		}
 
 		return arr, l

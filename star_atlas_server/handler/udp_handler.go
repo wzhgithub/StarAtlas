@@ -59,6 +59,7 @@ func ParseData() {
 		}
 	}()
 
+	topoTable := &model.TopoTable{}
 	for {
 		data, ok := <-limitChan
 		if !ok {
@@ -66,7 +67,6 @@ func ParseData() {
 			continue
 		}
 		vmcData, _ := model.NewVMCData(data)
-		topoTable := &model.TopoTable{}
 		err := topoTable.CreateOp(vmcData)
 		if err != nil {
 			glog.Errorf("failed create topotable into db, error: %s\n", err.Error())

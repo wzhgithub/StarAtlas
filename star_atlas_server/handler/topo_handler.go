@@ -41,7 +41,7 @@ func TopoInsert(c *gin.Context) {
 		return
 	}
 	node.Id = time.Now().Unix()
-	node.DeviceStatus = "START"
+	node.DeviceStatus = "RUN"
 	if err := topo.InsertOp(node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,

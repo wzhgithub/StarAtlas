@@ -1,9 +1,13 @@
 #include "telemsg.h"
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <arpa/inet.h>
 
 int main(int argc, char* argv[]) {
   if (argc==1) {
     //cerr<<"Usage: "<<argv[0]<<" /dev/stderr"<<endl;
-    fprintf(stderr, "Usage: %s <vmc_index> <_exchange_idx>\n", argv[0]);
+    fprintf(stderr, "Usage: %s <output:4debug> <vmc_index> <_exchange_idx> [ip:port]\n", argv[0]);
     exit(0);
   }
 
@@ -14,6 +18,29 @@ int main(int argc, char* argv[]) {
       cnt_exchange = 2;
   if (argc>=3) idx = atoi(argv[2]);
   if (argc>=4) idx_exch = atoi(argv[3]);
+
+  const char* ip = "127.0.0.1";
+  unsigned short port = 9191;
+# define LEN_BUF 128
+  char szBuf[LEN_BUF] = {0};
+  if (argc==5) {
+    size_t len = strlen(argv[4]); 
+    if (len>=LEN_BUF) {
+      cerr<<"Invalid ip address: "<<argv[4]<<endl;
+      exit(-1);
+    }
+    strncpy(szBuf, argv[4], LEN_BUF);
+    char* p = szBuf;
+    for (; p[0] && p[0]!=':'; p++) {}
+    if (!p[0]) {
+      cerr<<"Invalid ip address: "<<argv[4]<<endl;
+      exit(-1);
+    }
+    *p++='\0';
+    ip = szBuf;
+    port = atoi(p);
+  }
+  cout<<"ip: "<<ip<<"; port:"<<port<<"."<<endl;
 
   srand((unsigned)time(NULL));
   //int idx = random()%10,
@@ -64,5 +91,34 @@ int main(int argc, char* argv[]) {
     exit(0);
   }
   binaryio.write(buf,msg.m_size);
+
+  // send
+  int sockfd;
+  socklen_t len = sizeof(struct sockaddr_in);
+
+  struct sockaddr_in serveraddr;
+  memset(&serveraddr, 0, len);
+
+  serveraddr.sin_family = AF_INET;
+  serveraddr.sin_port = htons(port);
+  serveraddr.sin_addr.s_addr = inet_addr(ip);
+
+  sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sockfd < 0)
+  {
+    cerr << "fail to create socker" << endl;
+    delete [] buf;
+    exit(-1);
+  }
+  ssize_t ret = sendto(sockfd, buf, sz_out, 0, (struct sockaddr*)&serveraddr, len);
+  if (ret == -1) {
+    cerr << "sendto failed, ret code: "<<ret<<endl;
+    close(sockfd);
+    delete [] buf;
+    exit(-1);
+  }
+  cout << "send:"<<ret<<endl;
+  close(sockfd);
+
   delete [] buf;
 }
