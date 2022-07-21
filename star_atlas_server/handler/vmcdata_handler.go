@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"os/exec"
 	"star_atlas_server/model"
 	"strconv"
@@ -20,6 +21,7 @@ type FailureOverRequest struct {
 	mgm.DefaultModel `bson:",inline"`
 	From             FailureOverInfo `json:"from" bson:"from"`
 	To               FailureOverInfo `json:"to" bson:"to"`
+	TransStatus      uint            `json:"transStatus" bson:"transStatus"`
 }
 
 type VMCDataRspJson struct {
@@ -28,6 +30,8 @@ type VMCDataRspJson struct {
 	Code    uint8             `json:"code"`
 	Msg     string            `json:"msg"`
 }
+
+const cFailureOverTable = "failure_over_log"
 
 // ref: https://swaggo.github.io/swaggo.io/declarative_comments_format/api_operation.html
 // @Summary Show an account
@@ -136,6 +140,23 @@ func FailureOver(c *gin.Context) {
 		return
 	}
 
+	t := &model.TopoTable{}
+	if err := t.CollectOp(); err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	vid, err := strconv.ParseInt(req.From.VimdID, 10, 64)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	bids, err := t.GetBackupId(vid)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	req.To.VimdID = fmt.Sprintf("%d", bids[0])
+	glog.Infof("failure request %+v\n", req)
 	mockBin := "./trans"
 	arg1 := req.From.VimdID
 	arg2 := req.To.VimdID
@@ -143,11 +164,11 @@ func FailureOver(c *gin.Context) {
 	stdout, err := cmd.Output()
 	if err != nil {
 		glog.Errorf("run command:%+v failed err:%s\n", cmd, err.Error())
-		c.JSON(500, model.NewCommonResponseFail(err))
-		return
+		req.TransStatus = 500 // failed
 	}
+	req.TransStatus = 200 //success
 	glog.Infof("cmd output %s\n", stdout)
-	if err = mgm.CollectionByName("failure_over_log").Create(req); err != nil {
+	if err = mgm.CollectionByName(cFailureOverTable).Create(req); err != nil {
 		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
