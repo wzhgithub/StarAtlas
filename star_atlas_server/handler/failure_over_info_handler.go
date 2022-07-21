@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	"handler"
 	"star_atlas_server/model"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -42,7 +42,8 @@ func GetFailureOverVMCData(c *gin.Context) {
 		return
 	}
 	fr := fr_list[0]
-	from_vmc_id, to_vmc_id := fr.From.VMCID, fr.To.VMCID
+	from_vmc_id, _ := strconv.ParseInt(fr.From.VMCID, 10, 32)
+	to_vmc_id, _ := strconv.ParseInt(fr.To.VMCID, 10, 32)
 	from_vmcdata, to_vmcdata := &model.VMCData{}, &model.VMCData{}
 	err = from_vmcdata.CollectVMCData(int32(from_vmc_id))
 	if err != nil {
@@ -69,8 +70,8 @@ type FailureOverVMCData struct {
 	To   model.VMCData `json:"to"`
 }
 
-func GetFailureOverRequestList() ([]handler.FailureOverRequest, error) {
-	fr_list := []handler.FailureOverRequest{}
+func GetFailureOverRequestList() ([]FailureOverRequest, error) {
+	fr_list := []FailureOverRequest{}
 
 	findOptions := options.Find()
 	findOptions.SetSort(bson.D{{Key: "updated_at", Value: -1}})
