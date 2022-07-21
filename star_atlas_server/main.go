@@ -50,6 +50,7 @@ func main() {
 	}), gin.Recovery())
 
 	router.GET("/test", handler.Index)
+	router.GET("/test/vmcstatus", handler.VMCStatusTest)
 	router.GET("/vmcdata", handler.GetVMCData)
 	router.GET("/devicedata", handler.GetDeviceData) // usage: http://localhost:9999/devicedata?vmc_id=0&device_type=cpu
 	router.GET("/appinfo", handler.GetAppInfo)       // usage: http://localhost:9999/appinfo?vmc_id=0
