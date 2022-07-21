@@ -32,12 +32,12 @@ uint16_t g_device_tag[] = {
 };
 
 char gaszDevNameFmt[][10] = {
-  "CPU_%03d",
-  "DSP_%03d",
-  "GPU_%03d",
-  "FPGA_%03d",
-  "REMO_%02d",
-  "EXCH_%02d",
+  "CPU_%04d",
+  "DSP_%04d",
+  "GPU_%04d",
+  "FPGA_%04d",
+  "REMO_%04d",
+  "EXCH_%04d",
   ""
 };
 
@@ -281,12 +281,12 @@ public:
 
     memset(rd.m_device_name, 0, 10);
     snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
-    rd.m_device_index = idx;
+    rd.m_device_index = idx%100;
     rd.m_device_type = random()%(gDevType[typ]+1);
     // remote & exchanger
     rd.m_connect_to = connect_to;
     if (typ==eEXCHNAGE) {
-      if (idx==0) {
+      if (idx%100==0) {
         rd.m_device_type = 0;
         rd.m_connect_to = 0;
       } else {
@@ -381,10 +381,10 @@ public:
       for (int i=0; i<anDevice[h]; i++, n_idx++) {
         Device& rd = m_pdevices[n_idx];
 
-        int n_conn = 0, xidx = m_index*100+i;
+        int n_conn = 0, xidx = aDevType[h]*1000+m_index*100+i;
         if (aDevType[h]==eREMOTE || aDevType[h]==eEXCHNAGE) {
            n_conn = random()%256;
-           xidx = i;
+           xidx = aDevType[h]*1000+i;
         }
         SetXPU(rd, aDevType[h], xidx, n_conn);
       }
