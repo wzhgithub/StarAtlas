@@ -65,7 +65,20 @@ func GetFailureOverVMCData(c *gin.Context) {
 	// if to_vmcdata tasks are not empty
 	if len(to_vmcdata.APPInfo) > 0 && len(to_vmcdata.APPInfo[0].TaskSet) > 0 {
 		glog.Info("failure over request from %d to %d finished!\n", from_vmc_id, to_vmc_id)
-		// TODO: set req.TransStatus = 200
+		// see https://www.mongodb.com/blog/post/quick-start-golang--mongodb--how-to-update-documents
+		// see https://www.cnblogs.com/williamjie/p/9598748.html
+		ff := bson.M{"from": bson.M{"vmc_id": fmt.Sprintf("%d", from_vmc_id)}}
+		tt := bson.M{"to": bson.M{"vmc_id": fmt.Sprintf("%d", to_vmc_id)}}
+		ts := bson.M{"trans_status": 500}
+		filter := bson.M{"$and": []bson.M{ff, tt, ts}}
+		updateM := bson.M{"$set": bson.M{"trans_status": 200}}
+		res, err := mgm.CollectionByName(cFailureOverTable).UpdateOne(mgm.Ctx(), filter, updateM)
+		if err != nil {
+			glog.Errorf("update failed filter:%+v update:%+v err: %v\n", filter, updateM, err)
+			c.JSON(500, model.NewCommonResponseFail(err))
+			return
+		}
+		glog.Infof("update succeeded result: %+v\n", res)
 	}
 	failure_over_vmc_data := FailureOverVMCData{}
 	failure_over_vmc_data.From = *from_vmcdata
@@ -88,7 +101,7 @@ func GetFailureOverRequestList(unfinish_req bool) ([]FailureOverRequest, error) 
 	if unfinish_req {
 		filter = bson.M{"trans_status": 500}
 	}
-	ret := mgm.CollectionByName("failure_over_log").SimpleFind(&fr_list, filter, findOptions)
+	ret := mgm.CollectionByName(cFailureOverTable).SimpleFind(&fr_list, filter, findOptions)
 	if len(fr_list) < 1 {
 		return fr_list, fmt.Errorf("fr_list is empty")
 	}
