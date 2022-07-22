@@ -26,25 +26,14 @@ func GetAppInfo(c *gin.Context) {
 	glog.Error("app info list: %+v\n", app_info_list)
 	if err != nil {
 		glog.Error("failed read app info from db, error: %s\n", err.Error())
-		c.JSON(400, &AppInfoRspJson{Success: false, Msg: "fail"})
+		c.JSON(400, model.NewCommonResponseFail(err))
 		return
 	}
 
-	rsp := &AppInfoRspJson{}
-	rsp.Success = true
+	var apps []model.App
 	for _, v := range app_info_list {
-		rsp.Data = append(rsp.Data, *v)
+		apps = append(apps, *v)
 	}
-	rsp.Code = 0
-	rsp.Msg = "ok"
+	c.JSON(200, model.NewCommonResponseSucc(apps))
 
-	c.JSON(200, rsp)
-
-}
-
-type AppInfoRspJson struct {
-	Success bool        `json:"success"`
-	Data    []model.App `json:"data"`
-	Code    uint8       `json:"code"`
-	Msg     string      `json:"msg"`
 }

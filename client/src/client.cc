@@ -13,11 +13,12 @@ int main(int argc, char* argv[]) {
 
   // default
   int idx = 0,
-      idx_exch = 4,
-      cnt_remote = 4,
-      cnt_exchange = 2;
+      idx_exch = 5000,
+      cnt_remote = 9,
+      cnt_exchange = 7;
   if (argc>=3) idx = atoi(argv[2]);
   if (argc>=4) idx_exch = atoi(argv[3]);
+  if (idx_exch<5000) idx_exch+=5000;
 
   const char* ip = "127.0.0.1";
   unsigned short port = 9191;
