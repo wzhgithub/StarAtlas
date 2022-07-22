@@ -67,9 +67,10 @@ public:
   virtual ~Device();
 
 public:
-  bool parseSwitch(const char* filename);
-  bool parseRemote(const char* filename);
+  uint16_t getTagHead() const { return m_tag_head; }
+  uint16_t getTagTail() const { return m_tag_tail; }
 
+public:
   void init(uint8_t typ, int idx, const char* name=nullptr, 
     uint8_t sub_type =0xFF, int connect_to = 0);
   void setBasic(uint8_t core, uint16_t m_inops, uint16_t m_flops, uint16_t mem); // fix propery?
