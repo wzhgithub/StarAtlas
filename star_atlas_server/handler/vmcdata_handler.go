@@ -166,7 +166,6 @@ func FailureOver(c *gin.Context) {
 	if err != nil {
 		glog.Errorf("run command:%+v failed err:%s\n", cmd, err.Error())
 	}
-	req.TransStatus = 200 //success
 	glog.Infof("cmd output %s\n", stdout)
 	if err = mgm.CollectionByName(cFailureOverTable).Create(req); err != nil {
 		c.JSON(500, model.NewCommonResponseFail(err))
