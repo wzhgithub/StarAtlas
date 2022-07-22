@@ -18,7 +18,7 @@ func TopoShow(c *gin.Context) {
 			"code": -1,
 			"msg":  "Failed to collect topo from db",
 		})
-		glog.Error("Failed to collect topo from db, error: %s\n", err.Error())
+		glog.Errorf("Failed to collect topo from db, error: %s\n", err.Error())
 		return
 	}
 
@@ -65,7 +65,7 @@ func TopoDelete(c *gin.Context) {
 			"code": -1,
 			"msg":  "Invaild id",
 		})
-		glog.Error("Invaild id")
+		glog.Errorf("Invaild id")
 		return
 	}
 	if err := topo.DeleteOp(node.Id); err != nil {
