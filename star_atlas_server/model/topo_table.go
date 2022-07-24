@@ -229,18 +229,24 @@ func (t *TopoTable) InsertOp(node *Nodes) error {
 	return t.UpdateOp()
 }
 
-func (t *TopoTable) DeleteOp(id int64) error {
-	var index int
-	for idx, node := range t.Node {
-		if node.Id == id {
-			glog.Infof("[DeleteOp] remove node index: %d", index)
-			index = idx
-			break
+func (t *TopoTable) DeleteOp(delIds []int64) error {
+	glog.Infof("[DeleteOp] ids: %+v", delIds)
+	newNodes := make([]*Nodes, 0)
+	for _, node := range t.Node {
+		newAdded := true
+		for _, id := range delIds {
+			if node.Id == id {
+				newAdded = false
+				break
+			}
+		}
+		if newAdded {
+			newNodes = append(newNodes, node)
 		}
 	}
-	glog.Infof("[DeleteOp] before node size: %d", len(t.Node))
-	t.Node = append(t.Node[:index], t.Node[index+1:]...)
-	glog.Infof("[DeleteOp] after node size: %d", len(t.Node))
+	glog.Infof("[DeleteOp] t.node length: %d", len(t.Node))
+	glog.Infof("[DeleteOp] newNodes length: %d", len(newNodes))
+	t.Node = newNodes
 	return t.UpdateOp()
 }
 
