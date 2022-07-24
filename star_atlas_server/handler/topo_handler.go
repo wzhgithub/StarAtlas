@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"net/http"
 	"star_atlas_server/model"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -17,6 +18,8 @@ var deviceType = map[string]bool{
 	"DSP":  true,
 	"FPGA": true,
 }
+
+const cRange = 10
 
 // show
 func TopoShow(c *gin.Context) {
@@ -61,6 +64,7 @@ func TopoInsert(c *gin.Context) {
 	}
 	node.Id = maxId + 1
 	node.DeviceStatus = "RUN"
+	node.DeviceType = "vmc"
 	if err := topo.InsertOp(node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -69,10 +73,10 @@ func TopoInsert(c *gin.Context) {
 		return
 	}
 
-	cpuNum := rand.Intn(256)
-	gpuNum := rand.Intn(256)
-	fpgaNum := rand.Intn(256)
-	dspNum := rand.Intn(256)
+	cpuNum := rand.Intn(cRange)
+	gpuNum := rand.Intn(cRange)
+	fpgaNum := rand.Intn(cRange)
+	dspNum := rand.Intn(cRange)
 	if err := insertDevice(topo, cpuNum, "CPU", node.Id); err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
@@ -121,7 +125,7 @@ func insertDevice(topo *model.TopoTable, num int, dType string, vmcId int64) err
 	for i := 0; i < num; i++ {
 		n := &model.Nodes{
 			Id:           vmcId*model.CVMCBase + int64(i),
-			Name:         dType + "_" + string(rune(i)),
+			Name:         dType + "_" + strconv.Itoa(i),
 			DeviceType:   strings.ToLower(dType),
 			ParentId:     uint16(vmcId),
 			UpstreamId:   0,
@@ -138,37 +142,29 @@ func insertDevice(topo *model.TopoTable, num int, dType string, vmcId int64) err
 // delete
 func TopoDelete(c *gin.Context) {
 	topo := &model.TopoTable{}
+	if err := topo.CollectOp(); err != nil {
+		glog.Errorln("get topo table failed")
+		c.JSON(http.StatusInternalServerError, model.NewCommonResponseFail(err))
+		return
+	}
+
 	node := &model.Nodes{}
 	if err := c.ShouldBindJSON(&node); err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "Invaild id",
-		})
-		glog.Errorf("Invaild id")
+		glog.Errorln("Invaild id")
+		c.JSON(http.StatusInternalServerError, model.NewCommonResponseFail(err))
 		return
 	}
-	if node.DeviceType != "vmc" {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "This type of device is not vmc",
-		})
-		glog.Errorf("This type of device is not vmc")
-		return
-	}
+
+	delNodes := make([]int64, 0)
 	for _, tNode := range topo.Node {
-		if tNode.ParentId == uint16(node.Id) || tNode.Id == node.Id {
-			if err := topo.DeleteOp(node.Id); err != nil {
-				c.JSON(http.StatusOK, gin.H{
-					"code": -1,
-					"msg":  "DeleteOp failed",
-				})
-				return
-			}
+		if tNode.ParentId == uint16(node.Id) || (tNode.Id == node.Id && tNode.DeviceType == "vmc") {
+			glog.Infof("Delete vmc node %+v\n", tNode)
+			delNodes = append(delNodes, tNode.Id)
 		}
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": 0,
-		"msg":  "Delete success",
-		"data": node.Id,
-	})
+	if err := topo.DeleteOp(delNodes); err != nil {
+		c.JSON(http.StatusInternalServerError, model.NewCommonResponseFail(err))
+		return
+	}
+	c.JSON(http.StatusOK, model.NewCommonResponseSucc(node.Id))
 }

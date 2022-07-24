@@ -6,7 +6,7 @@ type IDatabaseOperation interface {
 	CollectOp() error
 	InsertOp() error
 	UpdateOp() error
-	DeleteOp(id int64) error
+	DeleteOp(delIds []int64) error
 	CreateData() error
 	CollectData() error
 }
