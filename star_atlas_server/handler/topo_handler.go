@@ -1,13 +1,20 @@
 package handler
 
 import (
+	"math/rand"
 	"net/http"
 	"star_atlas_server/model"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 )
+
+var deviceType := map[string]bool{
+	"CPU": true,
+	"GPU": true,
+	"DSP": true,
+	"FPGA": true,
+}
 
 // show
 func TopoShow(c *gin.Context) {
@@ -32,6 +39,16 @@ func TopoShow(c *gin.Context) {
 // insert
 func TopoInsert(c *gin.Context) {
 	topo := &model.TopoTable{}
+	maxId, err := topo.GetMaxVmcId()
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  err.Error(),
+		})
+		glog.Errorf(err.Error())
+		return
+	}
+
 	node := &model.Nodes{}
 	if err := c.ShouldBindJSON(&node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -40,7 +57,7 @@ func TopoInsert(c *gin.Context) {
 		})
 		return
 	}
-	node.Id = time.Now().Unix()
+	node.Id = maxId + 1
 	node.DeviceStatus = "RUN"
 	if err := topo.InsertOp(node); err != nil {
 		c.JSON(http.StatusOK, gin.H{
@@ -49,11 +66,47 @@ func TopoInsert(c *gin.Context) {
 		})
 		return
 	}
+
+	cpuNum := rand.Intn(256)
+	gpuNum := rand.Intn(256)
+	fpgaNum := rand.Intn(256)
+	dspNum := rand.Intn(256)
+	insertDevice(cpuNum, "CPU", node.Id)
+	insertDevice(gpuNum, "GPU", node.Id)
+	insertDevice(fpgaNum, "FPGA", node.Id)
+	insertDevice(dspNum, "DSP", node.Id)
+
 	c.JSON(http.StatusOK, gin.H{
 		"code": 0,
 		"msg":  "Insert success",
 		"data": node,
 	})
+}
+
+func insertDevice(num int, dType string, vmcId int64) error {
+	dType = strings.ToUppder(dType)
+	if !deviceType[dType] {
+		return fmt.Errorf("cannot find device type: %s\n", dType)
+	}
+	for i := 0; i < num; i++ {
+		n := &model.Nodes{
+			Id:           vmcId*model.CVMCBase + int64(i),
+			Name:         dType + "_" + string(i),
+			DeviceType:   strings.toLower(dType),
+			ParentId:     uint16(vmcId),
+			UpstreamId:   0,
+			DeviceStatus: "RUN",
+			OtherInfo:    nil,
+		}
+		if err := topo.InsertOp(n); err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"code": -1,
+				"msg":  "InsertOp failed",
+			})
+			return fmt.Errorf("InsertOp failed\n")
+		}
+	}
+	return nil
 }
 
 // delete
@@ -68,12 +121,24 @@ func TopoDelete(c *gin.Context) {
 		glog.Errorf("Invaild id")
 		return
 	}
-	if err := topo.DeleteOp(node.Id); err != nil {
+	if node.DeviceType != "vmc" {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "DeleteOp failed",
+			"msg":  "This type of device is not vmc",
 		})
+		glog.Errorf("This type of device is not vmc")
 		return
+	}
+	for _, tNode := range topo.Node {
+		if tNode.ParentId == uint16(node.Id) || tNode.Id == node.Id {
+			if err := topo.DeleteOp(node.Id); err != nil {
+				c.JSON(http.StatusOK, gin.H{
+					"code": -1,
+					"msg":  "DeleteOp failed",
+				})
+				return
+			}
+		}
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"code": 0,

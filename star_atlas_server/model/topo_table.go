@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	cTopoID  = "topo_table"
-	cVMCBase = int64(10e6)
-	cRTUBase = int64(10e3)
+	CTopoID  = "topo_table"
+	CVMCBase = int64(10e6)
+	CRTUBase = int64(10e3)
 )
 
 // var appStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
@@ -60,7 +60,7 @@ type pNodesArr []*Nodes
 func (v *VMCData) parseCPU(nodes *pNodesArr) {
 	for i := 0; i < int(v.CPUNumber); i++ {
 		n := &Nodes{
-			Id:           int64(v.VMCID)*cVMCBase + int64(v.CPUSet[i].ID),
+			Id:           int64(v.VMCID)*CVMCBase + int64(v.CPUSet[i].ID),
 			Name:         v.CPUSet[i].Name,
 			DeviceType:   "cpu",
 			ParentId:     uint16(v.VMCID),
@@ -77,7 +77,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 func (v *VMCData) parseGPU(nodes *pNodesArr) {
 	for i := 0; i < int(v.GPUNumber); i++ {
 		n := &Nodes{
-			Id:           int64(v.VMCID)*cVMCBase + int64(v.GPUSet[i].ID),
+			Id:           int64(v.VMCID)*CVMCBase + int64(v.GPUSet[i].ID),
 			Name:         v.GPUSet[i].Name,
 			DeviceType:   "gpu",
 			ParentId:     uint16(v.VMCID),
@@ -94,7 +94,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 func (v *VMCData) parseDSP(nodes *pNodesArr) {
 	for i := 0; i < int(v.DSPNumber); i++ {
 		n := &Nodes{
-			Id:           int64(v.VMCID)*cVMCBase + int64(v.DSPSet[i].ID),
+			Id:           int64(v.VMCID)*CVMCBase + int64(v.DSPSet[i].ID),
 			Name:         v.DSPSet[i].Name,
 			DeviceType:   "dsp",
 			ParentId:     uint16(v.VMCID),
@@ -111,7 +111,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 	for i := 0; i < int(v.FPGANumber); i++ {
 		n := &Nodes{
-			Id:           int64(v.VMCID)*cVMCBase + int64(v.FPGASet[i].ID),
+			Id:           int64(v.VMCID)*CVMCBase + int64(v.FPGASet[i].ID),
 			Name:         v.FPGASet[i].Name,
 			DeviceType:   "fpga",
 			ParentId:     uint16(v.VMCID),
@@ -162,7 +162,7 @@ func (v *VMCData) parseSwitch(nodes *pNodesArr) {
 func (v *VMCData) parseRTU(nodes *pNodesArr) {
 	for i := 0; i < int(v.RemoteUnitNumber); i++ {
 		n := &Nodes{
-			Id:           int64(v.RemoteUnitSet[i].LinkTo)*cRTUBase + int64(v.RemoteUnitSet[i].RemoteUnitOrder),
+			Id:           int64(v.RemoteUnitSet[i].LinkTo)*CRTUBase + int64(v.RemoteUnitSet[i].RemoteUnitOrder),
 			Name:         v.RemoteUnitSet[i].RemoteUnitName,
 			DeviceType:   "rtu",
 			ParentId:     0,
@@ -191,7 +191,7 @@ func NewTransferInfos(v *VMCData) []*TransferInfos {
 
 func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	return &TopoTable{
-		Id:           cTopoID,
+		Id:           CTopoID,
 		Node:         NewNodes(v, isFirst),
 		TransferInfo: NewTransferInfos(v),
 	}
@@ -200,7 +200,7 @@ func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 func (t *TopoTable) CreateOp(v *VMCData) error {
 	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": cTopoID}, t)
 	if err != nil {
-		glog.Errorf("[CreateOp] Find error  err:%+v", err)
+		glog.Infof("[CreateOp] Find error  err:%+v", err)
 	}
 	glog.Infof("[CreateOp] find return: %+v", t)
 	if t.Id == "" {
@@ -243,6 +243,26 @@ func (t *TopoTable) DeleteOp(id int64) error {
 	}
 	t.Node = append(t.Node[:index], t.Node[index+1:]...)
 	return t.UpdateOp()
+}
+
+func (t *TopoTable) GetMaxVmcId() (int64, error) {
+	err := t.CollectOp()
+	if err != nil {
+		glog.Errorf("[DeleteOp] Find error err:%+v", err)
+		return -1, err
+	}
+	var maxId int64 = -1
+	for _, node := range t.Node {
+		if node.DeviceType == "vmc" {
+			if node.Id > maxId {
+				maxId = node.Id
+			}
+		}
+	}
+	if maxId == -1 {
+		return -1, fmt.Errorf("cannot vmc device in the topo_table")
+	}
+	return maxId, nil
 }
 
 func (t *TopoTable) GetVmcStatus(vmc_id int64) (string, error) {
