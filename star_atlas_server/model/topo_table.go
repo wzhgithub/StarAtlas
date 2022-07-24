@@ -200,7 +200,7 @@ func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 func (t *TopoTable) CreateOp(v *VMCData) error {
 	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": cTopoID}, t)
 	if err != nil {
-		glog.Infof("[CreateOp] Find error  err:%+v", err)
+		glog.Infof("[CreateOp] Cannot find, create a new topo_table")
 	}
 	glog.Infof("[CreateOp] find return: %+v", t)
 	if t.Id == "" {
@@ -223,7 +223,7 @@ func (t *TopoTable) UpdateOp() error {
 func (t *TopoTable) InsertOp(node *Nodes) error {
 	err := t.CollectOp()
 	if err != nil {
-		glog.Errorf("[InsertOp] Find error err:%+v", err)
+		return fmt.Errorf("[InsertOp] Find error err:%+v", err)
 	}
 	t.Node = append(t.Node, node)
 	return t.UpdateOp()
@@ -232,7 +232,7 @@ func (t *TopoTable) InsertOp(node *Nodes) error {
 func (t *TopoTable) DeleteOp(id int64) error {
 	err := t.CollectOp()
 	if err != nil {
-		glog.Errorf("[DeleteOp] Find error err:%+v", err)
+		return fmt.Errorf("[DeleteOp] Find error err:%+v", err)
 	}
 	var index int
 	for idx, node := range t.Node {
