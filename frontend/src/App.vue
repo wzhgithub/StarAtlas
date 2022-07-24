@@ -114,6 +114,10 @@ export default {
   background: url("./assets/png/header.png") no-repeat;
   background-size: cover;
   vertical-align: middle;
+  ul {
+    height: 100%;
+    width: 100%;
+  }
 }
 .view_contenter {
   width: 100%;
@@ -189,7 +193,7 @@ ul {
 
 .nav .drop-down:hover .drop-down-content {
   opacity: 1;
-  height: 15vh;
+  height: 100%;
   z-index: 999;
   padding: 0;
   // background-color: #fff;

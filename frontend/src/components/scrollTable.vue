@@ -1,5 +1,5 @@
 <template>
-  <div style="cursor: default; margin: 1.5rem 0.8rem 1.3rem">
+  <div style="cursor: default; margin: 0rem 0.8rem 1.3rem">
     <div class="table-header table-row">
       <div class="table-cell" style="width: 25%">分区一</div>
       <div class="table-cell" style="width: 25%">分区二</div>
@@ -25,28 +25,76 @@
               <h3>任务详情</h3>
               <p>任务名：{{ item.productName }}</p>
               <p>所在分区：分区一</p>
+              <p>任务类型：控制任务</p>
+              <p>状态：运行中</p>
             </div>
             <div
               class="table-cell"
               style="width: 25%"
               :title="item.productName"
             >
-              {{ item.productName }}
+              <img src="../assets/othericon/control/running.svg" alt="" />
+              <!-- {{ item.productName }} -->
             </div>
           </el-tooltip>
-          <div class="table-cell" style="width: 25%" :title="item.coreName">
-            {{ item.coreName }}
-          </div>
-          <div class="table-cell" style="width: 25%" :title="item.publish">
-            {{ item.publish }}
-          </div>
-          <div
-            class="table-cell"
-            style="width: 25%"
-            :title="item.publishAmount"
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
           >
-            {{ item.publishAmount }}
-          </div>
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：任务1084</p>
+              <p>所在分区：分区二</p>
+              <p>任务类型：管理任务</p>
+              <p>状态：运行中</p>
+            </div>
+            <div class="table-cell" style="width: 25%" :title="item.coreName">
+              <img src="../assets/othericon/manage/running.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
+          >
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：任务3452</p>
+              <p>所在分区：分区三</p>
+              <p>任务类型：计算任务</p>
+              <p>状态：睡眠</p>
+            </div>
+            <div class="table-cell" style="width: 25%" :title="item.publish">
+              <img src="../assets/othericon/calculation/sleep.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
+          >
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：任务7684</p>
+              <p>所在分区：分区四</p>
+              <p>任务类型：管理任务</p>
+              <p>状态：阻塞</p>
+            </div>
+            <div
+              class="table-cell"
+              style="width: 25%"
+              :title="item.publishAmount"
+            >
+              <img src="../assets/othericon/manage/block.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
         </div>
       </div>
     </div>
@@ -116,6 +164,11 @@ export default {
   font-size: 1.4rem;
   text-overflow: ellipsis;
   overflow: hidden;
+  img {
+    // width: 5rem;
+    height: 3rem;
+    // display: inline-block;
+  }
 }
 // .hasBgc {
 //   background: rgb(0, 59, 81);
