@@ -8,14 +8,35 @@
 
 using std::map;
 using std::string;
+using std::function;
 
 const char* szConfBasePath = "conf/topology";
 const char* szConfArray[] = {
   "switch.json",
   "remote.json",
-  "tasks.json",
+  //"tasks.json",
 };
-const char* szVmcPrefix = "vmc_";
+
+typedef function<int (rapidjson::Document&, vector<Device>&)> ParseFunc;
+
+ParseFunc _parser[] = {
+  parseSwitch,
+  parseRemote,
+  //parsePartition,
+};
+
+class JsonParser {
+public:
+  string m_fname;
+  ParseFunc m_func;
+
+public:
+  JsonParser(const char* _name, ParseFunc _parse_func = parseDefault):
+    m_fname(_name), m_func(_parse_func) {
+  }
+};
+
+const char szVmcPrefix[] = "vmc";
 constexpr size_t nConf = sizeof(szConfArray)/sizeof(const char*);
 
 int main(int argc, char* argv[]) {
@@ -42,7 +63,7 @@ int main(int argc, char* argv[]) {
   p[0] = '\0';
 
   vector<string> _vmc;
-  get_vmc_conf(dir, _vmc);
+  get_vmc_conf(dir, _vmc, szVmcPrefix, sizeof(szVmcPrefix));
 
   bool _bflag = false;
   for (size_t h=0; h<_vmc.size(); h++) {
@@ -54,7 +75,7 @@ int main(int argc, char* argv[]) {
       exit(-1);
     }
     
-    
+    // parse remote & switch & task
   }
   exit(0);
 

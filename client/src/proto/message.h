@@ -44,7 +44,7 @@ public:
   
   // block
   uint8_t m_total_partition;
-  vector<Partition> m_partition;
+  vector<Partition> m_partitions;
 
 public:
   TeleMessage();
@@ -73,6 +73,9 @@ private:
 public:
   FaultMsg();
   virtual ~FaultMsg();
+
+public:
+  uint16_t size() const { return m_size; }
 
 public:
   int pack(char* buf);

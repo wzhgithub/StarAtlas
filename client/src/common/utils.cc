@@ -14,7 +14,7 @@ char* get_cur_dir(char* dir, size_t sz) {
   return plast;
 }
 
-size_t get_vmc_conf(const char* dir_name, vector<string>& arr) {
+size_t get_vmc_conf(const char* dir_name, vector<string>& arr, const char* _prefix, size_t _len) {
   size_t sz = arr.size();
   struct stat s;
   lstat(dir_name, &s);
@@ -24,7 +24,7 @@ size_t get_vmc_conf(const char* dir_name, vector<string>& arr) {
 
   struct dirent* filename;
   while ((filename = readdir(dir))!=NULL) {
-    if(strncmp(filename->d_name, "vmc", 3)!=0) {
+    if(strncmp(filename->d_name, _prefix, _len)!=0) {
       continue;
     }
     string s(dir_name);

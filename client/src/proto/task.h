@@ -1,12 +1,19 @@
 #ifndef _PROTO_TASK_INCLUDED_
 #define _PROTO_TASK_INCLUDED_
 
+#include <stdint.h>
+#include <vector>
+
 #include "rapidjson/schema.h"
 #include "rapidjson/stringbuffer.h"
 
+using std::vector;
+
+constexpr int _LEN_TASK_NAME_ = 2;
+constexpr int _LEN_PARTITION_NAME_ = 10;
+
 class Task {
 public:
-# define _LEN_TASK_NAME_ 2
   char m_name[_LEN_TASK_NAME_];
 
   uint16_t m_index;
@@ -28,7 +35,6 @@ public:
 
 class Partition {
 private:
-# define _LEN_PARTITION_NAME_ 10
   char m_name[_LEN_PARTITION_NAME_];
   uint8_t m_total_task;
   uint16_t m_duration;
@@ -41,6 +47,9 @@ private:
   vector<Task> m_tasks;
 
 public:
+  uint8_t task_count() const {return m_total_task;}
+
+public:
   Partition();
   virtual ~Partition();
 
@@ -49,7 +58,7 @@ public:
   int pack(char* buf);
 
 public:
-  bool parseTask(rapidjson::Document& _document);
+  bool parseTask(const rapidjson::Value& _document);
   void updateTask();
   void reset();
 };

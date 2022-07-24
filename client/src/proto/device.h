@@ -1,6 +1,8 @@
 #ifndef _PROTO_DEVICE_INCLUDED_
 #define _PROTO_DEVICE_INCLUDED_
 
+#include <stdint.h>
+
 typedef enum {
   eCPU = 0x0,
   eDSP,
@@ -11,7 +13,7 @@ typedef enum {
   eInvalid
 } EDeviceType;
 
-uint16_t g_device_tag[] = {
+static uint16_t g_device_tag[] = {
   0xeba0, 0xebaa, // CPU
   0xebb0, 0xebbb, // DSP 
   0xebc0, 0xebcc, // GPU
@@ -21,7 +23,7 @@ uint16_t g_device_tag[] = {
   0x0, 0x0
 };
 
-char gaszDevNameFmt[][10] = {
+static char gaszDevNameFmt[][10] = {
   "CPU_%04d",
   "DSP_%04d",
   "GPU_%04d",
@@ -31,7 +33,7 @@ char gaszDevNameFmt[][10] = {
   ""
 };
 
-uint8_t gDevType[] = {
+static uint8_t gDevType[] = {
   4, // ARM:0,RISC_V:1,SPARC:2,PPC:3,MIPS:4
   2, // 6701:0,6678:1,8024:2
   0, // NVIDIA AGX:0

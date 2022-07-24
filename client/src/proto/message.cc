@@ -1,7 +1,11 @@
 #include "message.h"
 #include "common/utils.h"
 
-TeleMessage::TeleMessage(uint8_t idx, uint8_t idx_exchange, const char* name) {
+#include <iostream>
+
+#include <arpa/inet.h>
+
+TeleMessage::TeleMessage() {
   m_tag = 0xeb;
   m_size = 0; // set later
   m_type = 0x55; // message type
@@ -30,19 +34,21 @@ void TeleMessage::init(uint8_t idx, uint8_t idx_exchange, const char* name) {
 
 uint16_t TeleMessage::getSize() {
   m_size = 31; // init
-  int n_total = cnt_remote + cnt_exchange + cnt_cpu + cnt_dsp + cnt_gpu + cnt_fpga, n_idx = 0;
-  m_size += ((cnt_remote+cnt_exchange)*13 + (cnt_cpu+cnt_dsp)*21 + cnt_gpu*19 + cnt_fpga*12);
-  if (cnt_remote) m_size+=3;
-  if (cnt_exchange) m_size+=3;
-  if (cnt_cpu) m_size+=3;
-  if (cnt_dsp) m_size+=3;
-  if (cnt_gpu) m_size+=3;
-  if (cnt_fpga) m_size+=3;
+  int n_total = m_cnt_remote + m_cnt_exchange +
+    m_total_cpu + m_total_dsp + m_total_gpu + m_total_fpga, n_idx = 0;
+  m_size += ( (m_cnt_remote+m_cnt_exchange)*13 + 
+    (m_total_cpu+m_total_dsp)*21 + m_total_gpu*19 + m_total_fpga*12);
+  if (m_cnt_remote) m_size+=3;
+  if (m_cnt_exchange) m_size+=3;
+  if (m_total_cpu) m_size+=3;
+  if (m_total_dsp) m_size+=3;
+  if (m_total_gpu) m_size+=3;
+  if (m_total_fpga) m_size+=3;
   
   // partition
   m_size += 1;
-  for (size_t h=0; h<m_partition.size(); h++) {
-    m_size += (18+12*m_partition[h].m_total_task);
+  for (size_t h=0; h<m_partitions.size(); h++) {
+    m_size += (18+12*m_partitions[h].task_count());
   } 
   m_size += 1; // crc
   return m_size;
@@ -108,10 +114,10 @@ int TeleMessage::pack(char* buf) {
   }
 
   ((uint8_t*)p++)[0] = m_total_partition;
-  for (int i=0; i<m_total_block; i++) {
-    p+=m_partition[i].pack(p);
+  for (int i=0; i<m_total_partition; i++) {
+    p+=m_partitions[i].pack(p);
   }
-  ((uint8_t*)p++)[0] = crc_calculate(buf, m_size-1); //crc
+  ((uint8_t*)p++)[0] = crc_calculate((uint8_t*)buf, m_size-1); //crc
   return (int)(p-buf);
 }
 
@@ -132,13 +138,13 @@ bool TeleMessage::parseVmc(rapidjson::Document& _document) {
   if (!_document.HasMember("index") ||
       !_document.HasMember("connect_to") ||
       !_document.HasMember("name")) {
-    cerr << "Invalid vmc. " << endl;
+    std::cerr << "Invalid vmc. " << std::endl;
     return false;
   }
   
   init(uint8_t(_document["index"].GetInt()),
        uint8_t(_document["connect_to"].GetInt()),
-       _document["name"].GetString().c_str());
+       _document["name"].GetString());
   return true;
 }
 
@@ -164,7 +170,7 @@ int FaultMsg::pack(char* buf) {
 ControlMessage::ControlMessage() {
   m_tag = 0xeb;
   m_size = 7;
-  m_size += m_msg.m_size; // 13 bytes;
+  m_size += m_msg.size(); // 13 bytes;
   m_type = 0xAA;
 }
 

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 #include <arpa/inet.h>
 
@@ -41,7 +42,7 @@ void Task::updateTask(uint32_t exe_time, uint8_t ret_code) {
 int Task::pack(char *buf) {
   char* p = buf;
   memcpy(p, m_name, _LEN_TASK_NAME_); 
-  p+=_LEN_TASK_NAME;
+  p+=_LEN_TASK_NAME_;
   ((uint16_t*)p)[0] = htons(m_index); p+=2;
   ((uint8_t*)p++)[0] = m_type;
   ((uint8_t*)p++)[0] = m_status;
@@ -90,16 +91,16 @@ int Partition::pack(char* buf) {
   return (int)(p-buf);
 }
 
-bool Partition::parseTask(rapidjson::Document& _document) {
+bool Partition::parseTask(const rapidjson::Value& _document) {
   if (!_document.HasMember("tasks")) {
-    cerr << "Empty tasks." << endl;
+    std::cerr << "Empty tasks." << std::endl;
     return false;
   }
 
   const auto& _tasks = _document["tasks"].GetArray();
   for (const auto& _task: _tasks) {
     if (!_task.IsObject()) {
-      cerr << "Invalid task: " << _task.GetString() << endl;
+      std::cerr << "Invalid task: !_task.IsObject() " << std::endl;
       m_tasks.clear();
       return false;
     }
@@ -109,18 +110,18 @@ bool Partition::parseTask(rapidjson::Document& _document) {
         !_task.HasMember("type") ||
         !_task.HasMember("status") ||
         !_task.HasMember("start_time")) {
-      cerr << "Invalid task: " << _task.GetString() << endl;
+      std::cerr << "Invalid task: <name|index|type|status|start_time> needed." << std::endl;
       m_tasks.clear();
       return false;
     }
 
     Task oTask;
     oTask.init(
-      uint16_t(_task.GetInt("index")),
-      uint8_t(_task.GetInt("type")),
-      uint8_t(_task.GetInt("status")),
-      uint8_t(_task.GetInt("start_time")),
-      _task.GetString("name").c_str());
+      uint16_t(_task["index"].GetInt()),
+      uint8_t(_task["type"].GetInt()),
+      uint8_t(_task["status"].GetInt()),
+      uint8_t(_task["start_time"].GetInt()),
+      _task["name"].GetString());
 
     m_tasks.emplace_back(std::move(oTask));
   }
