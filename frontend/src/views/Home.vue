@@ -242,8 +242,8 @@ export default {
         background-position: 0 15%;
         z-index: -100;
         .middlebox {
-          width: 60%;
-          height: 75%;
+          width: 60vh;
+          height: 60vh;
           background: url("../assets/newpng/center_bgi_2.png") no-repeat center;
           background-size: 100% 100%;
           transform: rotate(0deg);
@@ -256,7 +256,7 @@ export default {
             height: 100%;
             background: url("../assets/newpng/center_bgi_3.png") no-repeat
               center;
-            background-size: 92% 91%;
+            background-size: 92% 92%;
             background-position: 50% 55%;
             transform: rotate(0deg);
             animation-timing-function: linear;
@@ -268,7 +268,7 @@ export default {
               height: 100%;
               background: url("../assets/newpng/center_bgi_4.png") no-repeat
                 center;
-              background-size: 92% 91%;
+              background-size: 92% 92%;
               background-position: 50% 55%;
               transform: rotate(0deg);
               animation-timing-function: linear;
@@ -280,7 +280,7 @@ export default {
                 height: 100%;
                 background: url("../assets/newpng/center_bgi_5.png") no-repeat
                   center;
-                background-size: 92% 91%;
+                background-size: 92% 92%;
                 background-position: 50% 55%;
                 transform: rotate(0deg);
                 animation-timing-function: linear;

@@ -40,7 +40,48 @@
       </div>
       <div v-else class="mainbox">
         <div class="aside_box">
-          <img class="miansvg" src="../assets/newpng/sw.svg" alt="" />
+          <div class="grid-content_btn">
+            <button @click="mockError(1)">模拟整机故障</button>
+          </div>
+          <div class="grid-content_btn">
+            <button @click="mockError(0)">模拟分区故障</button>
+          </div>
+          <img
+            v-if="deviceType === 'sw'"
+            class="miansvg"
+            src="../assets/newpng/sw.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'CPU'"
+            class="miansvg"
+            src="../assets/newpng/CPU.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'GPU'"
+            class="miansvg"
+            src="../assets/newpng/GPU.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'DSP'"
+            class="miansvg"
+            src="../assets/newpng/DSP.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'FPGA'"
+            class="miansvg"
+            src="../assets/newpng/FPGA.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'VMC'"
+            class="miansvg"
+            src="../assets/newpng/VMC.svg"
+            alt=""
+          />
         </div>
         <div class="aside_box_line_bar">
           <p class="title">
@@ -85,6 +126,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 import "@/lib/loaders.min.css";
@@ -102,10 +144,10 @@ import flow from "@/assets/flow.png";
 import cloud from "@/assets/network/cloud.png";
 import { nameOrAll } from "@/api";
 // import text from "../assets/data/topo.json";
-import imgcpu from "@/assets/newpng/CPU.jpg";
-import imggpu from "@/assets/newpng/GPU.jpg";
-import imgdsp from "@/assets/newpng/DSP.jpg";
-import imgfgpa from "@/assets/newpng/FPGA.jpg";
+import imgcpu from "@/assets/newpng/CPU.svg";
+import imggpu from "@/assets/newpng/GPU.svg";
+import imgdsp from "@/assets/newpng/DSP.svg";
+import imgfgpa from "@/assets/newpng/FPGA.svg";
 import imgsw from "@/assets/newpng/sw.svg";
 import imgop1 from "@/assets/newpng/op_1.svg";
 import imgop2 from "@/assets/newpng/op_2.svg";
@@ -136,6 +178,7 @@ export default {
       flowColor_vpn: "#00FF00",
       drawer: false,
       devicename: "",
+      deviceType: "",
       topoData: [
         {
           id: 0,
@@ -247,6 +290,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setDisVmc", "setDisArea"]),
     async getNameOAll() {
       const { data } = await nameOrAll();
       // data = JSON.parse(data)
@@ -432,7 +476,7 @@ export default {
           }, 50);
         },
       };
-      function createNode(image, x, y, name, group, randomFlag) {
+      function createNode(image, x, y, name, group, randomFlag, nodesType) {
         var node = graph.createNode(name, x, y);
         if (image) {
           if (Q.isString(image)) {
@@ -449,6 +493,7 @@ export default {
         node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
         node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
         node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
+        node.nodesType = nodesType;
         // node.setStyle(Q.Styles., 25);
         model.add(node);
         return node;
@@ -468,6 +513,7 @@ export default {
         node.randomAble = randomFlag || false;
         node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
         node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
+        node.nodesType = "sw";
         model.add(node);
         return node;
       }
@@ -505,6 +551,7 @@ export default {
         group.setStyle(Q.Styles.LABEL_FONT_SIZE, 30);
         // group.setStyle(Q.Styles.GROUP_BACKGROUND_COLOR, false);
         // group.setStyle(Q.Styles.ALPHA, "0");
+        group.nodesType = "VMC";
         return group;
       }
       function createEdge(a, b, color, dashed, name) {
@@ -513,8 +560,13 @@ export default {
           edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
         }
         edge.setStyle(Q.Styles.EDGE_WIDTH, 5);
-        edge.setStyle(Q.Styles.EDGE_COLOR, "#2f6da0");
+        edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
         edge.setStyle(Q.Styles.ARROW_TO, false);
+        edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
+        edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
+        edge.nodesType = "line";
+        // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
         return edge;
       }
       function createBus(path) {
@@ -546,11 +598,11 @@ export default {
 
       // createText("公共事业服务中心\n网络拓扑", 859, 100, 40, "#F00");
 
-      var bus = createBus();
-      bus.moveTo(-600, 460);
-      bus.lineTo(-600, 540);
-      bus.moveTo(-600, 500);
-      bus.lineTo(600, 500);
+      // var bus = createBus();
+      // bus.moveTo(-600, 460);
+      // bus.lineTo(-600, 540);
+      // bus.moveTo(-600, 500);
+      // bus.lineTo(600, 500);
       // var node = graph.createNode(name, x, y);
       // node.image = Q.Shapes.getShape(Q.Consts.SHAPE_RECT, 30, 15);
       // node.setStyle(Q.Styles.SHAPE_FILL_COLOR, "#888");
@@ -560,10 +612,10 @@ export default {
       // var obc2 = createGroup(20, false, exchange2, vmc1, "obc2");
       // var obc3 = createGroup(20, false, exchange2, vmc1, "obc3");
       // var obc4 = createGroup(20, false, exchange2, vmc1, "obc4");
-      var cpu = createNode(imgcpu, -120, 100, "cpu", vmc1, true);
-      var gpu = createNode(imggpu, -270, 100, "gpu", vmc1, true);
-      var dsp = createNode(imgdsp, -420, 100, "dsp", vmc1, true);
-      var fpga = createNode(imgfgpa, -570, 100, "fpga", vmc1, true);
+      var cpu = createNode(imgcpu, -120, 100, "cpu", vmc1, true, "CPU");
+      var gpu = createNode(imggpu, -270, 100, "gpu", vmc1, true, "GPU");
+      var dsp = createNode(imgdsp, -420, 100, "dsp", vmc1, true, "DSP");
+      var fpga = createNode(imgfgpa, -570, 100, "fpga", vmc1, true, "FPGA");
       // vmc1.addChild(obc1);
       // vmc1.addChild(obc2);
       // vmc1.addChild(obc3);
@@ -574,10 +626,10 @@ export default {
       // var obc2_ = createGroup(20, false, exchange2, vmc2, "obc2");
       // var obc3_ = createGroup(20, false, exchange2, vmc2, "obc3");
       // var obc4_ = createGroup(20, false, exchange2, vmc2, "obc4");
-      var cpu_ = createNode(imgcpu, 120, 900, "cpu", vmc2, true);
-      var gpu_ = createNode(imggpu, 270, 900, "gpu", vmc2, true);
-      var dsp_ = createNode(imgdsp, 420, 900, "dsp", vmc2, true);
-      var fpga_ = createNode(imgfgpa, 570, 900, "fpga", vmc2, true);
+      var cpu_ = createNode(imgcpu, 120, 900, "cpu", vmc2, true, "CPU");
+      var gpu_ = createNode(imggpu, 270, 900, "gpu", vmc2, true, "GPU");
+      var dsp_ = createNode(imgdsp, 420, 900, "dsp", vmc2, true, "DSP");
+      var fpga_ = createNode(imgfgpa, 570, 900, "fpga", vmc2, true, "FPGA");
       // vmc2.addChild(obc1_);
       // vmc2.addChild(obc2_);
       // vmc2.addChild(obc3_);
@@ -587,32 +639,33 @@ export default {
       var exchange2_ = createSw(imgsw, 345, 700, "Switch2", null, true);
       var exchange3_ = createSw(imgsw, -300, 700, "Switch3", null, true);
       var exchange4_ = createSw(imgsw, 370, 350, "Switch4", null, true);
-      var edge = createEdge(exchange1_, bus);
-      var edge_ = createEdge(exchange2_, bus);
-      var edge3_ = createEdge(bus, exchange3_);
-      var edge4_ = createEdge(bus, exchange4_);
-      edge.angle = Math.PI / 2;
-      edge_.angle = Math.PI / 2;
-      edge3_.angle = Math.PI / 2;
-      edge4_.angle = Math.PI / 2;
+      var exchange5_ = createSw(imgsw, 0, 525, "centerSwitch", null, true);
+      var edge = createEdge(exchange1_, exchange5_);
+      var edge_ = createEdge(exchange2_, exchange5_);
+      var edge3_ = createEdge(exchange5_, exchange3_);
+      var edge4_ = createEdge(exchange5_, exchange4_);
+      // edge.angle = Math.PI / 2;
+      // edge_.angle = Math.PI / 2;
+      // edge3_.angle = Math.PI / 2;
+      // edge4_.angle = Math.PI / 2;
 
       var edgevc11 = createEdge(cpu, exchange1_);
       var edgevc12 = createEdge(gpu, exchange1_);
       var edgevc13 = createEdge(dsp, exchange1_);
       var edgevc14 = createEdge(fpga, exchange1_);
-      edgevc11.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      edgevc12.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      edgevc13.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      edgevc14.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc11.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc12.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc13.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc14.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
 
       var edgevc11_ = createEdge(cpu_, exchange2_);
       var edgevc12_ = createEdge(gpu_, exchange2_);
       var edgevc13_ = createEdge(dsp_, exchange2_);
       var edgevc14_ = createEdge(fpga_, exchange2_);
-      edgevc11_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      edgevc12_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      edgevc13_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      edgevc14_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc11_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc12_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc13_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+      // edgevc14_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
 
       var h1 = createSw(imgop1, -150, 900, "远置单元1", null, true);
       var h2 = createSw(imgop2, -300, 900, "远置单元2", null, true);
@@ -706,10 +759,29 @@ export default {
       graph.enableWheelZoom = false;
       graph.onclick = function (evt) {
         if (evt.getData()) {
-          that.drawer = true;
-          that.devicename = evt.getData().name;
+          if (evt.getData().nodesType) {
+            that.deviceType = evt.getData().nodesType;
+            that.drawer = true;
+            that.devicename = evt.getData().name;
+          }
         }
       };
+    },
+    mockError(type) {
+      this.drawer = false;
+      if (type) {
+        this.$message({
+          message: "模拟整机故障触发成功，可前往容灾演示页面查看任务迁移详情",
+          type: "success",
+        });
+        this.setDisVmc(new Date().valueOf());
+      } else {
+        this.$message({
+          message: "模拟分区故障触发成功，可前往容灾演示页面查看任务迁移详情",
+          type: "success",
+        });
+        this.setDisArea(new Date().valueOf());
+      }
     },
   },
   mounted() {
@@ -718,7 +790,7 @@ export default {
       setTimeout(() => {
         this.drawAllCanvas();
       }, 500);
-    }, 3000);
+    }, 2000);
   },
 
   created() {
@@ -750,8 +822,27 @@ export default {
   // background: rgb(207, 160, 160);
   // padding: 1%;
   // box-sizing: border-box;
+  .grid-content_btn {
+    padding: 1rem;
+    display: inline-block;
+    width: 40%;
+    button {
+      width: 100%;
+      height: 4vh;
+      background: url("../assets/png/btnbgc_.png") no-repeat center;
+      background-size: 100% 100%;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      &:hover {
+        background: url("../assets/png/btnbgc.png") no-repeat center;
+        background-size: 100% 100%;
+        color: rgb(222, 241, 255);
+        text-shadow: rgb(30 222 255 / 37%) 0px 0px 9px;
+      }
+    }
+  }
   .miansvg {
-    width: 50%;
+    width: 40%;
     margin-left: 25%;
   }
 }

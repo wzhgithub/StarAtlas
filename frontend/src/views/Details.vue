@@ -56,26 +56,26 @@
                 <div id="showcase" class="noselect">
                   <img
                     class="cloud9-item"
-                    src="../assets/newpng/CPU.jpg"
+                    src="../assets/newpng/CPU.svg"
                     alt="Firefox"
                     @click="dealWithTypeClick(0)"
                   />
 
                   <img
                     class="cloud9-item"
-                    src="../assets/newpng/FPGA.jpg"
+                    src="../assets/newpng/FPGA.svg"
                     alt="Opera"
                     @click="dealWithTypeClick(3)"
                   />
                   <img
                     class="cloud9-item"
-                    src="../assets/newpng/DSP.jpg"
+                    src="../assets/newpng/DSP.svg"
                     alt="Wyzo"
                     @click="dealWithTypeClick(2)"
                   />
                   <img
                     class="cloud9-item"
-                    src="../assets/newpng/GPU.jpg"
+                    src="../assets/newpng/GPU.svg"
                     alt="Opera"
                     @click="dealWithTypeClick(1)"
                   />
