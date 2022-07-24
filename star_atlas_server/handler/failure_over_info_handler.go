@@ -31,8 +31,19 @@ func GetFailureOverInfo(c *gin.Context) {
 		c.JSON(400, model.NewCommonResponseFail(err))
 		return
 	}
-
-	c.JSON(200, model.NewCommonResponseSucc(fr_list))
+	ret_fr_list := []FailureOverRequest{}
+	filter_map := make(map[string]bool)
+	for _, fr := range fr_list {
+		key := fmt.Sprintf("%s_%s_%s_%s_%s_%s",
+			fr.From.VMCID, fr.From.AppID, fr.From.TaskID, fr.To.VMCID, fr.To.AppID, fr.To.TaskID)
+		_, ok := filter_map[key]
+		if ok {
+			continue
+		}
+		filter_map[key] = true
+		ret_fr_list = append(ret_fr_list, fr)
+	}
+	c.JSON(200, model.NewCommonResponseSucc(ret_fr_list))
 }
 
 // reture the most recently failure over vmcdata

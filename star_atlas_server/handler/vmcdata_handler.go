@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"net/http"
 	"os/exec"
 	"star_atlas_server/model"
 	"strconv"
@@ -49,25 +50,40 @@ func GetVMCData(c *gin.Context) {
 	err := vmcdata_read.CollectVMCData(int32(vmc_id))
 	if err != nil {
 		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
-		c.JSON(400, &VMCDataRspJson{Success: false, Msg: "fail"})
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 	// glog.Infof("vmcdata_read: %+v\n", vmcdata_read)
 	vmcdata_rsp := vmcdata_read.TransferVMCDataToJson()
 	if vmcdata_rsp == nil {
 		glog.Error("failed to transfer vmcdata into Json")
-		c.JSON(400, &VMCDataRspJson{Success: false, Msg: "fail"})
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
-	rsp := &VMCDataRspJson{}
-	rsp.Success = true
-	rsp.Data = *vmcdata_rsp
-	rsp.Code = 0
-	rsp.Msg = "ok"
-
-	c.JSON(200, rsp)
-
+	// construct topo
+	topo := &model.TopoTable{}
+	err = topo.CollectOp()
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Failed to collect topo from db",
+		})
+		glog.Error("Failed to collect topo from db, error: %s\n", err.Error())
+		return
+	}
+	status, err := topo.GetVmcStatus(vmc_id)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  fmt.Sprintf("Failed to GetVmcStatus, when vmc_id = %d", vmc_id),
+		})
+		glog.Errorf("Failed to GetVmcStatus, when vmc_id = %d, error: %s\n", vmc_id, err.Error())
+	}
+	if status == "RUN" {
+		model.NewCommonResponseSucc(*vmcdata_rsp)
+	}
+	model.NewCommonResponseSucc(status)
 }
 
 type VMCSequenceRspJson struct {
