@@ -2,7 +2,6 @@ package handler
 
 import (
 	"fmt"
-	"net/http"
 	"os/exec"
 	"star_atlas_server/model"
 	"strconv"
@@ -49,14 +48,14 @@ func GetVMCData(c *gin.Context) {
 	vmcdata_read := &model.VMCData{}
 	err := vmcdata_read.CollectVMCData(int32(vmc_id))
 	if err != nil {
-		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
+		glog.Errorf("failed read vmcdata from db, error: %s\n", err.Error())
 		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 	// glog.Infof("vmcdata_read: %+v\n", vmcdata_read)
 	vmcdata_rsp := vmcdata_read.TransferVMCDataToJson()
 	if vmcdata_rsp == nil {
-		glog.Error("failed to transfer vmcdata into Json")
+		glog.Errorf("failed to transfer vmcdata into Json")
 		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
@@ -65,19 +64,13 @@ func GetVMCData(c *gin.Context) {
 	topo := &model.TopoTable{}
 	err = topo.CollectOp()
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  "Failed to collect topo from db",
-		})
-		glog.Error("Failed to collect topo from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
+		glog.Errorf("Failed to collect topo from db, error: %s\n", err.Error())
 		return
 	}
 	status, err := topo.GetVmcStatus(vmc_id)
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": -1,
-			"msg":  fmt.Sprintf("Failed to GetVmcStatus, when vmc_id = %d", vmc_id),
-		})
+		c.JSON(500, model.NewCommonResponseFail(err))
 		glog.Errorf("Failed to GetVmcStatus, when vmc_id = %d, error: %s\n", vmc_id, err.Error())
 	}
 	if status == "RUN" {
@@ -101,14 +94,14 @@ func GetVMCSequence(c *gin.Context) {
 		vmcid, err := strconv.ParseInt(vid[0], 10, 32)
 		if err != nil {
 			glog.Errorf("Parse vmcid: %s faild", vmcid)
-			c.JSON(400, &VMCSequenceRspJson{Success: false, Msg: "Parse vmcid error"})
+			c.JSON(500, &VMCSequenceRspJson{Success: false, Msg: "Parse vmcid error"})
 			return
 		}
 		vmcs, err := vmcdata_read.GetVMCList(int32(vmcid))
 
 		if err != nil && len(vmcs) == 0 {
 			glog.Errorf("get vmcid: %s faild", vmcid)
-			c.JSON(400, &VMCSequenceRspJson{Success: false, Msg: "Get vmcid error"})
+			c.JSON(500, &VMCSequenceRspJson{Success: false, Msg: "Get vmcid error"})
 			return
 		}
 
@@ -144,7 +137,7 @@ func GetVMCSequence(c *gin.Context) {
 		c.JSON(200, rsp)
 
 	} else {
-		c.JSON(400, &VMCSequenceRspJson{Success: false, Msg: "request without vmcid"})
+		c.JSON(500, &VMCSequenceRspJson{Success: false, Msg: "request without vmcid"})
 		return
 	}
 }
@@ -152,7 +145,7 @@ func GetVMCSequence(c *gin.Context) {
 func FailureOver(c *gin.Context) {
 	req := &FailureOverRequest{}
 	if err := c.ShouldBindJSON(req); err != nil {
-		c.JSON(400, model.NewCommonResponseFail(err))
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 

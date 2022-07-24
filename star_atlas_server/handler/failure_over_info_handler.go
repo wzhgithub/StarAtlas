@@ -27,8 +27,8 @@ import (
 func GetFailureOverInfo(c *gin.Context) {
 	fr_list, err := GetFailureOverRequestList(true)
 	if err != nil {
-		glog.Error("failed read failure over request list from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read failure over request list from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 	ret_fr_list := []FailureOverRequest{}
@@ -50,8 +50,8 @@ func GetFailureOverInfo(c *gin.Context) {
 func GetFailureOverVMCData(c *gin.Context) {
 	fr_list, err := GetFailureOverRequestList(false)
 	if err != nil {
-		glog.Error("failed read failure over request list from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read failure over request list from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 	fr := fr_list[0] // most recent failure over request
@@ -61,15 +61,15 @@ func GetFailureOverVMCData(c *gin.Context) {
 	from_vmcdata, to_vmcdata := &model.VMCData{}, &model.VMCData{}
 	err = from_vmcdata.CollectVMCData(int32(from_vmc_id))
 	if err != nil {
-		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read vmcdata from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
 	err = to_vmcdata.CollectVMCData(int32(to_vmc_id))
 	if err != nil {
-		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read vmcdata from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
