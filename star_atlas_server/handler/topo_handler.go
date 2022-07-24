@@ -1,18 +1,20 @@
 package handler
 
 import (
+	"fmt"
 	"math/rand"
 	"net/http"
 	"star_atlas_server/model"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 )
 
-var deviceType := map[string]bool{
-	"CPU": true,
-	"GPU": true,
-	"DSP": true,
+var deviceType = map[string]bool{
+	"CPU":  true,
+	"GPU":  true,
+	"DSP":  true,
 	"FPGA": true,
 }
 
@@ -71,10 +73,38 @@ func TopoInsert(c *gin.Context) {
 	gpuNum := rand.Intn(256)
 	fpgaNum := rand.Intn(256)
 	dspNum := rand.Intn(256)
-	insertDevice(cpuNum, "CPU", node.Id)
-	insertDevice(gpuNum, "GPU", node.Id)
-	insertDevice(fpgaNum, "FPGA", node.Id)
-	insertDevice(dspNum, "DSP", node.Id)
+	if err := insertDevice(topo, cpuNum, "CPU", node.Id); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Insert cpu device failed",
+		})
+		glog.Errorf(err.Error())
+		return
+	}
+	if err := insertDevice(topo, gpuNum, "GPU", node.Id); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Insert gpu device failed",
+		})
+		glog.Errorf(err.Error())
+		return
+	}
+	if err := insertDevice(topo, fpgaNum, "FPGA", node.Id); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Insert fpga device failed",
+		})
+		glog.Errorf(err.Error())
+		return
+	}
+	if err := insertDevice(topo, dspNum, "DSP", node.Id); err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": -1,
+			"msg":  "Insert dsp device failed",
+		})
+		glog.Errorf(err.Error())
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{
 		"code": 0,
@@ -83,27 +113,23 @@ func TopoInsert(c *gin.Context) {
 	})
 }
 
-func insertDevice(num int, dType string, vmcId int64) error {
-	dType = strings.ToUppder(dType)
+func insertDevice(topo *model.TopoTable, num int, dType string, vmcId int64) error {
+	dType = strings.ToUpper(dType)
 	if !deviceType[dType] {
-		return fmt.Errorf("cannot find device type: %s\n", dType)
+		return fmt.Errorf("cannot find device type: %s", dType)
 	}
 	for i := 0; i < num; i++ {
 		n := &model.Nodes{
 			Id:           vmcId*model.CVMCBase + int64(i),
-			Name:         dType + "_" + string(i),
-			DeviceType:   strings.toLower(dType),
+			Name:         dType + "_" + string(rune(i)),
+			DeviceType:   strings.ToLower(dType),
 			ParentId:     uint16(vmcId),
 			UpstreamId:   0,
 			DeviceStatus: "RUN",
 			OtherInfo:    nil,
 		}
 		if err := topo.InsertOp(n); err != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"code": -1,
-				"msg":  "InsertOp failed",
-			})
-			return fmt.Errorf("InsertOp failed\n")
+			return fmt.Errorf("insert %s device failed", dType)
 		}
 	}
 	return nil

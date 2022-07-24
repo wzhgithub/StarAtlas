@@ -198,7 +198,7 @@ func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 }
 
 func (t *TopoTable) CreateOp(v *VMCData) error {
-	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": cTopoID}, t)
+	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": CTopoID}, t)
 	if err != nil {
 		glog.Infof("[CreateOp] Cannot find, create a new topo_table")
 	}
