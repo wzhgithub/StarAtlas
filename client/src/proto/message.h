@@ -54,6 +54,10 @@ public:
   void init(uint8_t idx, uint8_t idx_exchange, const char* name = nullptr);
   uint16_t getSize(); 
   int pack(char* buf);  
+
+public:
+  void reset();
+  bool parseVmc(rapidjson::Document& _document);
 };
 
 // control message

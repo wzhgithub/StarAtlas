@@ -1,6 +1,13 @@
-#include "telemsg.h"
+#include "proto/message.h"
+#include "proto/parser.h"
 #include "common/utils.h"
+
 #include <functional>
+#include <map>
+#include <string>
+
+using std::map;
+using std::string;
 
 const char* szConfBasePath = "conf/topology";
 const char* szConfArray[] = {
@@ -23,20 +30,31 @@ int main(int argc, char* argv[]) {
     curConf = argv[1];
   }
 
+  map<string, string> _path_map;
   char dir[PATH_MAX] = {0};
   char *p = nullptr, *plast = get_cur_dir(dir, PATH_MAX);
   int n = snprintf(plast, PATH_MAX-(plast-dir), "%s/%s/", szConfBasePath, curConf);
   p = plast + n;
-  vector<string> arrConf;
   for (size_t h=0; h<nConf; h++) {
     snprintf(p, PATH_MAX-(p-dir), "%s", szConfArray[h]);
-    arrConf.push_back(dir);
+    _path_map[szConfArray[h]] = dir;
   }
   p[0] = '\0';
-  get_vmc_conf(dir, arrConf);
-  size_t h=0;
-  for (; h<arrConf.size(); h++) {
-    cout<<arrConf[h]<<endl;
+
+  vector<string> _vmc;
+  get_vmc_conf(dir, _vmc);
+
+  bool _bflag = false;
+  for (size_t h=0; h<_vmc.size(); h++) {
+    TeleMessage _msg;
+
+    rapidjson::Document _doc;
+    if (!parse(_vmc[h].c_str(), _doc) ||
+        !_msg.parseVmc(_doc)) { // init
+      exit(-1);
+    }
+    
+    
   }
   exit(0);
 
