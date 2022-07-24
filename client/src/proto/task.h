@@ -1,6 +1,9 @@
 #ifndef _PROTO_TASK_INCLUDED_
 #define _PROTO_TASK_INCLUDED_
 
+#include "rapidjson/schema.h"
+#include "rapidjson/stringbuffer.h"
+
 class Task {
 public:
 # define _LEN_TASK_NAME_ 2
@@ -35,7 +38,7 @@ private:
   uint8_t m_cnt_reset;
   uint8_t m_vmc_idx;
 
-  vector<Task> m_task;
+  vector<Task> m_tasks;
 
 public:
   Partition();
@@ -46,10 +49,9 @@ public:
   int pack(char* buf);
 
 public:
-  void parseTask(const char* filename);
+  bool parseTask(rapidjson::Document& _document);
   void updateTask();
   void reset();
 };
-
 
 #endif

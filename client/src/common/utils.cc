@@ -1,5 +1,6 @@
 #include "utils.h"
 
+#include <cstring>
 
 char* get_cur_dir(char* dir, size_t sz) {
   int n = readlink("/proc/self/exe", dir, sz);
@@ -40,4 +41,3 @@ uint8_t crc_calculate(uint8_t* p, size_t sz) {
   }
   return ~value;
 }
-

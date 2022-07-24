@@ -1,4 +1,4 @@
-#include "tasks.h"
+#include "task.h"
 
 #include <string.h>
 #include <vector>
@@ -85,7 +85,45 @@ int Partition::pack(char* buf) {
   ((uint8_t*)p++)[0] = m_cnt_reset;
   ((uint8_t*)p++)[0] = m_vmc_idx;
   for (size_t i=0; i<m_total_task; i++) {
-    p += m_task[i].pack(p);
+    p += m_tasks[i].pack(p);
   }
   return (int)(p-buf);
+}
+
+bool Partition::parseTask(rapidjson::Document& _document) {
+  if (!_document.HasMember("tasks")) {
+    cerr << "Empty tasks." << endl;
+    return false;
+  }
+
+  const auto& _tasks = _document["tasks"].GetArray();
+  for (const auto& _task: _tasks) {
+    if (!_task.IsObject()) {
+      cerr << "Invalid task: " << _task.GetString() << endl;
+      m_tasks.clear();
+      return false;
+    }
+
+    if (!_task.HasMember("name") ||
+        !_task.HasMember("index") ||
+        !_task.HasMember("type") ||
+        !_task.HasMember("status") ||
+        !_task.HasMember("start_time")) {
+      cerr << "Invalid task: " << _task.GetString() << endl;
+      m_tasks.clear();
+      return false;
+    }
+
+    Task oTask;
+    oTask.init(
+      uint16_t(_task.GetInt("index")),
+      uint8_t(_task.GetInt("type")),
+      uint8_t(_task.GetInt("status")),
+      uint8_t(_task.GetInt("start_time")),
+      _task.GetString("name").c_str());
+
+    m_tasks.emplace_back(std::move(oTask));
+  }
+  m_total_task = (uint8_t)m_tasks.size();
+  return true;
 }

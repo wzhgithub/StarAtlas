@@ -5,15 +5,10 @@ TeleMessage::TeleMessage(uint8_t idx, uint8_t idx_exchange, const char* name) {
   m_tag = 0xeb;
   m_size = 0; // set later
   m_type = 0x55; // message type
-  m_index = idx;
   memset(m_name, 0, sizeof(m_name));
-  if (!name) {
-    snprintf(m_name, _LEN_VMC_NAME_, "vmc_%02d", (int)m_index);
-  } else {
-    snprintf(m_name, _LEN_VMC_NAME_, "%s", name);
-  }
+  m_index = 0;
+  m_exchange_idx = 0;
   m_total_cpu = m_total_dsp = m_total_gpu = m_total_fpga = 0;
-  m_exchange_idx = idx_exchange;
   m_total_mem = m_total_disk = 0;
   m_mem_rate = m_cpu_rate = m_dsp_rate = m_gpu_rate = m_disk_rate = 0;
   m_cnt_exchange = m_cnt_remote = 0;
@@ -21,6 +16,16 @@ TeleMessage::TeleMessage(uint8_t idx, uint8_t idx_exchange, const char* name) {
 }
 
 TeleMessage::~TeleMessage() {
+}
+
+void TeleMessage::init(uint8_t idx, uint8_t idx_exchange, const char* name) {
+  m_index = idx;
+  m_exchange_idx = idx_exchange;
+  if (!name) {
+    snprintf(m_name, _LEN_VMC_NAME_, "vmc_%02d", (int)m_index);
+  } else {
+    snprintf(m_name, _LEN_VMC_NAME_, "%s", name);
+  }
 }
 
 uint16_t TeleMessage::getSize() {
@@ -151,4 +156,20 @@ int ControlMessage::pack(char* buf) {
   m_crc = crc_calculate((uint8_t*)buf, m_size-1);
   ((uint8_t*)p++)[0] = m_crc;
   return int(p-buf);
+}
+
+bool parseVmc(rapidjson::Document& _document, TeleMessage& _msg) {
+  if (!_document.HasMember("index") ||
+      !_document.HasMember("connect_to") ||
+      !_document.HasMember("name")) {
+    cerr << "Invalid vmc: " << _document.GetString() << endl;
+    return false;
+  }
+  
+  _msg.init(uint8_t(_document["index"].GetInt()),
+    uint8_t(_document["connect_to"].GetInt()),
+    _document["name"].GetString().c_str());
+
+  
+  return true;
 }

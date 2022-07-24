@@ -1,7 +1,6 @@
 #ifndef _TELEMETERING_INCLUDED_
 #define _TELEMETERING_INCLUDED_
 
-
 #include "device.h"
 #include "task.h"
 
@@ -48,18 +47,13 @@ public:
   vector<Partition> m_partition;
 
 public:
-  TeleMessage(uint8_t idx, uint8_t idx_exchange, const char* name = nullptr);
+  TeleMessage();
   ~TeleMessage();
 
 public:
+  void init(uint8_t idx, uint8_t idx_exchange, const char* name = nullptr);
   uint16_t getSize(); 
-  int pack(char* buf); 
-
-public:
-  bool parseSwitch(const char* filename);
-  bool parseRemote(const char* filename);
-  bool parseTask(const char* filename);
-  bool parseVmc(const char* filename);
+  int pack(char* buf);  
 };
 
 // control message
@@ -97,6 +91,4 @@ public:
 public:
   int pack(char* buf);
 };
-
-
 #endif

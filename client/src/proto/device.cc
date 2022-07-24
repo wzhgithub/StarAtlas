@@ -24,13 +24,6 @@ Device::Device() {
 Device::~Device() {
 }
 
-
-bool Device::parseSwitch(const char* filename) {
-}
-
-bool Device::parseRemote(const char* filename) {
-}
-
 void Device::init(uint8_t typ, int idx, const char* name, 
   uint8_t sub_type, int connect_to) {
     m_tag_head  = g_device_tag[typ*2];
