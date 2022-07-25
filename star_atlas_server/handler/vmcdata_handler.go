@@ -22,6 +22,7 @@ type FailureOverRequest struct {
 	From             FailureOverInfo `json:"from" bson:"from"`
 	To               FailureOverInfo `json:"to" bson:"to"`
 	TransStatus      uint            `json:"trans_status" bson:"trans_status"`
+	UniqueKey        string          `json:"unique_key" bson:"unique_key"`
 }
 
 type VMCDataRspJson struct {
@@ -172,6 +173,8 @@ func FailureOver(c *gin.Context) {
 	cmd := exec.Command(mockBin, arg1, arg2)
 	stdout, err := cmd.Output()
 	req.TransStatus = 500 // unfinished
+	req.UniqueKey = fmt.Sprintf("%s_%s_%s_%s_%s_%s",
+		req.From.VMCID, req.From.AppID, req.From.TaskID, req.To.VMCID, req.To.AppID, req.To.TaskID)
 	if err != nil {
 		glog.Errorf("run command:%+v failed err:%s\n", cmd, err.Error())
 	}

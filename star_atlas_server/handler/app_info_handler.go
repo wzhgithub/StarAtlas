@@ -56,7 +56,8 @@ func GetAppInfo(c *gin.Context) {
 
 	// check failure over database
 	fr_list := []FailureOverRequest{}
-	app_info_rsp := AppInfoRsp{}
+	apps := []model.App{}
+	app_info_rsp := AppInfoRsp{IsTransfer: false, Apps: apps}
 
 	findOptions := options.Find()
 	findOptions.SetSort(bson.D{{Key: "updated_at", Value: -1}})
@@ -75,12 +76,10 @@ func GetAppInfo(c *gin.Context) {
 		app_info_rsp.IsTransfer = true
 		fr := fr_list[0]
 		for _, app := range app_info_list {
-			from_app_id_uint64, _ := strconv.ParseInt(fr.From.AppID, 10, 64)
+			from_app_id_uint64, _ := strconv.ParseInt(fr.From.AppID, 10, 8)
 			from_app_id := uint8(from_app_id_uint64)
 			if from_app_id == app.ID {
 				app.IsTransfer = true
-			} else {
-				app.IsTransfer = false
 			}
 		}
 	}

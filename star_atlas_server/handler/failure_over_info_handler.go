@@ -34,13 +34,11 @@ func GetFailureOverInfo(c *gin.Context) {
 	ret_fr_list := []FailureOverRequest{}
 	filter_map := make(map[string]bool)
 	for _, fr := range fr_list {
-		key := fmt.Sprintf("%s_%s_%s_%s_%s_%s",
-			fr.From.VMCID, fr.From.AppID, fr.From.TaskID, fr.To.VMCID, fr.To.AppID, fr.To.TaskID)
-		_, ok := filter_map[key]
+		_, ok := filter_map[fr.UniqueKey]
 		if ok {
 			continue
 		}
-		filter_map[key] = true
+		filter_map[fr.UniqueKey] = true
 		ret_fr_list = append(ret_fr_list, fr)
 	}
 	c.JSON(200, model.NewCommonResponseSucc(ret_fr_list))
