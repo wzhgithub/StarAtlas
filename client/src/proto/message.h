@@ -51,6 +51,23 @@ public:
   ~TeleMessage();
 
 public:
+  vector<Device>& getDevice() { return m_devices; }
+  vector<Partition>& getPartition() { return m_partitions; }
+
+  void setTotalDevice (uint8_t _n, int typ) {
+    switch (typ) {
+      case eREMOTE: m_cnt_remote = _n; break;
+      case eEXCHNAGE: m_cnt_exchange= _n; break;
+      case eCPU: m_total_cpu = _n; break;
+      case eDSP: m_total_dsp= _n; break;
+      case eGPU: m_total_gpu= _n; break;
+      case eFPGA: m_total_fpga= _n; break;
+      default: break;
+    }
+  }
+  void setTotalPartition(uint8_t _n) { m_total_partition = _n; }
+
+public:
   void init(uint8_t idx, uint8_t idx_exchange, const char* name = nullptr);
   uint16_t getSize(); 
   int pack(char* buf);  
