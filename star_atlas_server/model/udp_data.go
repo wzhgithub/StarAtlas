@@ -55,6 +55,7 @@ type Task struct {
 	ExecuteTime uint32 `json:"execute_time" bson:"execute_time"` // 4 bytes
 	StatusCode  uint8  `json:"status_code" bson:"status_code"`
 	StartTime   uint8  `json:"start_time" bson:"start_time"`
+	IsTransfer  bool   `json:"is_transfer" bson:"is_transfer"`
 }
 
 type App struct {
@@ -67,6 +68,7 @@ type App struct {
 	BelongsTo    uint8   `json:"belongs_to" bson:"belongs_to"`
 	TaskSet      []*Task `json:"task_set" bson:"task_set"`
 	AppStatus    uint8   `json:"app_status" bson:"app_status"`
+	IsTransfer   bool    `json:"is_transfer" bson:"is_transfer"`
 }
 
 type RemoteUnit struct {
@@ -134,10 +136,11 @@ type VMCData struct {
 	TotalFPGABytes uint8         `json:"total_fpga_bytes" bson:"total_fpga_bytes"`
 	FPGASet        []*DeviceData `json:"fpga_set" bson:"fpga_set"` // 12bytes
 	// app
-	APPNum  uint8  `json:"app_num" bson:"app_num"`
-	APPInfo []*App `json:"app_info" bson:"app_info"`
-	Sum     uint8  `json:"sum" bson:"sum"`
-	Status  uint8  `json:"status" bson:"status"`
+	APPNum     uint8  `json:"app_num" bson:"app_num"`
+	APPInfo    []*App `json:"app_info" bson:"app_info"`
+	Sum        uint8  `json:"sum" bson:"sum"`
+	Status     uint8  `json:"status" bson:"status"`
+	IsTransfer bool   `json:"is_transfer" bson:"is_transfer"`
 }
 
 func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {

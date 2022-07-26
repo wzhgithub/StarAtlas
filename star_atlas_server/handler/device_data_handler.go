@@ -25,26 +25,16 @@ func GetDeviceData(c *gin.Context) {
 
 	device_data_list, err := model.CollectDeviceData(vmc_id, device_type)
 	if err != nil {
-		glog.Error("failed read device data from db, error: %s\n", err.Error())
-		c.JSON(400, &DeviceDataRspJson{Success: false, Msg: "fail"})
+		glog.Errorf("failed read device data from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
-	rsp := &DeviceDataRspJson{}
-	rsp.Success = true
+	device_data := []model.DeviceData{}
 	for _, v := range device_data_list {
-		rsp.Data = append(rsp.Data, *v)
+		device_data = append(device_data, *v)
 	}
-	rsp.Code = 0
-	rsp.Msg = "ok"
 
-	c.JSON(200, rsp)
+	c.JSON(200, model.NewCommonResponseSucc(device_data))
 
-}
-
-type DeviceDataRspJson struct {
-	Success bool               `json:"success"`
-	Data    []model.DeviceData `json:"data"`
-	Code    uint8              `json:"code"`
-	Msg     string             `json:"msg"`
 }

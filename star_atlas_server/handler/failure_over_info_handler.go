@@ -27,20 +27,29 @@ import (
 func GetFailureOverInfo(c *gin.Context) {
 	fr_list, err := GetFailureOverRequestList(true)
 	if err != nil {
-		glog.Error("failed read failure over request list from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read failure over request list from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
-
-	c.JSON(200, model.NewCommonResponseSucc(fr_list))
+	ret_fr_list := []FailureOverRequest{}
+	filter_map := make(map[string]bool)
+	for _, fr := range fr_list {
+		_, ok := filter_map[fr.UniqueKey]
+		if ok {
+			continue
+		}
+		filter_map[fr.UniqueKey] = true
+		ret_fr_list = append(ret_fr_list, fr)
+	}
+	c.JSON(200, model.NewCommonResponseSucc(ret_fr_list))
 }
 
 // reture the most recently failure over vmcdata
 func GetFailureOverVMCData(c *gin.Context) {
 	fr_list, err := GetFailureOverRequestList(false)
 	if err != nil {
-		glog.Error("failed read failure over request list from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read failure over request list from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 	fr := fr_list[0] // most recent failure over request
@@ -50,15 +59,15 @@ func GetFailureOverVMCData(c *gin.Context) {
 	from_vmcdata, to_vmcdata := &model.VMCData{}, &model.VMCData{}
 	err = from_vmcdata.CollectVMCData(int32(from_vmc_id))
 	if err != nil {
-		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read vmcdata from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
 	err = to_vmcdata.CollectVMCData(int32(to_vmc_id))
 	if err != nil {
-		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
-		c.JSON(400, model.NewCommonResponseFail(err))
+		glog.Errorf("failed read vmcdata from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
