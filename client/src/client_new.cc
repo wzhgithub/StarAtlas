@@ -81,10 +81,10 @@ int main(int argc, char* argv[]) {
     }
 
     // parse remote & switch & task
-    for (size_t h=0; h<nConf; h++) {
-      const string& _name = gdev_parser[h].m_fname;
-      int _typ = gdev_parser[h].m_type;
-      ParseFunc _func = gdev_parser[h].m_func;
+    for (size_t hh=0; hh<nConf; hh++) {
+      const string& _name = gdev_parser[hh].m_fname;
+      int _typ = gdev_parser[hh].m_type;
+      ParseFunc _func = gdev_parser[hh].m_func;
       auto it = _path_map.find(_name);
       rapidjson::Document _ddoc;
       if (it==_path_map.end() || 
@@ -106,13 +106,13 @@ int main(int argc, char* argv[]) {
       "gpu",
       "fpga",
     };
-    for (int h=0; h<sizeof(_xpu_name)/sizeof(const char*); h++) {
-      if (!_doc.HasMember(_xpu_name[h])) continue;
-      int _n_dev = parseXpu(_doc[_xpu_name[h]], _msg.getDevice(), h);
+    for (int hh=0; hh<sizeof(_xpu_name)/sizeof(const char*); hh++) {
+      if (!_doc.HasMember(_xpu_name[hh])) continue;
+      int _n_dev = parseXpu(_doc[_xpu_name[hh]], _msg.getDevice(), hh);
       if (!_n_dev) {
-        cerr << "warning: empty device, device type: "<< h <<endl;
+        cerr << "warning: empty device, device type: "<< hh <<endl;
       }
-      _msg.setTotalDevice(_n_dev, h);
+      _msg.setTotalDevice(_n_dev, hh);
     }
 
     // parse partition
@@ -131,9 +131,12 @@ int main(int argc, char* argv[]) {
     char* buf = new char[sz+16];
     memset(buf, 0, sz+16);
     int sz_out = _msg.pack(buf);
-    ofstream binaryio(argv[2], ios::binary);
+
+	char output[PATH_MAX] = {0};
+	snprintf(output, PATH_MAX, "%s_%d.bin", argv[2], h);
+    ofstream binaryio(output, ios::binary);
     if (!binaryio) {
-      cerr<<"open "<<argv[2]<<" failed."<<endl;
+      cerr<<"open "<<output<<" failed."<<endl;
       exit(0);
     }
     binaryio.write(buf,sz);
