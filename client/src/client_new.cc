@@ -68,11 +68,13 @@ int main(int argc, char* argv[]) {
   p[0] = '\0';
 
   vector<string> _vmc;
-  get_vmc_conf(dir, _vmc, szVmcPrefix, sizeof(szVmcPrefix));
+  get_vmc_conf(dir, _vmc, szVmcPrefix, strlen(szVmcPrefix));
 
   bool _bflag = false;
+  cout << "hello: " << _vmc.size() << endl;
   for (size_t h=0; h<_vmc.size(); h++) {
     TeleMessage _msg;
+    cout << "parse vmc: " << h << "; name: " << _vmc[h] << endl;
 
     rapidjson::Document _doc;
     if (!parse(_vmc[h].c_str(), _doc) ||
@@ -132,8 +134,8 @@ int main(int argc, char* argv[]) {
     memset(buf, 0, sz+16);
     int sz_out = _msg.pack(buf);
 
-	char output[PATH_MAX] = {0};
-	snprintf(output, PATH_MAX, "%s_%d.bin", argv[2], h);
+    char output[PATH_MAX] = {0};
+    snprintf(output, PATH_MAX, "%s_%d.bin", argv[2], h);
     ofstream binaryio(output, ios::binary);
     if (!binaryio) {
       cerr<<"open "<<output<<" failed."<<endl;

@@ -1,9 +1,9 @@
 {
   "central":[
-    {"name":"central_01", "index":1, "connect_to":1},
+    {"name":"central_01", "index":1, "connect_to":1}
   ],
   "access": [
     {"name":"switch_01", "index":2, "connect_to":1},
-    {"name":"switch_02", "index":3, "connect_to":1},
+    {"name":"switch_02", "index":3, "connect_to":1}
   ]
 }

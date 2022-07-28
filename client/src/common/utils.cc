@@ -1,6 +1,7 @@
 #include "utils.h"
 
 #include <cstring>
+#include <iostream>
 
 char* get_cur_dir(char* dir, size_t sz) {
   int n = readlink("/proc/self/exe", dir, sz);
@@ -15,23 +16,24 @@ char* get_cur_dir(char* dir, size_t sz) {
 }
 
 size_t get_vmc_conf(const char* dir_name, vector<string>& arr, const char* _prefix, size_t _len) {
-  size_t sz = arr.size();
   struct stat s;
   lstat(dir_name, &s);
   assert (S_ISDIR(s.st_mode));
   DIR* dir;
   dir = opendir(dir_name);
 
+  std::cout << dir_name << "len: " << _len <<"; " << _prefix  << std::endl;
   struct dirent* filename;
   while ((filename = readdir(dir))!=NULL) {
     if(strncmp(filename->d_name, _prefix, _len)!=0) {
       continue;
     }
+    std::cout << dir_name << std::endl;
     string s(dir_name);
     arr.emplace_back(s + filename->d_name);
   }
 
-  return arr.size()-sz;
+  return arr.size();
 }
 
 uint8_t crc_calculate(uint8_t* p, size_t sz) {
