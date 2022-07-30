@@ -767,6 +767,124 @@ export default {
         }
       };
     },
+    dealWithDataXY() {
+      let incomeSwForOp = [
+        { name: "a1", id: 10011 },
+        { name: "b1", id: 10021 },
+        { name: "c1", id: 10031 },
+        { name: "d1", id: 10041 },
+        { name: "e1", id: 10051 },
+      ];
+      let incomeSwForCal = [
+        { name: "a", id: 1001 },
+        { name: "b", id: 1002 },
+        { name: "c", id: 1003 },
+        { name: "d", id: 1004 },
+        { name: "e", id: 1005 },
+      ];
+      let baseLeftX = 0;
+      let baseLeftY = 0;
+      let baseRightTopX = 0;
+      let baseRightBottomX = 0;
+      let baseRightTopY = 0;
+      let baseRightBottomY = 0;
+      let newarr = incomeSwForCal.map((item, index) => {
+        let doublecoefficient = Math.floor(incomeSwForCal.length / 2);
+        if (index + 1 <= doublecoefficient) {
+          return {
+            ...item,
+            x: -240 * (doublecoefficient - index),
+            y: 140 * (doublecoefficient - index - 1),
+          };
+        } else {
+          let baseMultiple = Math.ceil(incomeSwForCal.length / 4);
+          if (index % 2 === 0) {
+            baseRightTopX = baseRightTopX + 300;
+            baseRightTopY = baseRightTopY + 150;
+            return {
+              ...item,
+              x: baseRightTopX,
+              y: baseRightTopY,
+            };
+          } else {
+            baseRightBottomX = baseRightBottomX + 300;
+            baseRightBottomY = baseRightBottomY - 150;
+            return {
+              ...item,
+              x: baseRightBottomX,
+              y: baseRightBottomY,
+            };
+          }
+        }
+      });
+      let newop = incomeSwForOp.map((items, indexs) => {
+        if (newarr[indexs].x <= 0) {
+          return {
+            ...items,
+            x: newarr[indexs].x,
+            y: newarr[indexs].y + 100,
+          };
+        } else {
+          if (newarr[indexs].y >= 0) {
+            return {
+              ...items,
+              x: newarr[indexs].x + 100,
+              y: newarr[indexs].y - 80,
+            };
+          } else {
+            return {
+              ...items,
+              x: newarr[indexs].x + 100,
+              y: newarr[indexs].y + 80,
+            };
+          }
+        }
+      });
+      let assistantPoints = [];
+      newarr.map((itemNow, indexNow) => {
+        if (itemNow.x <= 0) {
+          let tempointx = itemNow.x - 5;
+          let tempointy = itemNow.y + 10;
+          assistantPoints.push(
+            {
+              no: `${indexNow}_1`,
+              type: "busNode",
+              x: tempointx - 30,
+              y: tempointy + 40,
+            },
+            {
+              no: `${indexNow}_2`,
+              type: "busNode",
+              x: tempointx + 30,
+              y: tempointy - 10,
+            }
+          );
+        } else {
+          let tempointx = itemNow.x + 50;
+          let tempointy;
+          if (itemNow.y >= 0) {
+            tempointy = itemNow.y - 40;
+          } else {
+            tempointy = itemNow.y + 40;
+          }
+          assistantPoints.push(
+            {
+              no: `${indexNow}_1`,
+              type: "busNode",
+              x: tempointx - 160,
+              y: tempointy,
+            },
+            {
+              no: `${indexNow}_2`,
+              type: "busNode",
+              x: tempointx + 160,
+              y: tempointy,
+            }
+          );
+        }
+      });
+      console.log(newarr, newop, assistantPoints);
+    },
     mockError(type) {
       this.drawer = false;
       if (type) {
@@ -789,6 +907,7 @@ export default {
       this.loading = false;
       setTimeout(() => {
         this.drawAllCanvas();
+        this.dealWithDataXY();
       }, 500);
     }, 2000);
   },

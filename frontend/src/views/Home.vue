@@ -12,18 +12,18 @@
       <el-row style="width: 100%; height: 100%">
         <el-col :span="6" style="height: 100%">
           <div class="leftasid">
-            <div class="littlebox topbox">
+            <!-- <div class="littlebox topbox">
               <p class="title">
                 <span>简介1</span>
               </p>
-              <div class="contentBox">1233333</div>
+              <div class="contentBox"></div>
             </div>
             <div class="littlebox bottombox">
               <p class="title">
                 <span>简介2</span>
               </p>
-              <div class="contentBox">1233333</div>
-            </div>
+              <div class="contentBox"></div>
+            </div> -->
           </div>
         </el-col>
         <el-col :span="12" style="height: 100%">
@@ -89,18 +89,18 @@
         </el-col>
         <el-col :span="6" style="height: 100%">
           <div class="rightasid">
-            <div class="littlebox topbox">
+            <!-- <div class="littlebox topbox">
               <p class="title">
                 <span>简介3</span>
               </p>
-              <div class="contentBox">1233333</div>
+              <div class="contentBox"></div>
             </div>
             <div class="littlebox bottombox">
               <p class="title">
                 <span>简介4</span>
               </p>
-              <div class="contentBox">1233333</div>
-            </div>
+              <div class="contentBox"></div>
+            </div> -->
           </div>
         </el-col>
       </el-row>
