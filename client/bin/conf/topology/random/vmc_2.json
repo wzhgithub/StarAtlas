@@ -9,15 +9,15 @@
   "tasks":"tasks.json",
   "cpu":[
     {"name": "cpu_211", "index":1, "type":0, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0},
-    {"name": "cpu_212", "index":2, "type":1, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0},
+    {"name": "cpu_212", "index":2, "type":1, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0}
   ],
   "dsp":[
-    {"name": "dsp_221", "index":1, "type":0, "core": 1, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0},
+    {"name": "dsp_221", "index":1, "type":0, "core": 1, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0}
   ],
   "gpu":[
-    {"name": "gpu_231", "index":1, "type":0, "core": 16, "inops": 65535, "flops": 65536, "mem": 65535, "mem_used": 0, "usage": 0},
+    {"name": "gpu_231", "index":1, "type":0, "core": 16, "inops": 65535, "flops": 65536, "mem": 65535, "mem_used": 0, "usage": 0}
   ],
   "fpga":[
-    {"name": "fpag_241", "index":1, "type":0},
+    {"name": "fpag_241", "index":1, "type":0}
   ]
 }

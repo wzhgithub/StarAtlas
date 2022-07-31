@@ -168,7 +168,7 @@ int parsePartition(rapidjson::Document& _document, vector<Partition>& _parts) {
     _part.init(_cluster["index"].GetInt(),
       _cluster["name"].GetString());
 
-    if (!_part.parseTask(_cluster["task"])) {
+    if (!_part.parseTask(_cluster)) {
       std::cerr << "Invalid partition: invalied task." << std::endl;
       return 0;
     }
