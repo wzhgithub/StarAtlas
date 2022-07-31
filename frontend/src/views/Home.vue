@@ -12,17 +12,17 @@
       <el-row style="width: 100%; height: 100%">
         <el-col :span="6" style="height: 100%">
           <div class="leftasid">
-            <div class="littlebox topbox">
-              <p class="title">
-                <span>简介1</span>
+            <div class="boxLeft">
+              <p class="title_new_left">
+                <span>异构计算</span>
               </p>
-              <div class="contentBox">1233333</div>
+              <div class="contentBox"></div>
             </div>
-            <div class="littlebox bottombox">
-              <p class="title">
-                <span>简介2</span>
+            <div class="boxLeft">
+              <p class="title_new_left">
+                <span>TEE网络</span>
               </p>
-              <div class="contentBox">1233333</div>
+              <div class="contentBox"></div>
             </div>
           </div>
         </el-col>
@@ -89,17 +89,17 @@
         </el-col>
         <el-col :span="6" style="height: 100%">
           <div class="rightasid">
-            <div class="littlebox topbox">
-              <p class="title">
-                <span>简介3</span>
+            <div class="boxRight">
+              <p class="title_new_right">
+                <span>多级容灾</span>
               </p>
-              <div class="contentBox">1233333</div>
+              <div class="contentBox"></div>
             </div>
-            <div class="littlebox bottombox">
-              <p class="title">
-                <span>简介4</span>
+            <div class="boxRight">
+              <p class="title_new_right">
+                <span>高扩展性</span>
               </p>
-              <div class="contentBox">1233333</div>
+              <div class="contentBox"></div>
             </div>
           </div>
         </el-col>
@@ -298,6 +298,15 @@ export default {
       width: 100%;
       padding: 1%;
       box-sizing: border-box;
+      .boxLeft {
+        position: relative;
+        text-align: right;
+        width: 100%;
+        height: 50%;
+        background: url("../assets/newpng/homeTextbgileft.svg") no-repeat center;
+        background-size: 110%;
+        // background-size: cover !important;
+      }
       // background-color: #fff;
     }
     .rightasid {
@@ -306,28 +315,60 @@ export default {
       padding: 1%;
       box-sizing: border-box;
       // background-color: #fff;
+      .boxRight {
+        position: relative;
+        text-align: left;
+        width: 100%;
+        height: 50%;
+        background: url("../assets/newpng/homeTextbgiright.svg") no-repeat
+          center;
+        background-size: 120%;
+        // background-size: cover !important;
+      }
     }
-    .title {
+    .title_new_left {
       height: 12%;
       width: 100%;
       color: azure;
-      background: url("../assets/png/part_title.png") no-repeat center;
-      background-size: 100% 100%;
-      padding-left: 12%;
-      margin: 1%;
-      box-sizing: border-box;
+      position: absolute;
+      top: 24%;
       span {
-        height: 100%;
-        line-height: 2.29rem;
+        margin-right: 8%;
+        font-size: 1.5rem;
+        font-weight: 700;
+        background-image: linear-gradient(
+          #33bcdf,
+          #dcf2ff
+        ); //背景色渐变，默认从上到下
+        -webkit-background-clip: text; //CSS3属性：设定背景的绘制范围为文字
+        color: transparent; //将字的颜色设置透明，只露出背景色
+      }
+    }
+    .title_new_right {
+      height: 12%;
+      width: 100%;
+      color: azure;
+      position: absolute;
+      top: 24%;
+      span {
+        margin-left: 8%;
+        font-size: 1.5rem;
+        font-weight: 700;
+        background-image: linear-gradient(
+          #33bcdf,
+          #dcf2ff
+        ); //背景色渐变，默认从上到下
+        -webkit-background-clip: text; //CSS3属性：设定背景的绘制范围为文字
+        color: transparent; //将字的颜色设置透明，只露出背景色
       }
     }
     .contentBox {
       width: 100%;
       height: 85%;
       // background-color: aqua;
-      border-bottom: rgba(72, 159, 193, 0.5) 1px solid;
-      border-left: rgba(72, 159, 193, 0.5) 1px solid;
-      border-right: rgba(72, 159, 193, 0.5) 1px solid;
+      // border-bottom: rgba(72, 159, 193, 0.5) 1px solid;
+      // border-left: rgba(72, 159, 193, 0.5) 1px solid;
+      // border-right: rgba(72, 159, 193, 0.5) 1px solid;
       color: #fff;
     }
     .link_btn {

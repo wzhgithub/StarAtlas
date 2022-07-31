@@ -30,12 +30,23 @@
           <div style="width: 100%; height: 100%">
             <div class="middleboxfortask">
               <p class="title">
-                <span>相关任务</span>
+                <span>{{ `Vmc-${Nowindex}` }}相关任务</span>
               </p>
               <div class="content">
-                <el-carousel :interval="5000" class="carousel" trigger="click">
-                  <el-carousel-item v-for="item in 3" :key="item">
-                    <scrolltable :data="tableData[item - 1]" />
+                <el-carousel
+                  :interval="5000"
+                  class="carousel"
+                  trigger="click"
+                  @change="changeCarousle"
+                >
+                  <el-carousel-item
+                    v-for="item in 3"
+                    :key="item"
+                    style="height: 100%"
+                  >
+                    <div style="height: 100%">
+                      <TableNow style="height: 90%" />
+                    </div>
                   </el-carousel-item>
                 </el-carousel>
               </div>
@@ -67,7 +78,7 @@
 // import "@/lib/loaders.min.css";
 import { mapState } from "vuex";
 import selflineNewless from "@/components/selflineNewless.vue";
-import scrolltable from "@/components/scrollTable.vue";
+import TableNow from "@/components/TableNow.vue";
 import imgvmc from "@/assets/newpng/VMC.svg";
 import messages from "@/assets/newpng/send_.svg";
 const singletable = [
@@ -119,7 +130,7 @@ export default {
   components: {
     // HelloWorld,
     selflineNewless,
-    scrolltable,
+    TableNow,
   },
   data() {
     return {
@@ -130,12 +141,16 @@ export default {
       tableData: [[...singletable], [], [...singletable]],
       vmcedge: {},
       areaedge: {},
+      Nowindex: "1",
     };
   },
   computed: {
     ...mapState(["disVmc", "disArea"]),
   },
   methods: {
+    changeCarousle(before, now) {
+      this.Nowindex = before + 1;
+    },
     randomRange(min, max) {
       // min最小值，max最大值
       return Math.floor(Math.random() * (max - min)) + min;
@@ -361,12 +376,14 @@ export default {
         flowingSupport.start();
       });
       var timer = setInterval(() => {
-        edge1.tooltip = `当前线路: 整机迁移任务1002\n 当前速率：${that.randomRange(
-          128,
-          1024
-        )}MB/S\n 当前迁移类型：整机迁移\n 迁移开始时间：${new Date(
-          parseInt(that.disVmc)
-        ).toLocaleString()}`;
+        if (edge1) {
+          edge1.tooltip = `当前线路: 整机迁移任务1002\n 当前速率：${that.randomRange(
+            128,
+            1024
+          )}MB/S\n 当前迁移类型：整机迁移\n 迁移开始时间：${new Date(
+            parseInt(that.disVmc)
+          ).toLocaleString()}`;
+        }
         const nowDate = new Date().valueOf();
         if (that.disVmc) {
           if (nowDate - that.disVmc >= 1000 * 60 * 3 + 1000 * 45) {
