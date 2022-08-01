@@ -16,13 +16,25 @@
               <p class="title_new_left">
                 <span>异构计算</span>
               </p>
-              <div class="contentBox"></div>
+              <div class="contentBox">
+                <ul>
+                  <li>支持不同指令集</li>
+                  <li>支持不同体系架构</li>
+                  <li>CPU、GPU、DSP、FPGA</li>
+                </ul>
+              </div>
             </div>
             <div class="boxLeft">
               <p class="title_new_left">
-                <span>TEE网络</span>
+                <span>TTE协议</span>
               </p>
-              <div class="contentBox"></div>
+              <div class="contentBox">
+                <ul>
+                  <li>Time-triggered Ethernet</li>
+                  <li>时钟同步、时间触发通信</li>
+                  <li>速率受约传输、保证传输</li>
+                </ul>
+              </div>
             </div>
           </div>
         </el-col>
@@ -36,32 +48,32 @@
               >
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">关键指标一</div>
-                    <div class="mainNub">12350</div>
+                    <div class="toptitle">VMC数量</div>
+                    <div class="mainNub">2</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">关键指标二</div>
-                    <div class="mainNub">12350</div>
+                    <div class="toptitle">CPU数量</div>
+                    <div class="mainNub">4</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">关键指标三</div>
-                    <div class="mainNub">12350</div>
+                    <div class="toptitle">内存大小</div>
+                    <div class="mainNub">256G</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">关键指标四</div>
-                    <div class="mainNub">12350</div>
+                    <div class="toptitle">磁盘大小</div>
+                    <div class="mainNub">1T</div>
                   </div>
                 </el-col>
               </el-row>
             </div>
             <div class="boxMainTitleInfo">
-              <h3>星载平台</h3>
+              <h3>星辰算力</h3>
             </div>
             <div class="linktopbox">
               <router-link class="link_btn" to="/topo"> 拓扑结构 </router-link>
@@ -93,13 +105,25 @@
               <p class="title_new_right">
                 <span>多级容灾</span>
               </p>
-              <div class="contentBox"></div>
+              <div class="contentBox">
+                <ul>
+                  <li>支持三级故障容灾</li>
+                  <li>任务、分区、整机级</li>
+                  <li>支持主备、多活计算</li>
+                </ul>
+              </div>
             </div>
             <div class="boxRight">
               <p class="title_new_right">
-                <span>高扩展性</span>
+                <span>以太网络</span>
               </p>
-              <div class="contentBox"></div>
+              <div class="contentBox">
+                <ul>
+                  <li>提高设备接入效率</li>
+                  <li>降低接入设备成本</li>
+                  <li>丰富接入设备多样性</li>
+                </ul>
+              </div>
             </div>
           </div>
         </el-col>
@@ -169,6 +193,7 @@ export default {
           .toptitle {
             font-size: 1rem;
             margin-bottom: 1rem;
+            font-weight: bold;
           }
           .mainNub {
             text-shadow: 0 0 10px #3ee4f0;
@@ -191,7 +216,7 @@ export default {
       }
       .linktopbox {
         width: 50%;
-        height: 20%;
+        height: 15%;
         // background-color: #fff;
         position: absolute;
         top: 20%;
@@ -199,11 +224,11 @@ export default {
         background: url("../assets/newpng/center_mian_big_bgi.png") no-repeat
           center;
         background-size: 100% 100%;
-        font-size: 1.8rem;
+        font-size: 1.25rem;
         font-weight: 700;
       }
       .linkleftbox {
-        width: 40%;
+        width: 50%;
         height: 15%;
         // background-color: #fff;
         position: absolute;
@@ -216,7 +241,7 @@ export default {
         font-weight: 700;
       }
       .linkrightbox {
-        width: 40%;
+        width: 50%;
         height: 15%;
         // background-color: #fff;
         position: absolute;
@@ -360,6 +385,10 @@ export default {
         ); //背景色渐变，默认从上到下
         -webkit-background-clip: text; //CSS3属性：设定背景的绘制范围为文字
         color: transparent; //将字的颜色设置透明，只露出背景色
+        // height: 100%;
+        // line-height: 2.29rem;
+        // font-size: 1rem;
+        // font-weight: bold;
       }
     }
     .contentBox {
@@ -370,7 +399,29 @@ export default {
       // border-left: rgba(72, 159, 193, 0.5) 1px solid;
       // border-right: rgba(72, 159, 193, 0.5) 1px solid;
       color: #fff;
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      font-size: 1.25rem;
+      ul li{
+        list-style: disc;
+        text-align: left;
+      }
     }
+
+    .typing {
+      font-size: 1.1rem;
+      color: #fff;
+      text-shadow:
+          0 0 10px #0ebeff,
+          0 0 20px #0ebeff,
+          0 0 50px #0ebeff,
+          0 0 100px #0ebeff,
+          0 0 200px #0ebeff;
+      padding: 0.75rem;
+      box-sizing: border-box;
+    }
+
     .link_btn {
       // float: right;
       border: none;
