@@ -20,6 +20,6 @@ WORKDIR /app
 COPY --from=builder /app/publish .
 ENV GIN_MODE=release 
 
-EXPOSE 9999/tcp 9191/udp
+EXPOSE 9999/tcp 9191/udp 9192/tcp
 
 ENTRYPOINT ["./star_atlas_server", "-log_dir=./", "-alsologtostderr"]

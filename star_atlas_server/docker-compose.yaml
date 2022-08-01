@@ -26,4 +26,5 @@ services:
     platform: "linux/amd64"
     ports:
       - 9999:9999/tcp
+      - 9192:9192/tcp
       - 9191:9191/udp  # udp listener
