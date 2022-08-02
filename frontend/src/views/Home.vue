@@ -304,7 +304,7 @@ export default {
         width: 100%;
         height: 50%;
         background: url("../assets/newpng/homeTextbgileft.svg") no-repeat center;
-        background-size: 110%;
+        background-size: 105%;
         // background-size: cover !important;
       }
       // background-color: #fff;
@@ -322,7 +322,7 @@ export default {
         height: 50%;
         background: url("../assets/newpng/homeTextbgiright.svg") no-repeat
           center;
-        background-size: 120%;
+        background-size: 105%;
         // background-size: cover !important;
       }
     }

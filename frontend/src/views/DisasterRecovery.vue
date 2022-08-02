@@ -14,9 +14,9 @@
         type="flex"
         class="row-bg"
         justify="space-around"
-        style="width: 100%; height: 100%"
+        style="width: 100%; height: 60%"
       >
-        <el-col :span="16" style="width: 100%; height: 100%">
+        <el-col :span="12" style="width: 100%; height: 100%">
           <div style="width: 100%; height: 100%">
             <div class="topboxforcanvas">
               <p class="title">
@@ -26,9 +26,43 @@
             </div>
           </div>
         </el-col>
-        <el-col :span="8" style="width: 100%; height: 100%">
+        <el-col :span="12" style="width: 100%; height: 100%">
+          <div style="width: 100%; height: 60%">
+            <div class="topboxforcanvas">
+              <p class="title">
+                <span>相关指标</span>
+              </p>
+              <div class="content">
+                <el-carousel :interval="5000" class="carousel" trigger="click">
+                  <el-carousel-item v-for="item in 3" :key="item">
+                    <div class="canvasbox" :id="`linebox_${item}`">
+                      <selflineNewless :inref="`linebox_${item}`" />
+                    </div>
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+              <!-- <div class="boxforcanvas" ref="canvas"></div> -->
+            </div>
+          </div>
+          <div style="width: 100%; height: 40%">
+            <div class="topboxforcanvas">
+              <p class="title">
+                <span>迁移日志</span>
+              </p>
+              <!-- <div class="boxforcanvas" ref="canvas"></div> -->
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row
+        type="flex"
+        class="row-bg"
+        justify="space-around"
+        style="width: 100%; height: 40%"
+      >
+        <el-col :span="24" style="width: 100%; height: 100%">
           <div style="width: 100%; height: 100%">
-            <div class="middleboxfortask">
+            <div class="topboxforcanvas">
               <p class="title">
                 <span>{{ `Vmc-${Nowindex}` }}相关任务</span>
               </p>
@@ -50,24 +84,38 @@
                   </el-carousel-item>
                 </el-carousel>
               </div>
-            </div>
-            <div class="bottomboxforline">
-              <p class="title">
-                <span>相关指标</span>
-              </p>
-              <div class="content">
-                <el-carousel :interval="5000" class="carousel" trigger="click">
-                  <el-carousel-item v-for="item in 3" :key="item">
-                    <div class="canvasbox" :id="`linebox_${item}`">
-                      <selflineNewless :inref="`linebox_${item}`" />
-                    </div>
-                  </el-carousel-item>
-                </el-carousel>
-              </div>
+              <!-- <div class="boxforcanvas" ref="canvas"></div> -->
             </div>
           </div>
         </el-col>
       </el-row>
+      <!-- <el-row
+        type="flex"
+        class="row-bg"
+        justify="space-around"
+        style="width: 100%; height: 100%"
+      >
+        <el-col :span="16" style="width: 100%; height: 100%">
+          <div style="width: 100%; height: 100%">
+            <div class="topboxforcanvas">
+              <p class="title">
+                <span>迁移视图</span>
+              </p>
+              <div class="boxforcanvas" ref="canvas"></div>
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="8" style="width: 100%; height: 100%">
+          <div style="width: 100%; height: 100%">
+            <div class="middleboxfortask">
+              
+            </div>
+            <div class="bottomboxforline">
+              
+            </div>
+          </div>
+        </el-col>
+      </el-row> -->
     </div>
   </div>
 </template>

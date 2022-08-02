@@ -3,7 +3,7 @@
     <el-table class="tableList" :data="reallData" style="width: 100%">
       <template v-for="(item, index, nub) in reallData[0]">
         <el-table-column
-          width="180"
+          width="245"
           :key="index"
           :label="`分区${nub + 1}`"
           align="center"
