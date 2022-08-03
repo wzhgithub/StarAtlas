@@ -148,9 +148,10 @@ import imgcpu from "@/assets/newpng/CPU.svg";
 import imggpu from "@/assets/newpng/GPU.svg";
 import imgdsp from "@/assets/newpng/DSP.svg";
 import imgfgpa from "@/assets/newpng/FPGA.svg";
-import imgsw from "@/assets/newpng/sw.svg";
+import imgsw from "@/assets/newpng/centersw_topo.svg";
 import imgop1 from "@/assets/newpng/op_1.svg";
 import imgop2 from "@/assets/newpng/op_2.svg";
+import pointsvg from "@/assets/newpng/point.svg";
 // import obc from "@/assets/newpng/cloud.png";
 import imgvmc from "@/assets/newpng/VMC.svg";
 // import sw from "@/assets/newpng/cloud.png";
@@ -322,8 +323,23 @@ export default {
       node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
       node.nodesType = nodesType;
       // node.setStyle(Q.Styles., 25);
-      model.add(node);
+      // model.add(node);
       return node;
+    },
+    createEdge(graph, a, b, color, dashed, name) {
+      var edge = graph.createEdge(name, a, b);
+      if (dashed) {
+        edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
+      }
+      edge.setStyle(Q.Styles.EDGE_WIDTH, 5);
+      edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
+      edge.setStyle(Q.Styles.ARROW_TO, false);
+      edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+      edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
+      edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
+      edge.nodesType = "line";
+      // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
+      return edge;
     },
     initalarm() {
       if (!Q.Element.prototype.initAlarmBalloon) {
@@ -619,114 +635,10 @@ export default {
 
       Q.extend(VPNFlexEdgeUI, Q.EdgeUI);
 
-      // createText("公共事业服务中心\n网络拓扑", 859, 100, 40, "#F00");
-
-      // var bus = createBus();
-      // bus.moveTo(-600, 460);
-      // bus.lineTo(-600, 540);
-      // bus.moveTo(-600, 500);
-      // bus.lineTo(600, 500);
-      // var node = graph.createNode(name, x, y);
-      // node.image = Q.Shapes.getShape(Q.Consts.SHAPE_RECT, 30, 15);
-      // node.setStyle(Q.Styles.SHAPE_FILL_COLOR, "#888");
-
-      var vmc1 = createGroup(50, false, imgvmc, null, "vmc1");
-      // var obc1 = createGroup(20, false, exchange2, vmc1, "obc1");
-      // var obc2 = createGroup(20, false, exchange2, vmc1, "obc2");
-      // var obc3 = createGroup(20, false, exchange2, vmc1, "obc3");
-      // var obc4 = createGroup(20, false, exchange2, vmc1, "obc4");
-      var cpu = createNode(imgcpu, -120, 100, "cpu", vmc1, true, "CPU");
-      var gpu = createNode(imggpu, -270, 100, "gpu", vmc1, true, "GPU");
-      var dsp = createNode(imgdsp, -420, 100, "dsp", vmc1, true, "DSP");
-      var fpga = createNode(imgfgpa, -570, 100, "fpga", vmc1, true, "FPGA");
-      // vmc1.addChild(obc1);
-      // vmc1.addChild(obc2);
-      // vmc1.addChild(obc3);
-      // vmc1.addChild(obc4);
-
-      var vmc2 = createGroup(50, false, imgvmc, null, "vmc2");
-      // var obc1_ = createGroup(20, false, exchange2, vmc2, "obc1");
-      // var obc2_ = createGroup(20, false, exchange2, vmc2, "obc2");
-      // var obc3_ = createGroup(20, false, exchange2, vmc2, "obc3");
-      // var obc4_ = createGroup(20, false, exchange2, vmc2, "obc4");
-      var cpu_ = createNode(imgcpu, 120, 900, "cpu", vmc2, true, "CPU");
-      var gpu_ = createNode(imggpu, 270, 900, "gpu", vmc2, true, "GPU");
-      var dsp_ = createNode(imgdsp, 420, 900, "dsp", vmc2, true, "DSP");
-      var fpga_ = createNode(imgfgpa, 570, 900, "fpga", vmc2, true, "FPGA");
-      // vmc2.addChild(obc1_);
-      // vmc2.addChild(obc2_);
-      // vmc2.addChild(obc3_);
-      // vmc2.addChild(obc4_);
-
-      var exchange1_ = createSw(imgsw, -345, 350, "Switch1", null, true);
-      var exchange2_ = createSw(imgsw, 345, 700, "Switch2", null, true);
-      var exchange3_ = createSw(imgsw, -300, 700, "Switch3", null, true);
-      var exchange4_ = createSw(imgsw, 370, 350, "Switch4", null, true);
-      var exchange5_ = createSw(imgsw, 0, 525, "centerSwitch", null, true);
-      var edge = createEdge(exchange1_, exchange5_);
-      var edge_ = createEdge(exchange2_, exchange5_);
-      var edge3_ = createEdge(exchange5_, exchange3_);
-      var edge4_ = createEdge(exchange5_, exchange4_);
-      // edge.angle = Math.PI / 2;
-      // edge_.angle = Math.PI / 2;
-      // edge3_.angle = Math.PI / 2;
-      // edge4_.angle = Math.PI / 2;
-
-      var edgevc11 = createEdge(cpu, exchange1_);
-      var edgevc12 = createEdge(gpu, exchange1_);
-      var edgevc13 = createEdge(dsp, exchange1_);
-      var edgevc14 = createEdge(fpga, exchange1_);
-      // edgevc11.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      // edgevc12.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      // edgevc13.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      // edgevc14.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-
-      var edgevc11_ = createEdge(cpu_, exchange2_);
-      var edgevc12_ = createEdge(gpu_, exchange2_);
-      var edgevc13_ = createEdge(dsp_, exchange2_);
-      var edgevc14_ = createEdge(fpga_, exchange2_);
-      // edgevc11_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      // edgevc12_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      // edgevc13_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-      // edgevc14_.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
-
-      var h1 = createSw(imgop1, -150, 900, "远置单元1", null, true);
-      var h2 = createSw(imgop2, -300, 900, "远置单元2", null, true);
-      var h3 = createSw(imgop1, -450, 900, "远置单元3", null, true);
-      var edgevc1_1 = createEdge(exchange3_, h1);
-      var edgevc1_2 = createEdge(exchange3_, h2);
-      var edgevc1_3 = createEdge(exchange3_, h3);
-
-      var h4 = createSw(imgop1, 150, 100, "远置单元4", null, true);
-      var h5 = createSw(imgop2, 300, 100, "远置单元5", null, true);
-      var h6 = createSw(imgop1, 450, 100, "远置单元6", null, true);
-      var edgevc2_1 = createEdge(exchange4_, h4);
-      var edgevc2_2 = createEdge(exchange4_, h5);
-      var edgevc2_3 = createEdge(exchange4_, h6);
-
-      var flowingSupport = new FlowingSupport(graph);
-      flowingSupport.addFlowing(edge, 1, false, this.flowColor);
-      flowingSupport.addFlowing(edge_, 1, false, this.flowColor);
-      flowingSupport.addFlowing(edge3_, 1, false, this.flowColor);
-      flowingSupport.addFlowing(edge4_, 1, false, this.flowColor);
-
-      flowingSupport.addFlowing(edgevc11, 1, false);
-      flowingSupport.addFlowing(edgevc12, 1, false);
-      flowingSupport.addFlowing(edgevc13, 1, false);
-      flowingSupport.addFlowing(edgevc14, 1, false);
-
-      flowingSupport.addFlowing(edgevc11_, 1, false);
-      flowingSupport.addFlowing(edgevc12_, 1, false);
-      flowingSupport.addFlowing(edgevc13_, 1, false);
-      flowingSupport.addFlowing(edgevc14_, 1, false);
-
-      flowingSupport.addFlowing(edgevc1_1, 1, false, this.flowColor_vpn);
-      flowingSupport.addFlowing(edgevc1_2, 1, false, this.flowColor_vpn);
-      flowingSupport.addFlowing(edgevc1_3, 1, false, this.flowColor_vpn);
-
-      flowingSupport.addFlowing(edgevc2_1, 1, false, this.flowColor_vpn);
-      flowingSupport.addFlowing(edgevc2_2, 1, false, this.flowColor_vpn);
-      flowingSupport.addFlowing(edgevc2_3, 1, false, this.flowColor_vpn);
+      let tempobj = this.dealWithDataXY();
+      this.drawBusEdgeAndCenterSw(graph, tempobj.assistantPoints);
+      // console.log(tempobj);
+      // flowingSupport.addFlowing(edgevc2_3, 1, false, this.flowColor_vpn);
 
       graph.callLater(function () {
         flowingSupport.start();
@@ -760,13 +672,13 @@ export default {
             return;
           }
           if (element.randomAble) {
-            var alarmSeverity = AlarmSeverity.random;
-            element.alarmLabel =
-              "" +
-              (1 + Q.randomInt(100)) +
-              alarmSeverity.sortName +
-              (Q.randomBool() ? "+" : "");
-            element.alarmColor = alarmSeverity.color;
+            // var alarmSeverity = AlarmSeverity.random;
+            // element.alarmLabel =
+            //   "" +
+            //   (1 + Q.randomInt(100)) +
+            //   alarmSeverity.sortName +
+            //   (Q.randomBool() ? "+" : "");
+            // element.alarmColor = alarmSeverity.color;
           }
         });
         timer = setTimeout(A, 1500);
@@ -797,6 +709,8 @@ export default {
         { name: "c1", id: 10031 },
         { name: "d1", id: 10041 },
         { name: "e1", id: 10051 },
+        { name: "f1", id: 10061 },
+        { name: "g1", id: 10071 },
       ];
       let incomeSwForCal = [
         { name: "a", id: 1001 },
@@ -804,6 +718,8 @@ export default {
         { name: "c", id: 1003 },
         { name: "d", id: 1004 },
         { name: "e", id: 1005 },
+        { name: "f", id: 1006 },
+        { name: "g", id: 1007 },
       ];
       let baseLeftX = 0;
       let baseLeftY = 0;
@@ -883,30 +799,31 @@ export default {
             }
           );
         } else {
-          let tempointx = itemNow.x + 50;
+          console.log(itemNow);
+          let tempointx = itemNow.x;
           let tempointy;
           if (itemNow.y >= 0) {
-            tempointy = itemNow.y - 40;
-          } else {
             tempointy = itemNow.y + 40;
+          } else {
+            tempointy = itemNow.y - 40;
           }
           assistantPoints.push(
             {
               no: `${indexNow}_1`,
               type: "busNode",
-              x: tempointx - 160,
+              x: tempointx - 100,
               y: tempointy,
             },
             {
               no: `${indexNow}_2`,
               type: "busNode",
-              x: tempointx + 160,
+              x: tempointx + 100,
               y: tempointy,
             }
           );
         }
       });
-      console.log(newarr, newop, assistantPoints);
+      return { newarr, newop, assistantPoints };
     },
     dealWithDeviceXY(data) {
       const endObj = {};
@@ -976,11 +893,16 @@ export default {
       });
       return result;
     },
-    drawBusEdgeAndCenterSw(pointArr, graph) {
+    // 传入参数为第一个参数是所有相关主线bus所有的线，参数二为画布实体,目的绘制中心交换机和总线bus
+    drawBusEdgeAndCenterSw(graph, pointArr) {
+      let tempsarr = pointArr.map((item) => {
+        item.y = item.y * -1;
+        return item;
+      });
       let arrleft = [];
       let arrrightTop = [];
       let arrrightBottom = [];
-      pointArr.map((item) => {
+      tempsarr.map((item) => {
         if (item.x <= 0) {
           arrleft.push(item);
         } else {
@@ -995,24 +917,46 @@ export default {
       let line1 = arrleft.sort(this.compare("x", true));
       let line2 = arrrightTop.sort(this.compare("x", false));
       let line3 = arrrightBottom.sort(this.compare("x", false));
-
       let mostleftpoint = line1[0];
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
-
-      // var edge = graph.createEdge(name, a, b);
-      // if (dashed) {
-      //   edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
-      // }
-      // edge.setStyle(Q.Styles.EDGE_WIDTH, 5);
-      // edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
-      // edge.setStyle(Q.Styles.ARROW_TO, false);
-      // edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
-      // edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
-      // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
-      // edge.nodesType = "line";
-      // // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
-      // return edge;
+      let leftnNode = this.createNode(
+        graph,
+        pointsvg,
+        mostleftpoint.x,
+        mostleftpoint.y
+      );
+      let rightTopNode = this.createNode(
+        graph,
+        pointsvg,
+        mostrightToppoint.x,
+        mostrightToppoint.y
+      );
+      let rightBottomNode = this.createNode(
+        graph,
+        pointsvg,
+        mostrightBottompoint.x,
+        mostrightBottompoint.y
+      );
+      let centerNode = this.createNode(graph, imgsw, 0, 0, "中心交换机");
+      let line1Edge = this.createEdge(graph, leftnNode, centerNode);
+      let line2Edge = this.createEdge(graph, rightTopNode, centerNode);
+      let line3Edge = this.createEdge(graph, rightBottomNode, centerNode);
+      line1.map((item, index) => {
+        if (index) {
+          line1Edge.addPathSegment([item.x, item.y]);
+        }
+      });
+      line2.map((item, index) => {
+        if (index) {
+          line2Edge.addPathSegment([item.x, item.y]);
+        }
+      });
+      line3.map((item, index) => {
+        if (index) {
+          line3Edge.addPathSegment([item.x, item.y]);
+        }
+      });
     },
     /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
     compare(attr, rev) {
