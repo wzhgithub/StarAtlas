@@ -331,12 +331,13 @@ export default {
       if (dashed) {
         edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
       }
-      edge.setStyle(Q.Styles.EDGE_WIDTH, 5);
+      edge.setStyle(Q.Styles.EDGE_WIDTH, 3);
       edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
       edge.setStyle(Q.Styles.ARROW_TO, false);
       edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
       edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
-      edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
+      edge.setStyle(Q.Styles.ARROW_FROM_STROKE, 7);
+      // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
       edge.nodesType = "line";
       // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
       return edge;
@@ -637,7 +638,8 @@ export default {
 
       let tempobj = this.dealWithDataXY();
       this.drawBusEdgeAndCenterSw(graph, tempobj.assistantPoints);
-      // console.log(tempobj);
+      this.drawSwAndOthers(graph, tempobj.newarr, tempobj.newop);
+      // console.log(tempobj);newarr, newop,
       // flowingSupport.addFlowing(edgevc2_3, 1, false, this.flowColor_vpn);
 
       graph.callLater(function () {
@@ -782,25 +784,24 @@ export default {
       let assistantPoints = [];
       newarr.map((itemNow, indexNow) => {
         if (itemNow.x <= 0) {
-          let tempointx = itemNow.x - 25;
+          let tempointx = itemNow.x + 40;
           let tempointy = itemNow.y;
           assistantPoints.push(
             {
               no: `${indexNow}_1`,
               type: "busNode",
-              x: tempointx - 30,
+              x: tempointx - 40,
               y: tempointy + 100,
             },
             {
               no: `${indexNow}_2`,
               type: "busNode",
-              x: tempointx + 30,
+              x: tempointx + 40,
               y: tempointy,
             }
           );
         } else {
-          console.log(itemNow);
-          let tempointx = itemNow.x;
+          let tempointx = itemNow.x + 30;
           let tempointy;
           if (itemNow.y >= 0) {
             tempointy = itemNow.y + 40;
@@ -957,6 +958,23 @@ export default {
           line3Edge.addPathSegment([item.x, item.y]);
         }
       });
+      return;
+    },
+    drawSwAndOthers(graph, swArr, otherArr) {
+      let tempsarr = swArr.map((item) => {
+        item.y = item.y * -1;
+        return item;
+      });
+      let tempsarr_ = otherArr.map((item) => {
+        item.y = item.y * -1;
+        return item;
+      });
+      let nodesOfsw = tempsarr.map((item) => {
+        return this.createNode(graph, pointsvg, item.x, item.y);
+      });
+      // let nodesOfOther = tempsarr_.map((item) => {
+      //   return this.createNode(graph, pointsvg, item.x, item.y);
+      // });
     },
     /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
     compare(attr, rev) {
