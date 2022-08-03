@@ -287,6 +287,7 @@ export default {
           publishAmount: "任务6",
         },
       ],
+      allSwXY: [],
     };
   },
   methods: {
@@ -301,6 +302,28 @@ export default {
       graph = new Q.Graph(this.$refs.canvas);
       graph.editable = true;
       graph.enableRectangleSelectionByRightButton = true;
+    },
+    createNode(graph, image, x, y, name, group, randomFlag, nodesType) {
+      var node = graph.createNode(name, x, y);
+      if (image) {
+        if (Q.isString(image)) {
+          image = image;
+        }
+        node.image = image;
+      }
+      node.size = { height: 70 };
+      if (group) {
+        group.addChild(node);
+      }
+      node.randomAble = randomFlag || false;
+      node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
+      node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
+      node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
+      node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
+      node.nodesType = nodesType;
+      // node.setStyle(Q.Styles., 25);
+      model.add(node);
+      return node;
     },
     initalarm() {
       if (!Q.Element.prototype.initAlarmBalloon) {
@@ -794,7 +817,7 @@ export default {
           return {
             ...item,
             x: -240 * (doublecoefficient - index),
-            y: 140 * (doublecoefficient - index - 1),
+            y: 100 * (doublecoefficient - index - 1),
           };
         } else {
           let baseMultiple = Math.ceil(incomeSwForCal.length / 4);
@@ -843,20 +866,20 @@ export default {
       let assistantPoints = [];
       newarr.map((itemNow, indexNow) => {
         if (itemNow.x <= 0) {
-          let tempointx = itemNow.x - 5;
-          let tempointy = itemNow.y + 10;
+          let tempointx = itemNow.x - 25;
+          let tempointy = itemNow.y;
           assistantPoints.push(
             {
               no: `${indexNow}_1`,
               type: "busNode",
               x: tempointx - 30,
-              y: tempointy + 40,
+              y: tempointy + 100,
             },
             {
               no: `${indexNow}_2`,
               type: "busNode",
               x: tempointx + 30,
-              y: tempointy - 10,
+              y: tempointy,
             }
           );
         } else {
@@ -884,6 +907,132 @@ export default {
         }
       });
       console.log(newarr, newop, assistantPoints);
+    },
+    dealWithDeviceXY(data) {
+      const endObj = {};
+      for (const key in data) {
+        if (data[key].length) {
+          const temp = this.getSwitch(key);
+          let ends = data[key].map((item, index) => {
+            if (temp.x < 0) {
+              return {
+                ...item,
+                x: temp.x + 120,
+                y: temp.y - 20 + index * -40,
+              };
+            } else {
+              if (temp.y < 0) {
+                return {
+                  ...item,
+                  x: temp.x - 150,
+                  y: temp.y - 50 + index * -50,
+                };
+              } else {
+                return {
+                  ...item,
+                  x: temp.x - 150,
+                  y: temp.y + 50 + index * 50,
+                };
+              }
+            }
+          });
+          endObj[key] = ends;
+        }
+      }
+      return endObj;
+    },
+    dealWithFarendOpXY(data) {
+      const endObj = {};
+      for (const key in data) {
+        if (data[key].length) {
+          const temp = this.getSwitch(key);
+          let ends = data[key].map((item, index) => {
+            if (temp.x < 0) {
+              return {
+                ...item,
+                x: temp.x - 120,
+                y: temp.y + 20 + index * 20,
+              };
+            } else {
+              return {
+                ...item,
+                x: temp.x + 100,
+                y: temp.y - 30 + index * 35,
+              };
+            }
+          });
+          endObj[key] = ends;
+        }
+      }
+      return endObj;
+    },
+    getSwitch(id) {
+      let result = {};
+      this.allSwXY.map((item) => {
+        if (item.id === id) {
+          result = item;
+        }
+        return item;
+      });
+      return result;
+    },
+    drawBusEdgeAndCenterSw(pointArr, graph) {
+      let arrleft = [];
+      let arrrightTop = [];
+      let arrrightBottom = [];
+      pointArr.map((item) => {
+        if (item.x <= 0) {
+          arrleft.push(item);
+        } else {
+          if (item.y <= 0) {
+            arrrightBottom.push(item);
+          } else {
+            arrrightTop.push(item);
+          }
+        }
+        return item;
+      });
+      let line1 = arrleft.sort(this.compare("x", true));
+      let line2 = arrrightTop.sort(this.compare("x", false));
+      let line3 = arrrightBottom.sort(this.compare("x", false));
+
+      let mostleftpoint = line1[0];
+      let mostrightToppoint = line2[0];
+      let mostrightBottompoint = line3[0];
+
+      // var edge = graph.createEdge(name, a, b);
+      // if (dashed) {
+      //   edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
+      // }
+      // edge.setStyle(Q.Styles.EDGE_WIDTH, 5);
+      // edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
+      // edge.setStyle(Q.Styles.ARROW_TO, false);
+      // edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+      // edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
+      // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
+      // edge.nodesType = "line";
+      // // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
+      // return edge;
+    },
+    /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
+    compare(attr, rev) {
+      // console.log(attr, rev)
+      if (rev == undefined) {
+        rev = 1;
+      } else {
+        rev = rev ? 1 : -1;
+      }
+      return (a, b) => {
+        a = a[attr];
+        b = b[attr];
+        if (a < b) {
+          return rev * -1;
+        }
+        if (a > b) {
+          return rev * 1;
+        }
+        return 0;
+      };
     },
     mockError(type) {
       this.drawer = false;
