@@ -712,7 +712,6 @@ export default {
         { name: "d1", id: 10041 },
         { name: "e1", id: 10051 },
         { name: "f1", id: 10061 },
-        { name: "g1", id: 10071 },
       ];
       let incomeSwForCal = [
         { name: "a", id: 1001 },
@@ -721,7 +720,6 @@ export default {
         { name: "d", id: 1004 },
         { name: "e", id: 1005 },
         { name: "f", id: 1006 },
-        { name: "g", id: 1007 },
       ];
       let baseLeftX = 0;
       let baseLeftY = 0;
