@@ -515,107 +515,6 @@ export default {
           }, 50);
         },
       };
-      function createNode(image, x, y, name, group, randomFlag, nodesType) {
-        var node = graph.createNode(name, x, y);
-        if (image) {
-          if (Q.isString(image)) {
-            image = image;
-          }
-          node.image = image;
-        }
-        node.size = { height: 70 };
-        if (group) {
-          group.addChild(node);
-        }
-        node.randomAble = randomFlag || false;
-        node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
-        node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
-        node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
-        node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
-        node.nodesType = nodesType;
-        // node.setStyle(Q.Styles., 25);
-        model.add(node);
-        return node;
-      }
-      function createSw(image, x, y, name, group, randomFlag) {
-        var node = graph.createNode(name, x, y);
-        if (image) {
-          if (Q.isString(image)) {
-            image = image;
-          }
-          node.image = image;
-        }
-        node.size = { height: 120 };
-        if (group) {
-          group.addChild(node);
-        }
-        node.randomAble = randomFlag || false;
-        node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
-        node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
-        node.nodesType = "sw";
-        model.add(node);
-        return node;
-      }
-      function createText(name, x, y, fontSize, color, parent) {
-        var text = graph.createText(name, x, y);
-        text.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_MIDDLE);
-        text.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_MIDDLE);
-        text.setStyle(Q.Styles.LABEL_FONT_SIZE, fontSize);
-        text.setStyle(Q.Styles.LABEL_COLOR, color);
-        text.setStyle(Q.Styles.LABEL_BACKGROUND_COLOR, null);
-        if (parent) {
-          parent.addChild(text);
-        }
-        return text;
-      }
-      function createGroup(padding, flag, image, host, name) {
-        var group = graph.createGroup(name);
-        // group.name = name;
-        group.image = image;
-        group.groupType = Q.Consts.GROUP_TYPE_RECT;
-        group.padding = padding || 40;
-        // group.minSize = {
-        //   width: 300,
-        //   height: 440,
-        // };
-        if (flag) {
-          group.setStyle(Q.Styles.GROUP_BACKGROUND_COLOR, "#000000");
-          group.setStyle(Q.Styles.ALPHA, "0");
-        } else {
-          group.setStyle(Q.Styles.GROUP_BACKGROUND_COLOR, "#000000");
-          group.setStyle(Q.Styles.ALPHA, "0.3");
-        }
-        group.setStyle(Q.Styles.GROUP_STROKE_LINE_DASH, [3, 2]);
-        group.setStyle(Q.Styles.LABEL_COLOR, "#fff");
-        group.setStyle(Q.Styles.LABEL_FONT_SIZE, 30);
-        // group.setStyle(Q.Styles.GROUP_BACKGROUND_COLOR, false);
-        // group.setStyle(Q.Styles.ALPHA, "0");
-        group.nodesType = "VMC";
-        return group;
-      }
-      function createEdge(a, b, color, dashed, name) {
-        var edge = graph.createEdge(name, a, b);
-        if (dashed) {
-          edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
-        }
-        edge.setStyle(Q.Styles.EDGE_WIDTH, 5);
-        edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
-        edge.setStyle(Q.Styles.ARROW_TO, false);
-        edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
-        edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
-        edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
-        edge.nodesType = "line";
-        // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
-        return edge;
-      }
-      function createBus(path) {
-        var bus = new Q.Bus(null, path);
-        graph.graphModel.add(bus);
-        bus.setStyle(Q.Styles.SHAPE_STROKE, 25);
-        bus.setStyle(Q.Styles.SHAPE_FILL_COLOR, "#fff");
-        // bus.image = server;
-        return bus;
-      }
       var VPNFlexEdgeUI = function (edge, graph) {
         Q.doSuperConstructor(this, VPNFlexEdgeUI, arguments);
       };
@@ -738,7 +637,7 @@ export default {
           let baseMultiple = Math.ceil(incomeSwForCal.length / 4);
           if (index % 2 === 0) {
             baseRightTopX = baseRightTopX + 300;
-            baseRightTopY = baseRightTopY + 150;
+            baseRightTopY = baseRightTopY - 150;
             return {
               ...item,
               x: baseRightTopX,
@@ -746,7 +645,7 @@ export default {
             };
           } else {
             baseRightBottomX = baseRightBottomX + 300;
-            baseRightBottomY = baseRightBottomY - 150;
+            baseRightBottomY = baseRightBottomY + 150;
             return {
               ...item,
               x: baseRightBottomX,
@@ -759,7 +658,7 @@ export default {
         if (newarr[indexs].x <= 0) {
           return {
             ...items,
-            x: newarr[indexs].x,
+            x: newarr[indexs].x + 50,
             y: newarr[indexs].y + 100,
           };
         } else {
@@ -767,13 +666,13 @@ export default {
             return {
               ...items,
               x: newarr[indexs].x + 100,
-              y: newarr[indexs].y - 80,
+              y: newarr[indexs].y + 80,
             };
           } else {
             return {
               ...items,
               x: newarr[indexs].x + 100,
-              y: newarr[indexs].y + 80,
+              y: newarr[indexs].y - 80,
             };
           }
         }
@@ -918,60 +817,86 @@ export default {
       let mostleftpoint = line1[0];
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
-      let leftnNode = this.createNode(
-        graph,
-        pointsvg,
-        mostleftpoint.x,
-        mostleftpoint.y
-      );
-      let rightTopNode = this.createNode(
-        graph,
-        pointsvg,
-        mostrightToppoint.x,
-        mostrightToppoint.y
-      );
-      let rightBottomNode = this.createNode(
-        graph,
-        pointsvg,
-        mostrightBottompoint.x,
-        mostrightBottompoint.y
-      );
       let centerNode = this.createNode(graph, imgsw, 0, 0, "中心交换机");
-      let line1Edge = this.createEdge(graph, leftnNode, centerNode);
-      let line2Edge = this.createEdge(graph, rightTopNode, centerNode);
-      let line3Edge = this.createEdge(graph, rightBottomNode, centerNode);
-      line1.map((item, index) => {
-        if (index) {
-          line1Edge.addPathSegment([item.x, item.y]);
-        }
-      });
-      line2.map((item, index) => {
-        if (index) {
-          line2Edge.addPathSegment([item.x, item.y]);
-        }
-      });
-      line3.map((item, index) => {
-        if (index) {
-          line3Edge.addPathSegment([item.x, item.y]);
-        }
-      });
+      if (mostleftpoint) {
+        let leftnNode = this.createNode(
+          graph,
+          pointsvg,
+          mostleftpoint.x,
+          mostleftpoint.y
+        );
+        let line1Edge = this.createEdge(graph, leftnNode, centerNode);
+        line1.map((item, index) => {
+          if (index) {
+            line1Edge.addPathSegment([item.x, item.y]);
+          }
+        });
+      }
+      if (mostrightToppoint) {
+        let rightTopNode = this.createNode(
+          graph,
+          pointsvg,
+          mostrightToppoint.x,
+          mostrightToppoint.y
+        );
+
+        let line2Edge = this.createEdge(graph, rightTopNode, centerNode);
+        line2.map((item, index) => {
+          if (index) {
+            line2Edge.addPathSegment([item.x, item.y]);
+          }
+        });
+      }
+      if (mostrightBottompoint) {
+        let rightBottomNode = this.createNode(
+          graph,
+          pointsvg,
+          mostrightBottompoint.x,
+          mostrightBottompoint.y
+        );
+        let line3Edge = this.createEdge(graph, rightBottomNode, centerNode);
+
+        line3.map((item, index) => {
+          if (index) {
+            line3Edge.addPathSegment([item.x, item.y]);
+          }
+        });
+      }
       return;
     },
     drawSwAndOthers(graph, swArr, otherArr) {
       let tempsarr = swArr.map((item) => {
-        item.y = item.y * -1;
+        if (item.x <= 0) {
+          item.y = item.y * -1;
+        } else {
+          if (item.y > 0) {
+            item.y = (item.y + 80) * -1;
+          } else {
+            item.y = (item.y - 80) * -1;
+          }
+        }
         return item;
       });
       let tempsarr_ = otherArr.map((item) => {
-        item.y = item.y * -1;
+        if (item.x <= 0) {
+          item.y = item.y * -1;
+          item.x = item.x + 40;
+        } else {
+          item.x = item.x - 100;
+          if (item.y > 0) {
+            item.y = (item.y - 80) * -1;
+          } else {
+            item.y = (item.y + 80) * -1;
+          }
+        }
         return item;
       });
       let nodesOfsw = tempsarr.map((item) => {
         return this.createNode(graph, pointsvg, item.x, item.y);
       });
-      // let nodesOfOther = tempsarr_.map((item) => {
-      //   return this.createNode(graph, pointsvg, item.x, item.y);
-      // });
+      let nodesOfOther = tempsarr_.map((item) => {
+        return this.createNode(graph, pointsvg, item.x, item.y);
+      });
     },
     /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
     compare(attr, rev) {
