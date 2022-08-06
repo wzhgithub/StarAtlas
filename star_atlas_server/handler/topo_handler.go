@@ -12,11 +12,17 @@ import (
 	"github.com/golang/glog"
 )
 
-var deviceType = map[string]bool{
-	"CPU":  true,
-	"GPU":  true,
-	"DSP":  true,
-	"FPGA": true,
+type details struct {
+	dbase  int64
+	dtypes int
+	dcores int
+}
+
+var deviceDetails = map[string]details{
+	"CPU":  {model.C_CPU_BASE, 5, 256},
+	"GPU":  {model.C_GPU_BASE, 1, 256},
+	"DSP":  {model.C_DSP_BASE, 3, 256},
+	"FPGA": {model.C_FPGA_BASE, 1, 1},
 }
 
 const cRange = 10
@@ -119,22 +125,37 @@ func TopoInsert(c *gin.Context) {
 
 func insertDevice(topo *model.TopoTable, num int, dType string, vmcId int64) error {
 	dType = strings.ToUpper(dType)
-	if !deviceType[dType] {
+	if _, ok := deviceDetails[dType]; !ok {
 		return fmt.Errorf("cannot find device type: %s", dType)
 	}
+	n := &model.Nodes{
+		Id:           vmcId*model.CVMCBase + deviceDetails[dType].dbase,
+		Name:         dType + "_all",
+		DeviceType:   strings.ToLower(dType),
+		ParentId:     uint16(vmcId),
+		UpstreamId:   0,
+		DeviceStatus: "RUN",
+		DeviceNum:    int32(num),
+		OtherInfo:    make([]*model.OtherInfos, 0),
+	}
+	device_ids := make([]string, 0)
+	device_names := make([]string, 0)
+	device_types := make([]string, 0)
+	device_cores := make([]string, 0)
 	for i := 0; i < num; i++ {
-		n := &model.Nodes{
-			Id:           vmcId*model.CVMCBase + int64(i),
-			Name:         dType + "_" + strconv.Itoa(i),
-			DeviceType:   strings.ToLower(dType),
-			ParentId:     uint16(vmcId),
-			UpstreamId:   0,
-			DeviceStatus: "RUN",
-			OtherInfo:    nil,
-		}
-		if err := topo.InsertOp(n); err != nil {
-			return fmt.Errorf("insert %s device failed", dType)
-		}
+		cur_id := vmcId*model.CVMCBase + int64(i)
+		device_ids = append(device_ids, fmt.Sprintf("%d", cur_id))
+		device_names = append(device_names, dType+"_"+strconv.Itoa(i))
+		device_types = append(device_types, fmt.Sprintf("%d", rand.Intn(deviceDetails[dType].dtypes)))
+		device_cores = append(device_cores, fmt.Sprintf("%d", rand.Intn(deviceDetails[dType].dcores)))
+	}
+	n.OtherInfo = append(n.OtherInfo, model.NewOtherInfos("cpu_ids", device_ids))
+	n.OtherInfo = append(n.OtherInfo, model.NewOtherInfos("cpu_names", device_names))
+	n.OtherInfo = append(n.OtherInfo, model.NewOtherInfos("cpu_types", device_types))
+	n.OtherInfo = append(n.OtherInfo, model.NewOtherInfos("cpu_cores", device_cores))
+
+	if err := topo.InsertOp(n); err != nil {
+		return fmt.Errorf("insert %s device failed", dType)
 	}
 	return nil
 }
