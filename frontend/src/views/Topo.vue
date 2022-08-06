@@ -142,7 +142,7 @@ import router from "@/assets/network/router_a.png";
 import pc from "@/assets/network/pc_a.png";
 import flow from "@/assets/flow.png";
 import cloud from "@/assets/network/cloud.png";
-import { nameOrAll } from "@/api";
+import { getTopoShow } from "@/api";
 // import text from "../assets/data/topo.json";
 import imgcpu from "@/assets/newpng/CPU.svg";
 import imggpu from "@/assets/newpng/GPU.svg";
@@ -292,10 +292,9 @@ export default {
   methods: {
     ...mapMutations(["setDisVmc", "setDisArea"]),
     async getNameOAll() {
-      const { data } = await nameOrAll();
+      const { data } = await getTopoShow();
       // data = JSON.parse(data)
       console.log(data);
-      this.names = data[0]["names"];
     },
     creatGraph() {
       graph = new Q.Graph(this.$refs.canvas);
