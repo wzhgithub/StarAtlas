@@ -73,11 +73,14 @@ func GetVMCData(c *gin.Context) {
 	if err != nil {
 		c.JSON(500, model.NewCommonResponseFail(err))
 		glog.Errorf("Failed to GetVmcStatus, when vmc_id = %d, error: %s\n", vmc_id, err.Error())
+		return
 	}
+	var s *model.CommonResponse
 	if status == "RUN" {
-		model.NewCommonResponseSucc(*vmcdata_rsp)
+		s = model.NewCommonResponseSucc(*vmcdata_rsp)
 	}
-	model.NewCommonResponseSucc(status)
+	s = model.NewCommonResponseSucc(status)
+	c.JSON(200, s)
 }
 
 type VMCSequenceRspJson struct {
