@@ -151,7 +151,8 @@ import imgfgpa from "@/assets/newpng/FPGA.svg";
 import imgsw from "@/assets/newpng/centersw_topo.svg";
 import imgop1 from "@/assets/newpng/op_1.svg";
 import imgop2 from "@/assets/newpng/op_2.svg";
-import pointsvg from "@/assets/newpng/point.svg";
+import pointsvg from "@/assets/newpng/point_new.svg";
+import inswsvg from "@/assets/newpng/sw_in.svg";
 // import obc from "@/assets/newpng/cloud.png";
 import imgvmc from "@/assets/newpng/VMC.svg";
 // import sw from "@/assets/newpng/cloud.png";
@@ -325,7 +326,7 @@ export default {
       // model.add(node);
       return node;
     },
-    createEdge(graph, a, b, color, dashed, name) {
+    createEdge(graph, a, b, color, dashed, name, angle) {
       var edge = graph.createEdge(name, a, b);
       if (dashed) {
         edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
@@ -336,10 +337,36 @@ export default {
       edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
       edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
       edge.setStyle(Q.Styles.ARROW_FROM_STROKE, 7);
+      if (angle) {
+        edge.angle = angle;
+      }
       // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
       edge.nodesType = "line";
       // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
       return edge;
+    },
+    createBus(graph) {
+      var path = new Q.Path();
+      var bus = new Q.Bus(null, path);
+      graph.graphModel.add(bus);
+      bus.setStyle(Q.Styles.SHAPE_STROKE, 3);
+      bus.setStyle(Q.Styles.SHAPE_STROKE_STYLE, "#8cd1f1");
+      bus.setStyle(Q.Styles.SHAPE_FILL_COLOR, false);
+      return bus;
+      // var edge = graph.createEdge(name, a, b);
+      // if (dashed) {
+      //   edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
+      // }
+      // edge.setStyle(Q.Styles.EDGE_WIDTH, 3);
+      // edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
+      // edge.setStyle(Q.Styles.ARROW_TO, false);
+      // edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+      // edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
+      // edge.setStyle(Q.Styles.ARROW_FROM_STROKE, 7);
+      // // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
+      // edge.nodesType = "line";
+      // // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
+      // return edge;
     },
     initalarm() {
       if (!Q.Element.prototype.initAlarmBalloon) {
@@ -428,10 +455,10 @@ export default {
           }
           count = count || 1;
           while (--count >= 0) {
-            var ui = new Q.ImageUI(flow);
+            var ui = new Q.ImageUI(pointsvg);
             ui.layoutByPath = true;
             ui.position = { x: 0, y: 0 };
-            ui.size = { width: 20 };
+            ui.size = { width: 40 };
             ui.renderColor = flowColors;
             flowList.push(ui);
             flowList.byPercent = byPercent;
@@ -535,10 +562,37 @@ export default {
       Q.extend(VPNFlexEdgeUI, Q.EdgeUI);
 
       let tempobj = this.dealWithDataXY();
-      this.drawBusEdgeAndCenterSw(graph, tempobj.assistantPoints);
+      let busnodes = this.drawBusEdgeAndCenterSw(
+        graph,
+        tempobj.assistantPoints
+      );
       this.drawSwAndOthers(graph, tempobj.newarr, tempobj.newop);
       // console.log(tempobj);newarr, newop,
-      // flowingSupport.addFlowing(edgevc2_3, 1, false, this.flowColor_vpn);
+      var flowingSupport = new FlowingSupport(graph);
+      if (busnodes.line1Edge) {
+        flowingSupport.addFlowing(
+          busnodes.line1Edge,
+          1,
+          false
+          // this.flowColor_vpn
+        );
+      }
+      if (busnodes.line2Edge) {
+        flowingSupport.addFlowing(
+          busnodes.line2Edge,
+          1,
+          false
+          // this.flowColor_vpn
+        );
+      }
+      if (busnodes.line3Edge) {
+        flowingSupport.addFlowing(
+          busnodes.line3Edge,
+          1,
+          false
+          // this.flowColor_vpn
+        );
+      }
 
       graph.callLater(function () {
         flowingSupport.start();
@@ -589,9 +643,9 @@ export default {
         flowingSupport.stop();
         clearTimeout(timer);
       }
-      graph.zoomToOverview(0.5);
+      graph.zoomToOverview(0.8, 0.8);
       // graph.isMovable = false;
-      graph.enableWheelZoom = false;
+      // graph.enableWheelZoom = false;
       graph.onclick = function (evt) {
         if (evt.getData()) {
           if (evt.getData().nodesType) {
@@ -610,6 +664,7 @@ export default {
         { name: "d1", id: 10041 },
         { name: "e1", id: 10051 },
         { name: "f1", id: 10061 },
+        { name: "g1", id: 10061 },
       ];
       let incomeSwForCal = [
         { name: "a", id: 1001 },
@@ -618,6 +673,7 @@ export default {
         { name: "d", id: 1004 },
         { name: "e", id: 1005 },
         { name: "f", id: 1006 },
+        { name: "g", id: 1006 },
       ];
       let baseLeftX = 0;
       let baseLeftY = 0;
@@ -818,6 +874,9 @@ export default {
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
       let centerNode = this.createNode(graph, imgsw, 0, 0, "中心交换机");
+      let line1Edge = null;
+      let line2Edge = null;
+      let line3Edge = null;
       if (mostleftpoint) {
         let leftnNode = this.createNode(
           graph,
@@ -825,12 +884,16 @@ export default {
           mostleftpoint.x,
           mostleftpoint.y
         );
-        let line1Edge = this.createEdge(graph, leftnNode, centerNode);
+        leftnNode.zIndex = 999;
+        line1Edge = this.createBus(graph);
         line1.map((item, index) => {
-          if (index) {
-            line1Edge.addPathSegment([item.x, item.y]);
+          if (index === 0) {
+            line1Edge.moveTo(item.x, item.y);
+          } else {
+            line1Edge.lineTo(item.x, item.y);
           }
         });
+        line1Edge.lineTo(-50, 0);
       }
       if (mostrightToppoint) {
         let rightTopNode = this.createNode(
@@ -839,13 +902,16 @@ export default {
           mostrightToppoint.x,
           mostrightToppoint.y
         );
-
-        let line2Edge = this.createEdge(graph, rightTopNode, centerNode);
+        rightTopNode.zIndex = 999;
+        line2Edge = this.createBus(graph, rightTopNode, centerNode);
         line2.map((item, index) => {
-          if (index) {
-            line2Edge.addPathSegment([item.x, item.y]);
+          if (index === 0) {
+            line2Edge.moveTo(item.x, item.y);
+          } else {
+            line2Edge.lineTo(item.x, item.y);
           }
         });
+        line2Edge.lineTo(30, 20);
       }
       if (mostrightBottompoint) {
         let rightBottomNode = this.createNode(
@@ -854,17 +920,20 @@ export default {
           mostrightBottompoint.x,
           mostrightBottompoint.y
         );
-        let line3Edge = this.createEdge(graph, rightBottomNode, centerNode);
-
+        rightBottomNode.zIndex = 999;
+        line3Edge = this.createBus(graph, rightBottomNode, centerNode);
         line3.map((item, index) => {
-          if (index) {
-            line3Edge.addPathSegment([item.x, item.y]);
+          if (index === 0) {
+            line3Edge.moveTo(item.x, item.y);
+          } else {
+            line3Edge.lineTo(item.x, item.y);
           }
         });
+        line3Edge.lineTo(30, -20);
       }
-      return;
+      return { line1Edge, line2Edge, line3Edge };
     },
-    drawSwAndOthers(graph, swArr, otherArr) {
+    drawSwAndOthers(graph, swArr, otherArr, busObj) {
       let tempsarr = swArr.map((item) => {
         if (item.x <= 0) {
           item.y = item.y * -1;
@@ -892,10 +961,10 @@ export default {
         return item;
       });
       let nodesOfsw = tempsarr.map((item) => {
-        return this.createNode(graph, pointsvg, item.x, item.y);
+        return this.createNode(graph, inswsvg, item.x, item.y);
       });
       let nodesOfOther = tempsarr_.map((item) => {
-        return this.createNode(graph, pointsvg, item.x, item.y);
+        return this.createNode(graph, inswsvg, item.x, item.y);
       });
     },
     /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
@@ -944,7 +1013,6 @@ export default {
       }, 500);
     }, 2000);
   },
-
   created() {
     this.getNameOAll();
   },
