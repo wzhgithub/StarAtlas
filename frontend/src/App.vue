@@ -2,7 +2,7 @@
   <div id="app">
     <div class="nav_box">
       <ul class="nav">
-        <li class="home_title">星载高性能计算平台演示验证系统</li>
+        <li class="home_title">高性能星算平台演示系统</li>
         <li
           :class="activenow === 'home' ? 'drop-down active' : 'drop-down'"
           @click="changeRoute('home')"
@@ -114,6 +114,7 @@ export default {
   background: url("./assets/png/header.png") no-repeat;
   background-size: cover;
   vertical-align: middle;
+  font-weight: bold;
   ul {
     height: 100%;
     width: 100%;
