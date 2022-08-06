@@ -1,78 +1,184 @@
 package handler
 
 import (
+	"encoding/binary"
 	"fmt"
 	"net"
+	"star_atlas_server/model"
 	"star_atlas_server/pb"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	"google.golang.org/protobuf/proto"
 )
 
-const cBufferSize = 102400
+var conn net.Conn
 
-func SatelliteTCPHandler(tcpPort int) {
+type ToProto interface {
+	ToProto() (proto.Message, error)
+}
+
+type OrbitNormal struct {
+	X float32 `json:"x"`
+	Y float32 `json:"y"`
+	Z float32 `json:"z"`
+}
+
+type Coordinate struct {
+	Longitude float32 `json:"longitude"`
+	Latitude  float32 `json:"latitude"`
+}
+
+type OrbitCoordinate struct {
+	Coordinates []*Coordinate `json:"coordinates"`
+}
+
+func (O *OrbitCoordinate) GetType() (pb.MsgType, error) {
+	if O.Coordinates == nil || len(O.Coordinates) == 0 {
+		return 0, fmt.Errorf("invalidate coordinates")
+	}
+	lc := len(O.Coordinates)
+	if lc == 1 {
+		return pb.MsgType_ApiOrbitCoordinate, nil
+	}
+
+	return pb.MsgType_ApiMarkerCoordinates, nil
+}
+
+func (O *OrbitCoordinate) ToProto() (proto.Message, error) {
+	if O.Coordinates == nil || len(O.Coordinates) == 0 {
+		return nil, fmt.Errorf("invalidate coordinates")
+	}
+	lc := len(O.Coordinates)
+	if lc == 1 {
+		return &pb.OrbitCoordinate{
+			Coord: &pb.Coordinate{
+				Longitude: O.Coordinates[0].Longitude,
+				Latitude:  O.Coordinates[1].Latitude,
+			},
+		}, nil
+	}
+	coordinates := &pb.MarkerCoordinates{
+		Coordinates: make([]*pb.Coordinate, 0),
+	}
+	for i := 0; i < lc; i++ {
+		coordinates.Coordinates = append(coordinates.Coordinates, &pb.Coordinate{
+			Longitude: O.Coordinates[i].Longitude,
+			Latitude:  O.Coordinates[i].Latitude,
+		})
+	}
+	return coordinates, nil
+}
+
+func (O *OrbitNormal) ToProto() (proto.Message, error) {
+	return &pb.OrbitNormal{
+		X: O.X,
+		Y: O.Y,
+		Z: O.Z,
+	}, nil
+}
+
+func ApiOrbitNormal(c *gin.Context) {
+	o := &OrbitNormal{}
+	if err := c.ShouldBindJSON(o); err != nil {
+		glog.Errorf("ApiOrbitNormal Error binding JSON: %v", err)
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	msg, err := o.ToProto()
+	if err != nil {
+		glog.Errorf("ApiOrbitNormal Error ToProto: %v", err)
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, msg)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	c.JSON(200, model.NewCommonResponseSucc("ApiOrbitNormal success"))
+}
+
+func apiCoordinate(c *gin.Context) {
+	req := &OrbitCoordinate{}
+	if err := c.ShouldBindJSON(req); err != nil {
+		glog.Errorf("apiCoordinate Error binding JSON: %v", err)
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	msg, err := req.ToProto()
+	if err != nil {
+		glog.Errorf("apiCoordinate Error ToProto: %v", err)
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	t, _ := req.GetType()
+	err = sendMsg(conn, t, msg)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	c.JSON(200, model.NewCommonResponseSucc("ApiOrbitCoordinate success"))
+}
+
+func ApiMarkerCoordinates(c *gin.Context) {
+	apiCoordinate(c)
+}
+
+func ApiOrbitCoordinate(c *gin.Context) {
+	apiCoordinate(c)
+}
+
+func ApiShowPicture(ctx *gin.Context) {
+	name := ctx.Query("name")
+	msg := &pb.ShowPicture{
+		Name: name,
+	}
+	err := sendMsg(conn, pb.MsgType_ApiShowPicture, msg)
+	if err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}	
+	ctx.JSON(200, model.NewCommonResponseSucc("ApiShowPicture success"))
+}
+
+func SatelliteTCPHandlerInit(tcpPort int) {
+	glog.Infof("SatelliteTCPHandlerInit called port:%d\n", tcpPort)
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", tcpPort))
 	if err != nil {
 		glog.Errorf("Failed to listen tcp port: %v err: %v\n", tcpPort, err)
 		return
 	}
-	defer l.Close()
-	conn, err := l.Accept()
+	conn, err = l.Accept()
 	if err != nil {
 		glog.Errorf("Failed to accept connection: %v err: %v\n", l.Addr().String(), err)
 	}
-	defer conn.Close()
-
-	for {
-		data, err := readBytes(conn)
-		if err != nil {
-			glog.Errorf("Failed to read from connection: %v err: %v\n", conn, err)
-			continue
-		}
-		handler(conn, data)
-	}
+	glog.Infof("Connected to %s", conn.LocalAddr().String())
 }
 
-// ==============================todo case implementations =============================
-func handleByApiType(msg *pb.Msg) ([]byte, error) {
-	switch msg.Type {
-	case pb.MsgType_ApiOrbitNormal:
-	case pb.MsgType_ApiShowPicture:
-	case pb.MsgType_ApiMarkerCoordinates:
-	case pb.MsgType_ApiOrbitCoordinate:
+func sendMsg(conn net.Conn, msgType pb.MsgType, msg proto.Message) error {
+	if conn == nil {
+		return fmt.Errorf("connection must be non-nil")
+	}
+	data, err := proto.Marshal(msg)
+	if err != nil {
+		return err
 	}
 
-	return make([]byte, 0), nil
-}
+	data, err = proto.Marshal(&pb.Msg{
+		Type: msgType,
+		Data: data,
+	})
+	if err != nil {
+		return err
+	}
 
-func handler(conn net.Conn, data []byte) error {
-	data = data[4:]
-	m := &pb.Msg{}
-	if err := proto.Unmarshal(data, m); err != nil {
-		glog.Errorf("Failed to unmarshal message: %v\n", err)
+	var writeBuf = make([]byte, 4)
+	binary.BigEndian.PutUint32(writeBuf, uint32(len(data)))
+	writeBuf = append(writeBuf, data...)
+	n, err := conn.Write(writeBuf)
+	if n != len(writeBuf) || err != nil {
 		return err
 	}
-	//todo handler msg then send result
-	res, err := handleByApiType(m)
-	if err != nil {
-		glog.Errorf("Failed to handler message: %v\n", err)
-		return err
-	}
-	n, err := conn.Write(res)
-	if err != nil {
-		glog.Errorf("Failed to write connection message: %v\n", err)
-		return err
-	}
-	glog.Infof("Connection message written by length %d bytesData\n", n)
 	return nil
-}
-
-func readBytes(conn net.Conn) ([]byte, error) {
-	tmp := make([]byte, cBufferSize)
-	n, err := conn.Read(tmp)
-	if err != nil {
-		return nil, err
-	}
-	return tmp[:n], nil
 }

@@ -31,7 +31,7 @@ func main() {
 	}
 	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()
-	go handler.SatelliteTCPHandler(config.CommonConfig.SatelliteTCPPort)
+	go handler.SatelliteTCPHandlerInit(config.CommonConfig.SatelliteTCPPort)
 	router := gin.New()
 	// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter
 	// By default gin.DefaultWriter = os.Stdout
@@ -62,6 +62,10 @@ func main() {
 	router.POST("/vmc/failure_over", handler.FailureOver)
 	router.GET("/vmcdata/get_failure_over_info", handler.GetFailureOverInfo)
 	router.GET("/vmcdata/get_failure_over_vmcdata", handler.GetFailureOverVMCData)
+	router.POST("/satellite/control/orbit_normal", handler.ApiOrbitNormal)
+	router.POST("/satellite/control/orbit_coordinate", handler.ApiOrbitCoordinate)
+	router.POST("/satellite/control/marker_coordinate", handler.ApiMarkerCoordinates)
+	router.POST("/satellite/control/show_picture", handler.ApiShowPicture)
 	router.Run(":9999")
 
 }
