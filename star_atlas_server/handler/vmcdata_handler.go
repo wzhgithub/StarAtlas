@@ -78,6 +78,8 @@ func GetVMCData(c *gin.Context) {
 	var s *model.CommonResponse
 	if status == "RUN" {
 		s = model.NewCommonResponseSucc(*vmcdata_rsp)
+		c.JSON(200, s)
+		return
 	}
 	s = model.NewCommonResponseSucc(status)
 	c.JSON(200, s)
