@@ -31,7 +31,7 @@ func VMCStatusTest(c *gin.Context) {
 			"code": -1,
 			"msg":  "Failed to collect topo from db",
 		})
-		glog.Error("Failed to collect topo from db, error: %s\n", err.Error())
+		glog.Errorf("Failed to collect topo from db, error: %s\n", err.Error())
 		return
 	}
 

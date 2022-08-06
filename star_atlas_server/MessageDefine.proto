@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package="./pb";
+
+enum MsgType {
+    ApiOrbitNormal = 0;
+    ApiOrbitCoordinate = 1;
+    ApiMarkerCoordinates = 2;
+    ApiShowPicture = 3;
+}
+
+message Msg {
+    MsgType Type = 1;
+    bytes Data = 2;
+}
+
+message Coordinate {
+    float Longitude = 1;
+    float Latitude = 2;
+}
+
+message OrbitNormal {
+    float X = 1;
+    float Y = 2;
+    float Z = 3;
+}
+
+message OrbitCoordinate {
+    Coordinate Coord = 1;
+}
+
+message MarkerCoordinates {
+    repeated Coordinate Coordinates = 1;
+}
+
+message ShowPicture {
+    string Name = 1;
+}
