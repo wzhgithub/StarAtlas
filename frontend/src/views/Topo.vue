@@ -323,9 +323,18 @@ export default {
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
       node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
       node.nodesType = nodesType;
-      // node.setStyle(Q.Styles., 25);
-      // model.add(node);
       return node;
+    },
+    createEdgeForAngle(graph, a, b, angle) {
+      var edge = graph.createEdge(null, a, b);
+      edge.setStyle(Q.Styles.EDGE_WIDTH, 3);
+      edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
+      edge.setStyle(Q.Styles.ARROW_TO, false);
+      edge.zIndex = -2;
+      if (angle) {
+        edge.angle = angle;
+      }
+      return edge;
     },
     createEdge(graph, a, b, color, dashed, name, angle) {
       var edge = graph.createEdge(name, a, b);
@@ -341,9 +350,7 @@ export default {
       if (angle) {
         edge.angle = angle;
       }
-      // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
       edge.nodesType = "line";
-      // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
       return edge;
     },
     createBus(graph) {
@@ -354,20 +361,6 @@ export default {
       bus.setStyle(Q.Styles.SHAPE_STROKE_STYLE, "#8cd1f1");
       bus.setStyle(Q.Styles.SHAPE_FILL_COLOR, false);
       return bus;
-      // var edge = graph.createEdge(name, a, b);
-      // if (dashed) {
-      //   edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
-      // }
-      // edge.setStyle(Q.Styles.EDGE_WIDTH, 3);
-      // edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
-      // edge.setStyle(Q.Styles.ARROW_TO, false);
-      // edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
-      // edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
-      // edge.setStyle(Q.Styles.ARROW_FROM_STROKE, 7);
-      // // edge.setStyle(Q.Styles.ARROW_TO, Q.Consts.SHAPE_CIRCLE);
-      // edge.nodesType = "line";
-      // // edge.setStyle(Q.Styles.EDGE_OUTLINE_STYLE, "#0F0");
-      // return edge;
     },
     initalarm() {
       if (!Q.Element.prototype.initAlarmBalloon) {
@@ -567,8 +560,13 @@ export default {
         graph,
         tempobj.assistantPoints
       );
-      this.drawSwAndOthers(graph, tempobj.newarr, tempobj.newop);
-      // console.log(tempobj);newarr, newop,
+      let allsw = this.drawSwAndOthers(graph, tempobj.newarr, tempobj.newop);
+      let ends = this.drawEdgeForSw(
+        graph,
+        allsw.nodesOfsw,
+        allsw.nodesOfOther,
+        busnodes
+      );
       var flowingSupport = new FlowingSupport(graph);
       if (busnodes.line1Edge) {
         flowingSupport.addFlowing(
@@ -952,7 +950,7 @@ export default {
           item.y = item.y * -1;
           item.x = item.x + 40;
         } else {
-          item.x = item.x - 100;
+          item.x = item.x - 50;
           if (item.y > 0) {
             item.y = (item.y - 80) * -1;
           } else {
@@ -967,6 +965,62 @@ export default {
       let nodesOfOther = tempsarr_.map((item) => {
         return this.createNode(graph, inswsvg, item.x, item.y);
       });
+      return { nodesOfsw, nodesOfOther };
+    },
+    drawEdgeForSw(graph, allArrSw, otherArrSw, lineObj) {
+      let endline = allArrSw.map((item) => {
+        if (item.x <= 0 && lineObj.line1Edge) {
+          return this.createEdgeForAngle(
+            graph,
+            item,
+            lineObj.line1Edge,
+            -Math.PI / 2.5
+          );
+        } else {
+          if (item.y <= 0) {
+            return this.createEdgeForAngle(
+              graph,
+              item,
+              lineObj.line3Edge,
+              Math.PI / 2
+            );
+          } else {
+            return this.createEdgeForAngle(
+              graph,
+              item,
+              lineObj.line2Edge,
+              Math.PI / 2
+            );
+          }
+        }
+      });
+      let endOtherArrSw = otherArrSw.map((item) => {
+        if (item.x <= 0 && lineObj.line1Edge) {
+          return this.createEdgeForAngle(
+            graph,
+            item,
+            lineObj.line1Edge,
+            -Math.PI / 2.5
+          );
+        } else {
+          if (item.y <= 0) {
+            return this.createEdgeForAngle(
+              graph,
+              item,
+              lineObj.line3Edge,
+              Math.PI / 2
+            );
+          } else {
+            return this.createEdgeForAngle(
+              graph,
+              item,
+              lineObj.line2Edge,
+              Math.PI / 2
+            );
+          }
+        }
+      });
+      return endline;
     },
     /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
     compare(attr, rev) {
