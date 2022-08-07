@@ -47,7 +47,7 @@ constexpr size_t nConf = sizeof(gdev_parser)/sizeof(DeviceParser);
 
 int main(int argc, char* argv[]) {
   if (argc==1) {
-    fprintf(stderr, "Usage: %s [conf:random|demo|fault|parallel] [ip:port] [loop] [dump 4 debug]\n"
+    fprintf(stderr, "Usage: %s [conf:random|demo|fault|parallel] [ip:port] [loop] [interval] [dump 4 debug]\n"
                     "  etc: %s random\n", argv[0], argv[0]);
     exit(0);
   }
@@ -201,6 +201,10 @@ int main(int argc, char* argv[]) {
   if (argc>3) {
     max_loop = atoi(argv[3]);
   }
+  int interval = 500;
+  if (argc>4) {
+    interval = atoi(argv[4]);
+  }
 
   for (int _loop = 0; _loop < max_loop; _loop++) {
     for (size_t h=0; h<_msg_arr.size(); h++) {
@@ -227,8 +231,8 @@ int main(int argc, char* argv[]) {
 
        char output[PATH_MAX] = {0};
        const char* _prefix_dump = "sample";
-       if (argc>4) {
-         _prefix_dump = argv[4];
+       if (argc>5) {
+         _prefix_dump = argv[5];
        }
        snprintf(output, PATH_MAX, "%s_%d_%d.bin", _prefix_dump, h, _loop);
        ofstream binaryio(output, ios::binary);
@@ -238,6 +242,7 @@ int main(int argc, char* argv[]) {
        }
        binaryio.write(_buff,sz_out);
     }
+    usleep(interval*1000);
   }
   delete []_buff;
   close(sockfd);
