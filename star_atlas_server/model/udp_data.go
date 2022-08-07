@@ -33,6 +33,8 @@ const (
 	// cGPU_END    = 0xebcc
 
 	cTAST_SIZE = 12
+
+	cMAX_DOCUMENT_NUM = 200
 )
 
 type DeviceData struct {
@@ -565,8 +567,10 @@ func (vmc_data *VMCData) CreateData() error {
 	if err != nil {
 		return fmt.Errorf("CountDocuments error")
 	}
-	glog.Infof("vmc_data table num: %d", count)
 
+	if count > cMAX_DOCUMENT_NUM {
+		return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Update(vmc_data)
+	}
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
 }
 
