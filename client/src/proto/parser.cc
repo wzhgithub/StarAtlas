@@ -171,13 +171,15 @@ int parsePartition(rapidjson::Document& _document, vector<Partition>& _parts) {
 
     if (!_cluster.HasMember("name") ||
         !_cluster.HasMember("index") ||
+        !_cluster.HasMember("vmc") ||
         !_cluster.HasMember("tasks")) {
-      std::cerr << "Invalid partition: <name|index|tasks> needed." << std::endl;
+      std::cerr << "Invalid partition: <name|index|vmc|tasks> needed." << std::endl;
       return 0;
     }
 
     Partition _part;
     _part.init(_cluster["index"].GetInt(),
+      _cluster["vmc"].GetInt(),
       _cluster["name"].GetString());
 
     if (!_part.parseTask(_cluster)) {

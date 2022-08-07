@@ -54,7 +54,7 @@ public:
   virtual ~Partition();
 
 public:
-  void init(int idx, const char* name=nullptr);
+  void init(int idx, int vmc_idx, const char* name=nullptr);
   int pack(char* buf);
 
 public:

@@ -15,7 +15,7 @@ Task::Task() {
   m_type = 0;
   m_status = 0;
   m_exe_time = 0;
-  m_ret_code = 0;
+  m_ret_code = 2;
   m_start_time = 0;
 }
 
@@ -65,8 +65,9 @@ Partition::Partition() {
 Partition::~Partition() {
 }
 
-void Partition::init(int idx, const char* name) {
+void Partition::init(int idx, int vmc_idx, const char* name) {
   m_index = (uint8_t)idx;
+  m_vmc_idx = (uint8_t)vmc_idx;
   if (!name) {
     snprintf(m_name, _LEN_PARTITION_NAME_, "part_%02d", idx);
   } else {
