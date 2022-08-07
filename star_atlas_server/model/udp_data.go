@@ -1,6 +1,7 @@
 package model
 
 import (
+	"context"
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
@@ -32,6 +33,8 @@ const (
 	// cGPU_END    = 0xebcc
 
 	cTAST_SIZE = 12
+
+	cMAX_DOCUMENT_NUM = 200
 )
 
 type DeviceData struct {
@@ -558,6 +561,15 @@ func NewVMCData(str string) (*VMCData, error) {
 func (vmc_data *VMCData) CreateData() error {
 	if vmc_data == nil {
 		return fmt.Errorf("vcm data is nil")
+	}
+
+	count, err := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).CountDocuments(context.TODO(), bson.M{})
+	if err != nil {
+		return fmt.Errorf("CountDocuments error")
+	}
+
+	if count >= cMAX_DOCUMENT_NUM {
+		return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Update(vmc_data)
 	}
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
 }
