@@ -273,7 +273,8 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 			newNodes = append(newNodes, node)
 		}
 	}
-	t.Node = append(t.Node, NewNodes(v, false)...)
+	newNodes = append(newNodes, NewNodes(v, false)...)
+	t.Node = newNodes
 	return t.UpdateOp()
 }
 
