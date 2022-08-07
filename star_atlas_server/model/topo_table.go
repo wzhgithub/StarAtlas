@@ -254,10 +254,6 @@ func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	}
 }
 
-func removeIndex(s pNodesArr, index int) pNodesArr {
-	return append(s[:index], s[index+1:]...)
-}
-
 func (t *TopoTable) CreateOp(v *VMCData) error {
 	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": CTopoID}, t)
 	if err != nil {
@@ -271,12 +267,14 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 	}
 
-	for i, node := range t.Node {
-		if node.Id == int64(v.VMCID) || node.ParentId == uint16(v.VMCID) {
-			t.Node = removeIndex(t.Node, i)
+	newNodes := make([]*Nodes, 0)
+	for _, node := range t.Node {
+		if node.Id != int64(v.VMCID) && node.ParentId != uint16(v.VMCID) {
+			newNodes = append(newNodes, node)
 		}
 	}
-	t.Node = append(t.Node, NewNodes(v, false)...)
+	newNodes = append(newNodes, NewNodes(v, false)...)
+	t.Node = newNodes
 	return t.UpdateOp()
 }
 
