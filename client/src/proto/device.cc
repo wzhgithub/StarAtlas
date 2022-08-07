@@ -43,7 +43,7 @@ void Device::init(uint8_t typ, int idx, const char* name,
 
     // remote & exchanger
     m_connect_to = connect_to;
-    if (typ==eEXCHNAGE) {
+    /*if (typ==eEXCHNAGE) {
       if (idx==0) {
         m_device_subtype = 0;
         m_connect_to = 0;
@@ -54,7 +54,7 @@ void Device::init(uint8_t typ, int idx, const char* name,
     }
     if (typ==eREMOTE) {
       m_connect_to = 1;
-    }
+    }*/
 }
 
 void Device::setBasic(uint8_t core, uint16_t inops, uint16_t flops, uint16_t mem) {
