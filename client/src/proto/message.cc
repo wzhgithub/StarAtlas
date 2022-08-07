@@ -148,6 +148,39 @@ bool TeleMessage::parseVmc(rapidjson::Document& _document) {
   return true;
 }
 
+void TeleMessage::updateRandom() {
+  // update device
+  int anDevice[] = {
+    m_total_cpu,
+    m_total_dsp,
+    m_total_gpu,
+    m_total_fpga,
+  }; 
+
+  uint8_t _nop = 0;
+  uint8_t *ptotal_rate[] = {
+    &m_cpu_rate,
+    &m_dsp_rate,
+    &m_gpu_rate,
+    &_nop,
+  };
+
+  size_t idx = m_cnt_exchange + m_cnt_remote;
+  for (size_t h=0; h<sizeof(anDevice)/sizeof(int); h++) {
+    if (anDevice[h]==0) continue;
+
+    for (size_t j=0; j<anDevice[h]; j++, idx++) {
+      Device& _dev = m_devices[idx];
+      uint8_t _rate = random() % 101;
+      _dev.updateRate(random() % 101, _rate);
+      ptotal_rate[h][0] += (uint8_t)(float(_rate)/anDevice[h]);
+    }
+  }
+
+  m_mem_rate = random() % 101;
+  m_disk_rate = random() % 101;
+}
+
 FaultMsg::FaultMsg() {
   m_action = m_taskType = m_idxPart = m_status =0;
   m_szTaskName[0] = m_szTaskName[1] = '\0';

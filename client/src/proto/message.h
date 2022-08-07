@@ -76,6 +76,9 @@ public:
 public:
   void reset();
   bool parseVmc(rapidjson::Document& _document);
+
+public:
+  void updateRandom();
 };
 
 // control message

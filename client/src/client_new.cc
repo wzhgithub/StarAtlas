@@ -47,7 +47,7 @@ constexpr size_t nConf = sizeof(gdev_parser)/sizeof(DeviceParser);
 
 int main(int argc, char* argv[]) {
   if (argc==1) {
-    fprintf(stderr, "Usage: %s [conf:random|demo|fault|parallel] [ip:port] [dump 4 debug]\n"
+    fprintf(stderr, "Usage: %s [conf:random|demo|fault|parallel] [ip:port] [loop] [dump 4 debug]\n"
                     "  etc: %s random\n", argv[0], argv[0]);
     exit(0);
   }
@@ -103,6 +103,7 @@ int main(int argc, char* argv[]) {
   //cout << "hello: " << _vmc.size() << endl;
 
   vector<TeleMessage> _msg_arr;
+  srand((unsigned)time(NULL));
   for (size_t h=0; h<_vmc.size(); h++) {
     TeleMessage _msg;
     cout << "parse vmc: " << h << "; name: " << _vmc[h] << endl;
@@ -195,39 +196,48 @@ int main(int argc, char* argv[]) {
 
   size_t _buff_size = 1024;
   char* _buff = new char[_buff_size];
-  for (size_t h=0; h<_msg_arr.size(); h++) {
-    TeleMessage& _msg = _msg_arr[h];
 
-    size_t sz = _msg.getSize();
-    if (sz>_buff_size) {
-      delete []_buff;
-      _buff_size *= 2;
-      _buff = new char[_buff_size];
-    }
-    memset(_buff, 0, _buff_size);
-    int sz_out = _msg.pack(_buff);
+  size_t max_loop = 1;
+  if (argc>3) {
+    max_loop = atoi(argv[3]);
+  }
 
-    ssize_t ret = sendto(sockfd, _buff, sz_out, 0, (struct sockaddr*)&serveraddr, len);
-    if (ret == -1) {
-      cerr << "sendto failed, ret code: "<<ret<<endl;
-      close(sockfd);
-      delete [] _buff;
-      exit(-1);
-    }
-    cout << "send message, total byte:"<<ret<<"."<<endl;
+  for (int _loop = 0; _loop < max_loop; _loop++) {
+    for (size_t h=0; h<_msg_arr.size(); h++) {
+      TeleMessage& _msg = _msg_arr[h];
+       _msg.updateRandom();
 
-    char output[PATH_MAX] = {0};
-    const char* _prefix_dump = "sample";
-    if (argc>3) {
-      _prefix_dump = argv[3];
+       size_t sz = _msg.getSize();
+       if (sz>_buff_size) {
+         delete []_buff;
+         _buff_size *= 2;
+         _buff = new char[_buff_size];
+       }
+       memset(_buff, 0, _buff_size);
+       int sz_out = _msg.pack(_buff);
+
+       ssize_t ret = sendto(sockfd, _buff, sz_out, 0, (struct sockaddr*)&serveraddr, len);
+       if (ret == -1) {
+         cerr << "sendto failed, ret code: "<<ret<<endl;
+         close(sockfd);
+         delete [] _buff;
+         exit(-1);
+       }
+       cout << "send message, total byte:"<<ret<<"."<<endl;
+
+       char output[PATH_MAX] = {0};
+       const char* _prefix_dump = "sample";
+       if (argc>4) {
+         _prefix_dump = argv[4];
+       }
+       snprintf(output, PATH_MAX, "%s_%d_%d.bin", _prefix_dump, h, _loop);
+       ofstream binaryio(output, ios::binary);
+       if (!binaryio) {
+         cerr<<"open "<<output<<" failed."<<endl;
+         exit(0);
+       }
+       binaryio.write(_buff,sz_out);
     }
-    snprintf(output, PATH_MAX, "%s_%d.bin", _prefix_dump, h);
-    ofstream binaryio(output, ios::binary);
-    if (!binaryio) {
-      cerr<<"open "<<output<<" failed."<<endl;
-      exit(0);
-    }
-    binaryio.write(_buff,sz_out);
   }
   delete []_buff;
   close(sockfd);
