@@ -1,5 +1,6 @@
 # remote deployment
 ```shell
+host: http://nj.kyledong.com:9999/ 
 ssh drake@nj.kyledong.com -p 8027
 pwd: MEOWMEOWMEOW!@#
 sudo su
