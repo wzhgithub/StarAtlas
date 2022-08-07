@@ -158,7 +158,7 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 		data := make([]byte, 4096*1000)
 		n, err := conn.Read(data)
 		if err != nil {
-			glog.Errorf("Error reading %s: %v\n", conn.LocalAddr().String(), err)
+			// glog.Errorf("Error reading %s: %v\n", conn.LocalAddr().String(), err)
 			continue
 		}
 		data = data[:n]
