@@ -22,9 +22,11 @@ TeleMessage::TeleMessage() {
 TeleMessage::~TeleMessage() {
 }
 
-void TeleMessage::init(uint8_t idx, uint8_t idx_exchange, const char* name) {
+void TeleMessage::init(uint8_t idx, uint8_t idx_exchange, uint16_t mem, uint16_t disk, const char* name) {
   m_index = idx;
   m_exchange_idx = idx_exchange;
+  m_total_mem = mem;
+  m_total_disk= disk;
   if (!name) {
     snprintf(m_name, _LEN_VMC_NAME_, "vmc_%02d", (int)m_index);
   } else {
@@ -141,9 +143,17 @@ bool TeleMessage::parseVmc(rapidjson::Document& _document) {
     std::cerr << "Invalid vmc. " << std::endl;
     return false;
   }
+
+  uint16_t _disk = _document.HasMember("disk")?
+    (uint16_t)_document["disk"].GetInt():
+  65535;
+  uint16_t _mem = _document.HasMember("mem")?
+    (uint16_t)_document["mem"].GetInt():
+  65535;
   
   init(uint8_t(_document["index"].GetInt()),
        uint8_t(_document["connect_to"].GetInt()),
+       _mem, _disk,
        _document["name"].GetString());
   return true;
 }

@@ -69,7 +69,7 @@ public:
   void setTotalPartition(uint8_t _n) { m_total_partition = _n; }
 
 public:
-  void init(uint8_t idx, uint8_t idx_exchange, const char* name = nullptr);
+  void init(uint8_t idx, uint8_t idx_exchange, uint16_t mem, uint16_t disk, const char* name = nullptr);
   uint16_t getSize(); 
   int pack(char* buf);  
 
