@@ -32,12 +32,12 @@ uint16_t g_device_tag[] = {
 };
 
 char gaszDevNameFmt[][10] = {
-  "CPU_%02d",
-  "DSP_%02d",
-  "GPU_%02d",
-  "FPGA_%02d",
-  "REMO_%02d",
-  "EXCH_%02d",
+  "CPU_%04d",
+  "DSP_%04d",
+  "GPU_%04d",
+  "FPGA_%04d",
+  "REMO_%04d",
+  "EXCH_%04d",
   ""
 };
 
@@ -279,22 +279,37 @@ public:
     rd.m_tag_head  = g_device_tag[typ*2];
     rd.m_tag_tail  = g_device_tag[typ*2+1];
 
+    memset(rd.m_device_name, 0, 10);
     snprintf(rd.m_device_name, 10, gaszDevNameFmt[typ], idx);
+    //rd.m_device_index = idx%100;
     rd.m_device_index = idx;
     rd.m_device_type = random()%(gDevType[typ]+1);
     // remote & exchanger
     rd.m_connect_to = connect_to;
     if (typ==eEXCHNAGE) {
-      if (idx==0) {
+      /*
+      if (idx%100==0) {
         rd.m_device_type = 0;
-        rd.m_connect_to = 0;
+        rd.m_connect_to = 5000;  // hard code
       } else {
         rd.m_device_type = 1;
-        rd.m_connect_to = 0;
-      }
+        rd.m_connect_to = 5000; // hard code
+      }*/
+      uint8_t _atype[] = {
+        0, 0, 0, 1, 1, 1, 1,
+      };
+      uint8_t _alink[] = {
+        1, 1, 1, 0, 0, 2, 2
+      };
+      rd.m_device_type = _atype[idx%100];
+      rd.m_connect_to= 5000+_alink[idx%100];
     }
     if (typ==eREMOTE) {
-      rd.m_connect_to = 1;
+      //rd.m_connect_to = 5001; // hard code, only two switch
+      uint8_t _alink[] = {
+        4, 4, 4, 2, 2, 2, 2, 5, 5
+      };
+      rd.m_connect_to = 5000+_alink[idx%100];
     }
 
     rd.m_cnt_core = random()%255;
@@ -380,9 +395,12 @@ public:
       for (int i=0; i<anDevice[h]; i++, n_idx++) {
         Device& rd = m_pdevices[n_idx];
 
-        int n_conn = 0;
-        if (aDevType[h]==eREMOTE || aDevType[h]==eEXCHNAGE) n_conn = random()%256;
-        SetXPU(rd, aDevType[h], i, n_conn);
+        int n_conn = 0, xidx = aDevType[h]*1000+m_index*100+i;
+        if (aDevType[h]==eREMOTE || aDevType[h]==eEXCHNAGE) {
+           n_conn = random()%256;
+           xidx = aDevType[h]*1000+i;
+        }
+        SetXPU(rd, aDevType[h], xidx, n_conn);
       }
     }
 

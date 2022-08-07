@@ -11,7 +11,7 @@
             <el-progress
               :text-inside="true"
               :stroke-width="26"
-              :percentage="70"
+              :percentage="nowdata.cpuuseage"
               stroke-linecap="square"
               class="progressbar"
             ></el-progress>
@@ -22,9 +22,9 @@
                   <countTo
                     class="nub"
                     :startVal="0"
-                    :endVal="70"
+                    :endVal="nowdata.canuse"
                     :duration="1000"
-                    suffix="%"
+                    suffix=""
                   />
                 </div>
               </el-col>
@@ -34,9 +34,9 @@
                   <countTo
                     class="nub"
                     :startVal="0"
-                    :endVal="30"
+                    :endVal="nowdata.used"
                     :duration="1000"
-                    suffix="%"
+                    suffix=""
                   />
                 </div>
               </el-col>
@@ -49,7 +49,7 @@
             <el-progress
               :text-inside="true"
               :stroke-width="26"
-              :percentage="90"
+              :percentage="nowdata.computeuseage"
               stroke-linecap="square"
               class="progressbar"
             ></el-progress>
@@ -60,13 +60,24 @@
                   <countTo
                     class="nub"
                     :startVal="0"
-                    :endVal="30"
+                    :endVal="nowdata.alluse_"
                     :duration="1000"
-                    suffix="%"
+                    suffix=""
                   />
                 </div>
               </el-col>
-              <el-col :span="10"><div class="">可用算力:12</div></el-col>
+              <el-col :span="10">
+                <div class="">
+                  可用算力:
+                  <countTo
+                    class="nub"
+                    :startVal="0"
+                    :endVal="nowdata.canuse_"
+                    :duration="1000"
+                    suffix=""
+                  />
+                </div>
+              </el-col>
             </el-row>
           </p>
         </div>
@@ -74,8 +85,37 @@
       <el-col :span="10" class="content_col">
         <div class="right_part">
           <p class="core_title">
-            <span class="title_span">16核/32核</span>
-            <span class="title_span">1024MB/3072MB</span>
+            <span class="title_span">
+              <countTo
+                class="nub"
+                :startVal="0"
+                :endVal="nowdata.canusecore"
+                :duration="1000"
+                suffix="核"
+              />
+              /
+              <countTo
+                class="nub"
+                :startVal="0"
+                :endVal="nowdata.allcore"
+                :duration="1000"
+                suffix="核"
+              />
+            </span>
+            <span class="title_span">
+              <countTo
+                class="nub"
+                :startVal="0"
+                :endVal="nowdata.canusemb"
+                :duration="1000"
+                suffix="MB" />/
+              <countTo
+                class="nub"
+                :startVal="0"
+                :endVal="nowdata.allmb"
+                :duration="1000"
+                suffix="MB"
+            /></span>
           </p>
           <div class="type_box">
             <el-row type="flex" justify="center" class="type_row">
@@ -113,9 +153,44 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      nowdata: {
+        cpuuseage: 70,
+        canuse: 12,
+        used: 80,
+        computeuseage: 60,
+        canuse_: 1200,
+        alluse_: 2400,
+        canusecore: 8,
+        allcore: 32,
+        canusemb: 1024,
+        allmb: 10240,
+      },
+    };
   },
-  methods: {},
+  methods: {
+    randomRange(min, max) {
+      // min最小值，max最大值
+      return Math.floor(Math.random() * (max - min)) + min;
+    },
+  },
+  mounted() {
+    let that = this;
+    setInterval(() => {
+      that.nowdata = {
+        cpuuseage: that.randomRange(0, 100),
+        canuse: that.randomRange(0, 100),
+        used: that.randomRange(0, 100),
+        computeuseage: that.randomRange(0, 100),
+        canuse_: that.randomRange(1000, 1600),
+        alluse_: that.randomRange(2000, 3600),
+        canusecore: that.randomRange(0, 16),
+        allcore: 32,
+        canusemb: that.randomRange(100, 1024),
+        allmb: 1024,
+      };
+    }, 3000);
+  },
 };
 </script>
 <style lang="less">
@@ -134,7 +209,7 @@ export default {
     box-sizing: border-box;
     span {
       height: 100%;
-      line-height: 32px;
+      line-height: 2rem;
     }
   }
   .content {
@@ -143,6 +218,7 @@ export default {
     // background-color: #fff;
     .content_col {
       height: 100%;
+
       .subtitle {
         padding: 0;
         margin: 0;
@@ -150,7 +226,7 @@ export default {
         height: 30%;
         font-size: 0.8rem;
         color: #fff;
-        line-height: 24px;
+        line-height: 2rem;
         background: url("../assets/png/subtitlebg.png") no-repeat center;
         background-size: 100% 100%;
       }
@@ -183,6 +259,8 @@ export default {
           padding: 0;
           margin: 0;
           height: 15%;
+          white-space: nowrap;
+          overflow: hidden;
           // background-color: chocolate;
           .title_span {
             margin-right: 10%;

@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
@@ -54,6 +55,7 @@ type Task struct {
 	ExecuteTime uint32 `json:"execute_time" bson:"execute_time"` // 4 bytes
 	StatusCode  uint8  `json:"status_code" bson:"status_code"`
 	StartTime   uint8  `json:"start_time" bson:"start_time"`
+	IsTransfer  bool   `json:"is_transfer" bson:"is_transfer"`
 }
 
 type App struct {
@@ -66,6 +68,7 @@ type App struct {
 	BelongsTo    uint8   `json:"belongs_to" bson:"belongs_to"`
 	TaskSet      []*Task `json:"task_set" bson:"task_set"`
 	AppStatus    uint8   `json:"app_status" bson:"app_status"`
+	IsTransfer   bool    `json:"is_transfer" bson:"is_transfer"`
 }
 
 type RemoteUnit struct {
@@ -80,6 +83,16 @@ type SwitchDevice struct {
 	SwitchOrder uint8  `json:"switch_order" bson:"switch_order"`
 	SwitchType  uint8  `json:"switch_type" bson:"switch_type"` // 中心交换机：0；接入交换机：1
 	LinkTo      uint8  `json:"link_to" bson:"link_to"`
+}
+
+type VMCStatus struct {
+	UpdatedAt            time.Time `json:"time"`                 // 时间
+	CPUComputingPower    uint16    `json:"cpuComputingPower"`    // cpu算力
+	GPUComputingPower    uint16    `json:"gpuComputingPower"`    // gpu算力
+	DSPIntComputingPower uint16    `json:"dspIntComputingPower"` // dsp算力
+	MomoryUsage          uint8     `json:"memoryUsage"`          // 内存利用率
+	DiskUsage            uint8     `json:"diskUsage"`            // 外存利用率
+	TotalUsage           uint8     `json:"totalUsage"`           // 总利用率
 }
 
 type VMCData struct {
@@ -123,10 +136,11 @@ type VMCData struct {
 	TotalFPGABytes uint8         `json:"total_fpga_bytes" bson:"total_fpga_bytes"`
 	FPGASet        []*DeviceData `json:"fpga_set" bson:"fpga_set"` // 12bytes
 	// app
-	APPNum  uint8  `json:"app_num" bson:"app_num"`
-	APPInfo []*App `json:"app_info" bson:"app_info"`
-	Sum     uint8  `json:"sum" bson:"sum"`
-	Status  uint8  `json:"status" bson:"status"`
+	APPNum     uint8  `json:"app_num" bson:"app_num"`
+	APPInfo    []*App `json:"app_info" bson:"app_info"`
+	Sum        uint8  `json:"sum" bson:"sum"`
+	Status     uint8  `json:"status" bson:"status"`
+	IsTransfer bool   `json:"is_transfer" bson:"is_transfer"`
 }
 
 func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
@@ -291,6 +305,7 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 			}
 			arr[j] = t
 			statusCode |= t.StatusCode
+			glog.Infof("task details: %+v\n", t)
 		}
 		return arr, statusCode
 	}
@@ -337,7 +352,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 			AppStatus:    appStatus,
 		}
 		appStart = taskEnd
-
+		glog.Infof("app details: %+v\n", a)
 		arr = append(arr, a)
 	}
 
@@ -365,6 +380,8 @@ func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
 				LinkTo:          bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("remote unit %+v\n", bytes[t:t+13])
+			glog.Infof("remote unit %+v\n", r)
 		}
 
 		return arr, l
@@ -394,6 +411,8 @@ func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
 				LinkTo:      bytes[t+12],
 			}
 			arr[i] = r
+			glog.Infof("switch unit %+v\n", bytes[t:t+13])
+			glog.Infof("switch unit %+v\n", r)
 		}
 
 		return arr, l

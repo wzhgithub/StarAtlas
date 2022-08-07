@@ -1,12 +1,10 @@
 <template>
-  <div style="cursor: default; margin: 20px 10px 18px">
+  <div style="cursor: default; margin: 0rem 0.8rem 1.3rem">
     <div class="table-header table-row">
-      <div class="table-cell" style="width: 25%">任务名称</div>
-      <div class="table-cell" style="width: 30%">任务状态</div>
-      <div class="table-cell" style="width: 15%">执行人</div>
-      <div class="table-cell" style="width: 30%; text-align: right">
-        所占资源(GB)
-      </div>
+      <div class="table-cell" style="width: 25%">分区一</div>
+      <div class="table-cell" style="width: 25%">分区二</div>
+      <div class="table-cell" style="width: 25%">分区三</div>
+      <div class="table-cell" style="width: 25%">分区四</div>
     </div>
     <div class="table-body">
       <div :class="{ 'scroll-wrap': getPlayData.length > 0 }">
@@ -17,22 +15,86 @@
           :key="index"
           :ref="'row_' + index"
         >
-          <div class="table-cell" style="width: 25%" :title="item.productName">
-            {{ item.productName }}
-          </div>
-          <div class="table-cell" style="width: 30%" :title="item.coreName">
-            {{ item.coreName }}
-          </div>
-          <div class="table-cell" style="width: 15%" :title="item.publish">
-            {{ item.publish }}
-          </div>
-          <div
-            class="table-cell"
-            style="width: 30%; text-align: right"
-            :title="item.publishAmount"
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
           >
-            {{ item.publishAmount }}
-          </div>
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：{{ item.productName }}</p>
+              <p>所在分区：分区一</p>
+              <p>任务类型：控制任务</p>
+              <p>状态：运行中</p>
+            </div>
+            <div
+              class="table-cell"
+              style="width: 25%"
+              :title="item.productName"
+            >
+              <img src="../assets/othericon/control/running.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
+          >
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：任务1084</p>
+              <p>所在分区：分区二</p>
+              <p>任务类型：管理任务</p>
+              <p>状态：运行中</p>
+            </div>
+            <div class="table-cell" style="width: 25%" :title="item.coreName">
+              <img src="../assets/othericon/manage/running.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
+          >
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：任务3452</p>
+              <p>所在分区：分区三</p>
+              <p>任务类型：计算任务</p>
+              <p>状态：睡眠</p>
+            </div>
+            <div class="table-cell" style="width: 25%" :title="item.publish">
+              <img src="../assets/othericon/calculation/sleep.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content=""
+            placement="top-start"
+          >
+            <div slot="content">
+              <h3>任务详情</h3>
+              <p>任务名：任务7684</p>
+              <p>所在分区：分区四</p>
+              <p>任务类型：管理任务</p>
+              <p>状态：阻塞</p>
+            </div>
+            <div
+              class="table-cell"
+              style="width: 25%"
+              :title="item.publishAmount"
+            >
+              <img src="../assets/othericon/manage/block.svg" alt="" />
+              <!-- {{ item.productName }} -->
+            </div>
+          </el-tooltip>
         </div>
       </div>
     </div>
@@ -89,19 +151,24 @@ export default {
 <style lang="less" scoped>
 .table-row {
   display: flex;
-  line-height: 45px;
-  height: 45px;
+  line-height: 3.5rem;
+  height: 3.5rem;
   transition: all 0.3s;
-  border-bottom: 1px solid #21ebff;
+  border-bottom: 0.1rem solid #21ebff;
 }
 .table-header {
   color: #21ebff;
 }
 .table-cell {
   text-align: center;
-  font-size: 20px;
+  font-size: 1.4rem;
   text-overflow: ellipsis;
   overflow: hidden;
+  img {
+    // width: 5rem;
+    height: 3rem;
+    // display: inline-block;
+  }
 }
 // .hasBgc {
 //   background: rgb(0, 59, 81);
@@ -112,7 +179,7 @@ export default {
   display: none !important;
 }
 .table-body {
-  height: 240px;
+  height: 17.5rem;
   overflow-y: hidden;
   .table-row {
     color: #fff;
@@ -130,7 +197,7 @@ export default {
     top: 0;
   }
   to {
-    top: -8 * 35px;
+    top: -8 * 2.5rem;
   }
 }
 </style>

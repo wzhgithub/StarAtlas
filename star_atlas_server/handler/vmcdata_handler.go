@@ -1,12 +1,29 @@
 package handler
 
 import (
+	"fmt"
+	"os/exec"
 	"star_atlas_server/model"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"github.com/kamva/mgm/v3"
 )
+
+type FailureOverInfo struct {
+	VMCID  string `json:"vmc_id" bson:"vmc_id"`
+	AppID  string `json:"app_id" bson:"app_id"`
+	TaskID string `json:"task_id" bson:"task_id"`
+}
+
+type FailureOverRequest struct {
+	mgm.DefaultModel `bson:",inline"`
+	From             FailureOverInfo `json:"from" bson:"from"`
+	To               FailureOverInfo `json:"to" bson:"to"`
+	TransStatus      uint            `json:"trans_status" bson:"trans_status"`
+	UniqueKey        string          `json:"unique_key" bson:"unique_key"`
+}
 
 type VMCDataRspJson struct {
 	Success bool              `json:"success"`
@@ -14,6 +31,8 @@ type VMCDataRspJson struct {
 	Code    uint8             `json:"code"`
 	Msg     string            `json:"msg"`
 }
+
+const cFailureOverTable = "failure_over_log"
 
 // ref: https://swaggo.github.io/swaggo.io/declarative_comments_format/api_operation.html
 // @Summary Show an account
@@ -30,26 +49,47 @@ func GetVMCData(c *gin.Context) {
 	vmcdata_read := &model.VMCData{}
 	err := vmcdata_read.CollectVMCData(int32(vmc_id))
 	if err != nil {
-		glog.Error("failed read vmcdata from db, error: %s\n", err.Error())
-		c.JSON(400, &VMCDataRspJson{Success: false, Msg: "fail"})
+		glog.Errorf("failed read vmcdata from db, error: %s\n", err.Error())
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 	// glog.Infof("vmcdata_read: %+v\n", vmcdata_read)
 	vmcdata_rsp := vmcdata_read.TransferVMCDataToJson()
 	if vmcdata_rsp == nil {
-		glog.Error("failed to transfer vmcdata into Json")
-		c.JSON(400, &VMCDataRspJson{Success: false, Msg: "fail"})
+		glog.Errorf("failed to transfer vmcdata into Json")
+		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
 
-	rsp := &VMCDataRspJson{}
-	rsp.Success = true
-	rsp.Data = *vmcdata_rsp
-	rsp.Code = 0
-	rsp.Msg = "ok"
+	// construct topo
+	topo := &model.TopoTable{}
+	err = topo.CollectOp()
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		glog.Errorf("Failed to collect topo from db, error: %s\n", err.Error())
+		return
+	}
+	status, err := topo.GetVmcStatus(vmc_id)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		glog.Errorf("Failed to GetVmcStatus, when vmc_id = %d, error: %s\n", vmc_id, err.Error())
+		return
+	}
+	var s *model.CommonResponse
+	if status == "RUN" {
+		s = model.NewCommonResponseSucc(*vmcdata_rsp)
+		c.JSON(200, s)
+		return
+	}
+	s = model.NewCommonResponseSucc(status)
+	c.JSON(200, s)
+}
 
-	c.JSON(200, rsp)
-
+type VMCSequenceRspJson struct {
+	Success bool              `json:"success"`
+	Data    []model.VMCStatus `json:"data"`
+	Code    uint8             `json:"code"`
+	Msg     string            `json:"msg"`
 }
 
 func GetVMCSequence(c *gin.Context) {
@@ -60,15 +100,94 @@ func GetVMCSequence(c *gin.Context) {
 		vmcid, err := strconv.ParseInt(vid[0], 10, 32)
 		if err != nil {
 			glog.Errorf("Parse vmcid: %s faild", vmcid)
+			c.JSON(500, &VMCSequenceRspJson{Success: false, Msg: "Parse vmcid error"})
+			return
 		}
 		vmcs, err := vmcdata_read.GetVMCList(int32(vmcid))
 
 		if err != nil && len(vmcs) == 0 {
 			glog.Errorf("get vmcid: %s faild", vmcid)
+			c.JSON(500, &VMCSequenceRspJson{Success: false, Msg: "Get vmcid error"})
+			return
 		}
 
+		rsp := &VMCSequenceRspJson{}
+		rsp.Success = true
+		for _, v := range vmcs {
+			var cpuComputingPower uint16
+			for _, e := range v.CPUSet {
+				cpuComputingPower += e.FloatComputingPower
+			}
+			var gpuComputingPower uint16
+			for _, e := range v.GPUSet {
+				gpuComputingPower += e.FloatComputingPower
+			}
+			var dspComputingPower uint16
+			for _, e := range v.DSPSet {
+				dspComputingPower += e.IntComputingPower
+			}
+			vmc_status := &model.VMCStatus{
+				UpdatedAt:            v.UpdatedAt,
+				CPUComputingPower:    cpuComputingPower,
+				GPUComputingPower:    gpuComputingPower,
+				DSPIntComputingPower: dspComputingPower,
+				MomoryUsage:          v.MemoryUsage,
+				DiskUsage:            v.TotalDiskUsage,
+				TotalUsage:           v.TotalCPUUsage,
+			}
+			rsp.Data = append(rsp.Data, *vmc_status)
+		}
+		rsp.Code = 0
+		rsp.Msg = "ok"
+
+		c.JSON(200, rsp)
+
 	} else {
-		c.JSON(400, &VMCDataRspJson{Success: false, Msg: "request without vmcid"})
+		c.JSON(500, &VMCSequenceRspJson{Success: false, Msg: "request without vmcid"})
 		return
 	}
+}
+
+func FailureOver(c *gin.Context) {
+	req := &FailureOverRequest{}
+	if err := c.ShouldBindJSON(req); err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+
+	t := &model.TopoTable{}
+	if err := t.CollectOp(); err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	vid, err := strconv.ParseInt(req.From.VMCID, 10, 64)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	bids, err := t.GetBackupId(vid)
+	if err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	req.To.VMCID = fmt.Sprintf("%d", bids[0])
+	glog.Infof("failure request %+v\n", req)
+	mockBin := "./trans"
+	arg1 := req.From.VMCID
+	arg2 := req.To.VMCID
+	cmd := exec.Command(mockBin, arg1, arg2)
+	stdout, err := cmd.Output()
+	req.TransStatus = 500 // unfinished
+	req.UniqueKey = fmt.Sprintf("%s_%s_%s_%s_%s_%s",
+		req.From.VMCID, req.From.AppID, req.From.TaskID, req.To.VMCID, req.To.AppID, req.To.TaskID)
+	if err != nil {
+		glog.Errorf("run command:%+v failed err:%s\n", cmd, err.Error())
+	}
+	glog.Infof("cmd output %s\n", stdout)
+	if err = mgm.CollectionByName(cFailureOverTable).Create(req); err != nil {
+		c.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+
+	c.JSON(200, model.NewCommonResponseSucc(""))
 }

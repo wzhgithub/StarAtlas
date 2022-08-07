@@ -31,6 +31,7 @@ func main() {
 	}
 	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()
+	go handler.SatelliteTCPHandlerInit(config.CommonConfig.SatelliteTCPPort)
 	router := gin.New()
 	// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter
 	// By default gin.DefaultWriter = os.Stdout
@@ -50,14 +51,21 @@ func main() {
 	}), gin.Recovery())
 
 	router.GET("/test", handler.Index)
+	router.GET("/test/vmcstatus", handler.VMCStatusTest)
 	router.GET("/vmcdata", handler.GetVMCData)
 	router.GET("/devicedata", handler.GetDeviceData) // usage: http://localhost:9999/devicedata?vmc_id=0&device_type=cpu
 	router.GET("/appinfo", handler.GetAppInfo)       // usage: http://localhost:9999/appinfo?vmc_id=0
 	router.GET("/vmcdata/sequences", handler.GetVMCSequence)
-	router.POST("/topo/show", handler.TopoShow)
+	router.GET("/topo/show", handler.TopoShow)
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
-	router.GET("/topo/appshow", handler.AppShow)
+	router.POST("/vmc/failure_over", handler.FailureOver)
+	router.GET("/vmcdata/get_failure_over_info", handler.GetFailureOverInfo)
+	router.GET("/vmcdata/get_failure_over_vmcdata", handler.GetFailureOverVMCData)
+	router.POST("/satellite/control/orbit_normal", handler.ApiOrbitNormal)
+	router.POST("/satellite/control/orbit_coordinate", handler.ApiOrbitCoordinate)
+	router.POST("/satellite/control/marker_coordinate", handler.ApiMarkerCoordinates)
+	router.POST("/satellite/control/show_picture", handler.ApiShowPicture)
 	router.Run(":9999")
 
 }

@@ -51,84 +51,125 @@
             </el-col>
           </el-row>
           <el-row type="flex" justify="space-around" class="row_main_bottom">
-            <div class="mian_bottom_main_box"></div>
+            <div class="mian_bottom_main_box">
+              <div id="wrap">
+                <div id="showcase" class="noselect">
+                  <img
+                    class="cloud9-item"
+                    src="../assets/newpng/CPU.svg"
+                    alt="Firefox"
+                    @click="dealWithTypeClick(0)"
+                  />
+
+                  <img
+                    class="cloud9-item"
+                    src="../assets/newpng/FPGA.svg"
+                    alt="Opera"
+                    @click="dealWithTypeClick(3)"
+                  />
+                  <img
+                    class="cloud9-item"
+                    src="../assets/newpng/DSP.svg"
+                    alt="Wyzo"
+                    @click="dealWithTypeClick(2)"
+                  />
+                  <img
+                    class="cloud9-item"
+                    src="../assets/newpng/GPU.svg"
+                    alt="Opera"
+                    @click="dealWithTypeClick(1)"
+                  />
+                </div>
+              </div>
+              <h3 class="h3_title">设备：vmc1</h3>
+            </div>
           </el-row>
         </div>
       </el-col>
       <el-col :span="8" class="colBox">
-        <div class="grid-content_">
-          <el-row type="flex" class="row-bg" justify="space-around">
-            <el-col :span="6">
-              <div
-                :class="
-                  asidvisiber[0]
-                    ? 'grid-content_btn active_btn'
-                    : 'grid-content_btn'
-                "
-              >
-                <button @click="dealWithTypeClick(0)">CPU</button>
+        <vue-scroll :ops="ops">
+          <div class="grid-content_">
+            <el-row type="flex" class="row-bg" justify="space-around">
+              <el-col :span="6">
+                <div
+                  :class="
+                    asidvisiber[0]
+                      ? 'grid-content_btn active_btn'
+                      : 'grid-content_btn'
+                  "
+                >
+                  <button @click="dealWithTypeClick(0)">CPU</button>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div
+                  :class="
+                    asidvisiber[1]
+                      ? 'grid-content_btn active_btn'
+                      : 'grid-content_btn'
+                  "
+                >
+                  <button @click="dealWithTypeClick(1)">GPU</button>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div
+                  :class="
+                    asidvisiber[2]
+                      ? 'grid-content_btn active_btn'
+                      : 'grid-content_btn'
+                  "
+                >
+                  <button @click="dealWithTypeClick(2)">DSP</button>
+                </div>
+              </el-col>
+              <el-col :span="6">
+                <div
+                  :class="
+                    asidvisiber[3]
+                      ? 'grid-content_btn active_btn'
+                      : 'grid-content_btn'
+                  "
+                >
+                  <button @click="dealWithTypeClick(3)">FPGA</button>
+                </div>
+              </el-col>
+            </el-row>
+            <div v-show="asidvisiber[0]" class="aside_box">
+              <CpuInfo :cpuNow="cpu" />
+            </div>
+            <div v-show="asidvisiber[1]" class="aside_box"></div>
+            <div v-show="asidvisiber[2]" class="aside_box"></div>
+            <div v-show="asidvisiber[3]" class="aside_box"></div>
+            <div class="aside_box_line_bar">
+              <p class="title">
+                <span>机器历史状况</span>
+              </p>
+              <div class="canvasbox" id="linebox_">
+                <selflineNew inref="linebox_" />
               </div>
-            </el-col>
-            <el-col :span="6">
-              <div
-                :class="
-                  asidvisiber[1]
-                    ? 'grid-content_btn active_btn'
-                    : 'grid-content_btn'
-                "
-              >
-                <button @click="dealWithTypeClick(1)">GPU</button>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div
-                :class="
-                  asidvisiber[2]
-                    ? 'grid-content_btn active_btn'
-                    : 'grid-content_btn'
-                "
-              >
-                <button @click="dealWithTypeClick(2)">DSP</button>
-              </div>
-            </el-col>
-            <el-col :span="6">
-              <div
-                :class="
-                  asidvisiber[3]
-                    ? 'grid-content_btn active_btn'
-                    : 'grid-content_btn'
-                "
-              >
-                <button @click="dealWithTypeClick(3)">FPGA</button>
-              </div>
-            </el-col>
-          </el-row>
-          <div v-show="asidvisiber[0]" class="aside_box">
-            <CpuInfo :cpuNow="cpu" />
-          </div>
-          <div v-show="asidvisiber[1]" class="aside_box"></div>
-          <div v-show="asidvisiber[2]" class="aside_box"></div>
-          <div v-show="asidvisiber[3]" class="aside_box"></div>
-          <div class="aside_box_line_bar">
-            <p class="title">
-              <span>机器历史状况</span>
-            </p>
-            <div class="canvasbox" id="linebox_">
-              <selflineNew inref="linebox_" />
+            </div>
+            <div class="aside_box_task">
+              <p class="title">
+                <span>分时分区任务</span>
+              </p>
+              <scrolltable :data="tableData" />
             </div>
           </div>
-          <div class="aside_box_task">
-            <p class="title">
-              <span>分时分区任务</span>
-            </p>
-            <scrolltable :data="tableData" />
-          </div>
-        </div>
+        </vue-scroll>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
+// import "@/lib/jq_a.js";
+import $ from "@/lib/jq_a.js";
+// import $ from "jquery";
+import "@/lib/jquery.reflection.js";
+import "@/lib/jquery.cloud9carousel.js";
+import "@/lib/main.css";
+import "@/lib/jquerysctipttop.css";
+
 import CpuInfo from "@/components/CpuInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
@@ -143,6 +184,16 @@ export default {
   },
   data() {
     return {
+      ops: {
+        bar: {
+          hoverStyle: true,
+          onlyShowBarOnScroll: true, //是否只有滚动的时候才显示滚动条
+          showDelay: 0, // 在鼠标离开容器后多长时间隐藏滚动条。
+          keepShow: true, // 滚动条是否保持显示。
+          background: "#ccc", // 滚动条背景色。
+          "overflow-x": "hidden",
+        },
+      },
       data_: "",
       asidvisiber: [true, false, false, false],
       topdata: [20, 86, 73, 67, 78],
@@ -218,6 +269,60 @@ export default {
       // min最小值，max最大值
       return Math.floor(Math.random() * (max - min)) + min;
     },
+    drawall() {
+      console.log($);
+      $(function () {
+        var showcase = $("#showcase");
+        showcase.Cloud9Carousel({
+          yPos: 42,
+          yRadius: 48,
+          mirrorOptions: {
+            gap: 12,
+            height: 0.2,
+          },
+          buttonLeft: $(".nav > .left"),
+          buttonRight: $(".nav > .right"),
+          autoPlay: true,
+          bringToFront: true,
+          onRendered: showcaseUpdated,
+          onLoaded: function () {
+            showcase.css("visibility", "visible");
+            showcase.css("display", "none");
+            showcase.fadeIn(1500);
+          },
+        });
+
+        function showcaseUpdated(showcase) {
+          var title = $("#item-title").html(
+            $(showcase.nearestItem()).attr("alt")
+          );
+
+          var c = Math.cos((showcase.floatIndex() % 1) * 2 * Math.PI);
+          title.css("opacity", 0.5 + 0.5 * c);
+        }
+
+        // Simulate physical button click effect
+        $(".nav > button").click(function (e) {
+          var b = $(e.target).addClass("down");
+          setTimeout(function () {
+            b.removeClass("down");
+          }, 80);
+        });
+
+        $(document).keydown(function (e) {
+          switch (e.keyCode) {
+            /* left arrow */
+            case 37:
+              $(".nav > .left").click();
+              break;
+
+            /* right arrow */
+            case 39:
+              $(".nav > .right").click();
+          }
+        });
+      });
+    },
   },
   mounted() {
     let that = this;
@@ -230,10 +335,11 @@ export default {
         that.randomRange(0, 100),
       ];
     }, 1000);
+    this.drawall();
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .details {
   width: 100%;
   height: 91.5vh;
@@ -243,7 +349,7 @@ export default {
       width: 100%;
       height: 100%;
       // background-color: antiquewhite;
-      padding: 20px;
+      padding: 1.5rem;
       box-sizing: border-box;
       .row_main_top {
         width: 100%;
@@ -264,14 +370,20 @@ export default {
       .row_main_bottom {
         width: 100%;
         height: 82%;
-        background-color: rgb(0, 255, 136);
+        // background-color: rgb(0, 255, 136);
         margin: 0 !important;
         padding: 2%;
         box-sizing: border-box;
         .mian_bottom_main_box {
           width: 100%;
           height: 100%;
-          background-color: pink;
+          background: url("../assets/png/deallitle.png") no-repeat center;
+          background-size: 100% 100%;
+          background-position-y: 3.6rem;
+          // background-color: pink;src/assets/png/deallitle.png
+          img {
+            height: 45%;
+          }
         }
       }
     }
@@ -281,7 +393,7 @@ export default {
       // background-color: greenyellow;
       padding: 1%;
       box-sizing: border-box;
-      overflow-y: scroll;
+      // overflow-y: scroll;
       .aside_box {
         height: 30vh;
         // background: rgb(207, 160, 160);
@@ -306,7 +418,7 @@ export default {
         // box-sizing: border-box;
       }
       .grid-content_btn {
-        padding: 15px;
+        padding: 1rem;
         button {
           width: 100%;
           height: 4vh;
@@ -341,10 +453,17 @@ export default {
         box-sizing: border-box;
         span {
           height: 100%;
-          line-height: 32px;
+          line-height: 2.29rem;
         }
       }
     }
   }
+}
+.h3_title {
+  color: aqua;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: -1.5rem;
+  margin-left: 40%;
 }
 </style>

@@ -22,7 +22,13 @@ func UdpDataRev(port int) {
 		Port: port,
 	})
 
-	defer conn.Close()
+	defer func() {
+		conn.Close()
+		if err := recover(); err != nil {
+			glog.Errorf("go UdpDataRev error: %v", err)
+		}
+	}()
+
 	if err != nil {
 		glog.Fatalf("read from connect failed, err:%s\n", err.Error())
 	}
@@ -46,6 +52,14 @@ func udpProcess(conn *net.UDPConn) {
 }
 
 func ParseData() {
+
+	defer func() {
+		if err := recover(); err != nil {
+			glog.Errorf("go parse error: %v", err)
+		}
+	}()
+
+	topoTable := &model.TopoTable{}
 	for {
 		data, ok := <-limitChan
 		if !ok {
@@ -53,7 +67,6 @@ func ParseData() {
 			continue
 		}
 		vmcData, _ := model.NewVMCData(data)
-		topoTable := &model.TopoTable{}
 		err := topoTable.CreateOp(vmcData)
 		if err != nil {
 			glog.Errorf("failed create topotable into db, error: %s\n", err.Error())

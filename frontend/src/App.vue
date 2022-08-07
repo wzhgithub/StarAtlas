@@ -2,14 +2,18 @@
   <div id="app">
     <div class="nav_box">
       <ul class="nav">
-        <!-- <li class="drop-down">
-          <router-link class="nav_btn" to="/">Home</router-link>
-        </li> -->
+        <li class="home_title">高性能星算平台演示系统</li>
+        <li
+          :class="activenow === 'home' ? 'drop-down active' : 'drop-down'"
+          @click="changeRoute('home')"
+        >
+          <router-link class="nav_btn" to="/home"> 首页 </router-link>
+        </li>
         <li
           :class="activenow === 'topo' ? 'drop-down active' : 'drop-down'"
           @click="changeRoute('topo')"
         >
-          <router-link class="nav_btn" to="/"> 拓扑页 </router-link>
+          <router-link class="nav_btn" to="/topo"> 拓扑页 </router-link>
         </li>
 
         <li :class="activenow === 'details' ? 'drop-down active' : 'drop-down'">
@@ -28,6 +32,16 @@
               <router-link class="nav_btn_" to="/about">vmc4</router-link>
             </li> -->
           </ul>
+        </li>
+        <li
+          :class="
+            activenow === 'disasterrecovery' ? 'drop-down active' : 'drop-down'
+          "
+          @click="changeRoute('disasterrecovery')"
+        >
+          <router-link class="nav_btn" to="/disasterrecovery">
+            容灾演示
+          </router-link>
         </li>
       </ul>
       <!-- 
@@ -56,10 +70,11 @@
   </div>
 </template>
 <script>
+import "@/lib/qunee-min.js";
 export default {
   data() {
     return {
-      activenow: "topo",
+      activenow: "home",
     };
   },
   methods: {
@@ -69,8 +84,17 @@ export default {
     },
   },
   mounted() {
-    if (this.$route.path === "/") {
+    if (this.$route.path === "/" || this.$route.path === "/home") {
+      this.activenow = "home";
+    }
+    if (this.$route.path === "/topo") {
       this.activenow = "topo";
+    }
+    if (this.$route.path === "/disasterrecovery") {
+      this.activenow = "disasterrecovery";
+    }
+    if (this.$route.path === "/details") {
+      this.activenow = "details";
     }
   },
 };
@@ -90,10 +114,17 @@ export default {
   background: url("./assets/png/header.png") no-repeat;
   background-size: cover;
   vertical-align: middle;
+  font-weight: bold;
+  ul {
+    height: 100%;
+    width: 100%;
+  }
 }
 .view_contenter {
   width: 100%;
   height: 91.5vh;
+  padding: 2rem;
+  box-sizing: border-box;
   // background-color: #42b983;
 }
 .nav_btn {
@@ -106,7 +137,7 @@ export default {
   background: url("./assets/png/normalbtn.png") no-repeat center;
   color: aliceblue;
   text-decoration: none;
-  margin-top: 14px;
+  margin-top: 1rem;
   list-style: none;
 }
 
@@ -120,7 +151,7 @@ export default {
   background: url("./assets/png/normalbtn.png") no-repeat center;
   color: aliceblue;
   text-decoration: none;
-  margin-top: 14px;
+  margin-top: 1rem;
   list-style: none;
 }
 
@@ -130,19 +161,27 @@ ul {
 }
 .nav {
   width: 100%;
-  margin: 0px auto;
+  margin: 0 auto;
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
   justify-content: flex-end;
   // float: right;
+  position: relative;
+  .home_title {
+    position: absolute;
+    top: 0.5rem;
+    left: 3.5rem;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+  }
 }
 
 .drop-down {
   width: 12%;
   height: 5vh;
-  // margin-left: -30px;
   z-index: 999;
 }
 
@@ -155,7 +194,7 @@ ul {
 
 .nav .drop-down:hover .drop-down-content {
   opacity: 1;
-  height: 15vh;
+  height: 100%;
   z-index: 999;
   padding: 0;
   // background-color: #fff;

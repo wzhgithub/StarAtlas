@@ -11829,23 +11829,23 @@ var IfcActionRequest = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     return args;
   }
 };
@@ -11873,17 +11873,17 @@ var IfcActor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.TheActor);
-    ;
+    
     return args;
   }
 };
@@ -11905,11 +11905,11 @@ var IfcActorRole = class {
   ToTape() {
     let args = [];
     args.push(this.Role);
-    ;
+    
     args.push(this.UserDefinedRole);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -11943,23 +11943,23 @@ var IfcActuator = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -11995,25 +11995,25 @@ var IfcActuatorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12035,11 +12035,11 @@ var IfcAddress = class {
   ToTape() {
     let args = [];
     args.push(this.Purpose);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UserDefinedPurpose);
-    ;
+    
     return args;
   }
 };
@@ -12057,7 +12057,7 @@ var IfcAdvancedBrep = class {
   ToTape() {
     let args = [];
     args.push(this.Outer);
-    ;
+    
     return args;
   }
 };
@@ -12077,9 +12077,9 @@ var IfcAdvancedBrepWithVoids = class {
   ToTape() {
     let args = [];
     args.push(this.Outer);
-    ;
+    
     args.push(this.Voids);
-    ;
+    
     return args;
   }
 };
@@ -12101,11 +12101,11 @@ var IfcAdvancedFace = class {
   ToTape() {
     let args = [];
     args.push(this.Bounds);
-    ;
+    
     args.push(this.FaceSurface);
-    ;
+    
     args.push(this.SameSense);
-    ;
+    
     return args;
   }
 };
@@ -12139,23 +12139,23 @@ var IfcAirTerminal = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12189,23 +12189,23 @@ var IfcAirTerminalBox = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12241,25 +12241,25 @@ var IfcAirTerminalBoxType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12295,25 +12295,25 @@ var IfcAirTerminalType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12347,23 +12347,23 @@ var IfcAirToAirHeatRecovery = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12399,25 +12399,25 @@ var IfcAirToAirHeatRecoveryType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12451,23 +12451,23 @@ var IfcAlarm = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12503,25 +12503,25 @@ var IfcAlarmType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12555,23 +12555,23 @@ var IfcAlignment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -12591,9 +12591,9 @@ var IfcAlignment2DHorizontal = class {
   ToTape() {
     let args = [];
     args.push(this.StartDistAlong);
-    ;
+    
     args.push(this.Segments);
-    ;
+    
     return args;
   }
 };
@@ -12617,13 +12617,13 @@ var IfcAlignment2DHorizontalSegment = class {
   ToTape() {
     let args = [];
     args.push(this.TangentialContinuity);
-    ;
+    
     args.push(this.StartTag);
-    ;
+    
     args.push(this.EndTag);
-    ;
+    
     args.push(this.CurveGeometry);
-    ;
+    
     return args;
   }
 };
@@ -12645,11 +12645,11 @@ var IfcAlignment2DSegment = class {
   ToTape() {
     let args = [];
     args.push(this.TangentialContinuity);
-    ;
+    
     args.push(this.StartTag);
-    ;
+    
     args.push(this.EndTag);
-    ;
+    
     return args;
   }
 };
@@ -12683,23 +12683,23 @@ var IfcAlignment2DVerSegCircularArc = class {
   ToTape() {
     let args = [];
     args.push(this.TangentialContinuity);
-    ;
+    
     args.push(this.StartTag);
-    ;
+    
     args.push(this.EndTag);
-    ;
+    
     args.push(this.StartDistAlong);
-    ;
+    
     args.push(this.HorizontalLength);
-    ;
+    
     args.push(this.StartHeight);
-    ;
+    
     args.push(this.StartGradient);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.IsConvex);
-    ;
+    
     return args;
   }
 };
@@ -12729,19 +12729,19 @@ var IfcAlignment2DVerSegLine = class {
   ToTape() {
     let args = [];
     args.push(this.TangentialContinuity);
-    ;
+    
     args.push(this.StartTag);
-    ;
+    
     args.push(this.EndTag);
-    ;
+    
     args.push(this.StartDistAlong);
-    ;
+    
     args.push(this.HorizontalLength);
-    ;
+    
     args.push(this.StartHeight);
-    ;
+    
     args.push(this.StartGradient);
-    ;
+    
     return args;
   }
 };
@@ -12775,23 +12775,23 @@ var IfcAlignment2DVerSegParabolicArc = class {
   ToTape() {
     let args = [];
     args.push(this.TangentialContinuity);
-    ;
+    
     args.push(this.StartTag);
-    ;
+    
     args.push(this.EndTag);
-    ;
+    
     args.push(this.StartDistAlong);
-    ;
+    
     args.push(this.HorizontalLength);
-    ;
+    
     args.push(this.StartHeight);
-    ;
+    
     args.push(this.StartGradient);
-    ;
+    
     args.push(this.ParabolaConstant);
-    ;
+    
     args.push(this.IsConvex);
-    ;
+    
     return args;
   }
 };
@@ -12809,7 +12809,7 @@ var IfcAlignment2DVertical = class {
   ToTape() {
     let args = [];
     args.push(this.Segments);
-    ;
+    
     return args;
   }
 };
@@ -12839,19 +12839,19 @@ var IfcAlignment2DVerticalSegment = class {
   ToTape() {
     let args = [];
     args.push(this.TangentialContinuity);
-    ;
+    
     args.push(this.StartTag);
-    ;
+    
     args.push(this.EndTag);
-    ;
+    
     args.push(this.StartDistAlong);
-    ;
+    
     args.push(this.HorizontalLength);
-    ;
+    
     args.push(this.StartHeight);
-    ;
+    
     args.push(this.StartGradient);
-    ;
+    
     return args;
   }
 };
@@ -12873,11 +12873,11 @@ var IfcAlignmentCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Horizontal);
-    ;
+    
     args.push(this.Vertical);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -12907,19 +12907,19 @@ var IfcAnnotation = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     return args;
   }
 };
@@ -12939,9 +12939,9 @@ var IfcAnnotationFillArea = class {
   ToTape() {
     let args = [];
     args.push(this.OuterBoundary);
-    ;
+    
     args.push(this.InnerBoundaries);
-    ;
+    
     return args;
   }
 };
@@ -12965,13 +12965,13 @@ var IfcApplication = class {
   ToTape() {
     let args = [];
     args.push(this.ApplicationDeveloper);
-    ;
+    
     args.push(this.Version);
-    ;
+    
     args.push(this.ApplicationFullName);
-    ;
+    
     args.push(this.ApplicationIdentifier);
-    ;
+    
     return args;
   }
 };
@@ -13007,25 +13007,25 @@ var IfcAppliedValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.AppliedValue);
-    ;
+    
     args.push(this.UnitBasis);
-    ;
+    
     args.push(this.ApplicableDate);
-    ;
+    
     args.push(this.FixedUntilDate);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     args.push(this.Condition);
-    ;
+    
     args.push(this.ArithmeticOperator);
-    ;
+    
     args.push(this.Components);
-    ;
+    
     return args;
   }
 };
@@ -13059,23 +13059,23 @@ var IfcApproval = class {
   ToTape() {
     let args = [];
     args.push(this.Identifier);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.TimeOfApproval);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     args.push(this.Level);
-    ;
+    
     args.push(this.Qualifier);
-    ;
+    
     args.push(this.RequestingApproval);
-    ;
+    
     args.push(this.GivingApproval);
-    ;
+    
     return args;
   }
 };
@@ -13099,13 +13099,13 @@ var IfcApprovalRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingApproval);
-    ;
+    
     args.push(this.RelatedApprovals);
-    ;
+    
     return args;
   }
 };
@@ -13127,11 +13127,11 @@ var IfcArbitraryClosedProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.OuterCurve);
-    ;
+    
     return args;
   }
 };
@@ -13153,11 +13153,11 @@ var IfcArbitraryOpenProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Curve);
-    ;
+    
     return args;
   }
 };
@@ -13181,13 +13181,13 @@ var IfcArbitraryProfileDefWithVoids = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.OuterCurve);
-    ;
+    
     args.push(this.InnerCurves);
-    ;
+    
     return args;
   }
 };
@@ -13231,33 +13231,33 @@ var IfcAsset = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.OriginalValue);
-    ;
+    
     args.push(this.CurrentValue);
-    ;
+    
     args.push(this.TotalReplacementCost);
-    ;
+    
     args.push(this.Owner);
-    ;
+    
     args.push(this.User);
-    ;
+    
     args.push(this.ResponsiblePerson);
-    ;
+    
     args.push(this.IncorporationDate);
-    ;
+    
     args.push(this.DepreciatedValue);
-    ;
+    
     return args;
   }
 };
@@ -13303,35 +13303,35 @@ var IfcAsymmetricIShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.BottomFlangeWidth);
-    ;
+    
     args.push(this.OverallDepth);
-    ;
+    
     args.push(this.WebThickness);
-    ;
+    
     args.push(this.BottomFlangeThickness);
-    ;
+    
     args.push(this.BottomFlangeFilletRadius);
-    ;
+    
     args.push(this.TopFlangeWidth);
-    ;
+    
     args.push(this.TopFlangeThickness);
-    ;
+    
     args.push(this.TopFlangeFilletRadius);
-    ;
+    
     args.push(this.BottomFlangeEdgeRadius);
-    ;
+    
     args.push(this.BottomFlangeSlope);
-    ;
+    
     args.push(this.TopFlangeEdgeRadius);
-    ;
+    
     args.push(this.TopFlangeSlope);
-    ;
+    
     return args;
   }
 };
@@ -13365,23 +13365,23 @@ var IfcAudioVisualAppliance = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13417,25 +13417,25 @@ var IfcAudioVisualApplianceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13455,9 +13455,9 @@ var IfcAxis1Placement = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     return args;
   }
 };
@@ -13477,9 +13477,9 @@ var IfcAxis2Placement2D = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.RefDirection);
-    ;
+    
     return args;
   }
 };
@@ -13501,11 +13501,11 @@ var IfcAxis2Placement3D = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     args.push(this.RefDirection);
-    ;
+    
     return args;
   }
 };
@@ -13531,15 +13531,15 @@ var IfcBSplineCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Degree);
-    ;
+    
     args.push(this.ControlPointsList);
-    ;
+    
     args.push(this.CurveForm);
-    ;
+    
     args.push(this.ClosedCurve);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -13571,21 +13571,21 @@ var IfcBSplineCurveWithKnots = class {
   ToTape() {
     let args = [];
     args.push(this.Degree);
-    ;
+    
     args.push(this.ControlPointsList);
-    ;
+    
     args.push(this.CurveForm);
-    ;
+    
     args.push(this.ClosedCurve);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     args.push(this.KnotMultiplicities);
-    ;
+    
     args.push(this.Knots);
-    ;
+    
     args.push(this.KnotSpec);
-    ;
+    
     return args;
   }
 };
@@ -13615,19 +13615,19 @@ var IfcBSplineSurface = class {
   ToTape() {
     let args = [];
     args.push(this.UDegree);
-    ;
+    
     args.push(this.VDegree);
-    ;
+    
     args.push(this.ControlPointsList);
-    ;
+    
     args.push(this.SurfaceForm);
-    ;
+    
     args.push(this.UClosed);
-    ;
+    
     args.push(this.VClosed);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -13667,29 +13667,29 @@ var IfcBSplineSurfaceWithKnots = class {
   ToTape() {
     let args = [];
     args.push(this.UDegree);
-    ;
+    
     args.push(this.VDegree);
-    ;
+    
     args.push(this.ControlPointsList);
-    ;
+    
     args.push(this.SurfaceForm);
-    ;
+    
     args.push(this.UClosed);
-    ;
+    
     args.push(this.VClosed);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     args.push(this.UMultiplicities);
-    ;
+    
     args.push(this.VMultiplicities);
-    ;
+    
     args.push(this.UKnots);
-    ;
+    
     args.push(this.VKnots);
-    ;
+    
     args.push(this.KnotSpec);
-    ;
+    
     return args;
   }
 };
@@ -13723,23 +13723,23 @@ var IfcBeam = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13773,23 +13773,23 @@ var IfcBeamStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13825,25 +13825,25 @@ var IfcBeamType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13877,23 +13877,23 @@ var IfcBearing = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13929,25 +13929,25 @@ var IfcBearingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -13977,19 +13977,19 @@ var IfcBlobTexture = class {
   ToTape() {
     let args = [];
     args.push(this.RepeatS);
-    ;
+    
     args.push(this.RepeatT);
-    ;
+    
     args.push(this.Mode);
-    ;
+    
     args.push(this.TextureTransform);
-    ;
+    
     args.push(this.Parameter);
-    ;
+    
     args.push(this.RasterFormat);
-    ;
+    
     args.push(this.RasterCode);
-    ;
+    
     return args;
   }
 };
@@ -14013,13 +14013,13 @@ var IfcBlock = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.XLength);
-    ;
+    
     args.push(this.YLength);
-    ;
+    
     args.push(this.ZLength);
-    ;
+    
     return args;
   }
 };
@@ -14053,23 +14053,23 @@ var IfcBoiler = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14105,25 +14105,25 @@ var IfcBoilerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14145,11 +14145,11 @@ var IfcBooleanClippingResult = class {
   ToTape() {
     let args = [];
     args.push(this.Operator);
-    ;
+    
     args.push(this.FirstOperand);
-    ;
+    
     args.push(this.SecondOperand);
-    ;
+    
     return args;
   }
 };
@@ -14171,11 +14171,11 @@ var IfcBooleanResult = class {
   ToTape() {
     let args = [];
     args.push(this.Operator);
-    ;
+    
     args.push(this.FirstOperand);
-    ;
+    
     args.push(this.SecondOperand);
-    ;
+    
     return args;
   }
 };
@@ -14193,7 +14193,7 @@ var IfcBoundaryCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -14213,9 +14213,9 @@ var IfcBoundaryCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Segments);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -14245,19 +14245,19 @@ var IfcBoundaryEdgeCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.TranslationalStiffnessByLengthX);
-    ;
+    
     args.push(this.TranslationalStiffnessByLengthY);
-    ;
+    
     args.push(this.TranslationalStiffnessByLengthZ);
-    ;
+    
     args.push(this.RotationalStiffnessByLengthX);
-    ;
+    
     args.push(this.RotationalStiffnessByLengthY);
-    ;
+    
     args.push(this.RotationalStiffnessByLengthZ);
-    ;
+    
     return args;
   }
 };
@@ -14281,13 +14281,13 @@ var IfcBoundaryFaceCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.TranslationalStiffnessByAreaX);
-    ;
+    
     args.push(this.TranslationalStiffnessByAreaY);
-    ;
+    
     args.push(this.TranslationalStiffnessByAreaZ);
-    ;
+    
     return args;
   }
 };
@@ -14317,19 +14317,19 @@ var IfcBoundaryNodeCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.TranslationalStiffnessX);
-    ;
+    
     args.push(this.TranslationalStiffnessY);
-    ;
+    
     args.push(this.TranslationalStiffnessZ);
-    ;
+    
     args.push(this.RotationalStiffnessX);
-    ;
+    
     args.push(this.RotationalStiffnessY);
-    ;
+    
     args.push(this.RotationalStiffnessZ);
-    ;
+    
     return args;
   }
 };
@@ -14361,21 +14361,21 @@ var IfcBoundaryNodeConditionWarping = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.TranslationalStiffnessX);
-    ;
+    
     args.push(this.TranslationalStiffnessY);
-    ;
+    
     args.push(this.TranslationalStiffnessZ);
-    ;
+    
     args.push(this.RotationalStiffnessX);
-    ;
+    
     args.push(this.RotationalStiffnessY);
-    ;
+    
     args.push(this.RotationalStiffnessZ);
-    ;
+    
     args.push(this.WarpingStiffness);
-    ;
+    
     return args;
   }
 };
@@ -14427,13 +14427,13 @@ var IfcBoundingBox = class {
   ToTape() {
     let args = [];
     args.push(this.Corner);
-    ;
+    
     args.push(this.XDim);
-    ;
+    
     args.push(this.YDim);
-    ;
+    
     args.push(this.ZDim);
-    ;
+    
     return args;
   }
 };
@@ -14455,11 +14455,11 @@ var IfcBoxedHalfSpace = class {
   ToTape() {
     let args = [];
     args.push(this.BaseSurface);
-    ;
+    
     args.push(this.AgreementFlag);
-    ;
+    
     args.push(this.Enclosure);
-    ;
+    
     return args;
   }
 };
@@ -14495,25 +14495,25 @@ var IfcBridge = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14549,25 +14549,25 @@ var IfcBridgePart = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14607,29 +14607,29 @@ var IfcBuilding = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     args.push(this.ElevationOfRefHeight);
-    ;
+    
     args.push(this.ElevationOfTerrain);
-    ;
+    
     args.push(this.BuildingAddress);
-    ;
+    
     return args;
   }
 };
@@ -14661,21 +14661,21 @@ var IfcBuildingElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -14709,23 +14709,23 @@ var IfcBuildingElementPart = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14761,25 +14761,25 @@ var IfcBuildingElementPartType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14813,23 +14813,23 @@ var IfcBuildingElementProxy = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14865,25 +14865,25 @@ var IfcBuildingElementProxyType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -14917,23 +14917,23 @@ var IfcBuildingElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -14969,25 +14969,25 @@ var IfcBuildingStorey = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     args.push(this.Elevation);
-    ;
+    
     return args;
   }
 };
@@ -15017,19 +15017,19 @@ var IfcBuildingSystem = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     return args;
   }
 };
@@ -15063,23 +15063,23 @@ var IfcBurner = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15115,25 +15115,25 @@ var IfcBurnerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15165,21 +15165,21 @@ var IfcCShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     args.push(this.Width);
-    ;
+    
     args.push(this.WallThickness);
-    ;
+    
     args.push(this.Girth);
-    ;
+    
     args.push(this.InternalFilletRadius);
-    ;
+    
     return args;
   }
 };
@@ -15213,23 +15213,23 @@ var IfcCableCarrierFitting = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15265,25 +15265,25 @@ var IfcCableCarrierFittingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15317,23 +15317,23 @@ var IfcCableCarrierSegment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15369,25 +15369,25 @@ var IfcCableCarrierSegmentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15421,23 +15421,23 @@ var IfcCableFitting = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15473,25 +15473,25 @@ var IfcCableFittingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15525,23 +15525,23 @@ var IfcCableSegment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15577,25 +15577,25 @@ var IfcCableSegmentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15629,23 +15629,23 @@ var IfcCaissonFoundation = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15681,25 +15681,25 @@ var IfcCaissonFoundationType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -15717,7 +15717,7 @@ var IfcCartesianPoint = class {
   ToTape() {
     let args = [];
     args.push(this.Coordinates);
-    ;
+    
     return args;
   }
 };
@@ -15751,9 +15751,9 @@ var IfcCartesianPointList2D = class {
   ToTape() {
     let args = [];
     args.push(this.CoordList);
-    ;
+    
     args.push(this.TagList);
-    ;
+    
     return args;
   }
 };
@@ -15773,9 +15773,9 @@ var IfcCartesianPointList3D = class {
   ToTape() {
     let args = [];
     args.push(this.CoordList);
-    ;
+    
     args.push(this.TagList);
-    ;
+    
     return args;
   }
 };
@@ -15799,13 +15799,13 @@ var IfcCartesianTransformationOperator = class {
   ToTape() {
     let args = [];
     args.push(this.Axis1);
-    ;
+    
     args.push(this.Axis2);
-    ;
+    
     args.push(this.LocalOrigin);
-    ;
+    
     args.push(this.Scale);
-    ;
+    
     return args;
   }
 };
@@ -15829,13 +15829,13 @@ var IfcCartesianTransformationOperator2D = class {
   ToTape() {
     let args = [];
     args.push(this.Axis1);
-    ;
+    
     args.push(this.Axis2);
-    ;
+    
     args.push(this.LocalOrigin);
-    ;
+    
     args.push(this.Scale);
-    ;
+    
     return args;
   }
 };
@@ -15861,15 +15861,15 @@ var IfcCartesianTransformationOperator2DnonUniform = class {
   ToTape() {
     let args = [];
     args.push(this.Axis1);
-    ;
+    
     args.push(this.Axis2);
-    ;
+    
     args.push(this.LocalOrigin);
-    ;
+    
     args.push(this.Scale);
-    ;
+    
     args.push(this.Scale2);
-    ;
+    
     return args;
   }
 };
@@ -15895,15 +15895,15 @@ var IfcCartesianTransformationOperator3D = class {
   ToTape() {
     let args = [];
     args.push(this.Axis1);
-    ;
+    
     args.push(this.Axis2);
-    ;
+    
     args.push(this.LocalOrigin);
-    ;
+    
     args.push(this.Scale);
-    ;
+    
     args.push(this.Axis3);
-    ;
+    
     return args;
   }
 };
@@ -15933,19 +15933,19 @@ var IfcCartesianTransformationOperator3DnonUniform = class {
   ToTape() {
     let args = [];
     args.push(this.Axis1);
-    ;
+    
     args.push(this.Axis2);
-    ;
+    
     args.push(this.LocalOrigin);
-    ;
+    
     args.push(this.Scale);
-    ;
+    
     args.push(this.Axis3);
-    ;
+    
     args.push(this.Scale2);
-    ;
+    
     args.push(this.Scale3);
-    ;
+    
     return args;
   }
 };
@@ -15969,13 +15969,13 @@ var IfcCenterLineProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Curve);
-    ;
+    
     args.push(this.Thickness);
-    ;
+    
     return args;
   }
 };
@@ -16009,23 +16009,23 @@ var IfcChiller = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16061,25 +16061,25 @@ var IfcChillerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16113,23 +16113,23 @@ var IfcChimney = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16165,25 +16165,25 @@ var IfcChimneyType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16203,9 +16203,9 @@ var IfcCircle = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     return args;
   }
 };
@@ -16231,15 +16231,15 @@ var IfcCircleHollowProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.WallThickness);
-    ;
+    
     return args;
   }
 };
@@ -16263,13 +16263,13 @@ var IfcCircleProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     return args;
   }
 };
@@ -16295,15 +16295,15 @@ var IfcCircularArcSegment2D = class {
   ToTape() {
     let args = [];
     args.push(this.StartPoint);
-    ;
+    
     args.push(this.StartDirection);
-    ;
+    
     args.push(this.SegmentLength);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.IsCCW);
-    ;
+    
     return args;
   }
 };
@@ -16335,21 +16335,21 @@ var IfcCivilElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -16383,23 +16383,23 @@ var IfcCivilElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -16429,19 +16429,19 @@ var IfcClassification = class {
   ToTape() {
     let args = [];
     args.push(this.Source);
-    ;
+    
     args.push(this.Edition);
-    ;
+    
     args.push(this.EditionDate);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Location);
-    ;
+    
     args.push(this.ReferenceTokens);
-    ;
+    
     return args;
   }
 };
@@ -16469,17 +16469,17 @@ var IfcClassificationReference = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.ReferencedSource);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Sort);
-    ;
+    
     return args;
   }
 };
@@ -16497,7 +16497,7 @@ var IfcClosedShell = class {
   ToTape() {
     let args = [];
     args.push(this.CfsFaces);
-    ;
+    
     return args;
   }
 };
@@ -16531,23 +16531,23 @@ var IfcCoil = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16583,25 +16583,25 @@ var IfcCoilType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16625,13 +16625,13 @@ var IfcColourRgb = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Red);
-    ;
+    
     args.push(this.Green);
-    ;
+    
     args.push(this.Blue);
-    ;
+    
     return args;
   }
 };
@@ -16649,7 +16649,7 @@ var IfcColourRgbList = class {
   ToTape() {
     let args = [];
     args.push(this.ColourList);
-    ;
+    
     return args;
   }
 };
@@ -16667,7 +16667,7 @@ var IfcColourSpecification = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -16701,23 +16701,23 @@ var IfcColumn = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16751,23 +16751,23 @@ var IfcColumnStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16803,25 +16803,25 @@ var IfcColumnType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16855,23 +16855,23 @@ var IfcCommunicationsAppliance = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16907,25 +16907,25 @@ var IfcCommunicationsApplianceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -16949,13 +16949,13 @@ var IfcComplexProperty = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UsageName);
-    ;
+    
     args.push(this.HasProperties);
-    ;
+    
     return args;
   }
 };
@@ -16985,19 +16985,19 @@ var IfcComplexPropertyTemplate = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UsageName);
-    ;
+    
     args.push(this.TemplateType);
-    ;
+    
     args.push(this.HasPropertyTemplates);
-    ;
+    
     return args;
   }
 };
@@ -17017,9 +17017,9 @@ var IfcCompositeCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Segments);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -17039,9 +17039,9 @@ var IfcCompositeCurveOnSurface = class {
   ToTape() {
     let args = [];
     args.push(this.Segments);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -17063,11 +17063,11 @@ var IfcCompositeCurveSegment = class {
   ToTape() {
     let args = [];
     args.push(this.Transition);
-    ;
+    
     args.push(this.SameSense);
-    ;
+    
     args.push(this.ParentCurve);
-    ;
+    
     return args;
   }
 };
@@ -17091,13 +17091,13 @@ var IfcCompositeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Profiles);
-    ;
+    
     args.push(this.Label);
-    ;
+    
     return args;
   }
 };
@@ -17131,23 +17131,23 @@ var IfcCompressor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17183,25 +17183,25 @@ var IfcCompressorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17235,23 +17235,23 @@ var IfcCondenser = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17287,25 +17287,25 @@ var IfcCondenserType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17323,7 +17323,7 @@ var IfcConic = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -17341,7 +17341,7 @@ var IfcConnectedFaceSet = class {
   ToTape() {
     let args = [];
     args.push(this.CfsFaces);
-    ;
+    
     return args;
   }
 };
@@ -17361,9 +17361,9 @@ var IfcConnectionCurveGeometry = class {
   ToTape() {
     let args = [];
     args.push(this.CurveOnRelatingElement);
-    ;
+    
     args.push(this.CurveOnRelatedElement);
-    ;
+    
     return args;
   }
 };
@@ -17403,15 +17403,15 @@ var IfcConnectionPointEccentricity = class {
   ToTape() {
     let args = [];
     args.push(this.PointOnRelatingElement);
-    ;
+    
     args.push(this.PointOnRelatedElement);
-    ;
+    
     args.push(this.EccentricityInX);
-    ;
+    
     args.push(this.EccentricityInY);
-    ;
+    
     args.push(this.EccentricityInZ);
-    ;
+    
     return args;
   }
 };
@@ -17431,9 +17431,9 @@ var IfcConnectionPointGeometry = class {
   ToTape() {
     let args = [];
     args.push(this.PointOnRelatingElement);
-    ;
+    
     args.push(this.PointOnRelatedElement);
-    ;
+    
     return args;
   }
 };
@@ -17453,9 +17453,9 @@ var IfcConnectionSurfaceGeometry = class {
   ToTape() {
     let args = [];
     args.push(this.SurfaceOnRelatingElement);
-    ;
+    
     args.push(this.SurfaceOnRelatedElement);
-    ;
+    
     return args;
   }
 };
@@ -17475,9 +17475,9 @@ var IfcConnectionVolumeGeometry = class {
   ToTape() {
     let args = [];
     args.push(this.VolumeOnRelatingElement);
-    ;
+    
     args.push(this.VolumeOnRelatedElement);
-    ;
+    
     return args;
   }
 };
@@ -17507,19 +17507,19 @@ var IfcConstraint = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ConstraintGrade);
-    ;
+    
     args.push(this.ConstraintSource);
-    ;
+    
     args.push(this.CreatingActor);
-    ;
+    
     args.push(this.CreationTime);
-    ;
+    
     args.push(this.UserDefinedGrade);
-    ;
+    
     return args;
   }
 };
@@ -17557,27 +17557,27 @@ var IfcConstructionEquipmentResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17617,29 +17617,29 @@ var IfcConstructionEquipmentResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17677,27 +17677,27 @@ var IfcConstructionMaterialResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17737,29 +17737,29 @@ var IfcConstructionMaterialResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17797,27 +17797,27 @@ var IfcConstructionProductResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17857,29 +17857,29 @@ var IfcConstructionProductResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -17915,25 +17915,25 @@ var IfcConstructionResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     return args;
   }
 };
@@ -17971,27 +17971,27 @@ var IfcConstructionResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     return args;
   }
 };
@@ -18025,23 +18025,23 @@ var IfcContext = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.Phase);
-    ;
+    
     args.push(this.RepresentationContexts);
-    ;
+    
     args.push(this.UnitsInContext);
-    ;
+    
     return args;
   }
 };
@@ -18063,11 +18063,11 @@ var IfcContextDependentUnit = class {
   ToTape() {
     let args = [];
     args.push(this.Dimensions);
-    ;
+    
     args.push(this.UnitType);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -18095,17 +18095,17 @@ var IfcControl = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     return args;
   }
 };
@@ -18139,23 +18139,23 @@ var IfcController = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18191,25 +18191,25 @@ var IfcControllerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18233,13 +18233,13 @@ var IfcConversionBasedUnit = class {
   ToTape() {
     let args = [];
     args.push(this.Dimensions);
-    ;
+    
     args.push(this.UnitType);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.ConversionFactor);
-    ;
+    
     return args;
   }
 };
@@ -18265,15 +18265,15 @@ var IfcConversionBasedUnitWithOffset = class {
   ToTape() {
     let args = [];
     args.push(this.Dimensions);
-    ;
+    
     args.push(this.UnitType);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.ConversionFactor);
-    ;
+    
     args.push(this.ConversionOffset);
-    ;
+    
     return args;
   }
 };
@@ -18307,23 +18307,23 @@ var IfcCooledBeam = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18359,25 +18359,25 @@ var IfcCooledBeamType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18411,23 +18411,23 @@ var IfcCoolingTower = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18463,25 +18463,25 @@ var IfcCoolingTowerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18501,9 +18501,9 @@ var IfcCoordinateOperation = class {
   ToTape() {
     let args = [];
     args.push(this.SourceCRS);
-    ;
+    
     args.push(this.TargetCRS);
-    ;
+    
     return args;
   }
 };
@@ -18527,13 +18527,13 @@ var IfcCoordinateReferenceSystem = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.GeodeticDatum);
-    ;
+    
     args.push(this.VerticalDatum);
-    ;
+    
     return args;
   }
 };
@@ -18567,23 +18567,23 @@ var IfcCostItem = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.CostValues);
-    ;
+    
     args.push(this.CostQuantities);
-    ;
+    
     return args;
   }
 };
@@ -18619,25 +18619,25 @@ var IfcCostSchedule = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     args.push(this.SubmittedOn);
-    ;
+    
     args.push(this.UpdateDate);
-    ;
+    
     return args;
   }
 };
@@ -18673,25 +18673,25 @@ var IfcCostValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.AppliedValue);
-    ;
+    
     args.push(this.UnitBasis);
-    ;
+    
     args.push(this.ApplicableDate);
-    ;
+    
     args.push(this.FixedUntilDate);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     args.push(this.Condition);
-    ;
+    
     args.push(this.ArithmeticOperator);
-    ;
+    
     args.push(this.Components);
-    ;
+    
     return args;
   }
 };
@@ -18725,23 +18725,23 @@ var IfcCovering = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18777,25 +18777,25 @@ var IfcCoveringType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18833,27 +18833,27 @@ var IfcCrewResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18893,29 +18893,29 @@ var IfcCrewResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -18933,7 +18933,7 @@ var IfcCsgPrimitive3D = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -18951,7 +18951,7 @@ var IfcCsgSolid = class {
   ToTape() {
     let args = [];
     args.push(this.TreeRootExpression);
-    ;
+    
     return args;
   }
 };
@@ -18981,19 +18981,19 @@ var IfcCurrencyRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingMonetaryUnit);
-    ;
+    
     args.push(this.RelatedMonetaryUnit);
-    ;
+    
     args.push(this.ExchangeRate);
-    ;
+    
     args.push(this.RateDateTime);
-    ;
+    
     args.push(this.RateSource);
-    ;
+    
     return args;
   }
 };
@@ -19027,23 +19027,23 @@ var IfcCurtainWall = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19079,25 +19079,25 @@ var IfcCurtainWallType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19133,11 +19133,11 @@ var IfcCurveBoundedPlane = class {
   ToTape() {
     let args = [];
     args.push(this.BasisSurface);
-    ;
+    
     args.push(this.OuterBoundary);
-    ;
+    
     args.push(this.InnerBoundaries);
-    ;
+    
     return args;
   }
 };
@@ -19159,11 +19159,11 @@ var IfcCurveBoundedSurface = class {
   ToTape() {
     let args = [];
     args.push(this.BasisSurface);
-    ;
+    
     args.push(this.Boundaries);
-    ;
+    
     args.push(this.ImplicitOuter);
-    ;
+    
     return args;
   }
 };
@@ -19185,11 +19185,11 @@ var IfcCurveSegment2D = class {
   ToTape() {
     let args = [];
     args.push(this.StartPoint);
-    ;
+    
     args.push(this.StartDirection);
-    ;
+    
     args.push(this.SegmentLength);
-    ;
+    
     return args;
   }
 };
@@ -19215,15 +19215,15 @@ var IfcCurveStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.CurveFont);
-    ;
+    
     args.push(this.CurveWidth);
-    ;
+    
     args.push(this.CurveColour);
-    ;
+    
     args.push(this.ModelOrDraughting);
-    ;
+    
     return args;
   }
 };
@@ -19243,9 +19243,9 @@ var IfcCurveStyleFont = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.PatternList);
-    ;
+    
     return args;
   }
 };
@@ -19267,11 +19267,11 @@ var IfcCurveStyleFontAndScaling = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.CurveFont);
-    ;
+    
     args.push(this.CurveFontScaling);
-    ;
+    
     return args;
   }
 };
@@ -19291,9 +19291,9 @@ var IfcCurveStyleFontPattern = class {
   ToTape() {
     let args = [];
     args.push(this.VisibleSegmentLength);
-    ;
+    
     args.push(this.InvisibleSegmentLength);
-    ;
+    
     return args;
   }
 };
@@ -19313,9 +19313,9 @@ var IfcCylindricalSurface = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     return args;
   }
 };
@@ -19349,23 +19349,23 @@ var IfcDamper = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19401,25 +19401,25 @@ var IfcDamperType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19451,21 +19451,21 @@ var IfcDeepFoundation = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -19499,23 +19499,23 @@ var IfcDeepFoundationType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -19541,15 +19541,15 @@ var IfcDerivedProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.ParentProfile);
-    ;
+    
     args.push(this.Operator);
-    ;
+    
     args.push(this.Label);
-    ;
+    
     return args;
   }
 };
@@ -19571,11 +19571,11 @@ var IfcDerivedUnit = class {
   ToTape() {
     let args = [];
     args.push(this.Elements);
-    ;
+    
     args.push(this.UnitType);
-    ;
+    
     args.push(this.UserDefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19595,9 +19595,9 @@ var IfcDerivedUnitElement = class {
   ToTape() {
     let args = [];
     args.push(this.Unit);
-    ;
+    
     args.push(this.Exponent);
-    ;
+    
     return args;
   }
 };
@@ -19627,19 +19627,19 @@ var IfcDimensionalExponents = class {
   ToTape() {
     let args = [];
     args.push(this.LengthExponent);
-    ;
+    
     args.push(this.MassExponent);
-    ;
+    
     args.push(this.TimeExponent);
-    ;
+    
     args.push(this.ElectricCurrentExponent);
-    ;
+    
     args.push(this.ThermodynamicTemperatureExponent);
-    ;
+    
     args.push(this.AmountOfSubstanceExponent);
-    ;
+    
     args.push(this.LuminousIntensityExponent);
-    ;
+    
     return args;
   }
 };
@@ -19657,7 +19657,7 @@ var IfcDirection = class {
   ToTape() {
     let args = [];
     args.push(this.DirectionRatios);
-    ;
+    
     return args;
   }
 };
@@ -19691,23 +19691,23 @@ var IfcDiscreteAccessory = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19743,25 +19743,25 @@ var IfcDiscreteAccessoryType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19787,15 +19787,15 @@ var IfcDistanceExpression = class {
   ToTape() {
     let args = [];
     args.push(this.DistanceAlong);
-    ;
+    
     args.push(this.OffsetLateral);
-    ;
+    
     args.push(this.OffsetVertical);
-    ;
+    
     args.push(this.OffsetLongitudinal);
-    ;
+    
     args.push(this.AlongHorizontal);
-    ;
+    
     return args;
   }
 };
@@ -19829,23 +19829,23 @@ var IfcDistributionChamberElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19881,25 +19881,25 @@ var IfcDistributionChamberElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19929,19 +19929,19 @@ var IfcDistributionCircuit = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -19973,21 +19973,21 @@ var IfcDistributionControlElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -20021,23 +20021,23 @@ var IfcDistributionControlElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -20069,21 +20069,21 @@ var IfcDistributionElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -20117,23 +20117,23 @@ var IfcDistributionElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -20165,21 +20165,21 @@ var IfcDistributionFlowElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -20213,23 +20213,23 @@ var IfcDistributionFlowElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -20265,25 +20265,25 @@ var IfcDistributionPort = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.FlowDirection);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.SystemType);
-    ;
+    
     return args;
   }
 };
@@ -20313,19 +20313,19 @@ var IfcDistributionSystem = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -20375,39 +20375,39 @@ var IfcDocumentInformation = class {
   ToTape() {
     let args = [];
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Location);
-    ;
+    
     args.push(this.Purpose);
-    ;
+    
     args.push(this.IntendedUse);
-    ;
+    
     args.push(this.Scope);
-    ;
+    
     args.push(this.Revision);
-    ;
+    
     args.push(this.DocumentOwner);
-    ;
+    
     args.push(this.Editors);
-    ;
+    
     args.push(this.CreationTime);
-    ;
+    
     args.push(this.LastRevisionTime);
-    ;
+    
     args.push(this.ElectronicFormat);
-    ;
+    
     args.push(this.ValidFrom);
-    ;
+    
     args.push(this.ValidUntil);
-    ;
+    
     args.push(this.Confidentiality);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     return args;
   }
 };
@@ -20433,15 +20433,15 @@ var IfcDocumentInformationRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingDocument);
-    ;
+    
     args.push(this.RelatedDocuments);
-    ;
+    
     args.push(this.RelationshipType);
-    ;
+    
     return args;
   }
 };
@@ -20467,15 +20467,15 @@ var IfcDocumentReference = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ReferencedDocument);
-    ;
+    
     return args;
   }
 };
@@ -20517,31 +20517,31 @@ var IfcDoor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.OverallHeight);
-    ;
+    
     args.push(this.OverallWidth);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.UserDefinedOperationType);
-    ;
+    
     return args;
   }
 };
@@ -20591,39 +20591,39 @@ var IfcDoorLiningProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.LiningDepth);
-    ;
+    
     args.push(this.LiningThickness);
-    ;
+    
     args.push(this.ThresholdDepth);
-    ;
+    
     args.push(this.ThresholdThickness);
-    ;
+    
     args.push(this.TransomThickness);
-    ;
+    
     args.push(this.TransomOffset);
-    ;
+    
     args.push(this.LiningOffset);
-    ;
+    
     args.push(this.ThresholdOffset);
-    ;
+    
     args.push(this.CasingThickness);
-    ;
+    
     args.push(this.CasingDepth);
-    ;
+    
     args.push(this.ShapeAspectStyle);
-    ;
+    
     args.push(this.LiningToPanelOffsetX);
-    ;
+    
     args.push(this.LiningToPanelOffsetY);
-    ;
+    
     return args;
   }
 };
@@ -20657,23 +20657,23 @@ var IfcDoorPanelProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.PanelDepth);
-    ;
+    
     args.push(this.PanelOperation);
-    ;
+    
     args.push(this.PanelWidth);
-    ;
+    
     args.push(this.PanelPosition);
-    ;
+    
     args.push(this.ShapeAspectStyle);
-    ;
+    
     return args;
   }
 };
@@ -20715,31 +20715,31 @@ var IfcDoorStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.OverallHeight);
-    ;
+    
     args.push(this.OverallWidth);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.UserDefinedOperationType);
-    ;
+    
     return args;
   }
 };
@@ -20779,29 +20779,29 @@ var IfcDoorStyle = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.ConstructionType);
-    ;
+    
     args.push(this.ParameterTakesPrecedence);
-    ;
+    
     args.push(this.Sizeable);
-    ;
+    
     return args;
   }
 };
@@ -20843,31 +20843,31 @@ var IfcDoorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.ParameterTakesPrecedence);
-    ;
+    
     args.push(this.UserDefinedOperationType);
-    ;
+    
     return args;
   }
 };
@@ -20885,7 +20885,7 @@ var IfcDraughtingPreDefinedColour = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -20903,7 +20903,7 @@ var IfcDraughtingPreDefinedCurveFont = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -20937,23 +20937,23 @@ var IfcDuctFitting = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -20989,25 +20989,25 @@ var IfcDuctFittingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21041,23 +21041,23 @@ var IfcDuctSegment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21093,25 +21093,25 @@ var IfcDuctSegmentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21145,23 +21145,23 @@ var IfcDuctSilencer = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21197,25 +21197,25 @@ var IfcDuctSilencerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21235,9 +21235,9 @@ var IfcEdge = class {
   ToTape() {
     let args = [];
     args.push(this.EdgeStart);
-    ;
+    
     args.push(this.EdgeEnd);
-    ;
+    
     return args;
   }
 };
@@ -21261,13 +21261,13 @@ var IfcEdgeCurve = class {
   ToTape() {
     let args = [];
     args.push(this.EdgeStart);
-    ;
+    
     args.push(this.EdgeEnd);
-    ;
+    
     args.push(this.EdgeGeometry);
-    ;
+    
     args.push(this.SameSense);
-    ;
+    
     return args;
   }
 };
@@ -21285,7 +21285,7 @@ var IfcEdgeLoop = class {
   ToTape() {
     let args = [];
     args.push(this.EdgeList);
-    ;
+    
     return args;
   }
 };
@@ -21319,23 +21319,23 @@ var IfcElectricAppliance = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21371,25 +21371,25 @@ var IfcElectricApplianceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21423,23 +21423,23 @@ var IfcElectricDistributionBoard = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21475,25 +21475,25 @@ var IfcElectricDistributionBoardType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21527,23 +21527,23 @@ var IfcElectricFlowStorageDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21579,25 +21579,25 @@ var IfcElectricFlowStorageDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21631,23 +21631,23 @@ var IfcElectricGenerator = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21683,25 +21683,25 @@ var IfcElectricGeneratorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21735,23 +21735,23 @@ var IfcElectricMotor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21787,25 +21787,25 @@ var IfcElectricMotorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21839,23 +21839,23 @@ var IfcElectricTimeControl = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21891,25 +21891,25 @@ var IfcElectricTimeControlType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -21941,21 +21941,21 @@ var IfcElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -21991,25 +21991,25 @@ var IfcElementAssembly = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.AssemblyPlace);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22045,25 +22045,25 @@ var IfcElementAssemblyType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22095,21 +22095,21 @@ var IfcElementComponent = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -22143,23 +22143,23 @@ var IfcElementComponentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -22187,17 +22187,17 @@ var IfcElementQuantity = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.MethodOfMeasurement);
-    ;
+    
     args.push(this.Quantities);
-    ;
+    
     return args;
   }
 };
@@ -22231,23 +22231,23 @@ var IfcElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -22265,7 +22265,7 @@ var IfcElementarySurface = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -22287,11 +22287,11 @@ var IfcEllipse = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.SemiAxis1);
-    ;
+    
     args.push(this.SemiAxis2);
-    ;
+    
     return args;
   }
 };
@@ -22317,15 +22317,15 @@ var IfcEllipseProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.SemiAxis1);
-    ;
+    
     args.push(this.SemiAxis2);
-    ;
+    
     return args;
   }
 };
@@ -22357,21 +22357,21 @@ var IfcEnergyConversionDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -22405,23 +22405,23 @@ var IfcEnergyConversionDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -22455,23 +22455,23 @@ var IfcEngine = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22507,25 +22507,25 @@ var IfcEngineType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22559,23 +22559,23 @@ var IfcEvaporativeCooler = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22611,25 +22611,25 @@ var IfcEvaporativeCoolerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22663,23 +22663,23 @@ var IfcEvaporator = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22715,25 +22715,25 @@ var IfcEvaporatorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -22771,27 +22771,27 @@ var IfcEvent = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.EventTriggerType);
-    ;
+    
     args.push(this.UserDefinedEventTriggerType);
-    ;
+    
     args.push(this.EventOccurenceTime);
-    ;
+    
     return args;
   }
 };
@@ -22821,19 +22821,19 @@ var IfcEventTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.ActualDate);
-    ;
+    
     args.push(this.EarlyDate);
-    ;
+    
     args.push(this.LateDate);
-    ;
+    
     args.push(this.ScheduleDate);
-    ;
+    
     return args;
   }
 };
@@ -22873,29 +22873,29 @@ var IfcEventType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ProcessType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.EventTriggerType);
-    ;
+    
     args.push(this.UserDefinedEventTriggerType);
-    ;
+    
     return args;
   }
 };
@@ -22917,11 +22917,11 @@ var IfcExtendedProperties = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Properties);
-    ;
+    
     return args;
   }
 };
@@ -22957,11 +22957,11 @@ var IfcExternalReference = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -22985,13 +22985,13 @@ var IfcExternalReferenceRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingReference);
-    ;
+    
     args.push(this.RelatedResourceObjects);
-    ;
+    
     return args;
   }
 };
@@ -23025,23 +23025,23 @@ var IfcExternalSpatialElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -23073,21 +23073,21 @@ var IfcExternalSpatialStructureElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     return args;
   }
 };
@@ -23109,11 +23109,11 @@ var IfcExternallyDefinedHatchStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -23135,11 +23135,11 @@ var IfcExternallyDefinedSurfaceStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -23161,11 +23161,11 @@ var IfcExternallyDefinedTextFont = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -23189,13 +23189,13 @@ var IfcExtrudedAreaSolid = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.ExtrudedDirection);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     return args;
   }
 };
@@ -23221,15 +23221,15 @@ var IfcExtrudedAreaSolidTapered = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.ExtrudedDirection);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     args.push(this.EndSweptArea);
-    ;
+    
     return args;
   }
 };
@@ -23247,7 +23247,7 @@ var IfcFace = class {
   ToTape() {
     let args = [];
     args.push(this.Bounds);
-    ;
+    
     return args;
   }
 };
@@ -23265,7 +23265,7 @@ var IfcFaceBasedSurfaceModel = class {
   ToTape() {
     let args = [];
     args.push(this.FbsmFaces);
-    ;
+    
     return args;
   }
 };
@@ -23285,9 +23285,9 @@ var IfcFaceBound = class {
   ToTape() {
     let args = [];
     args.push(this.Bound);
-    ;
+    
     args.push(this.Orientation);
-    ;
+    
     return args;
   }
 };
@@ -23307,9 +23307,9 @@ var IfcFaceOuterBound = class {
   ToTape() {
     let args = [];
     args.push(this.Bound);
-    ;
+    
     args.push(this.Orientation);
-    ;
+    
     return args;
   }
 };
@@ -23331,11 +23331,11 @@ var IfcFaceSurface = class {
   ToTape() {
     let args = [];
     args.push(this.Bounds);
-    ;
+    
     args.push(this.FaceSurface);
-    ;
+    
     args.push(this.SameSense);
-    ;
+    
     return args;
   }
 };
@@ -23353,7 +23353,7 @@ var IfcFacetedBrep = class {
   ToTape() {
     let args = [];
     args.push(this.Outer);
-    ;
+    
     return args;
   }
 };
@@ -23373,9 +23373,9 @@ var IfcFacetedBrepWithVoids = class {
   ToTape() {
     let args = [];
     args.push(this.Outer);
-    ;
+    
     args.push(this.Voids);
-    ;
+    
     return args;
   }
 };
@@ -23409,23 +23409,23 @@ var IfcFacility = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     return args;
   }
 };
@@ -23459,23 +23459,23 @@ var IfcFacilityPart = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     return args;
   }
 };
@@ -23505,19 +23505,19 @@ var IfcFailureConnectionCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.TensionFailureX);
-    ;
+    
     args.push(this.TensionFailureY);
-    ;
+    
     args.push(this.TensionFailureZ);
-    ;
+    
     args.push(this.CompressionFailureX);
-    ;
+    
     args.push(this.CompressionFailureY);
-    ;
+    
     args.push(this.CompressionFailureZ);
-    ;
+    
     return args;
   }
 };
@@ -23551,23 +23551,23 @@ var IfcFan = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -23603,25 +23603,25 @@ var IfcFanType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -23655,23 +23655,23 @@ var IfcFastener = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -23707,25 +23707,25 @@ var IfcFastenerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -23757,21 +23757,21 @@ var IfcFeatureElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -23803,21 +23803,21 @@ var IfcFeatureElementAddition = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -23849,21 +23849,21 @@ var IfcFeatureElementSubtraction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -23885,11 +23885,11 @@ var IfcFillAreaStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.FillStyles);
-    ;
+    
     args.push(this.ModelorDraughting);
-    ;
+    
     return args;
   }
 };
@@ -23915,15 +23915,15 @@ var IfcFillAreaStyleHatching = class {
   ToTape() {
     let args = [];
     args.push(this.HatchLineAppearance);
-    ;
+    
     args.push(this.StartOfNextHatchLine);
-    ;
+    
     args.push(this.PointOfReferenceHatchLine);
-    ;
+    
     args.push(this.PatternStart);
-    ;
+    
     args.push(this.HatchLineAngle);
-    ;
+    
     return args;
   }
 };
@@ -23945,11 +23945,11 @@ var IfcFillAreaStyleTiles = class {
   ToTape() {
     let args = [];
     args.push(this.TilingPattern);
-    ;
+    
     args.push(this.Tiles);
-    ;
+    
     args.push(this.TilingScale);
-    ;
+    
     return args;
   }
 };
@@ -23983,23 +23983,23 @@ var IfcFilter = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24035,25 +24035,25 @@ var IfcFilterType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24087,23 +24087,23 @@ var IfcFireSuppressionTerminal = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24139,25 +24139,25 @@ var IfcFireSuppressionTerminalType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24185,17 +24185,17 @@ var IfcFixedReferenceSweptAreaSolid = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Directrix);
-    ;
+    
     args.push(this.StartParam);
-    ;
+    
     args.push(this.EndParam);
-    ;
+    
     args.push(this.FixedReference);
-    ;
+    
     return args;
   }
 };
@@ -24227,21 +24227,21 @@ var IfcFlowController = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -24275,23 +24275,23 @@ var IfcFlowControllerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -24323,21 +24323,21 @@ var IfcFlowFitting = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -24371,23 +24371,23 @@ var IfcFlowFittingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -24421,23 +24421,23 @@ var IfcFlowInstrument = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24473,25 +24473,25 @@ var IfcFlowInstrumentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24525,23 +24525,23 @@ var IfcFlowMeter = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24577,25 +24577,25 @@ var IfcFlowMeterType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -24627,21 +24627,21 @@ var IfcFlowMovingDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -24675,23 +24675,23 @@ var IfcFlowMovingDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -24723,21 +24723,21 @@ var IfcFlowSegment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -24771,23 +24771,23 @@ var IfcFlowSegmentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -24819,21 +24819,21 @@ var IfcFlowStorageDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -24867,23 +24867,23 @@ var IfcFlowStorageDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -24915,21 +24915,21 @@ var IfcFlowTerminal = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -24963,23 +24963,23 @@ var IfcFlowTerminalType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -25011,21 +25011,21 @@ var IfcFlowTreatmentDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -25059,23 +25059,23 @@ var IfcFlowTreatmentDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -25109,23 +25109,23 @@ var IfcFooting = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25161,25 +25161,25 @@ var IfcFootingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25211,21 +25211,21 @@ var IfcFurnishingElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -25259,23 +25259,23 @@ var IfcFurnishingElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -25309,23 +25309,23 @@ var IfcFurniture = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25363,27 +25363,27 @@ var IfcFurnitureType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.AssemblyPlace);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25417,23 +25417,23 @@ var IfcGeographicElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25469,25 +25469,25 @@ var IfcGeographicElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25505,7 +25505,7 @@ var IfcGeometricCurveSet = class {
   ToTape() {
     let args = [];
     args.push(this.Elements);
-    ;
+    
     return args;
   }
 };
@@ -25533,17 +25533,17 @@ var IfcGeometricRepresentationContext = class {
   ToTape() {
     let args = [];
     args.push(this.ContextIdentifier);
-    ;
+    
     args.push(this.ContextType);
-    ;
+    
     args.push(this.CoordinateSpaceDimension);
-    ;
+    
     args.push(this.Precision);
-    ;
+    
     args.push(this.WorldCoordinateSystem);
-    ;
+    
     args.push(this.TrueNorth);
-    ;
+    
     return args;
   }
 };
@@ -25593,25 +25593,25 @@ var IfcGeometricRepresentationSubContext = class {
   ToTape() {
     let args = [];
     args.push(this.ContextIdentifier);
-    ;
+    
     args.push(this.ContextType);
-    ;
+    
     args.push(this.CoordinateSpaceDimension);
-    ;
+    
     args.push(this.Precision);
-    ;
+    
     args.push(this.WorldCoordinateSystem);
-    ;
+    
     args.push(this.TrueNorth);
-    ;
+    
     args.push(this.ParentContext);
-    ;
+    
     args.push(this.TargetScale);
-    ;
+    
     args.push(this.TargetView);
-    ;
+    
     args.push(this.UserDefinedTargetView);
-    ;
+    
     return args;
   }
 };
@@ -25629,7 +25629,7 @@ var IfcGeometricSet = class {
   ToTape() {
     let args = [];
     args.push(this.Elements);
-    ;
+    
     return args;
   }
 };
@@ -25667,27 +25667,27 @@ var IfcGrid = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.UAxes);
-    ;
+    
     args.push(this.VAxes);
-    ;
+    
     args.push(this.WAxes);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25709,11 +25709,11 @@ var IfcGridAxis = class {
   ToTape() {
     let args = [];
     args.push(this.AxisTag);
-    ;
+    
     args.push(this.AxisCurve);
-    ;
+    
     args.push(this.SameSense);
-    ;
+    
     return args;
   }
 };
@@ -25735,11 +25735,11 @@ var IfcGridPlacement = class {
   ToTape() {
     let args = [];
     args.push(this.PlacementRelTo);
-    ;
+    
     args.push(this.PlacementLocation);
-    ;
+    
     args.push(this.PlacementRefDirection);
-    ;
+    
     return args;
   }
 };
@@ -25765,15 +25765,15 @@ var IfcGroup = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     return args;
   }
 };
@@ -25793,9 +25793,9 @@ var IfcHalfSpaceSolid = class {
   ToTape() {
     let args = [];
     args.push(this.BaseSurface);
-    ;
+    
     args.push(this.AgreementFlag);
-    ;
+    
     return args;
   }
 };
@@ -25829,23 +25829,23 @@ var IfcHeatExchanger = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25881,25 +25881,25 @@ var IfcHeatExchangerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25933,23 +25933,23 @@ var IfcHumidifier = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -25985,25 +25985,25 @@ var IfcHumidifierType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26039,25 +26039,25 @@ var IfcIShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.OverallWidth);
-    ;
+    
     args.push(this.OverallDepth);
-    ;
+    
     args.push(this.WebThickness);
-    ;
+    
     args.push(this.FlangeThickness);
-    ;
+    
     args.push(this.FilletRadius);
-    ;
+    
     args.push(this.FlangeEdgeRadius);
-    ;
+    
     args.push(this.FlangeSlope);
-    ;
+    
     return args;
   }
 };
@@ -26085,17 +26085,17 @@ var IfcImageTexture = class {
   ToTape() {
     let args = [];
     args.push(this.RepeatS);
-    ;
+    
     args.push(this.RepeatT);
-    ;
+    
     args.push(this.Mode);
-    ;
+    
     args.push(this.TextureTransform);
-    ;
+    
     args.push(this.Parameter);
-    ;
+    
     args.push(this.URLReference);
-    ;
+    
     return args;
   }
 };
@@ -26119,13 +26119,13 @@ var IfcIndexedColourMap = class {
   ToTape() {
     let args = [];
     args.push(this.MappedTo);
-    ;
+    
     args.push(this.Opacity);
-    ;
+    
     args.push(this.Colours);
-    ;
+    
     args.push(this.ColourIndex);
-    ;
+    
     return args;
   }
 };
@@ -26147,11 +26147,11 @@ var IfcIndexedPolyCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Points);
-    ;
+    
     args.push(this.Segments);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -26169,7 +26169,7 @@ var IfcIndexedPolygonalFace = class {
   ToTape() {
     let args = [];
     args.push(this.CoordIndex);
-    ;
+    
     return args;
   }
 };
@@ -26189,9 +26189,9 @@ var IfcIndexedPolygonalFaceWithVoids = class {
   ToTape() {
     let args = [];
     args.push(this.CoordIndex);
-    ;
+    
     args.push(this.InnerCoordIndices);
-    ;
+    
     return args;
   }
 };
@@ -26213,11 +26213,11 @@ var IfcIndexedTextureMap = class {
   ToTape() {
     let args = [];
     args.push(this.Maps);
-    ;
+    
     args.push(this.MappedTo);
-    ;
+    
     args.push(this.TexCoords);
-    ;
+    
     return args;
   }
 };
@@ -26241,13 +26241,13 @@ var IfcIndexedTriangleTextureMap = class {
   ToTape() {
     let args = [];
     args.push(this.Maps);
-    ;
+    
     args.push(this.MappedTo);
-    ;
+    
     args.push(this.TexCoords);
-    ;
+    
     args.push(this.TexCoordIndex);
-    ;
+    
     return args;
   }
 };
@@ -26281,23 +26281,23 @@ var IfcInterceptor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26333,25 +26333,25 @@ var IfcInterceptorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26373,11 +26373,11 @@ var IfcIntersectionCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Curve3D);
-    ;
+    
     args.push(this.AssociatedGeometry);
-    ;
+    
     args.push(this.MasterRepresentation);
-    ;
+    
     return args;
   }
 };
@@ -26415,27 +26415,27 @@ var IfcInventory = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Jurisdiction);
-    ;
+    
     args.push(this.ResponsiblePersons);
-    ;
+    
     args.push(this.LastUpdateDate);
-    ;
+    
     args.push(this.CurrentValue);
-    ;
+    
     args.push(this.OriginalValue);
-    ;
+    
     return args;
   }
 };
@@ -26469,23 +26469,23 @@ var IfcIrregularTimeSeries = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.StartTime);
-    ;
+    
     args.push(this.EndTime);
-    ;
+    
     args.push(this.TimeSeriesDataType);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.Values);
-    ;
+    
     return args;
   }
 };
@@ -26505,9 +26505,9 @@ var IfcIrregularTimeSeriesValue = class {
   ToTape() {
     let args = [];
     args.push(this.TimeStamp);
-    ;
+    
     args.push(this.ListValues);
-    ;
+    
     return args;
   }
 };
@@ -26541,23 +26541,23 @@ var IfcJunctionBox = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26593,25 +26593,25 @@ var IfcJunctionBoxType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26645,23 +26645,23 @@ var IfcLShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     args.push(this.Width);
-    ;
+    
     args.push(this.Thickness);
-    ;
+    
     args.push(this.FilletRadius);
-    ;
+    
     args.push(this.EdgeRadius);
-    ;
+    
     args.push(this.LegSlope);
-    ;
+    
     return args;
   }
 };
@@ -26699,27 +26699,27 @@ var IfcLaborResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26759,29 +26759,29 @@ var IfcLaborResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26807,15 +26807,15 @@ var IfcLagTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.LagValue);
-    ;
+    
     args.push(this.DurationType);
-    ;
+    
     return args;
   }
 };
@@ -26849,23 +26849,23 @@ var IfcLamp = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26901,25 +26901,25 @@ var IfcLampType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -26947,17 +26947,17 @@ var IfcLibraryInformation = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Version);
-    ;
+    
     args.push(this.Publisher);
-    ;
+    
     args.push(this.VersionDate);
-    ;
+    
     args.push(this.Location);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -26985,17 +26985,17 @@ var IfcLibraryReference = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Language);
-    ;
+    
     args.push(this.ReferencedLibrary);
-    ;
+    
     return args;
   }
 };
@@ -27017,11 +27017,11 @@ var IfcLightDistributionData = class {
   ToTape() {
     let args = [];
     args.push(this.MainPlaneAngle);
-    ;
+    
     args.push(this.SecondaryPlaneAngle);
-    ;
+    
     args.push(this.LuminousIntensity);
-    ;
+    
     return args;
   }
 };
@@ -27055,23 +27055,23 @@ var IfcLightFixture = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -27107,25 +27107,25 @@ var IfcLightFixtureType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -27145,9 +27145,9 @@ var IfcLightIntensityDistribution = class {
   ToTape() {
     let args = [];
     args.push(this.LightDistributionCurve);
-    ;
+    
     args.push(this.DistributionData);
-    ;
+    
     return args;
   }
 };
@@ -27171,13 +27171,13 @@ var IfcLightSource = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LightColour);
-    ;
+    
     args.push(this.AmbientIntensity);
-    ;
+    
     args.push(this.Intensity);
-    ;
+    
     return args;
   }
 };
@@ -27201,13 +27201,13 @@ var IfcLightSourceAmbient = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LightColour);
-    ;
+    
     args.push(this.AmbientIntensity);
-    ;
+    
     args.push(this.Intensity);
-    ;
+    
     return args;
   }
 };
@@ -27233,15 +27233,15 @@ var IfcLightSourceDirectional = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LightColour);
-    ;
+    
     args.push(this.AmbientIntensity);
-    ;
+    
     args.push(this.Intensity);
-    ;
+    
     args.push(this.Orientation);
-    ;
+    
     return args;
   }
 };
@@ -27277,25 +27277,25 @@ var IfcLightSourceGoniometric = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LightColour);
-    ;
+    
     args.push(this.AmbientIntensity);
-    ;
+    
     args.push(this.Intensity);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.ColourAppearance);
-    ;
+    
     args.push(this.ColourTemperature);
-    ;
+    
     args.push(this.LuminousFlux);
-    ;
+    
     args.push(this.LightEmissionSource);
-    ;
+    
     args.push(this.LightDistributionDataSource);
-    ;
+    
     return args;
   }
 };
@@ -27329,23 +27329,23 @@ var IfcLightSourcePositional = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LightColour);
-    ;
+    
     args.push(this.AmbientIntensity);
-    ;
+    
     args.push(this.Intensity);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.ConstantAttenuation);
-    ;
+    
     args.push(this.DistanceAttenuation);
-    ;
+    
     args.push(this.QuadricAttenuation);
-    ;
+    
     return args;
   }
 };
@@ -27387,31 +27387,31 @@ var IfcLightSourceSpot = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LightColour);
-    ;
+    
     args.push(this.AmbientIntensity);
-    ;
+    
     args.push(this.Intensity);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.ConstantAttenuation);
-    ;
+    
     args.push(this.DistanceAttenuation);
-    ;
+    
     args.push(this.QuadricAttenuation);
-    ;
+    
     args.push(this.Orientation);
-    ;
+    
     args.push(this.ConcentrationExponent);
-    ;
+    
     args.push(this.SpreadAngle);
-    ;
+    
     args.push(this.BeamWidthAngle);
-    ;
+    
     return args;
   }
 };
@@ -27431,9 +27431,9 @@ var IfcLine = class {
   ToTape() {
     let args = [];
     args.push(this.Pnt);
-    ;
+    
     args.push(this.Dir);
-    ;
+    
     return args;
   }
 };
@@ -27455,11 +27455,11 @@ var IfcLineSegment2D = class {
   ToTape() {
     let args = [];
     args.push(this.StartPoint);
-    ;
+    
     args.push(this.StartDirection);
-    ;
+    
     args.push(this.SegmentLength);
-    ;
+    
     return args;
   }
 };
@@ -27485,15 +27485,15 @@ var IfcLinearPlacement = class {
   ToTape() {
     let args = [];
     args.push(this.PlacementRelTo);
-    ;
+    
     args.push(this.PlacementMeasuredAlong);
-    ;
+    
     args.push(this.Distance);
-    ;
+    
     args.push(this.Orientation);
-    ;
+    
     args.push(this.CartesianPosition);
-    ;
+    
     return args;
   }
 };
@@ -27525,21 +27525,21 @@ var IfcLinearPositioningElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     return args;
   }
 };
@@ -27559,9 +27559,9 @@ var IfcLocalPlacement = class {
   ToTape() {
     let args = [];
     args.push(this.PlacementRelTo);
-    ;
+    
     args.push(this.RelativePlacement);
-    ;
+    
     return args;
   }
 };
@@ -27593,7 +27593,7 @@ var IfcManifoldSolidBrep = class {
   ToTape() {
     let args = [];
     args.push(this.Outer);
-    ;
+    
     return args;
   }
 };
@@ -27625,21 +27625,21 @@ var IfcMapConversion = class {
   ToTape() {
     let args = [];
     args.push(this.SourceCRS);
-    ;
+    
     args.push(this.TargetCRS);
-    ;
+    
     args.push(this.Eastings);
-    ;
+    
     args.push(this.Northings);
-    ;
+    
     args.push(this.OrthogonalHeight);
-    ;
+    
     args.push(this.XAxisAbscissa);
-    ;
+    
     args.push(this.XAxisOrdinate);
-    ;
+    
     args.push(this.Scale);
-    ;
+    
     return args;
   }
 };
@@ -27659,9 +27659,9 @@ var IfcMappedItem = class {
   ToTape() {
     let args = [];
     args.push(this.MappingSource);
-    ;
+    
     args.push(this.MappingTarget);
-    ;
+    
     return args;
   }
 };
@@ -27683,11 +27683,11 @@ var IfcMaterial = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     return args;
   }
 };
@@ -27707,9 +27707,9 @@ var IfcMaterialClassificationRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.MaterialClassifications);
-    ;
+    
     args.push(this.ClassifiedMaterial);
-    ;
+    
     return args;
   }
 };
@@ -27735,15 +27735,15 @@ var IfcMaterialConstituent = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Material);
-    ;
+    
     args.push(this.Fraction);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     return args;
   }
 };
@@ -27765,11 +27765,11 @@ var IfcMaterialConstituentSet = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.MaterialConstituents);
-    ;
+    
     return args;
   }
 };
@@ -27807,13 +27807,13 @@ var IfcMaterialDefinitionRepresentation = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Representations);
-    ;
+    
     args.push(this.RepresentedMaterial);
-    ;
+    
     return args;
   }
 };
@@ -27843,19 +27843,19 @@ var IfcMaterialLayer = class {
   ToTape() {
     let args = [];
     args.push(this.Material);
-    ;
+    
     args.push(this.LayerThickness);
-    ;
+    
     args.push(this.IsVentilated);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     args.push(this.Priority);
-    ;
+    
     return args;
   }
 };
@@ -27877,11 +27877,11 @@ var IfcMaterialLayerSet = class {
   ToTape() {
     let args = [];
     args.push(this.MaterialLayers);
-    ;
+    
     args.push(this.LayerSetName);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -27907,15 +27907,15 @@ var IfcMaterialLayerSetUsage = class {
   ToTape() {
     let args = [];
     args.push(this.ForLayerSet);
-    ;
+    
     args.push(this.LayerSetDirection);
-    ;
+    
     args.push(this.DirectionSense);
-    ;
+    
     args.push(this.OffsetFromReferenceLine);
-    ;
+    
     args.push(this.ReferenceExtent);
-    ;
+    
     return args;
   }
 };
@@ -27949,23 +27949,23 @@ var IfcMaterialLayerWithOffsets = class {
   ToTape() {
     let args = [];
     args.push(this.Material);
-    ;
+    
     args.push(this.LayerThickness);
-    ;
+    
     args.push(this.IsVentilated);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     args.push(this.Priority);
-    ;
+    
     args.push(this.OffsetDirection);
-    ;
+    
     args.push(this.OffsetValues);
-    ;
+    
     return args;
   }
 };
@@ -27983,7 +27983,7 @@ var IfcMaterialList = class {
   ToTape() {
     let args = [];
     args.push(this.Materials);
-    ;
+    
     return args;
   }
 };
@@ -28011,17 +28011,17 @@ var IfcMaterialProfile = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Material);
-    ;
+    
     args.push(this.Profile);
-    ;
+    
     args.push(this.Priority);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     return args;
   }
 };
@@ -28045,13 +28045,13 @@ var IfcMaterialProfileSet = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.MaterialProfiles);
-    ;
+    
     args.push(this.CompositeProfile);
-    ;
+    
     return args;
   }
 };
@@ -28073,11 +28073,11 @@ var IfcMaterialProfileSetUsage = class {
   ToTape() {
     let args = [];
     args.push(this.ForProfileSet);
-    ;
+    
     args.push(this.CardinalPoint);
-    ;
+    
     args.push(this.ReferenceExtent);
-    ;
+    
     return args;
   }
 };
@@ -28103,15 +28103,15 @@ var IfcMaterialProfileSetUsageTapering = class {
   ToTape() {
     let args = [];
     args.push(this.ForProfileSet);
-    ;
+    
     args.push(this.CardinalPoint);
-    ;
+    
     args.push(this.ReferenceExtent);
-    ;
+    
     args.push(this.ForProfileEndSet);
-    ;
+    
     args.push(this.CardinalEndPoint);
-    ;
+    
     return args;
   }
 };
@@ -28141,19 +28141,19 @@ var IfcMaterialProfileWithOffsets = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Material);
-    ;
+    
     args.push(this.Profile);
-    ;
+    
     args.push(this.Priority);
-    ;
+    
     args.push(this.Category);
-    ;
+    
     args.push(this.OffsetValues);
-    ;
+    
     return args;
   }
 };
@@ -28177,13 +28177,13 @@ var IfcMaterialProperties = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Properties);
-    ;
+    
     args.push(this.Material);
-    ;
+    
     return args;
   }
 };
@@ -28209,15 +28209,15 @@ var IfcMaterialRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingMaterial);
-    ;
+    
     args.push(this.RelatedMaterials);
-    ;
+    
     args.push(this.Expression);
-    ;
+    
     return args;
   }
 };
@@ -28251,9 +28251,9 @@ var IfcMeasureWithUnit = class {
   ToTape() {
     let args = [];
     args.push(this.ValueComponent);
-    ;
+    
     args.push(this.UnitComponent);
-    ;
+    
     return args;
   }
 };
@@ -28291,27 +28291,27 @@ var IfcMechanicalFastener = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.NominalDiameter);
-    ;
+    
     args.push(this.NominalLength);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28351,29 +28351,29 @@ var IfcMechanicalFastenerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.NominalDiameter);
-    ;
+    
     args.push(this.NominalLength);
-    ;
+    
     return args;
   }
 };
@@ -28407,23 +28407,23 @@ var IfcMedicalDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28459,25 +28459,25 @@ var IfcMedicalDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28511,23 +28511,23 @@ var IfcMember = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28561,23 +28561,23 @@ var IfcMemberStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28613,25 +28613,25 @@ var IfcMemberType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28669,27 +28669,27 @@ var IfcMetric = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ConstraintGrade);
-    ;
+    
     args.push(this.ConstraintSource);
-    ;
+    
     args.push(this.CreatingActor);
-    ;
+    
     args.push(this.CreationTime);
-    ;
+    
     args.push(this.UserDefinedGrade);
-    ;
+    
     args.push(this.Benchmark);
-    ;
+    
     args.push(this.ValueSource);
-    ;
+    
     args.push(this.DataValue);
-    ;
+    
     args.push(this.ReferencePath);
-    ;
+    
     return args;
   }
 };
@@ -28715,15 +28715,15 @@ var IfcMirroredProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.ParentProfile);
-    ;
+    
     args.push(this.Operator);
-    ;
+    
     args.push(this.Label);
-    ;
+    
     return args;
   }
 };
@@ -28741,7 +28741,7 @@ var IfcMonetaryUnit = class {
   ToTape() {
     let args = [];
     args.push(this.Currency);
-    ;
+    
     return args;
   }
 };
@@ -28775,23 +28775,23 @@ var IfcMotorConnection = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28827,25 +28827,25 @@ var IfcMotorConnectionType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -28865,9 +28865,9 @@ var IfcNamedUnit = class {
   ToTape() {
     let args = [];
     args.push(this.Dimensions);
-    ;
+    
     args.push(this.UnitType);
-    ;
+    
     return args;
   }
 };
@@ -28893,15 +28893,15 @@ var IfcObject = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     return args;
   }
 };
@@ -28925,13 +28925,13 @@ var IfcObjectDefinition = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -28949,7 +28949,7 @@ var IfcObjectPlacement = class {
   ToTape() {
     let args = [];
     args.push(this.PlacementRelTo);
-    ;
+    
     return args;
   }
 };
@@ -28987,27 +28987,27 @@ var IfcObjective = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ConstraintGrade);
-    ;
+    
     args.push(this.ConstraintSource);
-    ;
+    
     args.push(this.CreatingActor);
-    ;
+    
     args.push(this.CreationTime);
-    ;
+    
     args.push(this.UserDefinedGrade);
-    ;
+    
     args.push(this.BenchmarkValues);
-    ;
+    
     args.push(this.LogicalAggregator);
-    ;
+    
     args.push(this.ObjectiveQualifier);
-    ;
+    
     args.push(this.UserDefinedQualifier);
-    ;
+    
     return args;
   }
 };
@@ -29037,19 +29037,19 @@ var IfcOccupant = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.TheActor);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -29067,7 +29067,7 @@ var IfcOffsetCurve = class {
   ToTape() {
     let args = [];
     args.push(this.BasisCurve);
-    ;
+    
     return args;
   }
 };
@@ -29089,11 +29089,11 @@ var IfcOffsetCurve2D = class {
   ToTape() {
     let args = [];
     args.push(this.BasisCurve);
-    ;
+    
     args.push(this.Distance);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -29117,13 +29117,13 @@ var IfcOffsetCurve3D = class {
   ToTape() {
     let args = [];
     args.push(this.BasisCurve);
-    ;
+    
     args.push(this.Distance);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     args.push(this.RefDirection);
-    ;
+    
     return args;
   }
 };
@@ -29145,11 +29145,11 @@ var IfcOffsetCurveByDistances = class {
   ToTape() {
     let args = [];
     args.push(this.BasisCurve);
-    ;
+    
     args.push(this.OffsetValues);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -29167,7 +29167,7 @@ var IfcOpenShell = class {
   ToTape() {
     let args = [];
     args.push(this.CfsFaces);
-    ;
+    
     return args;
   }
 };
@@ -29201,23 +29201,23 @@ var IfcOpeningElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -29251,23 +29251,23 @@ var IfcOpeningStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -29293,15 +29293,15 @@ var IfcOrganization = class {
   ToTape() {
     let args = [];
     args.push(this.Identification);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Roles);
-    ;
+    
     args.push(this.Addresses);
-    ;
+    
     return args;
   }
 };
@@ -29325,13 +29325,13 @@ var IfcOrganizationRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingOrganization);
-    ;
+    
     args.push(this.RelatedOrganizations);
-    ;
+    
     return args;
   }
 };
@@ -29351,9 +29351,9 @@ var IfcOrientationExpression = class {
   ToTape() {
     let args = [];
     args.push(this.LateralAxisDirection);
-    ;
+    
     args.push(this.VerticalAxisDirection);
-    ;
+    
     return args;
   }
 };
@@ -29377,13 +29377,13 @@ var IfcOrientedEdge = class {
   ToTape() {
     let args = [];
     args.push(this.EdgeStart);
-    ;
+    
     args.push(this.EdgeEnd);
-    ;
+    
     args.push(this.EdgeElement);
-    ;
+    
     args.push(this.Orientation);
-    ;
+    
     return args;
   }
 };
@@ -29403,9 +29403,9 @@ var IfcOuterBoundaryCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Segments);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     return args;
   }
 };
@@ -29439,23 +29439,23 @@ var IfcOutlet = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -29491,25 +29491,25 @@ var IfcOutletType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -29541,21 +29541,21 @@ var IfcOwnerHistory = class {
   ToTape() {
     let args = [];
     args.push(this.OwningUser);
-    ;
+    
     args.push(this.OwningApplication);
-    ;
+    
     args.push(this.State);
-    ;
+    
     args.push(this.ChangeAction);
-    ;
+    
     args.push(this.LastModifiedDate);
-    ;
+    
     args.push(this.LastModifyingUser);
-    ;
+    
     args.push(this.LastModifyingApplication);
-    ;
+    
     args.push(this.CreationDate);
-    ;
+    
     return args;
   }
 };
@@ -29577,11 +29577,11 @@ var IfcParameterizedProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -29599,7 +29599,7 @@ var IfcPath = class {
   ToTape() {
     let args = [];
     args.push(this.EdgeList);
-    ;
+    
     return args;
   }
 };
@@ -29619,9 +29619,9 @@ var IfcPcurve = class {
   ToTape() {
     let args = [];
     args.push(this.BasisSurface);
-    ;
+    
     args.push(this.ReferenceCurve);
-    ;
+    
     return args;
   }
 };
@@ -29653,21 +29653,21 @@ var IfcPerformanceHistory = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LifeCyclePhase);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -29701,23 +29701,23 @@ var IfcPermeableCoveringProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.PanelPosition);
-    ;
+    
     args.push(this.FrameDepth);
-    ;
+    
     args.push(this.FrameThickness);
-    ;
+    
     args.push(this.ShapeAspectStyle);
-    ;
+    
     return args;
   }
 };
@@ -29751,23 +29751,23 @@ var IfcPermit = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     return args;
   }
 };
@@ -29799,21 +29799,21 @@ var IfcPerson = class {
   ToTape() {
     let args = [];
     args.push(this.Identification);
-    ;
+    
     args.push(this.FamilyName);
-    ;
+    
     args.push(this.GivenName);
-    ;
+    
     args.push(this.MiddleNames);
-    ;
+    
     args.push(this.PrefixTitles);
-    ;
+    
     args.push(this.SuffixTitles);
-    ;
+    
     args.push(this.Roles);
-    ;
+    
     args.push(this.Addresses);
-    ;
+    
     return args;
   }
 };
@@ -29835,11 +29835,11 @@ var IfcPersonAndOrganization = class {
   ToTape() {
     let args = [];
     args.push(this.ThePerson);
-    ;
+    
     args.push(this.TheOrganization);
-    ;
+    
     args.push(this.Roles);
-    ;
+    
     return args;
   }
 };
@@ -29867,17 +29867,17 @@ var IfcPhysicalComplexQuantity = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.HasQuantities);
-    ;
+    
     args.push(this.Discrimination);
-    ;
+    
     args.push(this.Quality);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     return args;
   }
 };
@@ -29897,9 +29897,9 @@ var IfcPhysicalQuantity = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -29921,11 +29921,11 @@ var IfcPhysicalSimpleQuantity = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     return args;
   }
 };
@@ -29961,25 +29961,25 @@ var IfcPile = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.ConstructionType);
-    ;
+    
     return args;
   }
 };
@@ -30015,25 +30015,25 @@ var IfcPileType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30067,23 +30067,23 @@ var IfcPipeFitting = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30119,25 +30119,25 @@ var IfcPipeFittingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30171,23 +30171,23 @@ var IfcPipeSegment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30223,25 +30223,25 @@ var IfcPipeSegmentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30275,23 +30275,23 @@ var IfcPixelTexture = class {
   ToTape() {
     let args = [];
     args.push(this.RepeatS);
-    ;
+    
     args.push(this.RepeatT);
-    ;
+    
     args.push(this.Mode);
-    ;
+    
     args.push(this.TextureTransform);
-    ;
+    
     args.push(this.Parameter);
-    ;
+    
     args.push(this.Width);
-    ;
+    
     args.push(this.Height);
-    ;
+    
     args.push(this.ColourComponents);
-    ;
+    
     args.push(this.Pixel);
-    ;
+    
     return args;
   }
 };
@@ -30309,7 +30309,7 @@ var IfcPlacement = class {
   ToTape() {
     let args = [];
     args.push(this.Location);
-    ;
+    
     return args;
   }
 };
@@ -30331,11 +30331,11 @@ var IfcPlanarBox = class {
   ToTape() {
     let args = [];
     args.push(this.SizeInX);
-    ;
+    
     args.push(this.SizeInY);
-    ;
+    
     args.push(this.Placement);
-    ;
+    
     return args;
   }
 };
@@ -30355,9 +30355,9 @@ var IfcPlanarExtent = class {
   ToTape() {
     let args = [];
     args.push(this.SizeInX);
-    ;
+    
     args.push(this.SizeInY);
-    ;
+    
     return args;
   }
 };
@@ -30375,7 +30375,7 @@ var IfcPlane = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -30409,23 +30409,23 @@ var IfcPlate = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30459,23 +30459,23 @@ var IfcPlateStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30511,25 +30511,25 @@ var IfcPlateType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -30563,9 +30563,9 @@ var IfcPointOnCurve = class {
   ToTape() {
     let args = [];
     args.push(this.BasisCurve);
-    ;
+    
     args.push(this.PointParameter);
-    ;
+    
     return args;
   }
 };
@@ -30587,11 +30587,11 @@ var IfcPointOnSurface = class {
   ToTape() {
     let args = [];
     args.push(this.BasisSurface);
-    ;
+    
     args.push(this.PointParameterU);
-    ;
+    
     args.push(this.PointParameterV);
-    ;
+    
     return args;
   }
 };
@@ -30609,7 +30609,7 @@ var IfcPolyLoop = class {
   ToTape() {
     let args = [];
     args.push(this.Polygon);
-    ;
+    
     return args;
   }
 };
@@ -30633,13 +30633,13 @@ var IfcPolygonalBoundedHalfSpace = class {
   ToTape() {
     let args = [];
     args.push(this.BaseSurface);
-    ;
+    
     args.push(this.AgreementFlag);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.PolygonalBoundary);
-    ;
+    
     return args;
   }
 };
@@ -30663,13 +30663,13 @@ var IfcPolygonalFaceSet = class {
   ToTape() {
     let args = [];
     args.push(this.Coordinates);
-    ;
+    
     args.push(this.Closed);
-    ;
+    
     args.push(this.Faces);
-    ;
+    
     args.push(this.PnIndex);
-    ;
+    
     return args;
   }
 };
@@ -30687,7 +30687,7 @@ var IfcPolyline = class {
   ToTape() {
     let args = [];
     args.push(this.Points);
-    ;
+    
     return args;
   }
 };
@@ -30717,19 +30717,19 @@ var IfcPort = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     return args;
   }
 };
@@ -30759,19 +30759,19 @@ var IfcPositioningElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     return args;
   }
 };
@@ -30807,25 +30807,25 @@ var IfcPostalAddress = class {
   ToTape() {
     let args = [];
     args.push(this.Purpose);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UserDefinedPurpose);
-    ;
+    
     args.push(this.InternalLocation);
-    ;
+    
     args.push(this.AddressLines);
-    ;
+    
     args.push(this.PostalBox);
-    ;
+    
     args.push(this.Town);
-    ;
+    
     args.push(this.Region);
-    ;
+    
     args.push(this.PostalCode);
-    ;
+    
     args.push(this.Country);
-    ;
+    
     return args;
   }
 };
@@ -30843,7 +30843,7 @@ var IfcPreDefinedColour = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -30861,7 +30861,7 @@ var IfcPreDefinedCurveFont = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -30879,7 +30879,7 @@ var IfcPreDefinedItem = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -30917,13 +30917,13 @@ var IfcPreDefinedPropertySet = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -30941,7 +30941,7 @@ var IfcPreDefinedTextFont = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -30979,13 +30979,13 @@ var IfcPresentationLayerAssignment = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.AssignedItems);
-    ;
+    
     args.push(this.Identifier);
-    ;
+    
     return args;
   }
 };
@@ -31017,21 +31017,21 @@ var IfcPresentationLayerWithStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.AssignedItems);
-    ;
+    
     args.push(this.Identifier);
-    ;
+    
     args.push(this.LayerOn);
-    ;
+    
     args.push(this.LayerFrozen);
-    ;
+    
     args.push(this.LayerBlocked);
-    ;
+    
     args.push(this.LayerStyles);
-    ;
+    
     return args;
   }
 };
@@ -31049,7 +31049,7 @@ var IfcPresentationStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -31067,7 +31067,7 @@ var IfcPresentationStyleAssignment = class {
   ToTape() {
     let args = [];
     args.push(this.Styles);
-    ;
+    
     return args;
   }
 };
@@ -31099,21 +31099,21 @@ var IfcProcedure = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -31149,25 +31149,25 @@ var IfcProcedureType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ProcessType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -31197,19 +31197,19 @@ var IfcProcess = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     return args;
   }
 };
@@ -31239,19 +31239,19 @@ var IfcProduct = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     return args;
   }
 };
@@ -31273,11 +31273,11 @@ var IfcProductDefinitionShape = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Representations);
-    ;
+    
     return args;
   }
 };
@@ -31299,11 +31299,11 @@ var IfcProductRepresentation = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Representations);
-    ;
+    
     return args;
   }
 };
@@ -31323,9 +31323,9 @@ var IfcProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     return args;
   }
 };
@@ -31349,13 +31349,13 @@ var IfcProfileProperties = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Properties);
-    ;
+    
     args.push(this.ProfileDefinition);
-    ;
+    
     return args;
   }
 };
@@ -31389,23 +31389,23 @@ var IfcProject = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.Phase);
-    ;
+    
     args.push(this.RepresentationContexts);
-    ;
+    
     args.push(this.UnitsInContext);
-    ;
+    
     return args;
   }
 };
@@ -31439,23 +31439,23 @@ var IfcProjectLibrary = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.Phase);
-    ;
+    
     args.push(this.RepresentationContexts);
-    ;
+    
     args.push(this.UnitsInContext);
-    ;
+    
     return args;
   }
 };
@@ -31489,23 +31489,23 @@ var IfcProjectOrder = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     return args;
   }
 };
@@ -31535,19 +31535,19 @@ var IfcProjectedCRS = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.GeodeticDatum);
-    ;
+    
     args.push(this.VerticalDatum);
-    ;
+    
     args.push(this.MapProjection);
-    ;
+    
     args.push(this.MapZone);
-    ;
+    
     args.push(this.MapUnit);
-    ;
+    
     return args;
   }
 };
@@ -31581,23 +31581,23 @@ var IfcProjectionElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -31617,9 +31617,9 @@ var IfcProperty = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -31661,17 +31661,17 @@ var IfcPropertyBoundedValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UpperBoundValue);
-    ;
+    
     args.push(this.LowerBoundValue);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.SetPointValue);
-    ;
+    
     return args;
   }
 };
@@ -31695,13 +31695,13 @@ var IfcPropertyDefinition = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -31727,15 +31727,15 @@ var IfcPropertyDependencyRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.DependingProperty);
-    ;
+    
     args.push(this.DependantProperty);
-    ;
+    
     args.push(this.Expression);
-    ;
+    
     return args;
   }
 };
@@ -31759,13 +31759,13 @@ var IfcPropertyEnumeratedValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.EnumerationValues);
-    ;
+    
     args.push(this.EnumerationReference);
-    ;
+    
     return args;
   }
 };
@@ -31787,11 +31787,11 @@ var IfcPropertyEnumeration = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.EnumerationValues);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     return args;
   }
 };
@@ -31815,13 +31815,13 @@ var IfcPropertyListValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ListValues);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     return args;
   }
 };
@@ -31845,13 +31845,13 @@ var IfcPropertyReferenceValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UsageName);
-    ;
+    
     args.push(this.PropertyReference);
-    ;
+    
     return args;
   }
 };
@@ -31877,15 +31877,15 @@ var IfcPropertySet = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.HasProperties);
-    ;
+    
     return args;
   }
 };
@@ -31909,13 +31909,13 @@ var IfcPropertySetDefinition = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -31945,19 +31945,19 @@ var IfcPropertySetTemplate = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.TemplateType);
-    ;
+    
     args.push(this.ApplicableEntity);
-    ;
+    
     args.push(this.HasPropertyTemplates);
-    ;
+    
     return args;
   }
 };
@@ -31981,13 +31981,13 @@ var IfcPropertySingleValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.NominalValue);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     return args;
   }
 };
@@ -32019,21 +32019,21 @@ var IfcPropertyTableValue = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.DefiningValues);
-    ;
+    
     args.push(this.DefinedValues);
-    ;
+    
     args.push(this.Expression);
-    ;
+    
     args.push(this.DefiningUnit);
-    ;
+    
     args.push(this.DefinedUnit);
-    ;
+    
     args.push(this.CurveInterpolation);
-    ;
+    
     return args;
   }
 };
@@ -32057,13 +32057,13 @@ var IfcPropertyTemplate = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -32087,13 +32087,13 @@ var IfcPropertyTemplateDefinition = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -32127,23 +32127,23 @@ var IfcProtectiveDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32177,23 +32177,23 @@ var IfcProtectiveDeviceTrippingUnit = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32229,25 +32229,25 @@ var IfcProtectiveDeviceTrippingUnitType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32283,25 +32283,25 @@ var IfcProtectiveDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32335,23 +32335,23 @@ var IfcProxy = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.ProxyType);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -32385,23 +32385,23 @@ var IfcPump = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32437,25 +32437,25 @@ var IfcPumpType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32481,15 +32481,15 @@ var IfcQuantityArea = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.AreaValue);
-    ;
+    
     args.push(this.Formula);
-    ;
+    
     return args;
   }
 };
@@ -32515,15 +32515,15 @@ var IfcQuantityCount = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.CountValue);
-    ;
+    
     args.push(this.Formula);
-    ;
+    
     return args;
   }
 };
@@ -32549,15 +32549,15 @@ var IfcQuantityLength = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.LengthValue);
-    ;
+    
     args.push(this.Formula);
-    ;
+    
     return args;
   }
 };
@@ -32581,13 +32581,13 @@ var IfcQuantitySet = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -32613,15 +32613,15 @@ var IfcQuantityTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.TimeValue);
-    ;
+    
     args.push(this.Formula);
-    ;
+    
     return args;
   }
 };
@@ -32647,15 +32647,15 @@ var IfcQuantityVolume = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.VolumeValue);
-    ;
+    
     args.push(this.Formula);
-    ;
+    
     return args;
   }
 };
@@ -32681,15 +32681,15 @@ var IfcQuantityWeight = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.WeightValue);
-    ;
+    
     args.push(this.Formula);
-    ;
+    
     return args;
   }
 };
@@ -32723,23 +32723,23 @@ var IfcRailing = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32775,25 +32775,25 @@ var IfcRailingType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32827,23 +32827,23 @@ var IfcRamp = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32877,23 +32877,23 @@ var IfcRampFlight = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32929,25 +32929,25 @@ var IfcRampFlightType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -32983,25 +32983,25 @@ var IfcRampType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -33035,23 +33035,23 @@ var IfcRationalBSplineCurveWithKnots = class {
   ToTape() {
     let args = [];
     args.push(this.Degree);
-    ;
+    
     args.push(this.ControlPointsList);
-    ;
+    
     args.push(this.CurveForm);
-    ;
+    
     args.push(this.ClosedCurve);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     args.push(this.KnotMultiplicities);
-    ;
+    
     args.push(this.Knots);
-    ;
+    
     args.push(this.KnotSpec);
-    ;
+    
     args.push(this.WeightsData);
-    ;
+    
     return args;
   }
 };
@@ -33093,31 +33093,31 @@ var IfcRationalBSplineSurfaceWithKnots = class {
   ToTape() {
     let args = [];
     args.push(this.UDegree);
-    ;
+    
     args.push(this.VDegree);
-    ;
+    
     args.push(this.ControlPointsList);
-    ;
+    
     args.push(this.SurfaceForm);
-    ;
+    
     args.push(this.UClosed);
-    ;
+    
     args.push(this.VClosed);
-    ;
+    
     args.push(this.SelfIntersect);
-    ;
+    
     args.push(this.UMultiplicities);
-    ;
+    
     args.push(this.VMultiplicities);
-    ;
+    
     args.push(this.UKnots);
-    ;
+    
     args.push(this.VKnots);
-    ;
+    
     args.push(this.KnotSpec);
-    ;
+    
     args.push(this.WeightsData);
-    ;
+    
     return args;
   }
 };
@@ -33149,21 +33149,21 @@ var IfcRectangleHollowProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.XDim);
-    ;
+    
     args.push(this.YDim);
-    ;
+    
     args.push(this.WallThickness);
-    ;
+    
     args.push(this.InnerFilletRadius);
-    ;
+    
     args.push(this.OuterFilletRadius);
-    ;
+    
     return args;
   }
 };
@@ -33189,15 +33189,15 @@ var IfcRectangleProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.XDim);
-    ;
+    
     args.push(this.YDim);
-    ;
+    
     return args;
   }
 };
@@ -33221,13 +33221,13 @@ var IfcRectangularPyramid = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.XLength);
-    ;
+    
     args.push(this.YLength);
-    ;
+    
     args.push(this.Height);
-    ;
+    
     return args;
   }
 };
@@ -33257,19 +33257,19 @@ var IfcRectangularTrimmedSurface = class {
   ToTape() {
     let args = [];
     args.push(this.BasisSurface);
-    ;
+    
     args.push(this.U1);
-    ;
+    
     args.push(this.V1);
-    ;
+    
     args.push(this.U2);
-    ;
+    
     args.push(this.V2);
-    ;
+    
     args.push(this.Usense);
-    ;
+    
     args.push(this.Vsense);
-    ;
+    
     return args;
   }
 };
@@ -33301,21 +33301,21 @@ var IfcRecurrencePattern = class {
   ToTape() {
     let args = [];
     args.push(this.RecurrenceType);
-    ;
+    
     args.push(this.DayComponent);
-    ;
+    
     args.push(this.WeekdayComponent);
-    ;
+    
     args.push(this.MonthComponent);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Interval);
-    ;
+    
     args.push(this.Occurrences);
-    ;
+    
     args.push(this.TimePeriods);
-    ;
+    
     return args;
   }
 };
@@ -33341,15 +33341,15 @@ var IfcReference = class {
   ToTape() {
     let args = [];
     args.push(this.TypeIdentifier);
-    ;
+    
     args.push(this.AttributeIdentifier);
-    ;
+    
     args.push(this.InstanceName);
-    ;
+    
     args.push(this.ListPositions);
-    ;
+    
     args.push(this.InnerReference);
-    ;
+    
     return args;
   }
 };
@@ -33383,23 +33383,23 @@ var IfcReferent = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.RestartDistance);
-    ;
+    
     return args;
   }
 };
@@ -33435,25 +33435,25 @@ var IfcRegularTimeSeries = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.StartTime);
-    ;
+    
     args.push(this.EndTime);
-    ;
+    
     args.push(this.TimeSeriesDataType);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.TimeStep);
-    ;
+    
     args.push(this.Values);
-    ;
+    
     return args;
   }
 };
@@ -33481,17 +33481,17 @@ var IfcReinforcementBarProperties = class {
   ToTape() {
     let args = [];
     args.push(this.TotalCrossSectionArea);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     args.push(this.BarSurface);
-    ;
+    
     args.push(this.EffectiveDepth);
-    ;
+    
     args.push(this.NominalBarDiameter);
-    ;
+    
     args.push(this.BarCount);
-    ;
+    
     return args;
   }
 };
@@ -33519,17 +33519,17 @@ var IfcReinforcementDefinitionProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.DefinitionType);
-    ;
+    
     args.push(this.ReinforcementSectionDefinitions);
-    ;
+    
     return args;
   }
 };
@@ -33573,33 +33573,33 @@ var IfcReinforcingBar = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     args.push(this.NominalDiameter);
-    ;
+    
     args.push(this.CrossSectionArea);
-    ;
+    
     args.push(this.BarLength);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.BarSurface);
-    ;
+    
     return args;
   }
 };
@@ -33647,37 +33647,37 @@ var IfcReinforcingBarType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.NominalDiameter);
-    ;
+    
     args.push(this.CrossSectionArea);
-    ;
+    
     args.push(this.BarLength);
-    ;
+    
     args.push(this.BarSurface);
-    ;
+    
     args.push(this.BendingShapeCode);
-    ;
+    
     args.push(this.BendingParameters);
-    ;
+    
     return args;
   }
 };
@@ -33711,23 +33711,23 @@ var IfcReinforcingElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     return args;
   }
 };
@@ -33761,23 +33761,23 @@ var IfcReinforcingElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -33829,41 +33829,41 @@ var IfcReinforcingMesh = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     args.push(this.MeshLength);
-    ;
+    
     args.push(this.MeshWidth);
-    ;
+    
     args.push(this.LongitudinalBarNominalDiameter);
-    ;
+    
     args.push(this.TransverseBarNominalDiameter);
-    ;
+    
     args.push(this.LongitudinalBarCrossSectionArea);
-    ;
+    
     args.push(this.TransverseBarCrossSectionArea);
-    ;
+    
     args.push(this.LongitudinalBarSpacing);
-    ;
+    
     args.push(this.TransverseBarSpacing);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -33919,45 +33919,45 @@ var IfcReinforcingMeshType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.MeshLength);
-    ;
+    
     args.push(this.MeshWidth);
-    ;
+    
     args.push(this.LongitudinalBarNominalDiameter);
-    ;
+    
     args.push(this.TransverseBarNominalDiameter);
-    ;
+    
     args.push(this.LongitudinalBarCrossSectionArea);
-    ;
+    
     args.push(this.TransverseBarCrossSectionArea);
-    ;
+    
     args.push(this.LongitudinalBarSpacing);
-    ;
+    
     args.push(this.TransverseBarSpacing);
-    ;
+    
     args.push(this.BendingShapeCode);
-    ;
+    
     args.push(this.BendingParameters);
-    ;
+    
     return args;
   }
 };
@@ -33985,17 +33985,17 @@ var IfcRelAggregates = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingObject);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     return args;
   }
 };
@@ -34023,17 +34023,17 @@ var IfcRelAssigns = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     return args;
   }
 };
@@ -34065,21 +34065,21 @@ var IfcRelAssignsToActor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingActor);
-    ;
+    
     args.push(this.ActingRole);
-    ;
+    
     return args;
   }
 };
@@ -34109,19 +34109,19 @@ var IfcRelAssignsToControl = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingControl);
-    ;
+    
     return args;
   }
 };
@@ -34151,19 +34151,19 @@ var IfcRelAssignsToGroup = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingGroup);
-    ;
+    
     return args;
   }
 };
@@ -34195,21 +34195,21 @@ var IfcRelAssignsToGroupByFactor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingGroup);
-    ;
+    
     args.push(this.Factor);
-    ;
+    
     return args;
   }
 };
@@ -34241,21 +34241,21 @@ var IfcRelAssignsToProcess = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingProcess);
-    ;
+    
     args.push(this.QuantityInProcess);
-    ;
+    
     return args;
   }
 };
@@ -34285,19 +34285,19 @@ var IfcRelAssignsToProduct = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingProduct);
-    ;
+    
     return args;
   }
 };
@@ -34327,19 +34327,19 @@ var IfcRelAssignsToResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatedObjectsType);
-    ;
+    
     args.push(this.RelatingResource);
-    ;
+    
     return args;
   }
 };
@@ -34365,15 +34365,15 @@ var IfcRelAssociates = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     return args;
   }
 };
@@ -34401,17 +34401,17 @@ var IfcRelAssociatesApproval = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingApproval);
-    ;
+    
     return args;
   }
 };
@@ -34439,17 +34439,17 @@ var IfcRelAssociatesClassification = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingClassification);
-    ;
+    
     return args;
   }
 };
@@ -34479,19 +34479,19 @@ var IfcRelAssociatesConstraint = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.Intent);
-    ;
+    
     args.push(this.RelatingConstraint);
-    ;
+    
     return args;
   }
 };
@@ -34519,17 +34519,17 @@ var IfcRelAssociatesDocument = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingDocument);
-    ;
+    
     return args;
   }
 };
@@ -34557,17 +34557,17 @@ var IfcRelAssociatesLibrary = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingLibrary);
-    ;
+    
     return args;
   }
 };
@@ -34595,17 +34595,17 @@ var IfcRelAssociatesMaterial = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingMaterial);
-    ;
+    
     return args;
   }
 };
@@ -34629,13 +34629,13 @@ var IfcRelConnects = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -34665,19 +34665,19 @@ var IfcRelConnectsElements = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ConnectionGeometry);
-    ;
+    
     args.push(this.RelatingElement);
-    ;
+    
     args.push(this.RelatedElement);
-    ;
+    
     return args;
   }
 };
@@ -34715,27 +34715,27 @@ var IfcRelConnectsPathElements = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ConnectionGeometry);
-    ;
+    
     args.push(this.RelatingElement);
-    ;
+    
     args.push(this.RelatedElement);
-    ;
+    
     args.push(this.RelatingPriorities);
-    ;
+    
     args.push(this.RelatedPriorities);
-    ;
+    
     args.push(this.RelatedConnectionType);
-    ;
+    
     args.push(this.RelatingConnectionType);
-    ;
+    
     return args;
   }
 };
@@ -34763,17 +34763,17 @@ var IfcRelConnectsPortToElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingPort);
-    ;
+    
     args.push(this.RelatedElement);
-    ;
+    
     return args;
   }
 };
@@ -34803,19 +34803,19 @@ var IfcRelConnectsPorts = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingPort);
-    ;
+    
     args.push(this.RelatedPort);
-    ;
+    
     args.push(this.RealizingElement);
-    ;
+    
     return args;
   }
 };
@@ -34843,17 +34843,17 @@ var IfcRelConnectsStructuralActivity = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingElement);
-    ;
+    
     args.push(this.RelatedStructuralActivity);
-    ;
+    
     return args;
   }
 };
@@ -34889,25 +34889,25 @@ var IfcRelConnectsStructuralMember = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingStructuralMember);
-    ;
+    
     args.push(this.RelatedStructuralConnection);
-    ;
+    
     args.push(this.AppliedCondition);
-    ;
+    
     args.push(this.AdditionalConditions);
-    ;
+    
     args.push(this.SupportedLength);
-    ;
+    
     args.push(this.ConditionCoordinateSystem);
-    ;
+    
     return args;
   }
 };
@@ -34945,27 +34945,27 @@ var IfcRelConnectsWithEccentricity = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingStructuralMember);
-    ;
+    
     args.push(this.RelatedStructuralConnection);
-    ;
+    
     args.push(this.AppliedCondition);
-    ;
+    
     args.push(this.AdditionalConditions);
-    ;
+    
     args.push(this.SupportedLength);
-    ;
+    
     args.push(this.ConditionCoordinateSystem);
-    ;
+    
     args.push(this.ConnectionConstraint);
-    ;
+    
     return args;
   }
 };
@@ -34999,23 +34999,23 @@ var IfcRelConnectsWithRealizingElements = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ConnectionGeometry);
-    ;
+    
     args.push(this.RelatingElement);
-    ;
+    
     args.push(this.RelatedElement);
-    ;
+    
     args.push(this.RealizingElements);
-    ;
+    
     args.push(this.ConnectionType);
-    ;
+    
     return args;
   }
 };
@@ -35043,17 +35043,17 @@ var IfcRelContainedInSpatialStructure = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedElements);
-    ;
+    
     args.push(this.RelatingStructure);
-    ;
+    
     return args;
   }
 };
@@ -35081,17 +35081,17 @@ var IfcRelCoversBldgElements = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingBuildingElement);
-    ;
+    
     args.push(this.RelatedCoverings);
-    ;
+    
     return args;
   }
 };
@@ -35119,17 +35119,17 @@ var IfcRelCoversSpaces = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingSpace);
-    ;
+    
     args.push(this.RelatedCoverings);
-    ;
+    
     return args;
   }
 };
@@ -35157,17 +35157,17 @@ var IfcRelDeclares = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingContext);
-    ;
+    
     args.push(this.RelatedDefinitions);
-    ;
+    
     return args;
   }
 };
@@ -35191,13 +35191,13 @@ var IfcRelDecomposes = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -35221,13 +35221,13 @@ var IfcRelDefines = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -35255,17 +35255,17 @@ var IfcRelDefinesByObject = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingObject);
-    ;
+    
     return args;
   }
 };
@@ -35293,17 +35293,17 @@ var IfcRelDefinesByProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingPropertyDefinition);
-    ;
+    
     return args;
   }
 };
@@ -35331,17 +35331,17 @@ var IfcRelDefinesByTemplate = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedPropertySets);
-    ;
+    
     args.push(this.RelatingTemplate);
-    ;
+    
     return args;
   }
 };
@@ -35369,17 +35369,17 @@ var IfcRelDefinesByType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     args.push(this.RelatingType);
-    ;
+    
     return args;
   }
 };
@@ -35407,17 +35407,17 @@ var IfcRelFillsElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingOpeningElement);
-    ;
+    
     args.push(this.RelatedBuildingElement);
-    ;
+    
     return args;
   }
 };
@@ -35445,17 +35445,17 @@ var IfcRelFlowControlElements = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedControlElements);
-    ;
+    
     args.push(this.RelatingFlowElement);
-    ;
+    
     return args;
   }
 };
@@ -35489,23 +35489,23 @@ var IfcRelInterferesElements = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingElement);
-    ;
+    
     args.push(this.RelatedElement);
-    ;
+    
     args.push(this.InterferenceGeometry);
-    ;
+    
     args.push(this.InterferenceType);
-    ;
+    
     args.push(this.ImpliedOrder);
-    ;
+    
     return args;
   }
 };
@@ -35533,17 +35533,17 @@ var IfcRelNests = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingObject);
-    ;
+    
     args.push(this.RelatedObjects);
-    ;
+    
     return args;
   }
 };
@@ -35571,17 +35571,17 @@ var IfcRelPositions = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingPositioningElement);
-    ;
+    
     args.push(this.RelatedProducts);
-    ;
+    
     return args;
   }
 };
@@ -35609,17 +35609,17 @@ var IfcRelProjectsElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingElement);
-    ;
+    
     args.push(this.RelatedFeatureElement);
-    ;
+    
     return args;
   }
 };
@@ -35647,17 +35647,17 @@ var IfcRelReferencedInSpatialStructure = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedElements);
-    ;
+    
     args.push(this.RelatingStructure);
-    ;
+    
     return args;
   }
 };
@@ -35691,23 +35691,23 @@ var IfcRelSequence = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingProcess);
-    ;
+    
     args.push(this.RelatedProcess);
-    ;
+    
     args.push(this.TimeLag);
-    ;
+    
     args.push(this.SequenceType);
-    ;
+    
     args.push(this.UserDefinedSequenceType);
-    ;
+    
     return args;
   }
 };
@@ -35735,17 +35735,17 @@ var IfcRelServicesBuildings = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingSystem);
-    ;
+    
     args.push(this.RelatedBuildings);
-    ;
+    
     return args;
   }
 };
@@ -35779,23 +35779,23 @@ var IfcRelSpaceBoundary = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingSpace);
-    ;
+    
     args.push(this.RelatedBuildingElement);
-    ;
+    
     args.push(this.ConnectionGeometry);
-    ;
+    
     args.push(this.PhysicalOrVirtualBoundary);
-    ;
+    
     args.push(this.InternalOrExternalBoundary);
-    ;
+    
     return args;
   }
 };
@@ -35831,25 +35831,25 @@ var IfcRelSpaceBoundary1stLevel = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingSpace);
-    ;
+    
     args.push(this.RelatedBuildingElement);
-    ;
+    
     args.push(this.ConnectionGeometry);
-    ;
+    
     args.push(this.PhysicalOrVirtualBoundary);
-    ;
+    
     args.push(this.InternalOrExternalBoundary);
-    ;
+    
     args.push(this.ParentBoundary);
-    ;
+    
     return args;
   }
 };
@@ -35887,27 +35887,27 @@ var IfcRelSpaceBoundary2ndLevel = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingSpace);
-    ;
+    
     args.push(this.RelatedBuildingElement);
-    ;
+    
     args.push(this.ConnectionGeometry);
-    ;
+    
     args.push(this.PhysicalOrVirtualBoundary);
-    ;
+    
     args.push(this.InternalOrExternalBoundary);
-    ;
+    
     args.push(this.ParentBoundary);
-    ;
+    
     args.push(this.CorrespondingBoundary);
-    ;
+    
     return args;
   }
 };
@@ -35935,17 +35935,17 @@ var IfcRelVoidsElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingBuildingElement);
-    ;
+    
     args.push(this.RelatedOpeningElement);
-    ;
+    
     return args;
   }
 };
@@ -35969,13 +35969,13 @@ var IfcRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -35999,13 +35999,13 @@ var IfcReparametrisedCompositeCurveSegment = class {
   ToTape() {
     let args = [];
     args.push(this.Transition);
-    ;
+    
     args.push(this.SameSense);
-    ;
+    
     args.push(this.ParentCurve);
-    ;
+    
     args.push(this.ParamLength);
-    ;
+    
     return args;
   }
 };
@@ -36029,13 +36029,13 @@ var IfcRepresentation = class {
   ToTape() {
     let args = [];
     args.push(this.ContextOfItems);
-    ;
+    
     args.push(this.RepresentationIdentifier);
-    ;
+    
     args.push(this.RepresentationType);
-    ;
+    
     args.push(this.Items);
-    ;
+    
     return args;
   }
 };
@@ -36055,9 +36055,9 @@ var IfcRepresentationContext = class {
   ToTape() {
     let args = [];
     args.push(this.ContextIdentifier);
-    ;
+    
     args.push(this.ContextType);
-    ;
+    
     return args;
   }
 };
@@ -36091,9 +36091,9 @@ var IfcRepresentationMap = class {
   ToTape() {
     let args = [];
     args.push(this.MappingOrigin);
-    ;
+    
     args.push(this.MappedRepresentation);
-    ;
+    
     return args;
   }
 };
@@ -36123,19 +36123,19 @@ var IfcResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     return args;
   }
 };
@@ -36159,13 +36159,13 @@ var IfcResourceApprovalRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatedResourceObjects);
-    ;
+    
     args.push(this.RelatingApproval);
-    ;
+    
     return args;
   }
 };
@@ -36189,13 +36189,13 @@ var IfcResourceConstraintRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.RelatingConstraint);
-    ;
+    
     args.push(this.RelatedResourceObjects);
-    ;
+    
     return args;
   }
 };
@@ -36215,9 +36215,9 @@ var IfcResourceLevelRelationship = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -36269,41 +36269,41 @@ var IfcResourceTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.ScheduleWork);
-    ;
+    
     args.push(this.ScheduleUsage);
-    ;
+    
     args.push(this.ScheduleStart);
-    ;
+    
     args.push(this.ScheduleFinish);
-    ;
+    
     args.push(this.ScheduleContour);
-    ;
+    
     args.push(this.LevelingDelay);
-    ;
+    
     args.push(this.IsOverAllocated);
-    ;
+    
     args.push(this.StatusTime);
-    ;
+    
     args.push(this.ActualWork);
-    ;
+    
     args.push(this.ActualUsage);
-    ;
+    
     args.push(this.ActualStart);
-    ;
+    
     args.push(this.ActualFinish);
-    ;
+    
     args.push(this.RemainingWork);
-    ;
+    
     args.push(this.RemainingUsage);
-    ;
+    
     args.push(this.Completion);
-    ;
+    
     return args;
   }
 };
@@ -36327,13 +36327,13 @@ var IfcRevolvedAreaSolid = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     args.push(this.Angle);
-    ;
+    
     return args;
   }
 };
@@ -36359,15 +36359,15 @@ var IfcRevolvedAreaSolidTapered = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     args.push(this.Angle);
-    ;
+    
     args.push(this.EndSweptArea);
-    ;
+    
     return args;
   }
 };
@@ -36389,11 +36389,11 @@ var IfcRightCircularCone = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.Height);
-    ;
+    
     args.push(this.BottomRadius);
-    ;
+    
     return args;
   }
 };
@@ -36415,11 +36415,11 @@ var IfcRightCircularCylinder = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.Height);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     return args;
   }
 };
@@ -36453,23 +36453,23 @@ var IfcRoof = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -36505,25 +36505,25 @@ var IfcRoofType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -36547,13 +36547,13 @@ var IfcRoot = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -36581,17 +36581,17 @@ var IfcRoundedRectangleProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.XDim);
-    ;
+    
     args.push(this.YDim);
-    ;
+    
     args.push(this.RoundingRadius);
-    ;
+    
     return args;
   }
 };
@@ -36615,13 +36615,13 @@ var IfcSIUnit = class {
   ToTape() {
     let args = [];
     args.push(this.Dimensions);
-    ;
+    
     args.push(this.UnitType);
-    ;
+    
     args.push(this.Prefix);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -36655,23 +36655,23 @@ var IfcSanitaryTerminal = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -36707,25 +36707,25 @@ var IfcSanitaryTerminalType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -36747,11 +36747,11 @@ var IfcSchedulingTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     return args;
   }
 };
@@ -36773,11 +36773,11 @@ var IfcSeamCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Curve3D);
-    ;
+    
     args.push(this.AssociatedGeometry);
-    ;
+    
     args.push(this.MasterRepresentation);
-    ;
+    
     return args;
   }
 };
@@ -36799,11 +36799,11 @@ var IfcSectionProperties = class {
   ToTape() {
     let args = [];
     args.push(this.SectionType);
-    ;
+    
     args.push(this.StartProfile);
-    ;
+    
     args.push(this.EndProfile);
-    ;
+    
     return args;
   }
 };
@@ -36831,17 +36831,17 @@ var IfcSectionReinforcementProperties = class {
   ToTape() {
     let args = [];
     args.push(this.LongitudinalStartPosition);
-    ;
+    
     args.push(this.LongitudinalEndPosition);
-    ;
+    
     args.push(this.TransversePosition);
-    ;
+    
     args.push(this.ReinforcementRole);
-    ;
+    
     args.push(this.SectionDefinition);
-    ;
+    
     args.push(this.CrossSectionReinforcementDefinitions);
-    ;
+    
     return args;
   }
 };
@@ -36861,9 +36861,9 @@ var IfcSectionedSolid = class {
   ToTape() {
     let args = [];
     args.push(this.Directrix);
-    ;
+    
     args.push(this.CrossSections);
-    ;
+    
     return args;
   }
 };
@@ -36887,13 +36887,13 @@ var IfcSectionedSolidHorizontal = class {
   ToTape() {
     let args = [];
     args.push(this.Directrix);
-    ;
+    
     args.push(this.CrossSections);
-    ;
+    
     args.push(this.CrossSectionPositions);
-    ;
+    
     args.push(this.FixedAxisVertical);
-    ;
+    
     return args;
   }
 };
@@ -36915,11 +36915,11 @@ var IfcSectionedSpine = class {
   ToTape() {
     let args = [];
     args.push(this.SpineCurve);
-    ;
+    
     args.push(this.CrossSections);
-    ;
+    
     args.push(this.CrossSectionPositions);
-    ;
+    
     return args;
   }
 };
@@ -36953,23 +36953,23 @@ var IfcSensor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37005,25 +37005,25 @@ var IfcSensorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37057,23 +37057,23 @@ var IfcShadingDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37109,25 +37109,25 @@ var IfcShadingDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37153,15 +37153,15 @@ var IfcShapeAspect = class {
   ToTape() {
     let args = [];
     args.push(this.ShapeRepresentations);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ProductDefinitional);
-    ;
+    
     args.push(this.PartOfProductDefinitionShape);
-    ;
+    
     return args;
   }
 };
@@ -37185,13 +37185,13 @@ var IfcShapeModel = class {
   ToTape() {
     let args = [];
     args.push(this.ContextOfItems);
-    ;
+    
     args.push(this.RepresentationIdentifier);
-    ;
+    
     args.push(this.RepresentationType);
-    ;
+    
     args.push(this.Items);
-    ;
+    
     return args;
   }
 };
@@ -37215,13 +37215,13 @@ var IfcShapeRepresentation = class {
   ToTape() {
     let args = [];
     args.push(this.ContextOfItems);
-    ;
+    
     args.push(this.RepresentationIdentifier);
-    ;
+    
     args.push(this.RepresentationType);
-    ;
+    
     args.push(this.Items);
-    ;
+    
     return args;
   }
 };
@@ -37239,7 +37239,7 @@ var IfcShellBasedSurfaceModel = class {
   ToTape() {
     let args = [];
     args.push(this.SbsmBoundary);
-    ;
+    
     return args;
   }
 };
@@ -37259,9 +37259,9 @@ var IfcSimpleProperty = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     return args;
   }
 };
@@ -37301,29 +37301,29 @@ var IfcSimplePropertyTemplate = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.TemplateType);
-    ;
+    
     args.push(this.PrimaryMeasureType);
-    ;
+    
     args.push(this.SecondaryMeasureType);
-    ;
+    
     args.push(this.Enumerators);
-    ;
+    
     args.push(this.PrimaryUnit);
-    ;
+    
     args.push(this.SecondaryUnit);
-    ;
+    
     args.push(this.Expression);
-    ;
+    
     args.push(this.AccessState);
-    ;
+    
     return args;
   }
 };
@@ -37367,33 +37367,33 @@ var IfcSite = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     args.push(this.RefLatitude);
-    ;
+    
     args.push(this.RefLongitude);
-    ;
+    
     args.push(this.RefElevation);
-    ;
+    
     args.push(this.LandTitleNumber);
-    ;
+    
     args.push(this.SiteAddress);
-    ;
+    
     return args;
   }
 };
@@ -37427,23 +37427,23 @@ var IfcSlab = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37477,23 +37477,23 @@ var IfcSlabElementedCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37527,23 +37527,23 @@ var IfcSlabStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37579,25 +37579,25 @@ var IfcSlabType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37621,13 +37621,13 @@ var IfcSlippageConnectionCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.SlippageX);
-    ;
+    
     args.push(this.SlippageY);
-    ;
+    
     args.push(this.SlippageZ);
-    ;
+    
     return args;
   }
 };
@@ -37661,23 +37661,23 @@ var IfcSolarDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37713,25 +37713,25 @@ var IfcSolarDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37783,27 +37783,27 @@ var IfcSpace = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.ElevationWithFlooring);
-    ;
+    
     return args;
   }
 };
@@ -37837,23 +37837,23 @@ var IfcSpaceHeater = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37889,25 +37889,25 @@ var IfcSpaceHeaterType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -37945,27 +37945,27 @@ var IfcSpaceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     return args;
   }
 };
@@ -37997,21 +37997,21 @@ var IfcSpatialElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     return args;
   }
 };
@@ -38045,23 +38045,23 @@ var IfcSpatialElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -38095,23 +38095,23 @@ var IfcSpatialStructureElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.CompositionType);
-    ;
+    
     return args;
   }
 };
@@ -38145,23 +38145,23 @@ var IfcSpatialStructureElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     return args;
   }
 };
@@ -38195,23 +38195,23 @@ var IfcSpatialZone = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38249,27 +38249,27 @@ var IfcSpatialZoneType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     return args;
   }
 };
@@ -38289,9 +38289,9 @@ var IfcSphere = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     return args;
   }
 };
@@ -38311,9 +38311,9 @@ var IfcSphericalSurface = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     return args;
   }
 };
@@ -38347,23 +38347,23 @@ var IfcStackTerminal = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38399,25 +38399,25 @@ var IfcStackTerminalType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38451,23 +38451,23 @@ var IfcStair = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38509,31 +38509,31 @@ var IfcStairFlight = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.NumberOfRisers);
-    ;
+    
     args.push(this.NumberOfTreads);
-    ;
+    
     args.push(this.RiserHeight);
-    ;
+    
     args.push(this.TreadLength);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38569,25 +38569,25 @@ var IfcStairFlightType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38623,25 +38623,25 @@ var IfcStairType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38677,25 +38677,25 @@ var IfcStructuralAction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.DestabilizingLoad);
-    ;
+    
     return args;
   }
 };
@@ -38729,23 +38729,23 @@ var IfcStructuralActivity = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     return args;
   }
 };
@@ -38781,25 +38781,25 @@ var IfcStructuralAnalysisModel = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.OrientationOf2DPlane);
-    ;
+    
     args.push(this.LoadedBy);
-    ;
+    
     args.push(this.HasResults);
-    ;
+    
     args.push(this.SharedPlacement);
-    ;
+    
     return args;
   }
 };
@@ -38831,21 +38831,21 @@ var IfcStructuralConnection = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedCondition);
-    ;
+    
     return args;
   }
 };
@@ -38863,7 +38863,7 @@ var IfcStructuralConnectionCondition = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -38903,29 +38903,29 @@ var IfcStructuralCurveAction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.DestabilizingLoad);
-    ;
+    
     args.push(this.ProjectedOrTrue);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -38959,23 +38959,23 @@ var IfcStructuralCurveConnection = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedCondition);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     return args;
   }
 };
@@ -39009,23 +39009,23 @@ var IfcStructuralCurveMember = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     return args;
   }
 };
@@ -39059,23 +39059,23 @@ var IfcStructuralCurveMemberVarying = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Axis);
-    ;
+    
     return args;
   }
 };
@@ -39111,25 +39111,25 @@ var IfcStructuralCurveReaction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -39159,19 +39159,19 @@ var IfcStructuralItem = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     return args;
   }
 };
@@ -39211,29 +39211,29 @@ var IfcStructuralLinearAction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.DestabilizingLoad);
-    ;
+    
     args.push(this.ProjectedOrTrue);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -39251,7 +39251,7 @@ var IfcStructuralLoad = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -39289,27 +39289,27 @@ var IfcStructuralLoadCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.ActionType);
-    ;
+    
     args.push(this.ActionSource);
-    ;
+    
     args.push(this.Coefficient);
-    ;
+    
     args.push(this.Purpose);
-    ;
+    
     args.push(this.SelfWeightCoefficients);
-    ;
+    
     return args;
   }
 };
@@ -39331,11 +39331,11 @@ var IfcStructuralLoadConfiguration = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Values);
-    ;
+    
     args.push(this.Locations);
-    ;
+    
     return args;
   }
 };
@@ -39371,25 +39371,25 @@ var IfcStructuralLoadGroup = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.ActionType);
-    ;
+    
     args.push(this.ActionSource);
-    ;
+    
     args.push(this.Coefficient);
-    ;
+    
     args.push(this.Purpose);
-    ;
+    
     return args;
   }
 };
@@ -39419,19 +39419,19 @@ var IfcStructuralLoadLinearForce = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.LinearForceX);
-    ;
+    
     args.push(this.LinearForceY);
-    ;
+    
     args.push(this.LinearForceZ);
-    ;
+    
     args.push(this.LinearMomentX);
-    ;
+    
     args.push(this.LinearMomentY);
-    ;
+    
     args.push(this.LinearMomentZ);
-    ;
+    
     return args;
   }
 };
@@ -39449,7 +39449,7 @@ var IfcStructuralLoadOrResult = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -39473,13 +39473,13 @@ var IfcStructuralLoadPlanarForce = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.PlanarForceX);
-    ;
+    
     args.push(this.PlanarForceY);
-    ;
+    
     args.push(this.PlanarForceZ);
-    ;
+    
     return args;
   }
 };
@@ -39509,19 +39509,19 @@ var IfcStructuralLoadSingleDisplacement = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DisplacementX);
-    ;
+    
     args.push(this.DisplacementY);
-    ;
+    
     args.push(this.DisplacementZ);
-    ;
+    
     args.push(this.RotationalDisplacementRX);
-    ;
+    
     args.push(this.RotationalDisplacementRY);
-    ;
+    
     args.push(this.RotationalDisplacementRZ);
-    ;
+    
     return args;
   }
 };
@@ -39553,21 +39553,21 @@ var IfcStructuralLoadSingleDisplacementDistortion = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DisplacementX);
-    ;
+    
     args.push(this.DisplacementY);
-    ;
+    
     args.push(this.DisplacementZ);
-    ;
+    
     args.push(this.RotationalDisplacementRX);
-    ;
+    
     args.push(this.RotationalDisplacementRY);
-    ;
+    
     args.push(this.RotationalDisplacementRZ);
-    ;
+    
     args.push(this.Distortion);
-    ;
+    
     return args;
   }
 };
@@ -39597,19 +39597,19 @@ var IfcStructuralLoadSingleForce = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.ForceX);
-    ;
+    
     args.push(this.ForceY);
-    ;
+    
     args.push(this.ForceZ);
-    ;
+    
     args.push(this.MomentX);
-    ;
+    
     args.push(this.MomentY);
-    ;
+    
     args.push(this.MomentZ);
-    ;
+    
     return args;
   }
 };
@@ -39641,21 +39641,21 @@ var IfcStructuralLoadSingleForceWarping = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.ForceX);
-    ;
+    
     args.push(this.ForceY);
-    ;
+    
     args.push(this.ForceZ);
-    ;
+    
     args.push(this.MomentX);
-    ;
+    
     args.push(this.MomentY);
-    ;
+    
     args.push(this.MomentZ);
-    ;
+    
     args.push(this.WarpingMoment);
-    ;
+    
     return args;
   }
 };
@@ -39673,7 +39673,7 @@ var IfcStructuralLoadStatic = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -39697,13 +39697,13 @@ var IfcStructuralLoadTemperature = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DeltaTConstant);
-    ;
+    
     args.push(this.DeltaTY);
-    ;
+    
     args.push(this.DeltaTZ);
-    ;
+    
     return args;
   }
 };
@@ -39733,19 +39733,19 @@ var IfcStructuralMember = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     return args;
   }
 };
@@ -39785,29 +39785,29 @@ var IfcStructuralPlanarAction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.DestabilizingLoad);
-    ;
+    
     args.push(this.ProjectedOrTrue);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -39843,25 +39843,25 @@ var IfcStructuralPointAction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.DestabilizingLoad);
-    ;
+    
     return args;
   }
 };
@@ -39895,23 +39895,23 @@ var IfcStructuralPointConnection = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedCondition);
-    ;
+    
     args.push(this.ConditionCoordinateSystem);
-    ;
+    
     return args;
   }
 };
@@ -39945,23 +39945,23 @@ var IfcStructuralPointReaction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     return args;
   }
 };
@@ -39995,23 +39995,23 @@ var IfcStructuralReaction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     return args;
   }
 };
@@ -40043,21 +40043,21 @@ var IfcStructuralResultGroup = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.TheoryType);
-    ;
+    
     args.push(this.ResultForLoadGroup);
-    ;
+    
     args.push(this.IsLinear);
-    ;
+    
     return args;
   }
 };
@@ -40097,29 +40097,29 @@ var IfcStructuralSurfaceAction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.DestabilizingLoad);
-    ;
+    
     args.push(this.ProjectedOrTrue);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -40151,21 +40151,21 @@ var IfcStructuralSurfaceConnection = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedCondition);
-    ;
+    
     return args;
   }
 };
@@ -40199,23 +40199,23 @@ var IfcStructuralSurfaceMember = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Thickness);
-    ;
+    
     return args;
   }
 };
@@ -40249,23 +40249,23 @@ var IfcStructuralSurfaceMemberVarying = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.Thickness);
-    ;
+    
     return args;
   }
 };
@@ -40301,25 +40301,25 @@ var IfcStructuralSurfaceReaction = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.AppliedLoad);
-    ;
+    
     args.push(this.GlobalOrLocal);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -40343,13 +40343,13 @@ var IfcStyleModel = class {
   ToTape() {
     let args = [];
     args.push(this.ContextOfItems);
-    ;
+    
     args.push(this.RepresentationIdentifier);
-    ;
+    
     args.push(this.RepresentationType);
-    ;
+    
     args.push(this.Items);
-    ;
+    
     return args;
   }
 };
@@ -40371,11 +40371,11 @@ var IfcStyledItem = class {
   ToTape() {
     let args = [];
     args.push(this.Item);
-    ;
+    
     args.push(this.Styles);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     return args;
   }
 };
@@ -40399,13 +40399,13 @@ var IfcStyledRepresentation = class {
   ToTape() {
     let args = [];
     args.push(this.ContextOfItems);
-    ;
+    
     args.push(this.RepresentationIdentifier);
-    ;
+    
     args.push(this.RepresentationType);
-    ;
+    
     args.push(this.Items);
-    ;
+    
     return args;
   }
 };
@@ -40443,27 +40443,27 @@ var IfcSubContractResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Usage);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -40503,29 +40503,29 @@ var IfcSubContractResourceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     args.push(this.BaseCosts);
-    ;
+    
     args.push(this.BaseQuantity);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -40547,11 +40547,11 @@ var IfcSubedge = class {
   ToTape() {
     let args = [];
     args.push(this.EdgeStart);
-    ;
+    
     args.push(this.EdgeEnd);
-    ;
+    
     args.push(this.ParentEdge);
-    ;
+    
     return args;
   }
 };
@@ -40587,11 +40587,11 @@ var IfcSurfaceCurve = class {
   ToTape() {
     let args = [];
     args.push(this.Curve3D);
-    ;
+    
     args.push(this.AssociatedGeometry);
-    ;
+    
     args.push(this.MasterRepresentation);
-    ;
+    
     return args;
   }
 };
@@ -40619,17 +40619,17 @@ var IfcSurfaceCurveSweptAreaSolid = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Directrix);
-    ;
+    
     args.push(this.StartParam);
-    ;
+    
     args.push(this.EndParam);
-    ;
+    
     args.push(this.ReferenceSurface);
-    ;
+    
     return args;
   }
 };
@@ -40663,23 +40663,23 @@ var IfcSurfaceFeature = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -40703,13 +40703,13 @@ var IfcSurfaceOfLinearExtrusion = class {
   ToTape() {
     let args = [];
     args.push(this.SweptCurve);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.ExtrudedDirection);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     return args;
   }
 };
@@ -40731,11 +40731,11 @@ var IfcSurfaceOfRevolution = class {
   ToTape() {
     let args = [];
     args.push(this.SweptCurve);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.AxisPosition);
-    ;
+    
     return args;
   }
 };
@@ -40759,13 +40759,13 @@ var IfcSurfaceReinforcementArea = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.SurfaceReinforcement1);
-    ;
+    
     args.push(this.SurfaceReinforcement2);
-    ;
+    
     args.push(this.ShearReinforcement);
-    ;
+    
     return args;
   }
 };
@@ -40787,11 +40787,11 @@ var IfcSurfaceStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Side);
-    ;
+    
     args.push(this.Styles);
-    ;
+    
     return args;
   }
 };
@@ -40815,13 +40815,13 @@ var IfcSurfaceStyleLighting = class {
   ToTape() {
     let args = [];
     args.push(this.DiffuseTransmissionColour);
-    ;
+    
     args.push(this.DiffuseReflectionColour);
-    ;
+    
     args.push(this.TransmissionColour);
-    ;
+    
     args.push(this.ReflectanceColour);
-    ;
+    
     return args;
   }
 };
@@ -40841,9 +40841,9 @@ var IfcSurfaceStyleRefraction = class {
   ToTape() {
     let args = [];
     args.push(this.RefractionIndex);
-    ;
+    
     args.push(this.DispersionFactor);
-    ;
+    
     return args;
   }
 };
@@ -40877,23 +40877,23 @@ var IfcSurfaceStyleRendering = class {
   ToTape() {
     let args = [];
     args.push(this.SurfaceColour);
-    ;
+    
     args.push(this.Transparency);
-    ;
+    
     args.push(this.DiffuseColour);
-    ;
+    
     args.push(this.TransmissionColour);
-    ;
+    
     args.push(this.DiffuseTransmissionColour);
-    ;
+    
     args.push(this.ReflectionColour);
-    ;
+    
     args.push(this.SpecularColour);
-    ;
+    
     args.push(this.SpecularHighlight);
-    ;
+    
     args.push(this.ReflectanceMethod);
-    ;
+    
     return args;
   }
 };
@@ -40913,9 +40913,9 @@ var IfcSurfaceStyleShading = class {
   ToTape() {
     let args = [];
     args.push(this.SurfaceColour);
-    ;
+    
     args.push(this.Transparency);
-    ;
+    
     return args;
   }
 };
@@ -40933,7 +40933,7 @@ var IfcSurfaceStyleWithTextures = class {
   ToTape() {
     let args = [];
     args.push(this.Textures);
-    ;
+    
     return args;
   }
 };
@@ -40959,15 +40959,15 @@ var IfcSurfaceTexture = class {
   ToTape() {
     let args = [];
     args.push(this.RepeatS);
-    ;
+    
     args.push(this.RepeatT);
-    ;
+    
     args.push(this.Mode);
-    ;
+    
     args.push(this.TextureTransform);
-    ;
+    
     args.push(this.Parameter);
-    ;
+    
     return args;
   }
 };
@@ -40987,9 +40987,9 @@ var IfcSweptAreaSolid = class {
   ToTape() {
     let args = [];
     args.push(this.SweptArea);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -41015,15 +41015,15 @@ var IfcSweptDiskSolid = class {
   ToTape() {
     let args = [];
     args.push(this.Directrix);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.InnerRadius);
-    ;
+    
     args.push(this.StartParam);
-    ;
+    
     args.push(this.EndParam);
-    ;
+    
     return args;
   }
 };
@@ -41051,17 +41051,17 @@ var IfcSweptDiskSolidPolygonal = class {
   ToTape() {
     let args = [];
     args.push(this.Directrix);
-    ;
+    
     args.push(this.Radius);
-    ;
+    
     args.push(this.InnerRadius);
-    ;
+    
     args.push(this.StartParam);
-    ;
+    
     args.push(this.EndParam);
-    ;
+    
     args.push(this.FilletRadius);
-    ;
+    
     return args;
   }
 };
@@ -41081,9 +41081,9 @@ var IfcSweptSurface = class {
   ToTape() {
     let args = [];
     args.push(this.SweptCurve);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     return args;
   }
 };
@@ -41117,23 +41117,23 @@ var IfcSwitchingDevice = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41169,25 +41169,25 @@ var IfcSwitchingDeviceType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41213,15 +41213,15 @@ var IfcSystem = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     return args;
   }
 };
@@ -41255,23 +41255,23 @@ var IfcSystemFurnitureElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41307,25 +41307,25 @@ var IfcSystemFurnitureElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41365,29 +41365,29 @@ var IfcTShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     args.push(this.FlangeWidth);
-    ;
+    
     args.push(this.WebThickness);
-    ;
+    
     args.push(this.FlangeThickness);
-    ;
+    
     args.push(this.FilletRadius);
-    ;
+    
     args.push(this.FlangeEdgeRadius);
-    ;
+    
     args.push(this.WebEdgeRadius);
-    ;
+    
     args.push(this.WebSlope);
-    ;
+    
     args.push(this.FlangeSlope);
-    ;
+    
     return args;
   }
 };
@@ -41409,11 +41409,11 @@ var IfcTable = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Rows);
-    ;
+    
     args.push(this.Columns);
-    ;
+    
     return args;
   }
 };
@@ -41439,15 +41439,15 @@ var IfcTableColumn = class {
   ToTape() {
     let args = [];
     args.push(this.Identifier);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     args.push(this.ReferencePath);
-    ;
+    
     return args;
   }
 };
@@ -41467,9 +41467,9 @@ var IfcTableRow = class {
   ToTape() {
     let args = [];
     args.push(this.RowCells);
-    ;
+    
     args.push(this.IsHeading);
-    ;
+    
     return args;
   }
 };
@@ -41503,23 +41503,23 @@ var IfcTank = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41555,25 +41555,25 @@ var IfcTankType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41615,31 +41615,31 @@ var IfcTask = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.Status);
-    ;
+    
     args.push(this.WorkMethod);
-    ;
+    
     args.push(this.IsMilestone);
-    ;
+    
     args.push(this.Priority);
-    ;
+    
     args.push(this.TaskTime);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -41695,45 +41695,45 @@ var IfcTaskTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.DurationType);
-    ;
+    
     args.push(this.ScheduleDuration);
-    ;
+    
     args.push(this.ScheduleStart);
-    ;
+    
     args.push(this.ScheduleFinish);
-    ;
+    
     args.push(this.EarlyStart);
-    ;
+    
     args.push(this.EarlyFinish);
-    ;
+    
     args.push(this.LateStart);
-    ;
+    
     args.push(this.LateFinish);
-    ;
+    
     args.push(this.FreeFloat);
-    ;
+    
     args.push(this.TotalFloat);
-    ;
+    
     args.push(this.IsCritical);
-    ;
+    
     args.push(this.StatusTime);
-    ;
+    
     args.push(this.ActualDuration);
-    ;
+    
     args.push(this.ActualStart);
-    ;
+    
     args.push(this.ActualFinish);
-    ;
+    
     args.push(this.RemainingTime);
-    ;
+    
     args.push(this.Completion);
-    ;
+    
     return args;
   }
 };
@@ -41791,47 +41791,47 @@ var IfcTaskTimeRecurring = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.DurationType);
-    ;
+    
     args.push(this.ScheduleDuration);
-    ;
+    
     args.push(this.ScheduleStart);
-    ;
+    
     args.push(this.ScheduleFinish);
-    ;
+    
     args.push(this.EarlyStart);
-    ;
+    
     args.push(this.EarlyFinish);
-    ;
+    
     args.push(this.LateStart);
-    ;
+    
     args.push(this.LateFinish);
-    ;
+    
     args.push(this.FreeFloat);
-    ;
+    
     args.push(this.TotalFloat);
-    ;
+    
     args.push(this.IsCritical);
-    ;
+    
     args.push(this.StatusTime);
-    ;
+    
     args.push(this.ActualDuration);
-    ;
+    
     args.push(this.ActualStart);
-    ;
+    
     args.push(this.ActualFinish);
-    ;
+    
     args.push(this.RemainingTime);
-    ;
+    
     args.push(this.Completion);
-    ;
+    
     args.push(this.Recurrence);
-    ;
+    
     return args;
   }
 };
@@ -41869,27 +41869,27 @@ var IfcTaskType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ProcessType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.WorkMethod);
-    ;
+    
     return args;
   }
 };
@@ -41923,23 +41923,23 @@ var IfcTelecomAddress = class {
   ToTape() {
     let args = [];
     args.push(this.Purpose);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.UserDefinedPurpose);
-    ;
+    
     args.push(this.TelephoneNumbers);
-    ;
+    
     args.push(this.FacsimileNumbers);
-    ;
+    
     args.push(this.PagerNumber);
-    ;
+    
     args.push(this.ElectronicMailAddresses);
-    ;
+    
     args.push(this.WWWHomePageURL);
-    ;
+    
     args.push(this.MessagingIDs);
-    ;
+    
     return args;
   }
 };
@@ -41989,39 +41989,39 @@ var IfcTendon = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.NominalDiameter);
-    ;
+    
     args.push(this.CrossSectionArea);
-    ;
+    
     args.push(this.TensionForce);
-    ;
+    
     args.push(this.PreStress);
-    ;
+    
     args.push(this.FrictionCoefficient);
-    ;
+    
     args.push(this.AnchorageSlip);
-    ;
+    
     args.push(this.MinCurvatureRadius);
-    ;
+    
     return args;
   }
 };
@@ -42057,25 +42057,25 @@ var IfcTendonAnchor = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -42111,25 +42111,25 @@ var IfcTendonAnchorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -42165,25 +42165,25 @@ var IfcTendonConduit = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.SteelGrade);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -42219,25 +42219,25 @@ var IfcTendonConduitType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -42279,31 +42279,31 @@ var IfcTendonType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.NominalDiameter);
-    ;
+    
     args.push(this.CrossSectionArea);
-    ;
+    
     args.push(this.SheathDiameter);
-    ;
+    
     return args;
   }
 };
@@ -42321,7 +42321,7 @@ var IfcTessellatedFaceSet = class {
   ToTape() {
     let args = [];
     args.push(this.Coordinates);
-    ;
+    
     return args;
   }
 };
@@ -42357,11 +42357,11 @@ var IfcTextLiteral = class {
   ToTape() {
     let args = [];
     args.push(this.Literal);
-    ;
+    
     args.push(this.Placement);
-    ;
+    
     args.push(this.Path);
-    ;
+    
     return args;
   }
 };
@@ -42387,15 +42387,15 @@ var IfcTextLiteralWithExtent = class {
   ToTape() {
     let args = [];
     args.push(this.Literal);
-    ;
+    
     args.push(this.Placement);
-    ;
+    
     args.push(this.Path);
-    ;
+    
     args.push(this.Extent);
-    ;
+    
     args.push(this.BoxAlignment);
-    ;
+    
     return args;
   }
 };
@@ -42421,15 +42421,15 @@ var IfcTextStyle = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.TextCharacterAppearance);
-    ;
+    
     args.push(this.TextStyle);
-    ;
+    
     args.push(this.TextFontStyle);
-    ;
+    
     args.push(this.ModelOrDraughting);
-    ;
+    
     return args;
   }
 };
@@ -42457,17 +42457,17 @@ var IfcTextStyleFontModel = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.FontFamily);
-    ;
+    
     args.push(this.FontStyle);
-    ;
+    
     args.push(this.FontVariant);
-    ;
+    
     args.push(this.FontWeight);
-    ;
+    
     args.push(this.FontSize);
-    ;
+    
     return args;
   }
 };
@@ -42487,9 +42487,9 @@ var IfcTextStyleForDefinedFont = class {
   ToTape() {
     let args = [];
     args.push(this.Colour);
-    ;
+    
     args.push(this.BackgroundColour);
-    ;
+    
     return args;
   }
 };
@@ -42519,19 +42519,19 @@ var IfcTextStyleTextModel = class {
   ToTape() {
     let args = [];
     args.push(this.TextIndent);
-    ;
+    
     args.push(this.TextAlign);
-    ;
+    
     args.push(this.TextDecoration);
-    ;
+    
     args.push(this.LetterSpacing);
-    ;
+    
     args.push(this.WordSpacing);
-    ;
+    
     args.push(this.TextTransform);
-    ;
+    
     args.push(this.LineHeight);
-    ;
+    
     return args;
   }
 };
@@ -42549,7 +42549,7 @@ var IfcTextureCoordinate = class {
   ToTape() {
     let args = [];
     args.push(this.Maps);
-    ;
+    
     return args;
   }
 };
@@ -42571,11 +42571,11 @@ var IfcTextureCoordinateGenerator = class {
   ToTape() {
     let args = [];
     args.push(this.Maps);
-    ;
+    
     args.push(this.Mode);
-    ;
+    
     args.push(this.Parameter);
-    ;
+    
     return args;
   }
 };
@@ -42597,11 +42597,11 @@ var IfcTextureMap = class {
   ToTape() {
     let args = [];
     args.push(this.Maps);
-    ;
+    
     args.push(this.Vertices);
-    ;
+    
     args.push(this.MappedTo);
-    ;
+    
     return args;
   }
 };
@@ -42619,7 +42619,7 @@ var IfcTextureVertex = class {
   ToTape() {
     let args = [];
     args.push(this.Coordinates);
-    ;
+    
     return args;
   }
 };
@@ -42637,7 +42637,7 @@ var IfcTextureVertexList = class {
   ToTape() {
     let args = [];
     args.push(this.TexCoordsList);
-    ;
+    
     return args;
   }
 };
@@ -42657,9 +42657,9 @@ var IfcTimePeriod = class {
   ToTape() {
     let args = [];
     args.push(this.StartTime);
-    ;
+    
     args.push(this.EndTime);
-    ;
+    
     return args;
   }
 };
@@ -42691,21 +42691,21 @@ var IfcTimeSeries = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.StartTime);
-    ;
+    
     args.push(this.EndTime);
-    ;
+    
     args.push(this.TimeSeriesDataType);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.Unit);
-    ;
+    
     return args;
   }
 };
@@ -42723,7 +42723,7 @@ var IfcTimeSeriesValue = class {
   ToTape() {
     let args = [];
     args.push(this.ListValues);
-    ;
+    
     return args;
   }
 };
@@ -42761,13 +42761,13 @@ var IfcTopologyRepresentation = class {
   ToTape() {
     let args = [];
     args.push(this.ContextOfItems);
-    ;
+    
     args.push(this.RepresentationIdentifier);
-    ;
+    
     args.push(this.RepresentationType);
-    ;
+    
     args.push(this.Items);
-    ;
+    
     return args;
   }
 };
@@ -42789,11 +42789,11 @@ var IfcToroidalSurface = class {
   ToTape() {
     let args = [];
     args.push(this.Position);
-    ;
+    
     args.push(this.MajorRadius);
-    ;
+    
     args.push(this.MinorRadius);
-    ;
+    
     return args;
   }
 };
@@ -42827,23 +42827,23 @@ var IfcTransformer = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -42879,25 +42879,25 @@ var IfcTransformerType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -42929,21 +42929,21 @@ var IfcTransitionCurveSegment2D = class {
   ToTape() {
     let args = [];
     args.push(this.StartPoint);
-    ;
+    
     args.push(this.StartDirection);
-    ;
+    
     args.push(this.SegmentLength);
-    ;
+    
     args.push(this.StartRadius);
-    ;
+    
     args.push(this.EndRadius);
-    ;
+    
     args.push(this.IsStartRadiusCCW);
-    ;
+    
     args.push(this.IsEndRadiusCCW);
-    ;
+    
     args.push(this.TransitionCurveType);
-    ;
+    
     return args;
   }
 };
@@ -42977,23 +42977,23 @@ var IfcTransportElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43029,25 +43029,25 @@ var IfcTransportElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43077,19 +43077,19 @@ var IfcTrapeziumProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.BottomXDim);
-    ;
+    
     args.push(this.TopXDim);
-    ;
+    
     args.push(this.YDim);
-    ;
+    
     args.push(this.TopXOffset);
-    ;
+    
     return args;
   }
 };
@@ -43115,15 +43115,15 @@ var IfcTriangulatedFaceSet = class {
   ToTape() {
     let args = [];
     args.push(this.Coordinates);
-    ;
+    
     args.push(this.Normals);
-    ;
+    
     args.push(this.Closed);
-    ;
+    
     args.push(this.CoordIndex);
-    ;
+    
     args.push(this.PnIndex);
-    ;
+    
     return args;
   }
 };
@@ -43151,17 +43151,17 @@ var IfcTriangulatedIrregularNetwork = class {
   ToTape() {
     let args = [];
     args.push(this.Coordinates);
-    ;
+    
     args.push(this.Normals);
-    ;
+    
     args.push(this.Closed);
-    ;
+    
     args.push(this.CoordIndex);
-    ;
+    
     args.push(this.PnIndex);
-    ;
+    
     args.push(this.Flags);
-    ;
+    
     return args;
   }
 };
@@ -43187,15 +43187,15 @@ var IfcTrimmedCurve = class {
   ToTape() {
     let args = [];
     args.push(this.BasisCurve);
-    ;
+    
     args.push(this.Trim1);
-    ;
+    
     args.push(this.Trim2);
-    ;
+    
     args.push(this.SenseAgreement);
-    ;
+    
     args.push(this.MasterRepresentation);
-    ;
+    
     return args;
   }
 };
@@ -43229,23 +43229,23 @@ var IfcTubeBundle = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43281,25 +43281,25 @@ var IfcTubeBundleType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43327,17 +43327,17 @@ var IfcTypeObject = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     return args;
   }
 };
@@ -43371,23 +43371,23 @@ var IfcTypeProcess = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ProcessType);
-    ;
+    
     return args;
   }
 };
@@ -43419,21 +43419,21 @@ var IfcTypeProduct = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -43467,23 +43467,23 @@ var IfcTypeResource = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.LongDescription);
-    ;
+    
     args.push(this.ResourceType);
-    ;
+    
     return args;
   }
 };
@@ -43519,25 +43519,25 @@ var IfcUShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     args.push(this.FlangeWidth);
-    ;
+    
     args.push(this.WebThickness);
-    ;
+    
     args.push(this.FlangeThickness);
-    ;
+    
     args.push(this.FilletRadius);
-    ;
+    
     args.push(this.EdgeRadius);
-    ;
+    
     args.push(this.FlangeSlope);
-    ;
+    
     return args;
   }
 };
@@ -43555,7 +43555,7 @@ var IfcUnitAssignment = class {
   ToTape() {
     let args = [];
     args.push(this.Units);
-    ;
+    
     return args;
   }
 };
@@ -43589,23 +43589,23 @@ var IfcUnitaryControlElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43641,25 +43641,25 @@ var IfcUnitaryControlElementType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43693,23 +43693,23 @@ var IfcUnitaryEquipment = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43745,25 +43745,25 @@ var IfcUnitaryEquipmentType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43797,23 +43797,23 @@ var IfcValve = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43849,25 +43849,25 @@ var IfcValveType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -43887,9 +43887,9 @@ var IfcVector = class {
   ToTape() {
     let args = [];
     args.push(this.Orientation);
-    ;
+    
     args.push(this.Magnitude);
-    ;
+    
     return args;
   }
 };
@@ -43921,7 +43921,7 @@ var IfcVertexLoop = class {
   ToTape() {
     let args = [];
     args.push(this.LoopVertex);
-    ;
+    
     return args;
   }
 };
@@ -43939,7 +43939,7 @@ var IfcVertexPoint = class {
   ToTape() {
     let args = [];
     args.push(this.VertexGeometry);
-    ;
+    
     return args;
   }
 };
@@ -43973,23 +43973,23 @@ var IfcVibrationDamper = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44025,25 +44025,25 @@ var IfcVibrationDamperType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44077,23 +44077,23 @@ var IfcVibrationIsolator = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44129,25 +44129,25 @@ var IfcVibrationIsolatorType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44179,21 +44179,21 @@ var IfcVirtualElement = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     return args;
   }
 };
@@ -44213,9 +44213,9 @@ var IfcVirtualGridIntersection = class {
   ToTape() {
     let args = [];
     args.push(this.IntersectingAxes);
-    ;
+    
     args.push(this.OffsetDistances);
-    ;
+    
     return args;
   }
 };
@@ -44249,23 +44249,23 @@ var IfcVoidingFeature = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44299,23 +44299,23 @@ var IfcWall = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44349,23 +44349,23 @@ var IfcWallElementedCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44399,23 +44399,23 @@ var IfcWallStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44451,25 +44451,25 @@ var IfcWallType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44503,23 +44503,23 @@ var IfcWasteTerminal = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44555,25 +44555,25 @@ var IfcWasteTerminalType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -44615,31 +44615,31 @@ var IfcWindow = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.OverallHeight);
-    ;
+    
     args.push(this.OverallWidth);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.PartitioningType);
-    ;
+    
     args.push(this.UserDefinedPartitioningType);
-    ;
+    
     return args;
   }
 };
@@ -44687,37 +44687,37 @@ var IfcWindowLiningProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.LiningDepth);
-    ;
+    
     args.push(this.LiningThickness);
-    ;
+    
     args.push(this.TransomThickness);
-    ;
+    
     args.push(this.MullionThickness);
-    ;
+    
     args.push(this.FirstTransomOffset);
-    ;
+    
     args.push(this.SecondTransomOffset);
-    ;
+    
     args.push(this.FirstMullionOffset);
-    ;
+    
     args.push(this.SecondMullionOffset);
-    ;
+    
     args.push(this.ShapeAspectStyle);
-    ;
+    
     args.push(this.LiningOffset);
-    ;
+    
     args.push(this.LiningToPanelOffsetX);
-    ;
+    
     args.push(this.LiningToPanelOffsetY);
-    ;
+    
     return args;
   }
 };
@@ -44751,23 +44751,23 @@ var IfcWindowPanelProperties = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.PanelPosition);
-    ;
+    
     args.push(this.FrameDepth);
-    ;
+    
     args.push(this.FrameThickness);
-    ;
+    
     args.push(this.ShapeAspectStyle);
-    ;
+    
     return args;
   }
 };
@@ -44809,31 +44809,31 @@ var IfcWindowStandardCase = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.ObjectPlacement);
-    ;
+    
     args.push(this.Representation);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.OverallHeight);
-    ;
+    
     args.push(this.OverallWidth);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.PartitioningType);
-    ;
+    
     args.push(this.UserDefinedPartitioningType);
-    ;
+    
     return args;
   }
 };
@@ -44873,29 +44873,29 @@ var IfcWindowStyle = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ConstructionType);
-    ;
+    
     args.push(this.OperationType);
-    ;
+    
     args.push(this.ParameterTakesPrecedence);
-    ;
+    
     args.push(this.Sizeable);
-    ;
+    
     return args;
   }
 };
@@ -44937,31 +44937,31 @@ var IfcWindowType = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ApplicableOccurrence);
-    ;
+    
     args.push(this.HasPropertySets);
-    ;
+    
     args.push(this.RepresentationMaps);
-    ;
+    
     args.push(this.Tag);
-    ;
+    
     args.push(this.ElementType);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     args.push(this.PartitioningType);
-    ;
+    
     args.push(this.ParameterTakesPrecedence);
-    ;
+    
     args.push(this.UserDefinedPartitioningType);
-    ;
+    
     return args;
   }
 };
@@ -44995,23 +44995,23 @@ var IfcWorkCalendar = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.WorkingTimes);
-    ;
+    
     args.push(this.ExceptionTimes);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -45053,31 +45053,31 @@ var IfcWorkControl = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.CreationDate);
-    ;
+    
     args.push(this.Creators);
-    ;
+    
     args.push(this.Purpose);
-    ;
+    
     args.push(this.Duration);
-    ;
+    
     args.push(this.TotalFloat);
-    ;
+    
     args.push(this.StartTime);
-    ;
+    
     args.push(this.FinishTime);
-    ;
+    
     return args;
   }
 };
@@ -45121,33 +45121,33 @@ var IfcWorkPlan = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.CreationDate);
-    ;
+    
     args.push(this.Creators);
-    ;
+    
     args.push(this.Purpose);
-    ;
+    
     args.push(this.Duration);
-    ;
+    
     args.push(this.TotalFloat);
-    ;
+    
     args.push(this.StartTime);
-    ;
+    
     args.push(this.FinishTime);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -45191,33 +45191,33 @@ var IfcWorkSchedule = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.Identification);
-    ;
+    
     args.push(this.CreationDate);
-    ;
+    
     args.push(this.Creators);
-    ;
+    
     args.push(this.Purpose);
-    ;
+    
     args.push(this.Duration);
-    ;
+    
     args.push(this.TotalFloat);
-    ;
+    
     args.push(this.StartTime);
-    ;
+    
     args.push(this.FinishTime);
-    ;
+    
     args.push(this.PredefinedType);
-    ;
+    
     return args;
   }
 };
@@ -45245,17 +45245,17 @@ var IfcWorkTime = class {
   ToTape() {
     let args = [];
     args.push(this.Name);
-    ;
+    
     args.push(this.DataOrigin);
-    ;
+    
     args.push(this.UserDefinedDataOrigin);
-    ;
+    
     args.push(this.RecurrencePattern);
-    ;
+    
     args.push(this.Start);
-    ;
+    
     args.push(this.Finish);
-    ;
+    
     return args;
   }
 };
@@ -45289,23 +45289,23 @@ var IfcZShapeProfileDef = class {
   ToTape() {
     let args = [];
     args.push(this.ProfileType);
-    ;
+    
     args.push(this.ProfileName);
-    ;
+    
     args.push(this.Position);
-    ;
+    
     args.push(this.Depth);
-    ;
+    
     args.push(this.FlangeWidth);
-    ;
+    
     args.push(this.WebThickness);
-    ;
+    
     args.push(this.FlangeThickness);
-    ;
+    
     args.push(this.FilletRadius);
-    ;
+    
     args.push(this.EdgeRadius);
-    ;
+    
     return args;
   }
 };
@@ -45333,17 +45333,17 @@ var IfcZone = class {
   ToTape() {
     let args = [];
     args.push(this.GlobalId);
-    ;
+    
     args.push(this.OwnerHistory);
-    ;
+    
     args.push(this.Name);
-    ;
+    
     args.push(this.Description);
-    ;
+    
     args.push(this.ObjectType);
-    ;
+    
     args.push(this.LongName);
-    ;
+    
     return args;
   }
 };
