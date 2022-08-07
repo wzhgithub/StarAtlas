@@ -172,8 +172,11 @@ func handleMsg(conn net.Conn, data []byte) {
 			glog.Errorf("go handle tcp Msg error: %v\n", err)
 		}
 	}()
+	l := binary.BigEndian.Uint32(data[0:4])
+	glog.Infof("received start:%d end:%d\n", 4, 4+l)
+	msgData := data[4 : 4+l]
 	msg := &pb.Msg{}
-	err := proto.Unmarshal(data, msg)
+	err := proto.Unmarshal(msgData, msg)
 	if err != nil {
 		glog.Errorf("go Unmarshal tcp Msg error: %v\n", err)
 		return
