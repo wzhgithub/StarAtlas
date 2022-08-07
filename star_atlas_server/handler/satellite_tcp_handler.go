@@ -138,7 +138,7 @@ func ApiShowPicture(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(500, model.NewCommonResponseFail(err))
 		return
-	}	
+	}
 	ctx.JSON(200, model.NewCommonResponseSucc("ApiShowPicture success"))
 }
 
@@ -154,6 +154,34 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 		glog.Errorf("Failed to accept connection: %v err: %v\n", l.Addr().String(), err)
 	}
 	glog.Infof("Connected to %s", conn.LocalAddr().String())
+	for {
+		data := make([]byte, 4096*1000)
+		n, err := conn.Read(data)
+		if err != nil {
+			glog.Errorf("Error reading %s: %v\n", conn.LocalAddr().String(), err)
+			continue
+		}
+		data = data[:n]
+		go handleMsg(conn, data)
+	}
+}
+
+func handleMsg(conn net.Conn, data []byte) {
+	defer func() {
+		if err := recover(); err != nil {
+			glog.Errorf("go handle tcp Msg error: %v\n", err)
+		}
+	}()
+	l := binary.BigEndian.Uint32(data[0:4])
+	glog.Infof("received start:%d end:%d\n", 4, 4+l)
+	msgData := data[4 : 4+l]
+	msg := &pb.Msg{}
+	err := proto.Unmarshal(msgData, msg)
+	if err != nil {
+		glog.Errorf("go Unmarshal tcp Msg error: %v\n", err)
+		return
+	}
+	glog.Infof("go Unmarshal tcp Msg: %v\n", msg)
 }
 
 func sendMsg(conn net.Conn, msgType pb.MsgType, msg proto.Message) error {

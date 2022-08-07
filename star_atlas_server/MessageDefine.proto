@@ -6,6 +6,8 @@ enum MsgType {
     ApiOrbitCoordinate = 1;
     ApiMarkerCoordinates = 2;
     ApiShowPicture = 3;
+    ApiKeyboard = 4;
+    ApiSpeech = 5;
 }
 
 message Msg {
@@ -33,5 +35,9 @@ message MarkerCoordinates {
 }
 
 message ShowPicture {
+    string Name = 1;
+}
+
+message Key {
     string Name = 1;
 }
