@@ -259,7 +259,6 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	if err != nil {
 		glog.Infof("[CreateOp] Cannot find, create a new topo_table")
 	}
-	// glog.Infof("[CreateOp] find return: %+v", t)
 	glog.Infof("[CreateOp] topo id = %s", t.Id)
 	if t.Id == "" {
 		glog.Infof("[CreateOp] new topoTable")

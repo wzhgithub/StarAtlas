@@ -568,7 +568,7 @@ func (vmc_data *VMCData) CreateData() error {
 		return fmt.Errorf("CountDocuments error")
 	}
 
-	if count > cMAX_DOCUMENT_NUM {
+	if count >= cMAX_DOCUMENT_NUM {
 		return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Update(vmc_data)
 	}
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
