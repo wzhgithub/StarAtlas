@@ -321,7 +321,7 @@ export default {
       node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
       node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
-      node.nodesType = nodesType;
+      node.nodesType = "sw";
       return node;
     },
     createEdgeForAngle(graph, a, b, angle) {
