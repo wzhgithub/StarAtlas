@@ -263,9 +263,18 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	if t.Id == "" {
 		glog.Infof("[CreateOp] new topoTable")
 		t = NewTopoTable(v, true)
+		glog.Infof("[CreateOp] new topo: %+v", t)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 	}
-	t.Node = append(t.Node, NewNodes(v, false)...)
+
+	newNodes := make([]*Nodes, 0)
+	for _, node := range t.Node {
+		if node.Id != int64(v.VMCID) && node.ParentId != uint16(v.VMCID) {
+			newNodes = append(newNodes, node)
+		}
+	}
+	newNodes = append(newNodes, NewNodes(v, false)...)
+	t.Node = newNodes
 	return t.UpdateOp()
 }
 
