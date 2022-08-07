@@ -141,9 +141,13 @@ int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ, 
     }
 
     uint8_t core = _item.HasMember("core")?_item["core"].GetInt():1;
-    uint8_t inops = _item.HasMember("inops")?_item["inops"].GetInt():32768;
-    uint8_t flops = _item.HasMember("flops")?_item["flops"].GetInt():32768;
-    uint8_t mem = _item.HasMember("mem")?_item["mem"].GetInt():32768;
+    uint16_t inops = _item.HasMember("inops")?_item["inops"].GetInt():32768;
+    uint16_t flops = _item.HasMember("flops")?_item["flops"].GetInt():32768;
+    uint16_t mem = _item.HasMember("mem")?_item["mem"].GetInt():32768;
+    //std::cout << "core: "<< core <<std::endl;
+    //std::cout << "inops: "<< inops <<std::endl;
+    //std::cout << "flops: "<< flops <<std::endl;
+    //std::cout << "mem: "<< mem <<std::endl;
     _dev.setBasic(core, inops, flops, mem);
     _device.emplace_back(std::move(_dev));
     n_xpu++;
