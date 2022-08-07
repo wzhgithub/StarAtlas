@@ -54,12 +54,12 @@ func GetVMCData(c *gin.Context) {
 		return
 	}
 	// glog.Infof("vmcdata_read: %+v\n", vmcdata_read)
-	vmcdata_rsp := vmcdata_read.TransferVMCDataToJson()
-	if vmcdata_rsp == nil {
-		glog.Errorf("failed to transfer vmcdata into Json")
-		c.JSON(500, model.NewCommonResponseFail(err))
-		return
-	}
+	// vmcdata_rsp := vmcdata_read.TransferVMCDataToJson()
+	// if vmcdata_rsp == nil {
+	// 	glog.Errorf("failed to transfer vmcdata into Json")
+	// 	c.JSON(500, model.NewCommonResponseFail(err))
+	// 	return
+	// }
 
 	// construct topo
 	topo := &model.TopoTable{}
@@ -77,7 +77,7 @@ func GetVMCData(c *gin.Context) {
 	}
 	var s *model.CommonResponse
 	if status == "RUN" {
-		s = model.NewCommonResponseSucc(*vmcdata_rsp)
+		s = model.NewCommonResponseSucc(*vmcdata_read)
 		c.JSON(200, s)
 		return
 	}
