@@ -1,0 +1,9 @@
+{
+  "cpu":[
+    {"name": "@auto@", "type":0, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 25, "usage": 0},
+    {"name": "@auto@", "type":1, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 25, "usage": 0}
+  ],
+  "gpu":[
+    {"name": "@auto@", "type":0, "core": 16, "inops": 65535, "flops": 65536, "mem": 65535, "mem_used": 25, "usage": 0}
+  ]
+}

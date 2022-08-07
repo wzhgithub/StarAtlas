@@ -1,0 +1,12 @@
+{
+ "2": [
+   {"name":"camera_01", "index":1, "type":1},
+   {"name":"sensor_01", "index":2, "type":0},
+   {"name":"load_01", "index":3, "type":2},
+ ],
+ "3": [
+   {"name":"camera_02", "index":4, "type":1},
+   {"name":"sensor_02", "index":5, "type":0},
+   {"name":"load_02", "index":6, "type":2},
+ ],
+}

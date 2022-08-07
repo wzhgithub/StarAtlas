@@ -1,0 +1,14 @@
+{
+  "connect_to":1,
+  "name":"vmc_01",
+  "index":1,
+  "cpu":[
+  ],
+  "dsp":[
+  ],
+  "gpu":[
+  ],
+  "fpga":[
+  ],
+  "disk":{"capacity":100, "used":50},
+}
