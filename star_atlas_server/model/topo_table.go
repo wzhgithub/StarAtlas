@@ -254,6 +254,10 @@ func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
 	}
 }
 
+func removeIndex(s pNodesArr, index int) pNodesArr {
+	return append(s[:index], s[index+1:]...)
+}
+
 func (t *TopoTable) CreateOp(v *VMCData) error {
 	err := mgm.CollectionByName(config.CommonConfig.DBTopoTableName).First(bson.M{"id": CTopoID}, t)
 	if err != nil {
@@ -263,7 +267,15 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	if t.Id == "" {
 		glog.Infof("[CreateOp] new topoTable")
 		t = NewTopoTable(v, true)
+		glog.Infof("[CreateOp] new topo: %+v", t)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
+	}
+
+	for i, node := range t.Node {
+		if node.Id == int64(v.VMCID) {
+			t.Node = removeIndex(t.Node, i)
+			break
+		}
 	}
 	t.Node = append(t.Node, NewNodes(v, false)...)
 	return t.UpdateOp()
