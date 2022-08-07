@@ -570,7 +570,7 @@ func (vmc_data *VMCData) CreateData() error {
 	}
 
 	if count >= cMAX_DOCUMENT_NUM {
-		var v *VMCData
+		v := &VMCData{}
 		err := coll.First(bson.M{"vmc_id": vmc_data.VMCID}, v)
 		if err != nil {
 			glog.Infof("Cannot find vmc_id: %d", vmc_data.VMCID)
@@ -580,7 +580,7 @@ func (vmc_data *VMCData) CreateData() error {
 				return fmt.Errorf("cannot find any document, maybe the db is empty")
 			}
 		}
-		glog.Infof("new v is: +v", v)
+		glog.Infof("new v is: %+v", v)
 		err = coll.Delete(v)
 		if err != nil {
 			return fmt.Errorf("delete vmc_data failed")
