@@ -173,8 +173,8 @@ func handleMsg(conn net.Conn, data []byte) {
 		}
 	}()
 	l := binary.BigEndian.Uint32(data[0:4])
-	msgData := data[4 : 4+l]
 	glog.Infof("received start:%d end:%d\n", 4, 4+l)
+	msgData := data[4 : 4+l]
 	msg := &pb.Msg{}
 	err := proto.Unmarshal(msgData, msg)
 	if err != nil {
