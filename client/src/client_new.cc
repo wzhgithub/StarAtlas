@@ -229,11 +229,13 @@ int main(int argc, char* argv[]) {
        }
        cout << "send message, total byte:"<<ret<<"."<<endl;
 
-       char output[PATH_MAX] = {0};
        const char* _prefix_dump = "sample";
        if (argc>5) {
          _prefix_dump = argv[5];
+       } else {
+         continue;
        }
+       char output[PATH_MAX] = {0};
        snprintf(output, PATH_MAX, "%s_%d_%d.bin", _prefix_dump, h, _loop);
        ofstream binaryio(output, ios::binary);
        if (!binaryio) {
