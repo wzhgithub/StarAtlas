@@ -1,0 +1,26 @@
+[
+  {
+    "connect_to":55,
+    "list": [
+      {"name":"camera_01", "index":41, "type":1},
+      {"name":"sensor_01", "index":42, "type":0},
+      {"name":"load_01", "index":43, "type":2}
+    ]
+  },
+  {
+    "connect_to":53,
+    "list": [
+      {"name":"camera_02", "index":44, "type":1},
+      {"name":"sensor_02", "index":45, "type":0},
+      {"name":"load_02", "index":46, "type":2},
+      {"name":"load_03", "index":47, "type":2}
+    ]
+  },
+  {
+    "connect_to":56,
+    "list": [
+      {"name":"camera_03", "index":48, "type":1},
+      {"name":"sensor_03", "index":49, "type":0}
+    ]
+  }
+]

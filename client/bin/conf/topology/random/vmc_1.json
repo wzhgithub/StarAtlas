@@ -1,0 +1,23 @@
+{
+  "connect_to":1,
+  "name":"vmc_01",
+  "index":1,
+  "mem":{"capacity":100, "used":10},
+  "disk":{"capacity":100, "used":10},
+  "remote":"remote.json",
+  "switch":"switch.json",
+  "tasks":"tasks.json",
+  "cpu":[
+    {"name": "cpu_111", "index":1, "type":0, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0},
+    {"name": "cpu_112", "index":2, "type":1, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0}
+  ],
+  "dsp":[
+    {"name": "dsp_121", "index":1, "type":0, "core": 1, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 0, "usage": 0}
+  ],
+  "gpu":[
+    {"name": "gpu_131", "index":1, "type":0, "core": 16, "inops": 65535, "flops": 65536, "mem": 65535, "mem_used": 0, "usage": 0}
+  ],
+  "fpga":[
+    {"name": "fpag_141", "index":1, "type":0}
+  ]
+}

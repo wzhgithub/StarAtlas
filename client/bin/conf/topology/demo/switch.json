@@ -1,0 +1,13 @@
+{
+  "central":[
+    {"name":"central_01", "index":51, "connect_to":52},
+    {"name":"central_02", "index":52, "connect_to":52},
+    {"name":"central_03", "index":53, "connect_to":52}
+  ],
+  "access": [
+    {"name":"switch_01", "index":54, "connect_to":51},
+    {"name":"switch_02", "index":55, "connect_to":51},
+    {"name":"switch_03", "index":56, "connect_to":53},
+    {"name":"switch_04", "index":57, "connect_to":53}
+  ]
+}

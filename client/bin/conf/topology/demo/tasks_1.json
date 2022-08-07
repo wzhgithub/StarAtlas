@@ -1,0 +1,28 @@
+[
+  {
+    "name":"part_01", 
+    "index":1,
+    "duration":0,
+    "time":0,
+    "tasks":[
+      {"name":"a", "index": 1001, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":0},
+      {"name":"b", "index": 1002, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":10},
+      {"name":"c", "index": 1003, "type":2, "status":0, "exe_time": 0, "ret_code": 2, "start_time":20}
+    ],
+    "reset":0,
+    "vmc":80
+  },
+  {
+    "name":"part_02", 
+    "index":2,
+    "duration":0,
+    "time":0,
+    "tasks":[
+      {"name":"d", "index": 2001, "type":2, "status":0, "exe_time": 0, "ret_code": 2, "start_time":0},
+      {"name":"e", "index": 2002, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":10},
+      {"name":"f", "index": 2003, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":20}
+    ],
+    "reset":0,
+    "vmc":80
+  }
+]
