@@ -272,9 +272,8 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	}
 
 	for i, node := range t.Node {
-		if node.Id == int64(v.VMCID) {
+		if node.Id == int64(v.VMCID) || node.ParentId == uint16(v.VMCID) {
 			t.Node = removeIndex(t.Node, i)
-			break
 		}
 	}
 	t.Node = append(t.Node, NewNodes(v, false)...)
