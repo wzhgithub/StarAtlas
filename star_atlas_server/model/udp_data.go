@@ -563,15 +563,30 @@ func (vmc_data *VMCData) CreateData() error {
 		return fmt.Errorf("vcm data is nil")
 	}
 
-	count, err := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).CountDocuments(context.TODO(), bson.M{})
+	coll := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName)
+	count, err := coll.CountDocuments(context.TODO(), bson.M{})
 	if err != nil {
 		return fmt.Errorf("CountDocuments error")
 	}
 
 	if count >= cMAX_DOCUMENT_NUM {
-		return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Update(vmc_data)
+		v := &VMCData{}
+		err := coll.First(bson.M{"vmc_id": vmc_data.VMCID}, v)
+		if err != nil {
+			glog.Infof("Cannot find vmc_id: %d", vmc_data.VMCID)
+			err = coll.First(bson.M{}, v)
+			if err != nil {
+				glog.Errorf("cannot find any document, maybe the db is empty")
+				return fmt.Errorf("cannot find any document, maybe the db is empty")
+			}
+		}
+		glog.Infof("new v is: %+v", v)
+		err = coll.Delete(v)
+		if err != nil {
+			return fmt.Errorf("delete vmc_data failed")
+		}
 	}
-	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
+	return coll.Create(vmc_data)
 }
 
 func (vmc_data *VMCData) CollectVMCData(vmc_id int32) error {
