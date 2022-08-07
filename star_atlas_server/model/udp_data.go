@@ -569,7 +569,11 @@ func (vmc_data *VMCData) CreateData() error {
 	}
 
 	if count >= cMAX_DOCUMENT_NUM {
-		return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Update(vmc_data)
+		filter := bson.M{"vmc_id": vmc_data.VMCID}
+		opt := options.FindOneAndUpdateOptions(*options.FindOneAndUpdate().SetSort(bson.D{{Key: "updated_at", Value: -1}}))
+		ret := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).FindOneAndUpdate(context.TODO(), filter, vmc_data, &opt)
+		glog.Infof("ret: %+v", ret)
+		return nil
 	}
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
 }
