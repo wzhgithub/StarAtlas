@@ -9,7 +9,7 @@ typedef enum {
   eGPU,
   eFPGA,
   eREMOTE,
-  eEXCHNAGE,
+  eEXCHNAGE, // 5
   eInvalid
 } EDeviceType;
 

@@ -22,13 +22,13 @@ size_t get_vmc_conf(const char* dir_name, vector<string>& arr, const char* _pref
   DIR* dir;
   dir = opendir(dir_name);
 
-  std::cout << dir_name << "len: " << _len <<"; " << _prefix  << std::endl;
+  //std::cout << dir_name << "len: " << _len <<"; " << _prefix  << std::endl;
   struct dirent* filename;
   while ((filename = readdir(dir))!=NULL) {
     if(strncmp(filename->d_name, _prefix, _len)!=0) {
       continue;
     }
-    std::cout << dir_name << std::endl;
+    //std::cout << dir_name << std::endl;
     string s(dir_name);
     arr.emplace_back(s + filename->d_name);
   }

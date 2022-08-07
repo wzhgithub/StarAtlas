@@ -51,6 +51,7 @@ public:
   ~TeleMessage();
 
 public:
+  uint8_t getBaseIndex() const { return m_index; }
   vector<Device>& getDevice() { return m_devices; }
   vector<Partition>& getPartition() { return m_partitions; }
 

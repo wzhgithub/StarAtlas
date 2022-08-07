@@ -100,7 +100,7 @@ int parseRemote(rapidjson::Document& _document, vector<Device>& _device) {
   return n_remote;
 }
 
-int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ) {
+int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ, uint8_t baseIndex, uint8_t globalDev) {
   if (!_document.IsArray()) {
     std::cerr << "Invalid xpu." << std::endl;
     return 0;
@@ -115,15 +115,23 @@ int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ) 
     }
 
     if (!_item.HasMember("name") ||
-        !_item.HasMember("index") ||
+        // !_item.HasMember("index") ||
         !_item.HasMember("type")) {
-      std::cerr << "Invalid xpu: <name|index|type> needed." << std::endl;
+      std::cerr << "Invalid xpu: <name|type> needed." << std::endl;
       return 0;
+    }
+
+    int _dev_index = baseIndex + (_item.HasMember("index")?
+      uint8_t(_item["index"].GetInt()):
+    (_device.size()-globalDev+1));
+    const char* _dev_name = _item["name"].GetString();
+    const char* _auto_name = "@auto@";
+    if (strcmp(_dev_name, _auto_name)==0) {
+      _dev_name = nullptr;
     }
      
     Device _dev;
-    _dev.init(typ, uint8_t(_item["index"].GetInt()),
-      _item["name"].GetString(),
+    _dev.init(typ, _dev_index, _dev_name, 
       uint8_t(_item["type"].GetInt()), 0);
 
     if (typ == eFPGA) {

@@ -1,0 +1,11 @@
+{
+  "connect_to":54,
+  "name":"vmc_02",
+  "index":100,
+  "mem":{"capacity":100, "used":10},
+  "disk":{"capacity":100, "used":10},
+  "remote":"remote.json",
+  "switch":"switch.json",
+  "tasks":"tasks_1.json",
+  "xpu":"xpu_1.json"
+}

@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
   char *p = nullptr, *plast = get_cur_dir(dir, PATH_MAX);
   int n = snprintf(plast, PATH_MAX-(plast-dir), "%s/%s/", szConfBasePath, curConf);
   p = plast + n;
+  string sCurPath(dir);
   for (size_t h=0; h<nConf; h++) {
     const string& _name = gdev_parser[h].m_fname;
     snprintf(p, PATH_MAX-(p-dir), "%s", _name.c_str());
@@ -71,7 +72,7 @@ int main(int argc, char* argv[]) {
   get_vmc_conf(dir, _vmc, szVmcPrefix, strlen(szVmcPrefix));
 
   bool _bflag = false;
-  cout << "hello: " << _vmc.size() << endl;
+  //cout << "hello: " << _vmc.size() << endl;
   for (size_t h=0; h<_vmc.size(); h++) {
     TeleMessage _msg;
     cout << "parse vmc: " << h << "; name: " << _vmc[h] << endl;
@@ -101,6 +102,16 @@ int main(int argc, char* argv[]) {
       }
       _msg.setTotalDevice(_n_dev, _typ);
     }
+    uint8_t nGlobalDev = _msg.getDevice().size();
+
+    rapidjson::Document _xpu_doc;
+    string _filename_xpu = (_doc.HasMember("xpu")?
+      sCurPath + string(_doc["xpu"].GetString()):
+    "");
+    if (!parse(_filename_xpu.c_str(), _xpu_doc)) {
+      cerr << "parse xpu failed." << endl;
+      exit(-1);
+    }
 
     const char* _xpu_name[] = {
       "cpu",
@@ -109,8 +120,8 @@ int main(int argc, char* argv[]) {
       "fpga",
     };
     for (int hh=0; hh<sizeof(_xpu_name)/sizeof(const char*); hh++) {
-      if (!_doc.HasMember(_xpu_name[hh])) continue;
-      int _n_dev = parseXpu(_doc[_xpu_name[hh]], _msg.getDevice(), hh);
+      if (!_xpu_doc.HasMember(_xpu_name[hh])) continue;
+      int _n_dev = parseXpu(_xpu_doc[_xpu_name[hh]], _msg.getDevice(), hh, _msg.getBaseIndex(), nGlobalDev);
       if (!_n_dev) {
         cerr << "warning: empty device, device type: "<< hh <<endl;
       }
@@ -118,8 +129,11 @@ int main(int argc, char* argv[]) {
     }
 
     // parse partition
+    string _local_filename_task = (_doc.HasMember("tasks")?
+      sCurPath + string(_doc["tasks"].GetString()):
+    _filename_task);
     rapidjson::Document _tdoc;
-    if (!parse(_filename_task.c_str(), _tdoc)) {
+    if (!parse(_local_filename_task.c_str(), _tdoc)) {
       exit(-1);
     }
     int _n_part = parsePartition(_tdoc, _msg.getPartition());
