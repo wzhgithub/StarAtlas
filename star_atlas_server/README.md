@@ -1,3 +1,10 @@
+# remote deployment
+```shell
+ssh drake@nj.kyledong.com -p 8027
+pwd: MEOWMEOWMEOW!@#
+sudo su
+```
+
 # build & run 
 ```shell
 ./build.sh
