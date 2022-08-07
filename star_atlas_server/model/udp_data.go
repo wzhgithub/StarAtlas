@@ -1,6 +1,7 @@
 package model
 
 import (
+	"context"
 	"encoding/binary"
 	"fmt"
 	"star_atlas_server/config"
@@ -559,6 +560,13 @@ func (vmc_data *VMCData) CreateData() error {
 	if vmc_data == nil {
 		return fmt.Errorf("vcm data is nil")
 	}
+
+	count, err := mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).CountDocuments(context.TODO(), bson.M{})
+	if err != nil {
+		return fmt.Errorf("CountDocuments error")
+	}
+	glog.Infof("vmc_data table num: %d", count)
+
 	return mgm.CollectionByName(config.CommonConfig.DBVMCDataTableName).Create(vmc_data)
 }
 
