@@ -8,6 +8,11 @@
 #include <map>
 #include <string>
 
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+
 using std::cerr;
 using std::cout;
 using std::endl;
@@ -42,7 +47,7 @@ constexpr size_t nConf = sizeof(gdev_parser)/sizeof(DeviceParser);
 
 int main(int argc, char* argv[]) {
   if (argc==1) {
-    fprintf(stderr, "Usage: %s [conf:random|demo|fault|parallel]\n"
+    fprintf(stderr, "Usage: %s [conf:random|demo|fault|parallel] [ip:port] [dump 4 debug]\n"
                     "  etc: %s random\n", argv[0], argv[0]);
     exit(0);
   }
@@ -51,6 +56,29 @@ int main(int argc, char* argv[]) {
   if (argc>1) {
     curConf = argv[1];
   }
+
+  const char* ip = "127.0.0.1";
+  unsigned short port = 9191;
+# define LEN_BUF 128
+  char szBuf[LEN_BUF] = {0};
+  if (argc>2) {
+    size_t len = strlen(argv[2]); 
+    if (len>=LEN_BUF) {
+      cerr<<"Invalid ip address: "<<argv[2]<<endl;
+      exit(-1);
+    }
+    strncpy(szBuf, argv[2], LEN_BUF);
+    char* p = szBuf;
+    for (; p[0] && p[0]!=':'; p++) {}
+    if (!p[0]) {
+      cerr<<"Invalid ip address: "<<argv[2]<<endl;
+      exit(-1);
+    }
+    *p++='\0';
+    ip = szBuf;
+    port = atoi(p);
+  }
+  cout<<"ip: "<<ip<<"; port:"<<port<<"."<<endl;
 
   map<string, string> _path_map;
   char dir[PATH_MAX] = {0};
@@ -73,6 +101,8 @@ int main(int argc, char* argv[]) {
 
   bool _bflag = false;
   //cout << "hello: " << _vmc.size() << endl;
+
+  vector<TeleMessage> _msg_arr;
   for (size_t h=0; h<_vmc.size(); h++) {
     TeleMessage _msg;
     cout << "parse vmc: " << h << "; name: " << _vmc[h] << endl;
@@ -142,21 +172,64 @@ int main(int argc, char* argv[]) {
     }
     _msg.setTotalPartition(_n_part);
 
-    // 
+    _msg_arr.emplace_back(_msg); 
+  }
+
+  // send
+  int sockfd;
+  socklen_t len = sizeof(struct sockaddr_in);
+
+  struct sockaddr_in serveraddr;
+  memset(&serveraddr, 0, len);
+
+  serveraddr.sin_family = AF_INET;
+  serveraddr.sin_port = htons(port);
+  serveraddr.sin_addr.s_addr = inet_addr(ip);
+
+  sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sockfd < 0)
+  {
+    cerr << "fail to create socker" << endl;
+    exit(-1);
+  } 
+
+  size_t _buff_size = 1024;
+  char* _buff = new char[_buff_size];
+  for (size_t h=0; h<_msg_arr.size(); h++) {
+    TeleMessage& _msg = _msg_arr[h];
+
     size_t sz = _msg.getSize();
-    char* buf = new char[sz+16];
-    memset(buf, 0, sz+16);
-    int sz_out = _msg.pack(buf);
+    if (sz>_buff_size) {
+      delete []_buff;
+      _buff_size *= 2;
+      _buff = new char[_buff_size];
+    }
+    memset(_buff, 0, _buff_size);
+    int sz_out = _msg.pack(_buff);
+
+    ssize_t ret = sendto(sockfd, _buff, sz_out, 0, (struct sockaddr*)&serveraddr, len);
+    if (ret == -1) {
+      cerr << "sendto failed, ret code: "<<ret<<endl;
+      close(sockfd);
+      delete [] _buff;
+      exit(-1);
+    }
+    cout << "send message, total byte:"<<ret<<"."<<endl;
 
     char output[PATH_MAX] = {0};
-    snprintf(output, PATH_MAX, "%s_%d.bin", argv[2], h);
+    const char* _prefix_dump = "sample";
+    if (argc>3) {
+      _prefix_dump = argv[3];
+    }
+    snprintf(output, PATH_MAX, "%s_%d.bin", _prefix_dump, h);
     ofstream binaryio(output, ios::binary);
     if (!binaryio) {
       cerr<<"open "<<output<<" failed."<<endl;
       exit(0);
     }
-    binaryio.write(buf,sz);
-    delete [] buf;
+    binaryio.write(_buff,sz_out);
   }
+  delete []_buff;
+  close(sockfd);
   exit(0);
 }
