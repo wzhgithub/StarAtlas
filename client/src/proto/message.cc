@@ -179,6 +179,7 @@ void TeleMessage::updateRandom() {
   for (size_t h=0; h<sizeof(anDevice)/sizeof(int); h++) {
     if (anDevice[h]==0) continue;
 
+    ptotal_rate[h][0] = 0;
     for (size_t j=0; j<anDevice[h]; j++, idx++) {
       Device& _dev = m_devices[idx];
       uint8_t _rate = random() % 101;
