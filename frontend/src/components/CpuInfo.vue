@@ -124,10 +124,10 @@
               </el-col>
               <el-col :span="8" class="type_col_">
                 <p class="type_text_"></p>
-                <p class="type_text">类型1</p>
-                <p class="type_text active_text">类型2</p>
-                <p class="type_text">类型3</p>
-                <p class="type_text">类型4</p>
+                <p class="type_text">ADM</p>
+                <p class="type_text active_text">龙芯</p>
+                <p class="type_text">Intel</p>
+                <p class="type_text">麒麟</p>
               </el-col>
             </el-row>
           </div>
@@ -147,25 +147,25 @@ export default {
   props: {
     cpuNow: {
       type: Object,
-      default: function () {
-        return {};
-      },
+      // default: function () {
+      //   return {};
+      // },
     },
   },
   data() {
     return {
-      nowdata: {
-        cpuuseage: 70,
-        canuse: 12,
-        used: 80,
-        computeuseage: 60,
-        canuse_: 1200,
-        alluse_: 2400,
-        canusecore: 8,
-        allcore: 32,
-        canusemb: 1024,
-        allmb: 10240,
-      },
+      // nowdata: {
+      //   cpuuseage: 70,
+      //   canuse: 12,
+      //   used: 80,
+      //   computeuseage: 60,
+      //   canuse_: 1200,
+      //   alluse_: 2400,
+      //   canusecore: 8,
+      //   allcore: 32,
+      //   canusemb: 1024,
+      //   allmb: 10240,
+      // },
     };
   },
   methods: {
@@ -174,21 +174,26 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
   },
+  computed: {
+    nowdata: function() {
+      return {...this.cpuNow}
+    }
+  },
   mounted() {
     let that = this;
     setInterval(() => {
-      that.nowdata = {
-        cpuuseage: that.randomRange(0, 100),
-        canuse: that.randomRange(0, 100),
-        used: that.randomRange(0, 100),
-        computeuseage: that.randomRange(0, 100),
-        canuse_: that.randomRange(1000, 1600),
-        alluse_: that.randomRange(2000, 3600),
-        canusecore: that.randomRange(0, 16),
-        allcore: 32,
-        canusemb: that.randomRange(100, 1024),
-        allmb: 1024,
-      };
+      // that.nowdata = {
+      //   cpuuseage: that.randomRange(0, 100),
+      //   canuse: that.randomRange(0, 100),
+      //   used: that.randomRange(0, 100),
+      //   computeuseage: that.randomRange(0, 100),
+      //   canuse_: that.randomRange(1000, 1600),
+      //   alluse_: that.randomRange(2000, 3600),
+      //   canusecore: that.randomRange(0, 16),
+      //   allcore: 32,
+      //   canusemb: that.randomRange(100, 1024),
+      //   allmb: 1024,
+      // };
     }, 3000);
   },
 };
