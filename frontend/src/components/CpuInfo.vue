@@ -1,6 +1,6 @@
 <template>
   <div class="cpu_info_box">
-    <p class="title">
+    <p class="title_cpu">
       <span>{{ this.cpuNow.name || "CPU信息详情" }}</span>
     </p>
     <el-row class="content">
@@ -203,7 +203,8 @@ export default {
   width: 100%;
   height: 98%;
   // background-color: #fff;
-  .title {
+  .title_cpu {
+    text-align: left;
     height: 15%;
     width: 100%;
     color: azure;
