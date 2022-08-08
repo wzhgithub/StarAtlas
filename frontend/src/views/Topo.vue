@@ -47,7 +47,7 @@
             <button @click="mockError(0)">模拟分区故障</button>
           </div>
           <img
-            v-if="deviceType === 'sw'"
+            v-if="deviceType === 'SW'"
             class="miansvg"
             src="../assets/newpng/sw.svg"
             alt=""
@@ -82,6 +82,30 @@
             src="../assets/newpng/VMC.svg"
             alt=""
           />
+          <img
+            v-if="deviceType === 'OP1'"
+            class="miansvg"
+            src="../assets/newpng/op_1.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'OP2'"
+            class="miansvg"
+            src="../assets/newpng/op_2.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'OP3'"
+            class="miansvg"
+            src="../assets/newpng/op_3.svg"
+            alt=""
+          />
+          <img
+            v-if="deviceType === 'OP4'"
+            class="miansvg"
+            src="../assets/newpng/op_4.svg"
+            alt=""
+          />
         </div>
         <div class="aside_box_line_bar">
           <p class="title">
@@ -112,14 +136,14 @@
             <!-- <p>信息字段5: 信息信息</p> -->
           </div>
         </div>
-        <div class="aside_box_task">
+        <!-- <div class="aside_box_task">
           <p class="title">
             <span>交换机历史数据信息</span>
           </p>
           <div class="boxForline" id="linebox">
             <selfline inref="linebox" />
           </div>
-        </div>
+        </div> -->
       </div>
     </el-drawer>
   </div>
@@ -151,6 +175,8 @@ import imgfgpa from "@/assets/newpng/FPGA.svg";
 import imgsw from "@/assets/newpng/centersw_topo.svg";
 import imgop1 from "@/assets/newpng/op_1.svg";
 import imgop2 from "@/assets/newpng/op_2.svg";
+import imgop3 from "@/assets/newpng/op_3.svg";
+import imgop4 from "@/assets/newpng/op_4.svg";
 import pointsvg from "@/assets/newpng/point_new.svg";
 import inswsvg from "@/assets/newpng/sw_in.svg";
 // import obc from "@/assets/newpng/cloud.png";
@@ -322,7 +348,7 @@ export default {
       node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
       node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
-      node.nodesType = "sw";
+      node.nodesType = nodesType;
       return node;
     },
     createEdgeForAngle(graph, a, b, angle) {
@@ -341,12 +367,12 @@ export default {
       if (dashed) {
         edge.setStyle(Q.Styles.EDGE_LINE_DASH, [8, 5]);
       }
-      edge.setStyle(Q.Styles.EDGE_WIDTH, 3);
+      edge.setStyle(Q.Styles.EDGE_WIDTH, 2);
       edge.setStyle(Q.Styles.EDGE_COLOR, "#8cd1f1");
       edge.setStyle(Q.Styles.ARROW_TO, false);
-      edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
-      edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
-      edge.setStyle(Q.Styles.ARROW_FROM_STROKE, 7);
+      // edge.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+      // edge.setStyle(Q.Styles.ARROW_FROM, Q.Consts.SHAPE_CIRCLE);
+      // edge.setStyle(Q.Styles.ARROW_FROM_STROKE, 7);
       if (angle) {
         edge.angle = angle;
       }
@@ -567,6 +593,7 @@ export default {
         allsw.nodesOfOther,
         busnodes
       );
+      let ens2 = this.darwTemp(graph, allsw.nodesOfsw, allsw.nodesOfOther);
       var flowingSupport = new FlowingSupport(graph);
       if (busnodes.line1Edge) {
         flowingSupport.addFlowing(
@@ -650,7 +677,36 @@ export default {
           if (evt.getData().nodesType) {
             that.deviceType = evt.getData().nodesType;
             that.drawer = true;
-            that.devicename = evt.getData().name;
+            if (evt.getData().nodesType === "SW") {
+              that.devicename = "交换机_60002";
+            }
+            if (evt.getData().nodesType === "VMC") {
+              that.devicename = "VMC_10000";
+            }
+            if (evt.getData().nodesType === "CPU") {
+              that.devicename = "CPU_2001";
+            }
+            if (evt.getData().nodesType === "GPU") {
+              that.devicename = "GPU_2002";
+            }
+            if (evt.getData().nodesType === "DSP") {
+              that.devicename = "DSP_2003";
+            }
+            if (evt.getData().nodesType === "FPGA") {
+              that.devicename = "FPGA_2004";
+            }
+            if (evt.getData().nodesType === "OP1") {
+              that.devicename = "相机_3001";
+            }
+            if (evt.getData().nodesType === "OP2") {
+              that.devicename = "激光扫描仪_3002";
+            }
+            if (evt.getData().nodesType === "OP3") {
+              that.devicename = "激光雷达_3003";
+            }
+            if (evt.getData().nodesType === "OP4") {
+              that.devicename = "推进器_3004";
+            }
           }
         }
       };
@@ -872,7 +928,7 @@ export default {
       let mostleftpoint = line1[0];
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
-      let centerNode = this.createNode(graph, imgsw, 0, 0, "中心交换机");
+      let centerNode = this.createNode(graph, inswsvg, 0, 0);
       let line1Edge = null;
       let line2Edge = null;
       let line3Edge = null;
@@ -960,10 +1016,28 @@ export default {
         return item;
       });
       let nodesOfsw = tempsarr.map((item) => {
-        return this.createNode(graph, inswsvg, item.x, item.y);
+        return this.createNode(
+          graph,
+          inswsvg,
+          item.x,
+          item.y,
+          null,
+          null,
+          null,
+          "SW"
+        );
       });
       let nodesOfOther = tempsarr_.map((item) => {
-        return this.createNode(graph, inswsvg, item.x, item.y);
+        return this.createNode(
+          graph,
+          inswsvg,
+          item.x,
+          item.y,
+          null,
+          null,
+          null,
+          "SW"
+        );
       });
       return { nodesOfsw, nodesOfOther };
     },
@@ -1021,6 +1095,267 @@ export default {
         }
       });
       return endline;
+    },
+    darwTemp(graph, allArrSw, otherArrSw) {
+      let nodesOfvmc = allArrSw.map((item, index) => {
+        if (item.x <= 0) {
+          let tempsnow = this.createNode(
+            graph,
+            imgvmc,
+            item.x - 100,
+            item.y + 50,
+            null,
+            null,
+            null,
+            "VMC"
+          );
+          let tempsnow1 = this.createNode(
+            graph,
+            imgvmc,
+            item.x - 100,
+            item.y + 110,
+            null,
+            null,
+            null,
+            "VMC"
+          );
+          let tempsnow_1 = this.createNode(
+            graph,
+            imgcpu,
+            item.x - 250,
+            item.y + 50,
+            null,
+            null,
+            null,
+            "CPU"
+          );
+          let tempsnow_2 = this.createNode(
+            graph,
+            imggpu,
+            item.x - 250,
+            item.y + 130,
+            null,
+            null,
+            null,
+            "GPU"
+          );
+          let tempsnow_3 = this.createNode(
+            graph,
+            imgdsp,
+            item.x - 250,
+            item.y + 210,
+            null,
+            null,
+            null,
+            "DSP"
+          );
+          let tempsnow_4 = this.createNode(
+            graph,
+            imgfgpa,
+            item.x - 250,
+            item.y + 290,
+            null,
+            null,
+            null,
+            "FPGA"
+          );
+          this.createEdge(graph, tempsnow, item);
+          this.createEdge(graph, tempsnow1, item);
+          if (index % 2 === 0) {
+            this.createEdge(graph, tempsnow_1, tempsnow1);
+            this.createEdge(graph, tempsnow_2, tempsnow1);
+            this.createEdge(graph, tempsnow_3, tempsnow1);
+            this.createEdge(graph, tempsnow_4, tempsnow1);
+          } else {
+            this.createEdge(graph, tempsnow_1, tempsnow);
+            this.createEdge(graph, tempsnow_2, tempsnow);
+            this.createEdge(graph, tempsnow_3, tempsnow);
+            this.createEdge(graph, tempsnow_4, tempsnow);
+          }
+          return tempsnow;
+        } else {
+          if (item.y > 0) {
+            let tempsnow_ = this.createNode(
+              graph,
+              imgvmc,
+              item.x - 150,
+              item.y,
+              null,
+              null,
+              null,
+              "VMC"
+            );
+            let tempsnow_1 = this.createNode(
+              graph,
+              imgcpu,
+              item.x - 250,
+              item.y,
+              null,
+              null,
+              null,
+              "CPU"
+            );
+            let tempsnow_2 = this.createNode(
+              graph,
+              imggpu,
+              item.x - 250,
+              item.y + 80,
+              null,
+              null,
+              null,
+              "GPU"
+            );
+            let tempsnow_3 = this.createNode(
+              graph,
+              imgdsp,
+              item.x - 250,
+              item.y + 160,
+              null,
+              null,
+              null,
+              "DSP"
+            );
+            let tempsnow_4 = this.createNode(
+              graph,
+              imgfgpa,
+              item.x - 250,
+              item.y + 240,
+              null,
+              null,
+              null,
+              "FPGA"
+            );
+            this.createEdge(graph, tempsnow_1, tempsnow_);
+            this.createEdge(graph, tempsnow_2, tempsnow_);
+            this.createEdge(graph, tempsnow_3, tempsnow_);
+            this.createEdge(graph, tempsnow_4, tempsnow_);
+            this.createEdge(graph, tempsnow_, item);
+            return tempsnow_;
+          } else {
+            let tempsnow_ = this.createNode(
+              graph,
+              imgvmc,
+              item.x - 150,
+              item.y,
+              null,
+              null,
+              null,
+              "VMC"
+            );
+            this.createEdge(graph, tempsnow_, item);
+          }
+        }
+      });
+      let nodesOfother = otherArrSw.map((item, index) => {
+        if (item.x <= 0) {
+          let tempsnow_1 = this.createNode(
+            graph,
+            imgop1,
+            item.x + 120,
+            item.y,
+            null,
+            null,
+            null,
+            "OP1"
+          );
+          let tempsnow_2 = this.createNode(
+            graph,
+            imgop2,
+            item.x + 120,
+            item.y - 80,
+            null,
+            null,
+            null,
+            "OP2"
+          );
+          let tempsnow_3 = this.createNode(
+            graph,
+            imgop3,
+            item.x + 120,
+            item.y - 160,
+            null,
+            null,
+            null,
+            "OP3"
+          );
+          let tempsnow_4 = this.createNode(
+            graph,
+            imgop4,
+            item.x + 120,
+            item.y - 240,
+            null,
+            null,
+            null,
+            "OP4"
+          );
+          this.createEdge(graph, tempsnow_1, item);
+          this.createEdge(graph, tempsnow_2, item);
+          this.createEdge(graph, tempsnow_3, item);
+          this.createEdge(graph, tempsnow_4, item);
+          return tempsnow_1;
+        } else {
+          if (item.y <= 0) {
+            let tempsnow_1 = this.createNode(
+              graph,
+              imgop1,
+              item.x + 120,
+              item.y,
+              null,
+              null,
+              null,
+              "OP1"
+            );
+            let tempsnow_2 = this.createNode(
+              graph,
+              imgop2,
+              item.x + 120,
+              item.y + 80,
+              null,
+              null,
+              null,
+              "OP2"
+            );
+            let tempsnow_3 = this.createNode(
+              graph,
+              imgop3,
+              item.x + 120,
+              item.y + 160,
+              null,
+              null,
+              null,
+              "OP3"
+            );
+            let tempsnow_4 = this.createNode(
+              graph,
+              imgop4,
+              item.x + 120,
+              item.y + 240,
+              null,
+              null,
+              null,
+              "OP4"
+            );
+            this.createEdge(graph, tempsnow_1, item);
+            this.createEdge(graph, tempsnow_2, item);
+            this.createEdge(graph, tempsnow_3, item);
+            this.createEdge(graph, tempsnow_4, item);
+            return tempsnow_1;
+          } else {
+            let tempsnow_2 = this.createNode(
+              graph,
+              imgop2,
+              item.x - 120,
+              item.y,
+              null,
+              null,
+              null,
+              "OP2"
+            );
+            this.createEdge(graph, tempsnow_2, item);
+            return tempsnow_2;
+          }
+        }
+      });
     },
     /** 两个参数： 参数1 是排序用的字段， 参数2 是：是否升序排序 true 为升序，false为降序*/
     compare(attr, rev) {
@@ -1097,6 +1432,7 @@ export default {
   // background: rgb(207, 160, 160);
   // padding: 1%;
   // box-sizing: border-box;
+  text-align: center;
   .grid-content_btn {
     padding: 1rem;
     display: inline-block;
@@ -1117,8 +1453,8 @@ export default {
     }
   }
   .miansvg {
-    width: 40%;
-    margin-left: 25%;
+    height: 80%;
+    // margin-left: 25%;
   }
 }
 .aside_box_line_bar {
