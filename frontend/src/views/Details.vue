@@ -174,6 +174,7 @@ import CpuInfo from "@/components/CpuInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import topNumber from "@/components/topNumber.vue";
+import { getVMCData } from "@/api";
 export default {
   name: "details",
   components: {
@@ -199,6 +200,16 @@ export default {
       topdata: [20, 86, 73, 67, 78],
       cpu: {
         name: "",
+        cpuuseage: 70,
+        canuse: 12,
+        used: 80,
+        computeuseage: 60,
+        canuse_: 1200,
+        alluse_: 2400,
+        canusecore: 8,
+        allcore: 32,
+        canusemb: 1024,
+        allmb: 10240,
       },
       tableData: [
         {
@@ -259,6 +270,25 @@ export default {
     };
   },
   methods: {
+    async getTopData() {
+      const { data } = await getVMCData(this.$route.params.id);
+      console.log(data);
+      this.topdata = [data.data.memory_usage, data.data.total_disk_usage,
+              data.data.total_cpu_usage, data.data.total_gpu_usage, data.data.total_dsp_usage];
+      this.cpu = {
+        name: "cpu",
+        cpuuseage: data.data.total_cpu_usage,
+        canuse: 100 - data.data.total_cpu_usage,
+        used: data.data.total_cpu_usage,
+        computeuseage: 32768 / 32768.0 * 100,
+        alluse_: 32768,
+        canuse_: 32768 - data.data.cpu_set[0].int_computing_power,
+        canusecore: data.data.cpu_number,
+        allcore: data.data.cpu_number,
+        canusemb: data.data.total_memory * (100 - data.data.memory_usage) / 100,
+        allmb: data.data.total_memory
+      }
+    },
     dealWithTypeClick(num) {
       // this.asidvisiber = [false,false,false,false]
       let arr = [false, false, false, false];
@@ -327,14 +357,15 @@ export default {
   mounted() {
     let that = this;
     setInterval(() => {
-      that.topdata = [
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-      ];
-    }, 1000);
+      that.getTopData();
+      // that.topdata = [
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      // ];
+    }, 5000);
     this.drawall();
   },
 };
