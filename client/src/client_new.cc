@@ -206,6 +206,7 @@ int main(int argc, char* argv[]) {
     interval = atoi(argv[4]);
   }
 
+  bool _bFillTaskGroup = false;
   for (int _loop = 0; max_loop==0 || _loop < max_loop; _loop++) {
     for (size_t h=0; h<_msg_arr.size(); h++) {
       TeleMessage& _msg = _msg_arr[h];
@@ -244,6 +245,7 @@ int main(int argc, char* argv[]) {
        }
        binaryio.write(_buff,sz_out);
     }
+    _bFillTaskGroup = true;
     usleep(interval*1000);
   }
   delete []_buff;

@@ -16,7 +16,6 @@ TeleMessage::TeleMessage() {
   m_total_mem = m_total_disk = 0;
   m_mem_rate = m_cpu_rate = m_dsp_rate = m_gpu_rate = m_disk_rate = 0;
   m_cnt_exchange = m_cnt_remote = 0;
-  m_total_partition = 0;
 }
 
 TeleMessage::~TeleMessage() {
@@ -49,8 +48,9 @@ uint16_t TeleMessage::getSize() {
   
   // partition
   m_size += 1;
-  for (size_t h=0; h<m_partitions.size(); h++) {
-    m_size += (18+12*m_partitions[h].task_count());
+  std::shared_ptr< vector<Partition> > _parts = m_partitions->lock();
+  for (size_t h=0; _parts && h<_parts->size(); h++) {
+    m_size += (18+12*(*_parts)[h].task_count());
   } 
   m_size += 1; // crc
   return m_size;
@@ -115,9 +115,11 @@ int TeleMessage::pack(char* buf) {
     }
   }
 
+  std::shared_ptr< vector<Partition> > _parts = m_partitions->lock();
+  uint8_t m_total_partition = _parts?_parts->size():0;
   ((uint8_t*)p++)[0] = m_total_partition;
   for (int i=0; i<m_total_partition; i++) {
-    p+=m_partitions[i].pack(p);
+    p+=(*_parts)[i].pack(p);
   }
   ((uint8_t*)p++)[0] = crc_calculate((uint8_t*)buf, m_size-1); //crc
   return (int)(p-buf);

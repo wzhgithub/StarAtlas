@@ -4,6 +4,8 @@
 #include "device.h"
 #include "task.h"
 
+#include <memory>
+
 using namespace std;
 
 class TeleMessage {
@@ -43,17 +45,16 @@ public:
   vector<Device> m_devices;
   
   // block
-  uint8_t m_total_partition;
-  vector<Partition> m_partitions;
+  std::weak_ptr< vector<Partition> > m_partitions;
 
 public:
   TeleMessage();
   ~TeleMessage();
 
 public:
+  uint8_t getSwitchIndex() const { return m_exchange_idx; }
   uint8_t getBaseIndex() const { return m_index; }
   vector<Device>& getDevice() { return m_devices; }
-  vector<Partition>& getPartition() { return m_partitions; }
 
   void setTotalDevice (uint8_t _n, int typ) {
     switch (typ) {
@@ -66,7 +67,7 @@ public:
       default: break;
     }
   }
-  void setTotalPartition(uint8_t _n) { m_total_partition = _n; }
+  void setPartition(std::shared_ptr< vector<Partition> >& _parts) { m_partitions = _parts; }
 
 public:
   void init(uint8_t idx, uint8_t idx_exchange, uint16_t mem, uint16_t disk, const char* name = nullptr);
