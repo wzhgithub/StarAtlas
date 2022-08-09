@@ -207,76 +207,7 @@ export default {
       drawer: false,
       devicename: "",
       deviceType: "",
-      topoData: [
-        {
-          id: 0,
-          name: "CPU_00",
-          device_type: "cpu",
-          parent_id: 0,
-          upstream_id: 0,
-          device_status: "RUN",
-          other_info: [
-            {
-              key: "cpu_type",
-              value: "3",
-            },
-            {
-              key: "cpu_cores",
-              value: "154",
-            },
-          ],
-        },
-        {
-          id: 2,
-          name: "DSP_02",
-          device_type: "dsp",
-          parent_id: 0,
-          upstream_id: 0,
-          device_status: "RUN",
-          other_info: [
-            {
-              key: "dsp_type",
-              value: "0",
-            },
-            {
-              key: "dsp_cores",
-              value: "181",
-            },
-          ],
-        },
-        {
-          id: 0,
-          name: "FPGA_00",
-          device_type: "fpga",
-          parent_id: 0,
-          upstream_id: 0,
-          device_status: "RUN",
-          other_info: [
-            {
-              key: "fpga_type",
-              value: "0",
-            },
-            {
-              key: "fpga_cores",
-              value: "0",
-            },
-          ],
-        },
-        {
-          id: 0,
-          name: "vmc_00@",
-          device_type: "vmc",
-          parent_id: 403,
-          upstream_id: 0,
-          device_status: "RUN",
-          other_info: [
-            {
-              key: "proto_type",
-              value: "85",
-            },
-          ],
-        },
-      ],
+      topoData: [],
       tableData: [
         {
           productName: "任务1-1",
@@ -320,17 +251,26 @@ export default {
   },
   methods: {
     ...mapMutations(["setDisVmc", "setDisArea"]),
-    async getNameOAll() {
+    async getTopoData() {
       const { data } = await getTopoShow();
-      // data = JSON.parse(data)
-      console.log(data);
+      this.topoData = data.data.node || [];
     },
     creatGraph() {
       graph = new Q.Graph(this.$refs.canvas);
       graph.editable = true;
       graph.enableRectangleSelectionByRightButton = true;
     },
-    createNode(graph, image, x, y, name, group, randomFlag, nodesType) {
+    createNode(
+      graph,
+      image,
+      x,
+      y,
+      name,
+      group,
+      randomFlag,
+      nodesType,
+      otherInfo
+    ) {
       var node = graph.createNode(name, x, y);
       if (image) {
         if (Q.isString(image)) {
@@ -348,6 +288,30 @@ export default {
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
       node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
       node.nodesType = nodesType;
+      node.moreInfo = otherInfo;
+      return node;
+    },
+    createNode_center(graph, image, x, y, name, group, randomFlag, nodesType) {
+      var node = graph.createNode(name, x, y);
+      if (image) {
+        if (Q.isString(image)) {
+          image = image;
+        }
+        node.image = image;
+      }
+      node.size = { height: 20 };
+      if (group) {
+        group.addChild(node);
+      }
+      node.randomAble = false;
+      node.setStyle(Q.Styles.SHAPE_FILL_COLOR, "#9bcfee");
+      node.setStyle(Q.Styles.SHAPE_STROKE_STYLE, "#9bcfee");
+      node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
+      node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
+      node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
+      node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
+      node.nodesType = null;
+      node.zIndex = 999;
       return node;
     },
     createEdgeForAngle(graph, a, b, angle) {
@@ -585,7 +549,12 @@ export default {
         graph,
         tempobj.assistantPoints
       );
-      let allsw = this.drawSwAndOthers(graph, tempobj.newarr, tempobj.newop);
+      let allsw = this.drawSwAndOthers(
+        graph,
+        tempobj.vmcArrEnd,
+        tempobj.rtuArrEnd
+      );
+      console.log(allsw);
       let ends = this.drawEdgeForSw(
         graph,
         allsw.nodesOfsw,
@@ -711,24 +680,49 @@ export default {
       };
     },
     dealWithDataXY() {
-      let incomeSwForOp = [
-        { name: "a1", id: 10011 },
-        { name: "b1", id: 10021 },
-        { name: "c1", id: 10031 },
-        { name: "d1", id: 10041 },
-        { name: "e1", id: 10051 },
-        { name: "f1", id: 10061 },
-        { name: "g1", id: 10061 },
-      ];
-      let incomeSwForCal = [
-        { name: "a", id: 1001 },
-        { name: "b", id: 1002 },
-        { name: "c", id: 1003 },
-        { name: "d", id: 1004 },
-        { name: "e", id: 1005 },
-        { name: "f", id: 1006 },
-        { name: "g", id: 1006 },
-      ];
+      const swArr = [];
+      const vmcArr = [];
+      const rtuArr = [];
+      const otherArr = [];
+      let allswData = this.topoData.map((item, index) => {
+        if (item.device_type === "sw") {
+          swArr.push(item);
+        } else if (item.device_type === "vmc") {
+          vmcArr.push(item);
+        } else if (item.device_type === "rtu") {
+          rtuArr.push(item);
+        } else {
+          otherArr.push(item);
+        }
+      });
+      let swIdForrtu = [];
+      rtuArr.map((item) => {
+        if (!swIdForrtu.includes(item.upstream_id)) {
+          swIdForrtu.push(item.upstream_id);
+        }
+      });
+      let swForRtu = [];
+      let swForVmc = [];
+      swArr.map((item) => {
+        if (!swIdForrtu.includes(item.id)) {
+          swForVmc.push(item);
+        } else {
+          swForRtu.push(item);
+        }
+      });
+      // console.log(swForRtu, swForVmc);
+      let incomeSwForOp = [];
+      let incomeSwForCal = [];
+      let flag = true;
+      if (swForVmc.length >= swForRtu.length) {
+        incomeSwForCal = swForVmc;
+        incomeSwForOp = swForRtu;
+        flag = true;
+      } else {
+        incomeSwForCal = swForRtu;
+        incomeSwForOp = swForVmc;
+        flag = false;
+      }
       let baseLeftX = 0;
       let baseLeftY = 0;
       let baseRightTopX = 0;
@@ -830,7 +824,18 @@ export default {
           );
         }
       });
-      return { newarr, newop, assistantPoints };
+      if (flag) {
+        return {
+          vmcArrEnd: newarr,
+          rtuArrEnd: newop,
+          assistantPoints,
+        };
+      }
+      return {
+        vmcArrEnd: newop,
+        rtuArrEnd: newarr,
+        assistantPoints,
+      };
     },
     dealWithDeviceXY(data) {
       const endObj = {};
@@ -927,7 +932,8 @@ export default {
       let mostleftpoint = line1[0];
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
-      let centerNode = this.createNode(graph, inswsvg, 0, 0);
+      let sheapcenter = Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, 15, 15, 1, 1);
+      let centerNode = this.createNode_center(graph, sheapcenter, 0, 0);
       let line1Edge = null;
       let line2Edge = null;
       let line3Edge = null;
@@ -947,7 +953,7 @@ export default {
             line1Edge.lineTo(item.x, item.y);
           }
         });
-        line1Edge.lineTo(-50, 0);
+        line1Edge.lineTo(0, 0);
       }
       if (mostrightToppoint) {
         let rightTopNode = this.createNode(
@@ -965,7 +971,7 @@ export default {
             line2Edge.lineTo(item.x, item.y);
           }
         });
-        line2Edge.lineTo(30, 20);
+        line2Edge.lineTo(0, 0);
       }
       if (mostrightBottompoint) {
         let rightBottomNode = this.createNode(
@@ -983,12 +989,12 @@ export default {
             line3Edge.lineTo(item.x, item.y);
           }
         });
-        line3Edge.lineTo(30, -20);
+        line3Edge.lineTo(0, 0);
       }
       return { line1Edge, line2Edge, line3Edge };
     },
-    drawSwAndOthers(graph, swArr, otherArr, busObj) {
-      let tempsarr = swArr.map((item) => {
+    drawSwAndOthers(graph, vmcSWArr, rtuSWArr, busObj) {
+      let tempsarr = vmcSWArr.map((item) => {
         if (item.x <= 0) {
           item.y = item.y * -1;
         } else {
@@ -1000,7 +1006,7 @@ export default {
         }
         return item;
       });
-      let tempsarr_ = otherArr.map((item) => {
+      let tempsarr_ = rtuSWArr.map((item) => {
         if (item.x <= 0) {
           item.y = item.y * -1;
           item.x = item.x + 40;
@@ -1014,6 +1020,7 @@ export default {
         }
         return item;
       });
+      console.log(tempsarr, tempsarr_);
       let nodesOfsw = tempsarr.map((item) => {
         return this.createNode(
           graph,
@@ -1023,7 +1030,8 @@ export default {
           null,
           null,
           null,
-          "SW"
+          "SW",
+          item
         );
       });
       let nodesOfOther = tempsarr_.map((item) => {
@@ -1035,7 +1043,8 @@ export default {
           null,
           null,
           null,
-          "SW"
+          "SW",
+          item
         );
       });
       return { nodesOfsw, nodesOfOther };
@@ -1095,157 +1104,184 @@ export default {
       });
       return endline;
     },
-    darwTemp(graph, allArrSw, otherArrSw) {
-      let nodesOfvmc = allArrSw.map((item, index) => {
+    darwTemp(graph, vmcArrSw, rtuArrSw) {
+      let nodesOfvmc = vmcArrSw.map((item, index) => {
         if (item.x <= 0) {
-          let tempsnow = this.createNode(
-            graph,
-            imgvmc,
-            item.x - 100,
-            item.y + 50,
-            null,
-            null,
-            null,
-            "VMC"
-          );
-          let tempsnow1 = this.createNode(
-            graph,
-            imgvmc,
-            item.x - 100,
-            item.y + 110,
-            null,
-            null,
-            null,
-            "VMC"
-          );
-          let tempsnow_1 = this.createNode(
-            graph,
-            imgcpu,
-            item.x - 250,
-            item.y + 50,
-            null,
-            null,
-            null,
-            "CPU"
-          );
-          let tempsnow_2 = this.createNode(
-            graph,
-            imggpu,
-            item.x - 250,
-            item.y + 130,
-            null,
-            null,
-            null,
-            "GPU"
-          );
-          let tempsnow_3 = this.createNode(
-            graph,
-            imgdsp,
-            item.x - 250,
-            item.y + 210,
-            null,
-            null,
-            null,
-            "DSP"
-          );
-          let tempsnow_4 = this.createNode(
-            graph,
-            imgfgpa,
-            item.x - 250,
-            item.y + 290,
-            null,
-            null,
-            null,
-            "FPGA"
-          );
-          this.createEdge(graph, tempsnow, item);
-          this.createEdge(graph, tempsnow1, item);
+          let tempy = 50;
+          let getRelevanceVmc = [];
+          this.topoData.map((itemnow) => {
+            if (
+              itemnow.upstream_id === item.moreInfo.id &&
+              itemnow.device_type === "vmc"
+            ) {
+              getRelevanceVmc.push({
+                ...itemnow,
+                x: item.x - 100,
+                y: item.y + tempy,
+              });
+              tempy = tempy + 60;
+            }
+          });
+          getRelevanceVmc.map((vmcitem) => {
+            return this.createNode(
+              graph,
+              imgvmc,
+              vmcitem.x,
+              vmcitem.y,
+              null,
+              null,
+              null,
+              "VMC"
+            );
+          });
+          // let tempsnow = this.createNode(
+          //   graph,
+          //   imgvmc,
+          //   item.x - 100,
+          //   item.y + 50,
+          //   null,
+          //   null,
+          //   null,
+          //   "VMC"
+          // );
+          // let tempsnow1 = this.createNode(
+          //   graph,
+          //   imgvmc,
+          //   item.x - 100,
+          //   item.y + 110,
+          //   null,
+          //   null,
+          //   null,
+          //   "VMC"
+          // );
+          // let tempsnow_1 = this.createNode(
+          //   graph,
+          //   imgcpu,
+          //   item.x - 250,
+          //   item.y + 50,
+          //   null,
+          //   null,
+          //   null,
+          //   "CPU"
+          // );
+          // let tempsnow_2 = this.createNode(
+          //   graph,
+          //   imggpu,
+          //   item.x - 250,
+          //   item.y + 130,
+          //   null,
+          //   null,
+          //   null,
+          //   "GPU"
+          // );
+          // let tempsnow_3 = this.createNode(
+          //   graph,
+          //   imgdsp,
+          //   item.x - 250,
+          //   item.y + 210,
+          //   null,
+          //   null,
+          //   null,
+          //   "DSP"
+          // );
+          // let tempsnow_4 = this.createNode(
+          //   graph,
+          //   imgfgpa,
+          //   item.x - 250,
+          //   item.y + 290,
+          //   null,
+          //   null,
+          //   null,
+          //   "FPGA"
+          // );
+          // this.createEdge(graph, tempsnow, item);
+          // this.createEdge(graph, tempsnow1, item);
           if (index % 2 === 0) {
-            this.createEdge(graph, tempsnow_1, tempsnow1);
-            this.createEdge(graph, tempsnow_2, tempsnow1);
-            this.createEdge(graph, tempsnow_3, tempsnow1);
-            this.createEdge(graph, tempsnow_4, tempsnow1);
+            // this.createEdge(graph, tempsnow_1, tempsnow1);
+            // this.createEdge(graph, tempsnow_2, tempsnow1);
+            // this.createEdge(graph, tempsnow_3, tempsnow1);
+            // this.createEdge(graph, tempsnow_4, tempsnow1);
           } else {
-            this.createEdge(graph, tempsnow_1, tempsnow);
-            this.createEdge(graph, tempsnow_2, tempsnow);
-            this.createEdge(graph, tempsnow_3, tempsnow);
-            this.createEdge(graph, tempsnow_4, tempsnow);
+            // this.createEdge(graph, tempsnow_1, tempsnow);
+            // this.createEdge(graph, tempsnow_2, tempsnow);
+            // this.createEdge(graph, tempsnow_3, tempsnow);
+            // this.createEdge(graph, tempsnow_4, tempsnow);
           }
-          return tempsnow;
+          // return tempsnow;
         } else {
-          if (item.y > 0) {
-            let tempsnow_ = this.createNode(
-              graph,
-              imgvmc,
-              item.x - 150,
-              item.y,
-              null,
-              null,
-              null,
-              "VMC"
-            );
-            let tempsnow_1 = this.createNode(
-              graph,
-              imgcpu,
-              item.x - 250,
-              item.y,
-              null,
-              null,
-              null,
-              "CPU"
-            );
-            let tempsnow_2 = this.createNode(
-              graph,
-              imggpu,
-              item.x - 250,
-              item.y + 80,
-              null,
-              null,
-              null,
-              "GPU"
-            );
-            let tempsnow_3 = this.createNode(
-              graph,
-              imgdsp,
-              item.x - 250,
-              item.y + 160,
-              null,
-              null,
-              null,
-              "DSP"
-            );
-            let tempsnow_4 = this.createNode(
-              graph,
-              imgfgpa,
-              item.x - 250,
-              item.y + 240,
-              null,
-              null,
-              null,
-              "FPGA"
-            );
-            this.createEdge(graph, tempsnow_1, tempsnow_);
-            this.createEdge(graph, tempsnow_2, tempsnow_);
-            this.createEdge(graph, tempsnow_3, tempsnow_);
-            this.createEdge(graph, tempsnow_4, tempsnow_);
-            this.createEdge(graph, tempsnow_, item);
-            return tempsnow_;
-          } else {
-            let tempsnow_ = this.createNode(
-              graph,
-              imgvmc,
-              item.x - 150,
-              item.y,
-              null,
-              null,
-              null,
-              "VMC"
-            );
-            this.createEdge(graph, tempsnow_, item);
-          }
+          // if (item.y > 0) {
+          //   let tempsnow_ = this.createNode(
+          //     graph,
+          //     imgvmc,
+          //     item.x - 150,
+          //     item.y,
+          //     null,
+          //     null,
+          //     null,
+          //     "VMC"
+          //   );
+          //   let tempsnow_1 = this.createNode(
+          //     graph,
+          //     imgcpu,
+          //     item.x - 250,
+          //     item.y,
+          //     null,
+          //     null,
+          //     null,
+          //     "CPU"
+          //   );
+          //   let tempsnow_2 = this.createNode(
+          //     graph,
+          //     imggpu,
+          //     item.x - 250,
+          //     item.y + 80,
+          //     null,
+          //     null,
+          //     null,
+          //     "GPU"
+          //   );
+          //   let tempsnow_3 = this.createNode(
+          //     graph,
+          //     imgdsp,
+          //     item.x - 250,
+          //     item.y + 160,
+          //     null,
+          //     null,
+          //     null,
+          //     "DSP"
+          //   );
+          //   let tempsnow_4 = this.createNode(
+          //     graph,
+          //     imgfgpa,
+          //     item.x - 250,
+          //     item.y + 240,
+          //     null,
+          //     null,
+          //     null,
+          //     "FPGA"
+          //   );
+          //   this.createEdge(graph, tempsnow_1, tempsnow_);
+          //   this.createEdge(graph, tempsnow_2, tempsnow_);
+          //   this.createEdge(graph, tempsnow_3, tempsnow_);
+          //   this.createEdge(graph, tempsnow_4, tempsnow_);
+          //   this.createEdge(graph, tempsnow_, item);
+          //   return tempsnow_;
+          // } else {
+          //   let tempsnow_ = this.createNode(
+          //     graph,
+          //     imgvmc,
+          //     item.x - 150,
+          //     item.y,
+          //     null,
+          //     null,
+          //     null,
+          //     "VMC"
+          //   );
+          //   this.createEdge(graph, tempsnow_, item);
+          // }
         }
       });
-      let nodesOfother = otherArrSw.map((item, index) => {
+      let nodesOfother = rtuArrSw.map((item, index) => {
         if (item.x <= 0) {
           let tempsnow_1 = this.createNode(
             graph,
@@ -1398,12 +1434,11 @@ export default {
       this.loading = false;
       setTimeout(() => {
         this.drawAllCanvas();
-        this.dealWithDataXY();
       }, 500);
     }, 2000);
   },
   created() {
-    this.getNameOAll();
+    this.getTopoData();
   },
 };
 </script>
