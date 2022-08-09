@@ -1122,8 +1122,8 @@ export default {
               tempy = tempy + 60;
             }
           });
-          getRelevanceVmc.map((vmcitem) => {
-            return this.createNode(
+          let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+            let tempnode = this.createNode(
               graph,
               imgvmc,
               vmcitem.x,
@@ -1131,9 +1131,15 @@ export default {
               null,
               null,
               null,
-              "VMC"
+              "VMC",
+              vmcitem
             );
+            this.createEdge(graph, tempnode, item);
+            return tempnode;
           });
+          // let opArr = vmcArr1.map((vmcnode) => {
+
+          // });
           // let tempsnow = this.createNode(
           //   graph,
           //   imgvmc,
