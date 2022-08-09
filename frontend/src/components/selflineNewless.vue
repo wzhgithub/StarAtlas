@@ -12,7 +12,7 @@
 <script>
 // import text from "@/assets/data/linejson.json";
 export default {
-  props: ["value", "color", "inref"],
+  props: ["value", "color", "inref", "indexNow"],
   name: "selflineNewless",
   data() {
     return {
@@ -53,7 +53,7 @@ export default {
           },
         },
         legend: {
-          data: ["aline", "line", "bar", "line_"],
+          data: ["峰值算力", "峰值带宽", "bar", "line_"],
           textStyle: {
             color: "#ccc",
           },
@@ -76,7 +76,7 @@ export default {
         },
         series: [
           {
-            name: "aline",
+            name: "峰值算力",
             type: "line",
             smooth: true,
             showAllSymbol: true,
@@ -88,7 +88,7 @@ export default {
             },
           },
           {
-            name: "line",
+            name: "峰值带宽",
             type: "line",
             smooth: true,
             showAllSymbol: true,
@@ -160,7 +160,9 @@ export default {
   mounted() {
     const that = this;
     setTimeout(() => {
-      that.setDatanow();
+      if (that.indexNow !== 1) {
+        that.setDatanow();
+      }
       that.drawEcharts();
     }, 500);
   },

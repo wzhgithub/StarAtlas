@@ -20,8 +20,10 @@
           <a class="nav_btn">详情页</a>
           <ul class="drop-down-content">
             <template v-for="(item, index) in vmcs">
-              <li @click="changeRoute('details')">
-                <router-link class="nav_btn_" :to="`/details/${item.id}`"> {{item.name || `vmc-${index}`}}</router-link>
+              <li :key="item.id" @click="changeRoute('details')">
+                <router-link class="nav_btn_" :to="`/details/${item.id}`">
+                  {{ item.name || `vmc-${index}` }}</router-link
+                >
               </li>
             </template>
             <!-- <li @click="changeRoute('details')">
@@ -86,8 +88,13 @@ export default {
     async getNameOAll() {
       const { data } = await getTopoShow();
       if (data.code == 0) {
-        this.vmcs = data.data.node.filter((item) => {return item.device_type == "vmc"})
-                                  .sort((a, b) => {return a.id - b.id});
+        this.vmcs = data.data.node
+          .filter((item) => {
+            return item.device_type == "vmc";
+          })
+          .sort((a, b) => {
+            return a.id - b.id;
+          });
       }
     },
   },

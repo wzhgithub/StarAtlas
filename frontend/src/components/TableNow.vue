@@ -1,6 +1,10 @@
 <template>
   <div style="width: 100%; height: 100%">
-    <el-table class="tableList" :data="reallData" style="width: 100%">
+    <el-table
+      class="tableList"
+      :data="indexNow !== 1 ? reallData : []"
+      style="width: 100%"
+    >
       <template v-for="(item, index, nub) in reallData[0]">
         <el-table-column
           width="245"
@@ -165,7 +169,7 @@
 <script>
 export default {
   name: "TableNow",
-  props: {},
+  props: ["indexNow"],
   data() {
     return {
       initMt: 0,

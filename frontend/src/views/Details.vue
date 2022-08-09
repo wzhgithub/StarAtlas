@@ -138,9 +138,15 @@
             <div v-show="asidvisiber[0]" class="aside_box">
               <CpuInfo :cpuNow="cpu" />
             </div>
-            <div v-show="asidvisiber[1]" class="aside_box"></div>
-            <div v-show="asidvisiber[2]" class="aside_box"></div>
-            <div v-show="asidvisiber[3]" class="aside_box"></div>
+            <div v-show="asidvisiber[1]" class="aside_box">
+              <GpuInfo />
+            </div>
+            <div v-show="asidvisiber[2]" class="aside_box">
+              <DspInfo />
+            </div>
+            <div v-show="asidvisiber[3]" class="aside_box">
+              <FpgaInfo />
+            </div>
             <div class="aside_box_line_bar">
               <p class="title">
                 <span>机器历史状况</span>
@@ -171,6 +177,9 @@ import "@/lib/main.css";
 import "@/lib/jquerysctipttop.css";
 
 import CpuInfo from "@/components/CpuInfo.vue";
+import GpuInfo from "@/components/GpuInfo.vue";
+import DspInfo from "@/components/DspInfo.vue";
+import FpgaInfo from "@/components/FpgaInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import topNumber from "@/components/topNumber.vue";
@@ -179,6 +188,9 @@ export default {
   name: "details",
   components: {
     CpuInfo,
+    GpuInfo,
+    DspInfo,
+    FpgaInfo,
     selflineNew,
     scrolltable,
     topNumber,
@@ -406,6 +418,7 @@ export default {
         padding: 2%;
         box-sizing: border-box;
         .mian_bottom_main_box {
+          position: relative;
           width: 100%;
           height: 100%;
           background: url("../assets/png/deallitle.png") no-repeat center;
@@ -491,10 +504,11 @@ export default {
   }
 }
 .h3_title {
+  position: absolute;
   color: aqua;
   font-size: 2rem;
   font-weight: 700;
-  margin-top: -1.5rem;
-  margin-left: 40%;
+  bottom: 0.8%;
+  left: 40%;
 }
 </style>

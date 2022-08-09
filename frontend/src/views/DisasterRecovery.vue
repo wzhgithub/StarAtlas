@@ -32,11 +32,14 @@
               <p class="title">
                 <span>相关指标</span>
               </p>
-              <div class="content">
+              <div class="content" style="width: 100%; height: 80%">
                 <el-carousel :interval="5000" class="carousel" trigger="click">
                   <el-carousel-item v-for="item in 3" :key="item">
                     <div class="canvasbox" :id="`linebox_${item}`">
-                      <selflineNewless :inref="`linebox_${item}`" />
+                      <selflineNewless
+                        :inref="`linebox_${item}`"
+                        :indexNow="item"
+                      />
                     </div>
                   </el-carousel-item>
                 </el-carousel>
@@ -45,9 +48,20 @@
             </div>
           </div>
           <div style="width: 100%; height: 40%">
-            <div class="topboxforcanvas">
-              <p class="title">
+            <div class="topboxforcanvas_3">
+              <p class="title_3">
                 <span>迁移日志</span>
+              </p>
+              <p class="logp">
+                [当前线路]：整机迁移任务1002, From: Vmc1, To:Vmc2
+              </p>
+              <p class="logp">[迁移开始时间]：2022/8/7 22:38:56</p>
+              <p class="logp">==============================================</p>
+              <p class="logp">
+                [迁移完成]：整机迁移任务1002, From: Vmc1, To:Vmc2
+              </p>
+              <p class="logp">
+                [迁移完成时间]：整机迁移任务1002 2022/8/7 22:42:18
               </p>
               <!-- <div class="boxforcanvas" ref="canvas"></div> -->
             </div>
@@ -62,8 +76,8 @@
       >
         <el-col :span="24" style="width: 100%; height: 100%">
           <div style="width: 100%; height: 100%">
-            <div class="topboxforcanvas">
-              <p class="title">
+            <div class="topboxforcanvas_">
+              <p class="title_2">
                 <span>{{ `Vmc-${Nowindex}` }}相关任务</span>
               </p>
               <div class="content">
@@ -79,7 +93,11 @@
                     style="height: 100%"
                   >
                     <div style="height: 100%">
-                      <TableNow style="height: 90%" />
+                      <TableNow
+                        style="height: 90%"
+                        :key="item"
+                        :indexNow="item"
+                      />
                     </div>
                   </el-carousel-item>
                 </el-carousel>
@@ -491,7 +509,7 @@ export default {
     width: 100%;
     color: azure;
     background: url("../assets/png/part_title.png") no-repeat center;
-    background-size: 100% 100%;
+    background-size: 100% 2rem;
     padding-left: 12%;
     margin: 1%;
     box-sizing: border-box;
@@ -500,7 +518,61 @@ export default {
       height: 100%;
       width: 90%;
       font-size: 1.3rem;
-      padding-top: 5px;
+      padding-top: -1%;
+    }
+  }
+  .title_1 {
+    display: block;
+    height: 15%;
+    width: 100%;
+    color: azure;
+    background: url("../assets/png/part_title.png") no-repeat center;
+    background-size: 100% 2rem;
+    padding-left: 12%;
+    margin: 1%;
+    box-sizing: border-box;
+    span {
+      display: inline-block;
+      height: 100%;
+      width: 90%;
+      font-size: 1.3rem;
+      padding-top: 0.3%;
+    }
+  }
+  .title_2 {
+    display: block;
+    height: 15%;
+    width: 100%;
+    color: azure;
+    background: url("../assets/png/part_title.png") no-repeat center;
+    background-size: 100% 2rem;
+    padding-left: 8%;
+    // margin: 1%;
+    box-sizing: border-box;
+    span {
+      display: inline-block;
+      height: 100%;
+      width: 90%;
+      font-size: 1.3rem;
+      padding-top: 0.3%;
+    }
+  }
+  .title_3 {
+    display: block;
+    height: 25%;
+    width: 100%;
+    color: azure;
+    background: url("../assets/png/part_title.png") no-repeat center;
+    background-size: 100% 2rem;
+    padding-left: 12%;
+    // margin: 1%;
+    box-sizing: border-box;
+    span {
+      display: inline-block;
+      height: 100%;
+      width: 90%;
+      font-size: 1.3rem;
+      padding-top: 0.3%;
     }
   }
   .content {
@@ -515,17 +587,20 @@ export default {
       }
       .canvasbox {
         width: 100%;
-        height: 100%;
+        height: 70%;
       }
     }
   }
-  .topboxforcanvas {
-    padding: 1.7%;
+  .topboxforcanvas_ {
+    margin-top: 24px;
+    padding-top: 0.5%;
     width: 100%;
-    height: 100%;
+    height: 90%;
     background: url("../assets/newpng/tableborder_.png") no-repeat center;
-    background-size: 100% 100%;
+    background-size: 104% 100%;
     box-sizing: border-box;
+    background-position-x: -15px;
+    overflow: hidden;
     .title {
       height: 8%;
       line-height: 8%;
@@ -533,6 +608,43 @@ export default {
     .boxforcanvas {
       height: 92%;
       width: 100%;
+    }
+  }
+  .topboxforcanvas {
+    padding: 1%;
+    width: 100%;
+    height: 100%;
+    background: url("../assets/newpng/tableborder_.png") no-repeat center;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+    // .title {
+    //   height: 8%;
+    //   line-height: 8%;
+    // }
+    .boxforcanvas {
+      height: 92%;
+      width: 100%;
+    }
+  }
+  .topboxforcanvas_3 {
+    padding-top: 0px;
+    width: 100%;
+    height: 100%;
+    background: url("../assets/newpng/tableborder_.png") no-repeat center;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+    // .title {
+    //   height: 8%;
+    //   line-height: 8%;
+    // }
+    .boxforcanvas {
+      height: 92%;
+      width: 100%;
+    }
+    .logp {
+      padding-left: 24px;
+      color: aliceblue;
+      margin: 0;
     }
   }
   .middleboxfortask {
