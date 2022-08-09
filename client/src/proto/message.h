@@ -67,7 +67,7 @@ public:
       default: break;
     }
   }
-  void setPartition(std::shared_ptr< vector<Partition> >& _parts) { m_partitions = _parts; }
+  void setPartition(std::shared_ptr< vector<Partition> > _parts) { m_partitions = _parts; }
 
 public:
   void init(uint8_t idx, uint8_t idx_exchange, uint16_t mem, uint16_t disk, const char* name = nullptr);

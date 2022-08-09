@@ -102,6 +102,7 @@ int main(int argc, char* argv[]) {
   bool _bflag = false;
   //cout << "hello: " << _vmc.size() << endl;
 
+  map<string, std::shared_ptr< vector<Partition> >> _parts_map;
   vector<TeleMessage> _msg_arr;
   srand((unsigned)time(NULL));
   for (size_t h=0; h<_vmc.size(); h++) {
@@ -163,16 +164,21 @@ int main(int argc, char* argv[]) {
     string _local_filename_task = (_doc.HasMember("tasks")?
       sCurPath + string(_doc["tasks"].GetString()):
     _filename_task);
-    rapidjson::Document _tdoc;
-    if (!parse(_local_filename_task.c_str(), _tdoc)) {
-      exit(-1);
+    auto it = _parts_map.find(_local_filename_task);
+    if (it==_parts_map.end()) {
+      std::shared_ptr< vector<Partition> > _parts(new vector<Partition>());
+      rapidjson::Document _tdoc;
+      if (!parse(_local_filename_task.c_str(), _tdoc)) {
+        exit(-1);
+      }
+      int _n_part = parsePartition(_tdoc, _parts);
+      if (!_n_part) {
+        cerr << "warning: empty tasks." <<endl;
+      }
+      _parts_map[ _local_filename_task ] = _parts;
     }
-    int _n_part = parsePartition(_tdoc, _msg.getPartition());
-    if (!_n_part) {
-      cerr << "warning: empty tasks." <<endl;
-    }
-    _msg.setTotalPartition(_n_part);
-
+    it = _parts_map.find(_local_filename_task);
+    _msg.setPartition(it->second);
     _msg_arr.emplace_back(_msg); 
   }
 
@@ -208,6 +214,14 @@ int main(int argc, char* argv[]) {
 
   bool _bFillTaskGroup = false;
   for (int _loop = 0; max_loop==0 || _loop < max_loop; _loop++) {
+    // update task
+    for (auto &v: _parts_map) {
+      std::shared_ptr< vector<Partition> > _parts = v.second;
+      for (auto& _part: *_parts) {
+        _part.updateTask();
+      }
+    }
+
     for (size_t h=0; h<_msg_arr.size(); h++) {
       TeleMessage& _msg = _msg_arr[h];
        _msg.updateRandom();

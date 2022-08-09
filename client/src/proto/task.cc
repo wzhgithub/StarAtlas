@@ -35,7 +35,7 @@ void Task::init(uint16_t idx, uint8_t typ, uint8_t status, uint8_t stt, const ch
 }
 
 void Task::updateTask(uint32_t exe_time, uint8_t ret_code) {
-  m_exe_time = exe_time;
+  m_exe_time += exe_time;
   m_ret_code = ret_code;
 }
 
@@ -128,4 +128,44 @@ bool Partition::parseTask(const rapidjson::Value& _document) {
   }
   m_total_task = (uint8_t)m_tasks.size();
   return true;
+}
+
+void Partition::updateTask(uint16_t _interval) {
+  // update Partition
+  m_duration += _interval;
+  
+  // select runing task
+  for (auto& _task: m_tasks) {
+    if (_task.m_status==1) {  // executing
+      uint8_t _status[] = {
+        0, 1, 2, 3, 0xFF
+      };
+      _task.m_status = _status[random()%( sizeof(_status)/sizeof(uint8_t) )];
+      if (_task.m_status==1) {
+        _task.updateTask(_interval, 2); // ret_code==2, normal
+        return; // continue executing
+      } else if (_task.m_status==0) { // finished job
+        uint8_t _ret[] = {0,1,2};
+        _task.updateTask(_interval, _ret[ random() % sizeof(_ret)]);
+      }
+      break;
+    }
+  }
+
+  // select task to run
+  for (auto& _task: m_tasks) {
+    if (_task.m_status==0) {  // executing
+      _task.m_status = 1;
+      _task.updateTask(0, 2);
+      break;
+    }
+  }
+
+  // select sleep, block task
+  for (auto& _task: m_tasks) {
+    if (_task.m_status==2 || _task.m_status==3) {  // executing
+      _task.m_status = 0;
+      break;
+    }
+  }
 }

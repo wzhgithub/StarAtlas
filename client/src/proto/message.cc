@@ -48,7 +48,7 @@ uint16_t TeleMessage::getSize() {
   
   // partition
   m_size += 1;
-  std::shared_ptr< vector<Partition> > _parts = m_partitions->lock();
+  std::shared_ptr< vector<Partition> > _parts = m_partitions.lock();
   for (size_t h=0; _parts && h<_parts->size(); h++) {
     m_size += (18+12*(*_parts)[h].task_count());
   } 
@@ -115,7 +115,7 @@ int TeleMessage::pack(char* buf) {
     }
   }
 
-  std::shared_ptr< vector<Partition> > _parts = m_partitions->lock();
+  std::shared_ptr< vector<Partition> > _parts = m_partitions.lock();
   uint8_t m_total_partition = _parts?_parts->size():0;
   ((uint8_t*)p++)[0] = m_total_partition;
   for (int i=0; i<m_total_partition; i++) {
@@ -181,6 +181,7 @@ void TeleMessage::updateRandom() {
   for (size_t h=0; h<sizeof(anDevice)/sizeof(int); h++) {
     if (anDevice[h]==0) continue;
 
+    ptotal_rate[h][0] = 0;
     for (size_t j=0; j<anDevice[h]; j++, idx++) {
       Device& _dev = m_devices[idx];
       uint8_t _rate = random() % 101;
