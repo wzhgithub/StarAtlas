@@ -247,6 +247,19 @@ export default {
         },
       ],
       allSwXY: [],
+      imgObg: {
+        vmc: imgvmc,
+        sw: inswsvg,
+        sw_c: imgsw,
+        cpu: imgcpu,
+        gpu: imggpu,
+        dsp: imgdsp,
+        fpga: imgfgpa,
+        rtu_0: imgop1,
+        rtu_1: imgop2,
+        rtu_2: imgop3,
+        rtu_3: imgop4,
+      },
     };
   },
   methods: {
@@ -1107,7 +1120,7 @@ export default {
     darwTemp(graph, vmcArrSw, rtuArrSw) {
       let nodesOfvmc = vmcArrSw.map((item, index) => {
         if (item.x <= 0) {
-          let tempy = 50;
+          let tempy = 80;
           let getRelevanceVmc = [];
           this.topoData.map((itemnow) => {
             if (
@@ -1119,7 +1132,7 @@ export default {
                 x: item.x - 100,
                 y: item.y + tempy,
               });
-              tempy = tempy + 60;
+              tempy = tempy + 100;
             }
           });
           let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
@@ -1137,263 +1150,278 @@ export default {
             this.createEdge(graph, tempnode, item);
             return tempnode;
           });
-          // let opArr = vmcArr1.map((vmcnode) => {
-
-          // });
-          // let tempsnow = this.createNode(
-          //   graph,
-          //   imgvmc,
-          //   item.x - 100,
-          //   item.y + 50,
-          //   null,
-          //   null,
-          //   null,
-          //   "VMC"
-          // );
-          // let tempsnow1 = this.createNode(
-          //   graph,
-          //   imgvmc,
-          //   item.x - 100,
-          //   item.y + 110,
-          //   null,
-          //   null,
-          //   null,
-          //   "VMC"
-          // );
-          // let tempsnow_1 = this.createNode(
-          //   graph,
-          //   imgcpu,
-          //   item.x - 250,
-          //   item.y + 50,
-          //   null,
-          //   null,
-          //   null,
-          //   "CPU"
-          // );
-          // let tempsnow_2 = this.createNode(
-          //   graph,
-          //   imggpu,
-          //   item.x - 250,
-          //   item.y + 130,
-          //   null,
-          //   null,
-          //   null,
-          //   "GPU"
-          // );
-          // let tempsnow_3 = this.createNode(
-          //   graph,
-          //   imgdsp,
-          //   item.x - 250,
-          //   item.y + 210,
-          //   null,
-          //   null,
-          //   null,
-          //   "DSP"
-          // );
-          // let tempsnow_4 = this.createNode(
-          //   graph,
-          //   imgfgpa,
-          //   item.x - 250,
-          //   item.y + 290,
-          //   null,
-          //   null,
-          //   null,
-          //   "FPGA"
-          // );
-          // this.createEdge(graph, tempsnow, item);
-          // this.createEdge(graph, tempsnow1, item);
-          if (index % 2 === 0) {
-            // this.createEdge(graph, tempsnow_1, tempsnow1);
-            // this.createEdge(graph, tempsnow_2, tempsnow1);
-            // this.createEdge(graph, tempsnow_3, tempsnow1);
-            // this.createEdge(graph, tempsnow_4, tempsnow1);
-          } else {
-            // this.createEdge(graph, tempsnow_1, tempsnow);
-            // this.createEdge(graph, tempsnow_2, tempsnow);
-            // this.createEdge(graph, tempsnow_3, tempsnow);
-            // this.createEdge(graph, tempsnow_4, tempsnow);
-          }
-          // return tempsnow;
+          let opArr = vmcArr1.map((vmcnode) => {
+            let tempx = 100;
+            let getRelevanceCal = [];
+            this.topoData.map((itemnow) => {
+              if (
+                itemnow.parent_id === vmcnode.moreInfo.id &&
+                itemnow.device_type !== "vmc" &&
+                itemnow.device_type !== "sw" &&
+                itemnow.device_type !== "rtu"
+              ) {
+                getRelevanceCal.push({
+                  ...itemnow,
+                  x: vmcnode.x - tempx,
+                  y: vmcnode.y + 50,
+                });
+                tempx = tempx + 100;
+              }
+            });
+            let calArr1 = getRelevanceCal.map((calitem) => {
+              let tempnodes = this.createNode(
+                graph,
+                this.imgObg[calitem.device_type],
+                calitem.x,
+                calitem.y,
+                null,
+                null,
+                null,
+                calitem.device_type,
+                calitem
+              );
+              let tempedge = this.createEdge(graph, tempnodes, vmcnode);
+              tempedge.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+              return tempnodes;
+            });
+          });
         } else {
-          // if (item.y > 0) {
-          //   let tempsnow_ = this.createNode(
-          //     graph,
-          //     imgvmc,
-          //     item.x - 150,
-          //     item.y,
-          //     null,
-          //     null,
-          //     null,
-          //     "VMC"
-          //   );
-          //   let tempsnow_1 = this.createNode(
-          //     graph,
-          //     imgcpu,
-          //     item.x - 250,
-          //     item.y,
-          //     null,
-          //     null,
-          //     null,
-          //     "CPU"
-          //   );
-          //   let tempsnow_2 = this.createNode(
-          //     graph,
-          //     imggpu,
-          //     item.x - 250,
-          //     item.y + 80,
-          //     null,
-          //     null,
-          //     null,
-          //     "GPU"
-          //   );
-          //   let tempsnow_3 = this.createNode(
-          //     graph,
-          //     imgdsp,
-          //     item.x - 250,
-          //     item.y + 160,
-          //     null,
-          //     null,
-          //     null,
-          //     "DSP"
-          //   );
-          //   let tempsnow_4 = this.createNode(
-          //     graph,
-          //     imgfgpa,
-          //     item.x - 250,
-          //     item.y + 240,
-          //     null,
-          //     null,
-          //     null,
-          //     "FPGA"
-          //   );
-          //   this.createEdge(graph, tempsnow_1, tempsnow_);
-          //   this.createEdge(graph, tempsnow_2, tempsnow_);
-          //   this.createEdge(graph, tempsnow_3, tempsnow_);
-          //   this.createEdge(graph, tempsnow_4, tempsnow_);
-          //   this.createEdge(graph, tempsnow_, item);
-          //   return tempsnow_;
-          // } else {
-          //   let tempsnow_ = this.createNode(
-          //     graph,
-          //     imgvmc,
-          //     item.x - 150,
-          //     item.y,
-          //     null,
-          //     null,
-          //     null,
-          //     "VMC"
-          //   );
-          //   this.createEdge(graph, tempsnow_, item);
-          // }
+          if (item.y > 0) {
+            let tempy = 80;
+            let getRelevanceVmc = [];
+            this.topoData.map((itemnow) => {
+              if (
+                itemnow.upstream_id === item.moreInfo.id &&
+                itemnow.device_type === "vmc"
+              ) {
+                getRelevanceVmc.push({
+                  ...itemnow,
+                  x: item.x - 100,
+                  y: item.y + tempy,
+                });
+                tempy = tempy + 100;
+              }
+            });
+            let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+              let tempnode = this.createNode(
+                graph,
+                imgvmc,
+                vmcitem.x,
+                vmcitem.y,
+                null,
+                null,
+                null,
+                "VMC",
+                vmcitem
+              );
+              this.createEdge(graph, tempnode, item);
+              return tempnode;
+            });
+            let opArr = vmcArr1.map((vmcnode) => {
+              let tempx = 100;
+              let getRelevanceCal = [];
+              this.topoData.map((itemnow) => {
+                if (
+                  itemnow.parent_id === vmcnode.moreInfo.id &&
+                  itemnow.device_type !== "vmc" &&
+                  itemnow.device_type !== "sw" &&
+                  itemnow.device_type !== "rtu"
+                ) {
+                  getRelevanceCal.push({
+                    ...itemnow,
+                    x: vmcnode.x - tempx,
+                    y: vmcnode.y + 50,
+                  });
+                  tempx = tempx + 100;
+                }
+              });
+              let calArr1 = getRelevanceCal.map((calitem) => {
+                let tempnodes = this.createNode(
+                  graph,
+                  this.imgObg[calitem.device_type],
+                  calitem.x,
+                  calitem.y,
+                  null,
+                  null,
+                  null,
+                  calitem.device_type,
+                  calitem
+                );
+                let tempedge = this.createEdge(graph, tempnodes, vmcnode);
+                tempedge.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+                return tempnodes;
+              });
+            });
+          } else {
+            let tempy = 80;
+            let getRelevanceVmc = [];
+            this.topoData.map((itemnow) => {
+              if (
+                itemnow.upstream_id === item.moreInfo.id &&
+                itemnow.device_type === "vmc"
+              ) {
+                getRelevanceVmc.push({
+                  ...itemnow,
+                  x: item.x + 100,
+                  y: item.y - tempy,
+                });
+                tempy = tempy + 100;
+              }
+            });
+            let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+              let tempnode = this.createNode(
+                graph,
+                imgvmc,
+                vmcitem.x,
+                vmcitem.y,
+                null,
+                null,
+                null,
+                "VMC",
+                vmcitem
+              );
+              this.createEdge(graph, tempnode, item);
+              return tempnode;
+            });
+            let opArr = vmcArr1.map((vmcnode) => {
+              let tempx = 100;
+              let getRelevanceCal = [];
+              this.topoData.map((itemnow) => {
+                if (
+                  itemnow.parent_id === vmcnode.moreInfo.id &&
+                  itemnow.device_type !== "vmc" &&
+                  itemnow.device_type !== "sw" &&
+                  itemnow.device_type !== "rtu"
+                ) {
+                  getRelevanceCal.push({
+                    ...itemnow,
+                    x: vmcnode.x + tempx,
+                    y: vmcnode.y - 50,
+                  });
+                  tempx = tempx + 100;
+                }
+              });
+              let calArr1 = getRelevanceCal.map((calitem) => {
+                let tempnodes = this.createNode(
+                  graph,
+                  this.imgObg[calitem.device_type],
+                  calitem.x,
+                  calitem.y,
+                  null,
+                  null,
+                  null,
+                  calitem.device_type,
+                  calitem
+                );
+                let tempedge = this.createEdge(graph, tempnodes, vmcnode);
+                tempedge.edgeType = Q.Consts.EDGE_TYPE_VERTICAL_HORIZONTAL;
+                return tempnodes;
+              });
+            });
+          }
         }
       });
       let nodesOfother = rtuArrSw.map((item, index) => {
         if (item.x <= 0) {
-          let tempsnow_1 = this.createNode(
-            graph,
-            imgop1,
-            item.x + 120,
-            item.y,
-            null,
-            null,
-            null,
-            "OP1"
-          );
-          let tempsnow_2 = this.createNode(
-            graph,
-            imgop2,
-            item.x + 120,
-            item.y - 80,
-            null,
-            null,
-            null,
-            "OP2"
-          );
-          let tempsnow_3 = this.createNode(
-            graph,
-            imgop3,
-            item.x + 120,
-            item.y - 160,
-            null,
-            null,
-            null,
-            "OP3"
-          );
-          let tempsnow_4 = this.createNode(
-            graph,
-            imgop4,
-            item.x + 120,
-            item.y - 240,
-            null,
-            null,
-            null,
-            "OP4"
-          );
-          this.createEdge(graph, tempsnow_1, item);
-          this.createEdge(graph, tempsnow_2, item);
-          this.createEdge(graph, tempsnow_3, item);
-          this.createEdge(graph, tempsnow_4, item);
-          return tempsnow_1;
+          let tempy = 80;
+          let getRelevanceRtu = [];
+          this.topoData.map((itemnow) => {
+            if (
+              itemnow.upstream_id === item.moreInfo.id &&
+              itemnow.device_type === "rtu"
+            ) {
+              getRelevanceRtu.push({
+                ...itemnow,
+                x: item.x + 100,
+                y: item.y - tempy,
+              });
+              tempy = tempy + 100;
+            }
+          });
+          let rtuArr1 = getRelevanceRtu.map((rtuItem) => {
+            let tempnode = this.createNode(
+              graph,
+              this.imgObg[
+                `${rtuItem.device_type}_${rtuItem.other_info[0].value[0]}`
+              ],
+              rtuItem.x,
+              rtuItem.y,
+              null,
+              null,
+              null,
+              rtuItem.device_type,
+              rtuItem
+            );
+            this.createEdge(graph, tempnode, item);
+            return tempnode;
+          });
         } else {
           if (item.y <= 0) {
-            let tempsnow_1 = this.createNode(
-              graph,
-              imgop1,
-              item.x + 120,
-              item.y,
-              null,
-              null,
-              null,
-              "OP1"
-            );
-            let tempsnow_2 = this.createNode(
-              graph,
-              imgop2,
-              item.x + 120,
-              item.y + 80,
-              null,
-              null,
-              null,
-              "OP2"
-            );
-            let tempsnow_3 = this.createNode(
-              graph,
-              imgop3,
-              item.x + 120,
-              item.y + 160,
-              null,
-              null,
-              null,
-              "OP3"
-            );
-            let tempsnow_4 = this.createNode(
-              graph,
-              imgop4,
-              item.x + 120,
-              item.y + 240,
-              null,
-              null,
-              null,
-              "OP4"
-            );
-            this.createEdge(graph, tempsnow_1, item);
-            this.createEdge(graph, tempsnow_2, item);
-            this.createEdge(graph, tempsnow_3, item);
-            this.createEdge(graph, tempsnow_4, item);
-            return tempsnow_1;
+            let tempy = 80;
+            let getRelevanceRtu = [];
+            this.topoData.map((itemnow) => {
+              if (
+                itemnow.upstream_id === item.moreInfo.id &&
+                itemnow.device_type === "rtu"
+              ) {
+                getRelevanceRtu.push({
+                  ...itemnow,
+                  x: item.x - 100,
+                  y: item.y - tempy,
+                });
+                tempy = tempy + 80;
+              }
+            });
+            let rtuArr1 = getRelevanceRtu.map((rtuItem) => {
+              let tempnode = this.createNode(
+                graph,
+                this.imgObg[
+                  `${rtuItem.device_type}_${rtuItem.other_info[0].value[0]}`
+                ],
+                rtuItem.x,
+                rtuItem.y,
+                null,
+                null,
+                null,
+                rtuItem.device_type,
+                rtuItem
+              );
+              this.createEdge(graph, tempnode, item);
+              return tempnode;
+            });
           } else {
-            let tempsnow_2 = this.createNode(
-              graph,
-              imgop2,
-              item.x - 120,
-              item.y,
-              null,
-              null,
-              null,
-              "OP2"
-            );
-            this.createEdge(graph, tempsnow_2, item);
-            return tempsnow_2;
+            let tempy = 80;
+            let getRelevanceRtu = [];
+            this.topoData.map((itemnow) => {
+              if (
+                itemnow.upstream_id === item.moreInfo.id &&
+                itemnow.device_type === "rtu"
+              ) {
+                getRelevanceRtu.push({
+                  ...itemnow,
+                  x: item.x + 100,
+                  y: item.y - tempy,
+                });
+                tempy = tempy + 80;
+              }
+            });
+            let rtuArr1 = getRelevanceRtu.map((rtuItem) => {
+              let tempnode = this.createNode(
+                graph,
+                this.imgObg[
+                  `${rtuItem.device_type}_${rtuItem.other_info[0].value[0]}`
+                ],
+                rtuItem.x,
+                rtuItem.y,
+                null,
+                null,
+                null,
+                rtuItem.device_type,
+                rtuItem
+              );
+              this.createEdge(graph, tempnode, item);
+              return tempnode;
+            });
           }
         }
       });
