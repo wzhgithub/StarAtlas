@@ -19,17 +19,18 @@
         <li :class="activenow === 'details' ? 'drop-down active' : 'drop-down'">
           <a class="nav_btn">详情页</a>
           <ul class="drop-down-content">
-            <li @click="changeRoute('details')">
-              <router-link class="nav_btn_" to="/details"> vmc1 </router-link>
+            <template v-for="(item, index) in vmcs">
+              <li :key="item.id" @click="changeRoute('details')">
+                <router-link class="nav_btn_" :to="`/details/${item.id}`">
+                  {{ item.name || `vmc-${index}` }}</router-link
+                >
+              </li>
+            </template>
+            <!-- <li @click="changeRoute('details')">
+              <router-link class="nav_btn_" to="/details/100"> vmc1 </router-link>
             </li>
             <li @click="changeRoute('details')">
-              <router-link class="nav_btn_" to="/details"> vmc2 </router-link>
-            </li>
-            <!-- <li>
-              <router-link class="nav_btn_" to="/about">vmc3</router-link>
-            </li>
-            <li>
-              <router-link class="nav_btn_" to="/about">vmc4</router-link>
+              <router-link class="nav_btn_" to="/details/160"> vmc2 </router-link>
             </li> -->
           </ul>
         </li>
@@ -71,16 +72,30 @@
 </template>
 <script>
 import "@/lib/qunee-min.js";
+import { getTopoShow } from "@/api";
 export default {
   data() {
     return {
       activenow: "home",
+      vmcs: [],
     };
   },
   methods: {
     changeRoute(key) {
       this.activenow = key;
       console.log(this.activenow);
+    },
+    async getNameOAll() {
+      const { data } = await getTopoShow();
+      if (data.code == 0) {
+        this.vmcs = data.data.node
+          .filter((item) => {
+            return item.device_type == "vmc";
+          })
+          .sort((a, b) => {
+            return a.id - b.id;
+          });
+      }
     },
   },
   mounted() {
@@ -96,6 +111,9 @@ export default {
     if (this.$route.path === "/details") {
       this.activenow = "details";
     }
+  },
+  created() {
+    this.getNameOAll();
   },
 };
 </script>
@@ -188,7 +206,7 @@ ul {
 .drop-down-content {
   opacity: 0;
   height: 0;
-  overflow: hidden;
+  // overflow: hidden;
   transition: all 1s ease;
 }
 

@@ -138,9 +138,15 @@
             <div v-show="asidvisiber[0]" class="aside_box">
               <CpuInfo :cpuNow="cpu" />
             </div>
-            <div v-show="asidvisiber[1]" class="aside_box"></div>
-            <div v-show="asidvisiber[2]" class="aside_box"></div>
-            <div v-show="asidvisiber[3]" class="aside_box"></div>
+            <div v-show="asidvisiber[1]" class="aside_box">
+              <GpuInfo />
+            </div>
+            <div v-show="asidvisiber[2]" class="aside_box">
+              <DspInfo />
+            </div>
+            <div v-show="asidvisiber[3]" class="aside_box">
+              <FpgaInfo />
+            </div>
             <div class="aside_box_line_bar">
               <p class="title">
                 <span>机器历史状况</span>
@@ -171,13 +177,20 @@ import "@/lib/main.css";
 import "@/lib/jquerysctipttop.css";
 
 import CpuInfo from "@/components/CpuInfo.vue";
+import GpuInfo from "@/components/GpuInfo.vue";
+import DspInfo from "@/components/DspInfo.vue";
+import FpgaInfo from "@/components/FpgaInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import topNumber from "@/components/topNumber.vue";
+import { getVMCData } from "@/api";
 export default {
   name: "details",
   components: {
     CpuInfo,
+    GpuInfo,
+    DspInfo,
+    FpgaInfo,
     selflineNew,
     scrolltable,
     topNumber,
@@ -199,6 +212,16 @@ export default {
       topdata: [20, 86, 73, 67, 78],
       cpu: {
         name: "",
+        cpuuseage: 70,
+        canuse: 12,
+        used: 80,
+        computeuseage: 60,
+        canuse_: 1200,
+        alluse_: 2400,
+        canusecore: 8,
+        allcore: 32,
+        canusemb: 1024,
+        allmb: 10240,
       },
       tableData: [
         {
@@ -259,6 +282,25 @@ export default {
     };
   },
   methods: {
+    async getTopData() {
+      const { data } = await getVMCData(this.$route.params.id);
+      console.log(data);
+      this.topdata = [data.data.memory_usage, data.data.total_disk_usage,
+              data.data.total_cpu_usage, data.data.total_gpu_usage, data.data.total_dsp_usage];
+      this.cpu = {
+        name: "cpu",
+        cpuuseage: data.data.total_cpu_usage,
+        canuse: 100 - data.data.total_cpu_usage,
+        used: data.data.total_cpu_usage,
+        computeuseage: 32768 / 32768.0 * 100,
+        alluse_: 32768,
+        canuse_: 32768 - data.data.cpu_set[0].int_computing_power,
+        canusecore: data.data.cpu_number,
+        allcore: data.data.cpu_number,
+        canusemb: data.data.total_memory * (100 - data.data.memory_usage) / 100,
+        allmb: data.data.total_memory
+      }
+    },
     dealWithTypeClick(num) {
       // this.asidvisiber = [false,false,false,false]
       let arr = [false, false, false, false];
@@ -327,14 +369,15 @@ export default {
   mounted() {
     let that = this;
     setInterval(() => {
-      that.topdata = [
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-        that.randomRange(0, 100),
-      ];
-    }, 1000);
+      that.getTopData();
+      // that.topdata = [
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      //   that.randomRange(0, 100),
+      // ];
+    }, 5000);
     this.drawall();
   },
 };
@@ -375,6 +418,7 @@ export default {
         padding: 2%;
         box-sizing: border-box;
         .mian_bottom_main_box {
+          position: relative;
           width: 100%;
           height: 100%;
           background: url("../assets/png/deallitle.png") no-repeat center;
@@ -460,10 +504,11 @@ export default {
   }
 }
 .h3_title {
+  position: absolute;
   color: aqua;
   font-size: 2rem;
   font-weight: 700;
-  margin-top: -1.5rem;
-  margin-left: 40%;
+  bottom: 0.8%;
+  left: 40%;
 }
 </style>
