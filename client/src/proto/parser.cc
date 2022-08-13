@@ -155,7 +155,7 @@ int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ, 
   return n_xpu;
 }
 
-int parsePartition(rapidjson::Document& _document, vector<Partition>& _parts) {
+int parsePartition(rapidjson::Document& _document, std::shared_ptr< vector<Partition> > _parts) {
  if (!_document.IsArray()) {
     std::cerr << "Invalid partition." << std::endl;
     return 0;
@@ -187,7 +187,7 @@ int parsePartition(rapidjson::Document& _document, vector<Partition>& _parts) {
       return 0;
     }
 
-    _parts.emplace_back(std::move(_part));
+    _parts->emplace_back(std::move(_part));
     n_part++;
   }
   return n_part;
