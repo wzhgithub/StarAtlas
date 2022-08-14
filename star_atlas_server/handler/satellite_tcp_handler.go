@@ -260,6 +260,7 @@ func handlePbMsg(msg *pb.Msg) error {
 
 func handleKeyboardMessage(msg *pb.Msg) error {
 	keyName := strings.ToLower(string(msg.GetData()))
+	keyName = strings.Trim(keyName, "\n")
 	ori, err := basePolar.OperationByKey(keyName)
 	if err != nil {
 		return err
