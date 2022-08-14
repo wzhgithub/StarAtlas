@@ -68,6 +68,8 @@ func (o *Polar) OperationByKey(keyName string) (*OrbitNormal, error) {
 		o.Phi += cStep
 	case "d":
 		o.Phi -= cStep
+	default:
+		return nil, fmt.Errorf("keyName not supported: %s", keyName)
 	}
 
 	orb := &OrbitNormal{
@@ -233,7 +235,7 @@ func handleMsg(conn net.Conn, data []byte) {
 	}
 	glog.Infof("go Unmarshal tcp Msg: %v\n", msg)
 	if err = handlePbMsg(msg); err != nil {
-		glog.Errorf("go handlePbMsg: %v\n", err)
+		glog.Errorf("go handlePbMsg failed err: %v\n", err)
 		return
 	}
 }
@@ -269,7 +271,7 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 	if err != nil {
 		return err
 	}
-	glog.Infof("key:%s OrbitNormal is :%v\n", keyName, oMsg)
+	glog.Infof("key:%s OrbitNormal:%v\n", keyName, oMsg)
 	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
 		return err
 	}
