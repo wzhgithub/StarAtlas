@@ -287,7 +287,7 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 
 func handlePic() error {
 	idx := rand.Intn(13) + 1
-	imageName := fmt.Sprintf("image%d.jpeg", idx)
+	imageName := fmt.Sprintf("image%d", idx)
 	msg := &pb.ShowPicture{
 		Name: imageName,
 	}
