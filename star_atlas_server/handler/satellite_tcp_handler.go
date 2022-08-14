@@ -268,6 +268,7 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 	if err != nil {
 		return err
 	}
+	glog.Infof("key:%s OrbitNormal is :%v\n", keyName, oMsg)
 	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
 		return err
 	}
