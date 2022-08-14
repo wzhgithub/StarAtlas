@@ -3,6 +3,8 @@ package handler
 import (
 	"encoding/binary"
 	"fmt"
+	"math"
+	"math/rand"
 	"net"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
@@ -13,6 +15,21 @@ import (
 )
 
 var conn net.Conn
+
+const cBufferSize = 4096 * 1000
+const cStep = math.Pi / 36 // 5 dgree
+
+var basePolar = &Polar{
+	Theta: 0,
+	Phi:   0,
+	R:     1,
+}
+
+type Polar struct {
+	Theta float64
+	Phi   float64
+	R     float64
+}
 
 type ToProto interface {
 	ToProto() (proto.Message, error)
@@ -31,6 +48,38 @@ type Coordinate struct {
 
 type OrbitCoordinate struct {
 	Coordinates []*Coordinate `json:"coordinates"`
+}
+
+func (o *Polar) OperationByKey(keyName string) (*OrbitNormal, error) {
+	/**
+	x = sin(theta)*cos(phi) 0
+	y = sin(theta)*sin(phi) 0
+	z = cos(theta)  1
+	theta = 0
+	phi = 0
+	*/
+
+	switch keyName {
+	case "W":
+		o.Theta += cStep
+	case "S":
+		o.Theta -= cStep
+	case "A":
+		o.Phi += cStep
+	case "D":
+		o.Phi -= cStep
+	default:
+		return nil, fmt.Errorf("keyName not supported: %s", keyName)
+	}
+	glog.Infof("basePolar: %v\n", o)
+
+	orb := &OrbitNormal{
+		X: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Cos(o.Phi)),
+		Z: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Sin(o.Phi)),
+		Y: float32(o.R) * float32(math.Cos(o.Theta)),
+	}
+
+	return orb, nil
 }
 
 func (O *OrbitCoordinate) GetType() (pb.MsgType, error) {
@@ -155,7 +204,7 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 	}
 	glog.Infof("Connected to %s", conn.LocalAddr().String())
 	for {
-		data := make([]byte, 4096*1000)
+		data := make([]byte, cBufferSize)
 		n, err := conn.Read(data)
 		if err != nil {
 			// glog.Errorf("Error reading %s: %v\n", conn.LocalAddr().String(), err)
@@ -174,6 +223,10 @@ func handleMsg(conn net.Conn, data []byte) {
 	}()
 	l := binary.BigEndian.Uint32(data[0:4])
 	glog.Infof("received start:%d end:%d\n", 4, 4+l)
+	if l > cBufferSize {
+		glog.Warningf("received out of range data len:%d buffer:%d\n", l, cBufferSize)
+		return
+	}
 	msgData := data[4 : 4+l]
 	msg := &pb.Msg{}
 	err := proto.Unmarshal(msgData, msg)
@@ -182,6 +235,73 @@ func handleMsg(conn net.Conn, data []byte) {
 		return
 	}
 	glog.Infof("go Unmarshal tcp Msg: %v\n", msg)
+	if err = handlePbMsg(msg); err != nil {
+		glog.Errorf("go handlePbMsg failed err: %v\n", err)
+		return
+	}
+}
+
+func handlePbMsg(msg *pb.Msg) error {
+	switch msg.GetType() {
+	case pb.MsgType_ApiSpeech:
+		res, err := recogniteByType(msg.Data, 16000, 1, 2, CSpeechType)
+		if err != nil {
+			return err
+		}
+		glog.Infof("received speech from server %v\n", res)
+		if res.StatusCode != 200 {
+			return fmt.Errorf(res.StatucMesaage)
+		}
+		glog.Infof("received speech word %v\n", res.Result)
+		return parseWAVCmd(res.Result)
+	case pb.MsgType_ApiKeyboard:
+		return handleKeyboardMessage(msg)
+	}
+
+	return nil
+}
+
+func handleKeyboardMessage(msg *pb.Msg) error {
+	k := &pb.Key{}
+	if err := proto.Unmarshal(msg.GetData(), k); err != nil {
+		return err
+	}
+	if k.GetName() == "Return" {
+		return handlePic()
+	}
+	ori, err := basePolar.OperationByKey(k.GetName())
+	if err != nil {
+		return err
+	}
+	oMsg, err := ori.ToProto()
+	if err != nil {
+		return err
+	}
+	glog.Infof("key:%v OrbitNormal:%v\n", k, oMsg)
+	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func handlePic() error {
+	idx := rand.Intn(13) + 1
+	imageName := fmt.Sprintf("image%d", idx)
+	msg := &pb.ShowPicture{
+		Name: imageName,
+	}
+	glog.Infof("pic data msg:%v\n", msg)
+	err := sendMsg(conn, pb.MsgType_ApiShowPicture, msg)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func parseWAVCmd(result interface{}) error {
+
+	return nil
 }
 
 func sendMsg(conn net.Conn, msgType pb.MsgType, msg proto.Message) error {
