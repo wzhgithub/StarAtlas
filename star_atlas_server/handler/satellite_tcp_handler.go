@@ -7,7 +7,6 @@ import (
 	"net"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -71,6 +70,7 @@ func (o *Polar) OperationByKey(keyName string) (*OrbitNormal, error) {
 	default:
 		return nil, fmt.Errorf("keyName not supported: %s", keyName)
 	}
+	glog.Infof("basePolar: %v\n", o)
 
 	orb := &OrbitNormal{
 		X: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Cos(o.Phi)),
@@ -261,11 +261,11 @@ func handlePbMsg(msg *pb.Msg) error {
 }
 
 func handleKeyboardMessage(msg *pb.Msg) error {
-	keyName := strings.ToLower(string(msg.GetData()))
-	keyName = strings.Trim(keyName, "\n")
-	keyName = strings.Trim(keyName, "\x01")
-	keyName = keyName[len(keyName)-1:]
-	ori, err := basePolar.OperationByKey(keyName)
+	k := &pb.Key{}
+	if err := proto.Unmarshal(msg.GetData(), k); err != nil {
+		return err
+	}
+	ori, err := basePolar.OperationByKey(k.GetName())
 	if err != nil {
 		return err
 	}
@@ -273,7 +273,7 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 	if err != nil {
 		return err
 	}
-	glog.Infof("key:%s OrbitNormal:%v\n", keyName, oMsg)
+	glog.Infof("key:%v OrbitNormal:%v\n", k, oMsg)
 	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
 		return err
 	}
