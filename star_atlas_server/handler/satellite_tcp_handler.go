@@ -263,6 +263,8 @@ func handlePbMsg(msg *pb.Msg) error {
 func handleKeyboardMessage(msg *pb.Msg) error {
 	keyName := strings.ToLower(string(msg.GetData()))
 	keyName = strings.Trim(keyName, "\n")
+	keyName = strings.Trim(keyName, "\x01")
+	keyName = keyName[len(keyName)-1:]
 	ori, err := basePolar.OperationByKey(keyName)
 	if err != nil {
 		return err
