@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"star_atlas_server/config"
 
 	"github.com/gin-gonic/gin"
@@ -27,6 +28,20 @@ func recogniteByType(wavData []byte, frameRate int, channels int, byteWidth int,
 			"Too long wave sample byte length:", len(wavData),
 			"the max length is", cWavDataMaxLength)
 	}
+	file, err := os.OpenFile(
+		"test.vaw",
+		os.O_WRONLY|os.O_TRUNC|os.O_CREATE,
+		0777,
+	)
+	if err != nil {
+		glog.Errorf("open file failed: %v\n", err)
+	}
+	defer file.Close()
+	bLen, err := file.Write(wavData)
+	if err != nil {
+		glog.Errorf("write file failed: %v\n", err)
+	}
+	glog.Infof("Got writer bytes: %v\n", bLen)
 
 	requestBody := common.AsrtAPISpeechRequest{
 		Samples:    common.BytesToBase64(wavData),
