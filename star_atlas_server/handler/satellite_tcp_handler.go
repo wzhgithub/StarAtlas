@@ -14,6 +14,8 @@ import (
 
 var conn net.Conn
 
+const cBufferSize = 4096 * 1000
+
 type ToProto interface {
 	ToProto() (proto.Message, error)
 }
@@ -155,7 +157,7 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 	}
 	glog.Infof("Connected to %s", conn.LocalAddr().String())
 	for {
-		data := make([]byte, 4096*1000)
+		data := make([]byte, cBufferSize)
 		n, err := conn.Read(data)
 		if err != nil {
 			// glog.Errorf("Error reading %s: %v\n", conn.LocalAddr().String(), err)
@@ -174,6 +176,10 @@ func handleMsg(conn net.Conn, data []byte) {
 	}()
 	l := binary.BigEndian.Uint32(data[0:4])
 	glog.Infof("received start:%d end:%d\n", 4, 4+l)
+	if l > cBufferSize {
+		glog.Warningf("received out of range data len:%d buffer:%d\n", l, cBufferSize)
+		return
+	}
 	msgData := data[4 : 4+l]
 	msg := &pb.Msg{}
 	err := proto.Unmarshal(msgData, msg)
@@ -182,6 +188,33 @@ func handleMsg(conn net.Conn, data []byte) {
 		return
 	}
 	glog.Infof("go Unmarshal tcp Msg: %v\n", msg)
+	if err = handlePbMsg(msg); err != nil {
+		glog.Errorf("go handlePbMsg: %v\n", err)
+		return
+	}
+}
+
+func handlePbMsg(msg *pb.Msg) error {
+	switch msg.Type {
+	case pb.MsgType_ApiSpeech:
+		res, err := recogniteByType(msg.Data, 16000, 1, 16, CSpeechType)
+		if err != nil {
+			return err
+		}
+		glog.Infof("received speech from server %v\n", res)
+		if res.StatusCode != 200 {
+			return fmt.Errorf(res.StatucMesaage)
+		}
+		glog.Infof("received speech word %v\n", res.Result)
+		return parseCmd(res.Result)
+	}
+
+	return nil
+}
+
+func parseCmd(result interface{}) error {
+
+	return nil
 }
 
 func sendMsg(conn net.Conn, msgType pb.MsgType, msg proto.Message) error {
