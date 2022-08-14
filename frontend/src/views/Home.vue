@@ -49,25 +49,25 @@
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">VMC数量</div>
-                    <div class="mainNub">2</div>
+                    <div class="mainNub">{{vmc_num}}</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">CPU数量</div>
-                    <div class="mainNub">4</div>
+                    <div class="toptitle">计算单元</div>
+                    <div class="mainNub">{{cpu_num}}</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">内存大小</div>
-                    <div class="mainNub">256G</div>
+                    <div class="toptitle">远置单元</div>
+                    <div class="mainNub">{{rtu_num}}</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">磁盘大小</div>
-                    <div class="mainNub">1T</div>
+                    <div class="toptitle">交换机</div>
+                    <div class="mainNub">{{switch_num}}</div>
                   </div>
                 </el-col>
               </el-row>
@@ -136,6 +136,7 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 import "@/lib/loaders.min.css";
+import { getTopoShow } from "@/api";
 
 export default {
   name: "Home",
@@ -143,15 +144,46 @@ export default {
     // HelloWorld,
   },
   data() {
-    return {
+    return { 
       loading: true,
+      vmc_num: 0,
+      cpu_num: 0,
+      rtu_num: 0,
+      switch_num: 0,
     };
   },
-  methods: {},
+  methods: {
+    async getNameOAll() {
+      const { data } = await getTopoShow();
+      if (data.code == 0) {
+        this.vmc_num = 0;
+        this.cpu_num = 0;
+        this.rtu_num = 0;
+        this.switch_num = 0;
+        this.vmcs = data.data.node
+          .map((item) => {
+            // return item.device_type == "vmc" || item.device_type == "cpu";
+            if (item.device_type == "vmc") {
+              this.vmc_num += 1;
+            } else if (item.device_type == "sw") {
+              this.switch_num += 1;
+            } else if (item.device_type == "rtu") {
+              this.rtu_num += 1;
+            } else {
+              this.cpu_num += item.other_info[0].value.length;
+            }
+            return item;
+          });
+        // console.log(this.vmcs);
+      }
+    }
+  },
   mounted() {
+    let that = this;
     setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+      that.loading = false;
+      that.getNameOAll();
+    }, 3000);
   },
 
   created() {},

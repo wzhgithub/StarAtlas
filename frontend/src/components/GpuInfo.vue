@@ -1,7 +1,8 @@
 <template>
   <div class="gpu_info_box">
     <p class="title_gpu">
-      <span>{{ this.cpuNow.name || "GPU信息详情" }}</span>
+      <span>{{ this.gpuNow.name || "GPU信息详情" }}</span>
+      <!-- <span>{{ "GPU信息详情" }}</span> -->
     </p>
     <el-row class="content">
       <el-col :span="8" class="content_col">
@@ -23,11 +24,17 @@
       </el-col>
       <el-col :span="16" class="content_col">
         <div class="right_part">
-          <p>设备ID：2000034</p>
+          <!-- <p>设备ID：2000034</p>
           <p>设备状态：就绪</p>
           <p>当前可用算力：2376</p>
           <p>设备类型：NVIDIA RTX1660</p>
-          <p>设备温度：34°C</p>
+          <p>设备温度：34°C</p> -->
+          <p>设备类型: {{nowdata.type}}</p>
+          <p>设备状态: {{nowdata.status}}</p>
+          <p>GPU核数: {{nowdata.cores}}</p>
+          <p>浮点算力: {{nowdata.float_power}}</p>
+          <p>GPU利用率: {{nowdata.usage}}%</p>
+          <p>显存利用率: {{nowdata.memory_usage}}%</p>
         </div>
       </el-col>
     </el-row>
@@ -46,27 +53,29 @@ export default {
     countTo,
   },
   props: {
-    cpuNow: {
+    gpuNow: {
       type: Object,
-      default: function () {
-        return {};
-      },
+      name: "",
+      // default: function () {
+      //   return {};
+      // },
     },
   },
   data() {
     return {
-      nowdata: {
-        cpuuseage: 70,
-        canuse: 12,
-        used: 80,
-        computeuseage: 60,
-        canuse_: 1200,
-        alluse_: 2400,
-        canusecore: 8,
-        allcore: 32,
-        canusemb: 1024,
-        allmb: 10240,
-      },
+      deviceType: "GPU",
+      // nowdata: {
+      //   cpuuseage: 70,
+      //   canuse: 12,
+      //   used: 80,
+      //   computeuseage: 60,
+      //   canuse_: 1200,
+      //   alluse_: 2400,
+      //   canusecore: 8,
+      //   allcore: 32,
+      //   canusemb: 1024,
+      //   allmb: 10240,
+      // },
     };
   },
   methods: {
@@ -75,22 +84,27 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
   },
+  computed: {
+    nowdata: function() {
+      return {...this.gpuNow}
+    }
+  },
   mounted() {
     let that = this;
-    setInterval(() => {
-      that.nowdata = {
-        cpuuseage: that.randomRange(0, 100),
-        canuse: that.randomRange(0, 100),
-        used: that.randomRange(0, 100),
-        computeuseage: that.randomRange(0, 100),
-        canuse_: that.randomRange(1000, 1600),
-        alluse_: that.randomRange(2000, 3600),
-        canusecore: that.randomRange(0, 16),
-        allcore: 32,
-        canusemb: that.randomRange(100, 1024),
-        allmb: 1024,
-      };
-    }, 3000);
+    // setInterval(() => {
+    //   that.nowdata = {
+    //     cpuuseage: that.randomRange(0, 100),
+    //     canuse: that.randomRange(0, 100),
+    //     used: that.randomRange(0, 100),
+    //     computeuseage: that.randomRange(0, 100),
+    //     canuse_: that.randomRange(1000, 1600),
+    //     alluse_: that.randomRange(2000, 3600),
+    //     canusecore: that.randomRange(0, 16),
+    //     allcore: 32,
+    //     canusemb: that.randomRange(100, 1024),
+    //     allmb: 1024,
+    //   };
+    // }, 3000);
   },
 };
 </script>
