@@ -74,8 +74,8 @@ func (o *Polar) OperationByKey(keyName string) (*OrbitNormal, error) {
 
 	orb := &OrbitNormal{
 		X: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Cos(o.Phi)),
-		Y: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Sin(o.Phi)),
-		Z: float32(o.R) * float32(math.Cos(o.Theta)),
+		Z: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Sin(o.Phi)),
+		Y: float32(o.R) * float32(math.Cos(o.Theta)),
 	}
 
 	return orb, nil
