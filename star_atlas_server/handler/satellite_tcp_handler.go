@@ -59,13 +59,13 @@ func (o *Polar) OperationByKey(keyName string) (*OrbitNormal, error) {
 	*/
 
 	switch keyName {
-	case "w":
+	case "W":
 		o.Theta += cStep
-	case "s":
+	case "S":
 		o.Theta -= cStep
-	case "a":
+	case "A":
 		o.Phi += cStep
-	case "d":
+	case "D":
 		o.Phi -= cStep
 	default:
 		return nil, fmt.Errorf("keyName not supported: %s", keyName)
