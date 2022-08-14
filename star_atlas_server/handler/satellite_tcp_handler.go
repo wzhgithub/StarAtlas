@@ -3,9 +3,11 @@ package handler
 import (
 	"encoding/binary"
 	"fmt"
+	"math"
 	"net"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -15,6 +17,19 @@ import (
 var conn net.Conn
 
 const cBufferSize = 4096 * 1000
+const cStep = math.Pi / 36 // 5 dgree
+
+var basePolar = &Polar{
+	Theta: 0,
+	Phi:   0,
+	R:     1,
+}
+
+type Polar struct {
+	Theta float64
+	Phi   float64
+	R     float64
+}
 
 type ToProto interface {
 	ToProto() (proto.Message, error)
@@ -33,6 +48,35 @@ type Coordinate struct {
 
 type OrbitCoordinate struct {
 	Coordinates []*Coordinate `json:"coordinates"`
+}
+
+func (o *Polar) OperationByKey(keyName string) (*OrbitNormal, error) {
+	/**
+	x = sin(theta)*cos(phi) 0
+	y = sin(theta)*sin(phi) 0
+	z = cos(theta)  1
+	theta = 0
+	phi = 0
+	*/
+
+	switch keyName {
+	case "w":
+		o.Theta += cStep
+	case "s":
+		o.Theta -= cStep
+	case "a":
+		o.Phi += cStep
+	case "d":
+		o.Phi -= cStep
+	}
+
+	orb := &OrbitNormal{
+		X: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Cos(o.Phi)),
+		Y: float32(o.R) * float32(math.Sin(o.Theta)) * float32(math.Sin(o.Phi)),
+		Z: float32(o.R) * float32(math.Cos(o.Theta)),
+	}
+
+	return orb, nil
 }
 
 func (O *OrbitCoordinate) GetType() (pb.MsgType, error) {
@@ -195,7 +239,7 @@ func handleMsg(conn net.Conn, data []byte) {
 }
 
 func handlePbMsg(msg *pb.Msg) error {
-	switch msg.Type {
+	switch msg.GetType() {
 	case pb.MsgType_ApiSpeech:
 		res, err := recogniteByType(msg.Data, 16000, 1, 16, CSpeechType)
 		if err != nil {
@@ -206,13 +250,32 @@ func handlePbMsg(msg *pb.Msg) error {
 			return fmt.Errorf(res.StatucMesaage)
 		}
 		glog.Infof("received speech word %v\n", res.Result)
-		return parseCmd(res.Result)
+		return parseWAVCmd(res.Result)
+	case pb.MsgType_ApiKeyboard:
+		return handleKeyboardMessage(msg)
 	}
 
 	return nil
 }
 
-func parseCmd(result interface{}) error {
+func handleKeyboardMessage(msg *pb.Msg) error {
+	keyName := strings.ToLower(string(msg.GetData()))
+	ori, err := basePolar.OperationByKey(keyName)
+	if err != nil {
+		return err
+	}
+	oMsg, err := ori.ToProto()
+	if err != nil {
+		return err
+	}
+	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func parseWAVCmd(result interface{}) error {
 
 	return nil
 }
