@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"math"
+	"math/rand"
 	"net"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
@@ -265,6 +266,9 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 	if err := proto.Unmarshal(msg.GetData(), k); err != nil {
 		return err
 	}
+	if k.GetName() == "Return" {
+		return handlePic()
+	}
 	ori, err := basePolar.OperationByKey(k.GetName())
 	if err != nil {
 		return err
@@ -278,6 +282,20 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 		return err
 	}
 
+	return nil
+}
+
+func handlePic() error {
+	idx := rand.Intn(13) + 1
+	imageName := fmt.Sprintf("image%d.jpeg", idx)
+	msg := &pb.ShowPicture{
+		Name: imageName,
+	}
+	glog.Infof("pic data msg:%v\n", msg)
+	err := sendMsg(conn, pb.MsgType_ApiShowPicture, msg)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
