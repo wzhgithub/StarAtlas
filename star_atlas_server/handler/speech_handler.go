@@ -41,7 +41,6 @@ func RecogniteByType(wavData []byte, frameRate int, channels int, byteWidth int,
 	}
 
 	url := fmt.Sprintf("%s/%s", config.CommonConfig.SpeechURL, requestType)
-	glog.Infof("url: %s", url)
 	rspBody, err := common.SendHTTPRequest(url, cPostMethod, byteForm, cContenttype)
 	if err != nil {
 		return nil, err
