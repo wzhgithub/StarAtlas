@@ -244,7 +244,7 @@ func handleMsg(conn net.Conn, data []byte) {
 func handlePbMsg(msg *pb.Msg) error {
 	switch msg.GetType() {
 	case pb.MsgType_ApiSpeech:
-		res, err := recogniteByType(msg.Data, 16000, 1, 2, CSpeechType)
+		res, err := RecogniteByType(msg.Data, 16000, 1, 2, CSpeechType)
 		if err != nil {
 			return err
 		}
