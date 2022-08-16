@@ -1,15 +1,11 @@
 <template>
   <div style="width: 100%; height: 100%">
-    <el-table
-      class="tableList"
-      :data="indexNow !== 1 ? reallData : []"
-      style="width: 100%"
-    >
+    <el-table class="tableList" :data="reallData" style="width: 100%">
       <template v-for="(item, index, nub) in reallData[0]">
         <el-table-column
           width="245"
           :key="index"
-          :label="`分区${nub + 1}`"
+          :label="`分区${item.zone || nub + 1}`"
           align="center"
           type="index"
           :prop="item"
@@ -19,14 +15,14 @@
               <p>任务详情</p>
               <p>任务名: {{ scope.row[index].name }}</p>
               <p>所在分区: {{ scope.row[index].zone }}</p>
-              <p>任务类型: {{ getType(scope.row[index].type) }}</p>
-              <p>任务状态: {{ getStatus(scope.row[index].status) }}</p>
+              <p>任务类型: {{ getType(scope.row[index].task_type) }}</p>
+              <p>任务状态: {{ getStatus(scope.row[index].task_status) }}</p>
               <div slot="reference" class="name-wrapper">
                 {{ scope.row[index].name }}
                 <img
                   v-if="
-                    scope.row[index].type === 'manage' &&
-                    scope.row[index].status === 'running'
+                    scope.row[index].task_type === 2 &&
+                    scope.row[index].task_status === 1
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/manage/running.svg"
@@ -34,8 +30,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'manage' &&
-                    scope.row[index].status === 'block'
+                    scope.row[index].task_type === 2 &&
+                    scope.row[index].task_status === 3
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/manage/block.svg"
@@ -43,8 +39,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'manage' &&
-                    scope.row[index].status === 'ready'
+                    scope.row[index].task_type === 2 &&
+                    scope.row[index].task_status === 0
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/manage/ready.svg"
@@ -52,8 +48,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'manage' &&
-                    scope.row[index].status === 'sleep'
+                    scope.row[index].task_type === 2 &&
+                    scope.row[index].task_status === 2
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/manage/sleep.svg"
@@ -61,8 +57,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'manage' &&
-                    scope.row[index].status === 'uncreated'
+                    scope.row[index].task_type === 2 &&
+                    scope.row[index].task_status === 255
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/manage/uncreated.svg"
@@ -70,8 +66,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'calculation' &&
-                    scope.row[index].status === 'running'
+                    scope.row[index].task_type === 0 &&
+                    scope.row[index].task_status === 1
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/calculation/running.svg"
@@ -79,8 +75,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'calculation' &&
-                    scope.row[index].status === 'block'
+                    scope.row[index].task_type === 0 &&
+                    scope.row[index].task_status === 3
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/calculation/block.svg"
@@ -88,8 +84,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'calculation' &&
-                    scope.row[index].status === 'ready'
+                    scope.row[index].task_type === 0 &&
+                    scope.row[index].task_status === 0
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/calculation/ready.svg"
@@ -97,8 +93,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'calculation' &&
-                    scope.row[index].status === 'sleep'
+                    scope.row[index].task_type === 0 &&
+                    scope.row[index].task_status === 2
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/calculation/sleep.svg"
@@ -106,8 +102,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'calculation' &&
-                    scope.row[index].status === 'uncreated'
+                    scope.row[index].task_type === 0 &&
+                    scope.row[index].task_status === 255
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/calculation/uncreated.svg"
@@ -115,8 +111,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'control' &&
-                    scope.row[index].status === 'running'
+                    scope.row[index].task_type === 1 &&
+                    scope.row[index].task_status === 1
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/control/running.svg"
@@ -124,8 +120,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'control' &&
-                    scope.row[index].status === 'block'
+                    scope.row[index].task_type === 1 &&
+                    scope.row[index].task_status === 3
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/control/block.svg"
@@ -133,8 +129,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'control' &&
-                    scope.row[index].status === 'ready'
+                    scope.row[index].task_type === 1 &&
+                    scope.row[index].task_status === 0
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/control/ready.svg"
@@ -142,8 +138,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'control' &&
-                    scope.row[index].status === 'sleep'
+                    scope.row[index].task_type === 1 &&
+                    scope.row[index].task_status === 2
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/control/sleep.svg"
@@ -151,8 +147,8 @@
                 />
                 <img
                   v-if="
-                    scope.row[index].type === 'control' &&
-                    scope.row[index].status === 'uncreated'
+                    scope.row[index].task_type === 1 &&
+                    scope.row[index].task_status === 255
                   "
                   style="height: 1rem; vertical-align: middle"
                   src="../assets/othericon/control/uncreated.svg"
@@ -167,6 +163,7 @@
   </div>
 </template>
 <script>
+import { getAppInfo } from "../api";
 export default {
   name: "TableNow",
   props: ["indexNow"],
@@ -176,178 +173,87 @@ export default {
       // getPlayData:[],
       visible: true,
       stop: false,
+      rawData: [],
     };
   },
   methods: {
     getType(typeName) {
-      if (typeName === "calculation") {
+      if (typeName === 0) {
         return "计算任务";
       }
-      if (typeName === "control") {
+      if (typeName === 1) {
         return "控制任务";
       }
-      if (typeName === "manage") {
+      if (typeName === 2) {
         return "管理任务";
       }
       return "未知类型";
     },
     getStatus(typestatus) {
-      if (typestatus === "block") {
+      if (typestatus === 3) {
         return "阻塞";
       }
-      if (typestatus === "ready") {
+      if (typestatus === 0) {
         return "就绪";
       }
-      if (typestatus === "running") {
+      if (typestatus === 1) {
         return "运行中";
       }
-      if (typestatus === "sleep") {
+      if (typestatus === 2) {
         return "睡眠";
       }
-      if (typestatus === "uncreated") {
+      if (typestatus === 255) {
         return "未创建";
       }
       return "未知状态";
+    },
+    async getAppInfoData() {
+      let res = await getAppInfo(this.indexNow);
+      this.rawData = res.data.data.apps || [];
     },
   },
   watch: {},
   computed: {
     getPlayData() {},
     reallData() {
-      return [
-        {
-          z_1: {
-            name: "任务7684",
-            zone: "分区一",
-            type: "control",
-            status: "block",
-          },
-          z_2: {
-            name: "任务7634",
-            zone: "分区二",
-            type: "manage",
-            status: "ready",
-          },
-          z_3: {
-            name: "任务76842",
-            zone: "分区三",
-            type: "manage",
-            status: "running",
-          },
-          z_4: {
-            name: "任务768455",
-            zone: "分区四",
-            type: "manage",
-            status: "sleep",
-          },
-          z_5: {
-            name: "任务76823",
-            zone: "分区五",
-            type: "control",
-            status: "uncreated",
-          },
-        },
-        {
-          z_1: {
-            name: "任务7685",
-            zone: "分区一",
-            type: "manage",
-            status: "block",
-          },
-          z_2: {
-            name: "任务7634",
-            zone: "分区二",
-            type: "control",
-            status: "ready",
-          },
-          z_3: {
-            name: "任务76842",
-            zone: "分区三",
-            type: "manage",
-            status: "running",
-          },
-          z_4: {
-            name: "任务768455",
-            zone: "分区四",
-            type: "manage",
-            status: "sleep",
-          },
-          z_5: {
-            name: "任务76823",
-            zone: "分区五",
-            type: "manage",
-            status: "uncreated",
-          },
-        },
-        {
-          z_1: {
-            name: "任务7687",
-            zone: "分区一",
-            type: "manage",
-            status: "block",
-          },
-          z_2: {
-            name: "任务7634",
-            zone: "分区二",
-            type: "manage",
-            status: "ready",
-          },
-          z_3: {
-            name: "任务76842",
-            zone: "分区三",
-            type: "manage",
-            status: "running",
-          },
-          z_4: {
-            name: "任务768455",
-            zone: "分区四",
-            type: "manage",
-            status: "sleep",
-          },
-          z_5: {
-            name: "任务76823",
-            zone: "分区五",
-            type: "manage",
-            status: "uncreated",
-          },
-        },
-        {
-          z_1: {
-            name: "任务7684",
-            zone: "分区一",
-            type: "manage",
-            status: "block",
-          },
-          z_2: {
-            name: "任务7634",
-            zone: "分区二",
-            type: "manage",
-            status: "ready",
-          },
-          z_3: {
-            name: "任务76842",
-            zone: "分区三",
-            type: "manage",
-            status: "running",
-          },
-          z_4: {
-            name: "任务768455",
-            zone: "分区四",
-            type: "manage",
-            status: "sleep",
-          },
-          z_5: {
-            name: "任务76823",
-            zone: "分区五",
-            type: "manage",
-            status: "uncreated",
-          },
-        },
-      ];
+      let endarr = [];
+      let maxAppLength = this.rawData.length;
+      let maxTaskLength = 0;
+      this.rawData.map((item) => {
+        if (item.task_set.length > maxTaskLength) {
+          maxTaskLength = item.task_set.length;
+        }
+      });
+      for (let i = 0; i < maxTaskLength; i++) {
+        let tempDataObj = {};
+        for (let j = 0; j < maxAppLength; j++) {
+          if (
+            this.rawData[j] &&
+            this.rawData[j].task_set &&
+            this.rawData[j].task_set[i]
+          ) {
+            tempDataObj[`z_${j + 1}`] = {
+              ...this.rawData[j].task_set[i],
+              zone: this.rawData[j].app_name,
+              app_status: this.rawData[j].app_status,
+              belongs_to: this.rawData[j].belongs_to,
+              app_id: this.rawData[j].id,
+            };
+          } else {
+            tempDataObj[`z_${j + 1}`] = {
+              id: null,
+              name: null,
+            };
+          }
+        }
+        endarr.push(tempDataObj);
+      }
+      return endarr;
     },
   },
   mounted() {
     // this.play();
+    this.getAppInfoData();
   },
 };
 </script>
