@@ -22,7 +22,7 @@ star_atlas_server/go.sum
 __pycache__
 asrt-sdk-go
 .DS_Store
-record.wav
+speech_recognition/sr_client/testData/record.wav
 go.mod
 go.sum
 main
