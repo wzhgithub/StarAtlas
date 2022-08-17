@@ -88,7 +88,7 @@
                   @change="changeCarousle"
                 >
                   <el-carousel-item
-                    v-for="item in 3"
+                    v-for="item in vmcArr"
                     :key="item"
                     style="height: 100%"
                   >
@@ -208,6 +208,7 @@ export default {
       vmcedge: {},
       areaedge: {},
       Nowindex: "1",
+      vmcArr: [200, 100, 80, 140, 120, 160, 180],
     };
   },
   computed: {
