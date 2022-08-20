@@ -18,11 +18,11 @@ const CSpeechType = "speech"
 const CAllType = "all"
 
 func Recognite(ctx *gin.Context) {
-	recogniteByType(nil, 0, 0, 0, CSpeechType)
+	RecogniteByType(nil, 0, 0, 0, CSpeechType)
 	ctx.JSON(200, "ok")
 }
 
-func recogniteByType(wavData []byte, frameRate int, channels int, byteWidth int, requestType string) (*common.AsrtAPIResponse, error) {
+func RecogniteByType(wavData []byte, frameRate int, channels int, byteWidth int, requestType string) (*common.AsrtAPIResponse, error) {
 	if len(wavData) > cWavDataMaxLength {
 		return nil, fmt.Errorf("error: %s `%d`, %s `%d`",
 			"Too long wave sample byte length:", len(wavData),

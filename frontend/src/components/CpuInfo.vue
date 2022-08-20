@@ -45,7 +45,7 @@
         </div>
         <div class="left_part_">
           <p class="subtitle">
-            <span>算力状况</span>&nbsp;&nbsp;&nbsp;<span></span>
+            <span>内存使用率</span>&nbsp;&nbsp;&nbsp;<span></span>
             <el-progress
               :text-inside="true"
               :stroke-width="26"
@@ -56,25 +56,25 @@
             <el-row type="flex" justify="space-between">
               <el-col :span="10">
                 <div class="">
-                  总算力:
+                  总内存:
                   <countTo
                     class="nub"
                     :startVal="0"
                     :endVal="nowdata.alluse_"
                     :duration="1000"
-                    suffix=""
+                    suffix="MB"
                   />
                 </div>
               </el-col>
               <el-col :span="10">
                 <div class="">
-                  可用算力:
+                  可用:
                   <countTo
                     class="nub"
                     :startVal="0"
                     :endVal="nowdata.canuse_"
                     :duration="1000"
-                    suffix=""
+                    suffix="MB"
                   />
                 </div>
               </el-col>
@@ -93,14 +93,29 @@
                 :duration="1000"
                 suffix="核"
               />
-              /
+              <!-- /
               <countTo
                 class="nub"
                 :startVal="0"
                 :endVal="nowdata.allcore"
                 :duration="1000"
                 suffix="核"
-              />
+              /> -->
+            </span>
+            <span class="title_span">
+              <!-- <countTo
+                class="nub"
+                :startVal="0"
+                :endVal="nowdata.canusemb"
+                :duration="1000"
+                suffix="Int" />
+                / -->
+              <countTo
+                class="nub"
+                :startVal="0"
+                :endVal="nowdata.allmb"
+                :duration="1000"
+                suffix="FP"/>
             </span>
             <span class="title_span">
               <countTo
@@ -108,14 +123,8 @@
                 :startVal="0"
                 :endVal="nowdata.canusemb"
                 :duration="1000"
-                suffix="MB" />/
-              <countTo
-                class="nub"
-                :startVal="0"
-                :endVal="nowdata.allmb"
-                :duration="1000"
-                suffix="MB"
-            /></span>
+                suffix="INT" />
+            </span>
           </p>
           <div class="type_box">
             <el-row type="flex" justify="center" class="type_row">
@@ -147,6 +156,7 @@ export default {
   props: {
     cpuNow: {
       type: Object,
+      name: "",
       // default: function () {
       //   return {};
       // },
@@ -181,20 +191,20 @@ export default {
   },
   mounted() {
     let that = this;
-    setInterval(() => {
-      // that.nowdata = {
-      //   cpuuseage: that.randomRange(0, 100),
-      //   canuse: that.randomRange(0, 100),
-      //   used: that.randomRange(0, 100),
-      //   computeuseage: that.randomRange(0, 100),
-      //   canuse_: that.randomRange(1000, 1600),
-      //   alluse_: that.randomRange(2000, 3600),
-      //   canusecore: that.randomRange(0, 16),
-      //   allcore: 32,
-      //   canusemb: that.randomRange(100, 1024),
-      //   allmb: 1024,
-      // };
-    }, 3000);
+    // setInterval(() => {
+    //   that.nowdata = {
+    //     cpuuseage: that.randomRange(0, 100),
+    //     canuse: that.randomRange(0, 100),
+    //     used: that.randomRange(0, 100),
+    //     computeuseage: that.randomRange(0, 100),
+    //     canuse_: that.randomRange(1000, 1600),
+    //     alluse_: that.randomRange(2000, 3600),
+    //     canusecore: that.randomRange(0, 16),
+    //     allcore: 32,
+    //     canusemb: that.randomRange(100, 1024),
+    //     allmb: 1024,
+    //   };
+    // }, 3000);
   },
 };
 </script>

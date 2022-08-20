@@ -139,13 +139,13 @@
               <CpuInfo :cpuNow="cpu" />
             </div>
             <div v-show="asidvisiber[1]" class="aside_box">
-              <GpuInfo />
+              <GpuInfo :gpuNow="gpu" />
             </div>
             <div v-show="asidvisiber[2]" class="aside_box">
-              <DspInfo />
+              <DspInfo :dspNow="dsp" />
             </div>
             <div v-show="asidvisiber[3]" class="aside_box">
-              <FpgaInfo />
+              <FpgaInfo :fpgaNow="fpga" />
             </div>
             <div class="aside_box_line_bar">
               <p class="title">
@@ -211,7 +211,7 @@ export default {
       asidvisiber: [true, false, false, false],
       topdata: [20, 86, 73, 67, 78],
       cpu: {
-        name: "",
+        name: "CPU信息详情",
         cpuuseage: 70,
         canuse: 12,
         used: 80,
@@ -222,6 +222,38 @@ export default {
         allcore: 32,
         canusemb: 1024,
         allmb: 10240,
+      },
+      gpu: {
+        name: "",
+        type: "NIDIA AGX",
+        float_power: 0,
+        usage: 60,
+        cores: 1,
+        memory_usage: 50,
+        total_memory: 65535,
+        status: "健康",
+      },
+      dsp: {
+        name: "",
+        type: "",
+        float_power: 0,
+        int_power: 0,
+        usage: 0,
+        cores: 1,
+        memory_usage: 0,
+        total_memory: 65535,
+        status: "健康",
+      },
+      fpga: {
+        name: "",
+        type: "FPGA",
+        float_power: 0,
+        int_power: 0,
+        usage: 0,
+        cores: 1,
+        memory_usage: 0,
+        total_memory: 65535,
+        status: "健康",
       },
       tableData: [
         {
@@ -288,17 +320,54 @@ export default {
       this.topdata = [data.data.memory_usage, data.data.total_disk_usage,
               data.data.total_cpu_usage, data.data.total_gpu_usage, data.data.total_dsp_usage];
       this.cpu = {
-        name: "cpu",
+        name: "CPU信息详情",
         cpuuseage: data.data.total_cpu_usage,
         canuse: 100 - data.data.total_cpu_usage,
         used: data.data.total_cpu_usage,
-        computeuseage: 32768 / 32768.0 * 100,
-        alluse_: 32768,
-        canuse_: 32768 - data.data.cpu_set[0].int_computing_power,
+        // computeuseage: 32768 / 32768.0 * 100,
+        // alluse_: 32768,
+        // canuse_: 32768 - data.data.cpu_set[0].int_computing_power,
+        computeuseage: data.data.memory_usage,
+        canuse_: data.data.total_memory * (100 - data.data.memory_usage) / 100,
+        alluse_: data.data.total_memory,
         canusecore: data.data.cpu_number,
         allcore: data.data.cpu_number,
-        canusemb: data.data.total_memory * (100 - data.data.memory_usage) / 100,
-        allmb: data.data.total_memory
+        canusemb: data.data.cpu_set[0].float_computing_power ? data.data.cpu_set[0].float_computing_power : 0,
+        allmb: data.data.cpu_set[0].int_computing_power ? data.data.cpu_set[0].float_computing_power : 0,
+        // canusemb: data.data.total_memory * (100 - data.data.memory_usage) / 100,
+        // allmb: data.data.total_memory
+      }
+      this.gpu = {
+        name: data.data.gpu_set[0].name,
+        float_power: data.data.gpu_set[0].float_computing_power,
+        cores: data.data.gpu_set[0].num,
+        usage: data.data.gpu_set[0].usage,
+        memory_usage: data.data.gpu_set[0].memory_usage,
+        total_memory: data.data.gpu_set[0].total_memory,
+        type: "NIDIA AGX",
+        status: "健康",
+      }
+      this.dsp = {
+        name: data.data.dsp_set[0].name,
+        float_power: data.data.dsp_set[0].float_computing_power,
+        int_power: data.data.dsp_set[0].int_computing_power,
+        cores: data.data.dsp_set[0].num,
+        usage: data.data.dsp_set[0].usage,
+        memory_usage: data.data.dsp_set[0].memory_usage,
+        total_memory: data.data.dsp_set[0].total_memory,
+        type: data.data.dsp_set[0].type,
+        status: "健康",
+      }
+      this.fpga = {
+        name: data.data.fpga_set[0].name,
+        float_power: data.data.fpga_set[0].float_computing_power,
+        int_power: data.data.fpga_set[0].int_computing_power,
+        cores: data.data.fpga_set[0].num,
+        usage: data.data.fpga_set[0].usage,
+        memory_usage: data.data.fpga_set[0].memory_usage,
+        total_memory: data.data.fpga_set[0].total_memory,
+        type: data.data.fpga_set[0].type,
+        status: "健康",
       }
     },
     dealWithTypeClick(num) {
@@ -392,7 +461,7 @@ export default {
       width: 100%;
       height: 100%;
       // background-color: antiquewhite;
-      padding: 1.5rem;
+      padding: 0.7rem;
       box-sizing: border-box;
       .row_main_top {
         width: 100%;
