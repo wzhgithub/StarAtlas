@@ -196,16 +196,22 @@ func ApiShowPicture(ctx *gin.Context) {
 	ctx.JSON(200, model.NewCommonResponseSucc("ApiShowPicture success"))
 }
 
-func SatelliteTCPHandlerInit(tcpPort int) {
-	glog.Infof("SatelliteTCPHandlerInit called port:%d\n", tcpPort)
+func newConn(tcpPort int) (net.Conn, error) {
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", tcpPort))
 	if err != nil {
 		glog.Errorf("Failed to listen tcp port: %v err: %v\n", tcpPort, err)
-		return
+		return nil, err
 	}
-	conn, err = l.Accept()
+	return l.Accept()
+}
+
+func SatelliteTCPHandlerInit(tcpPort int) {
+	glog.Infof("SatelliteTCPHandlerInit called port:%d\n", tcpPort)
+	var err error
+	conn, err = newConn(tcpPort)
 	if err != nil {
-		glog.Errorf("Failed to accept connection: %v err: %v\n", l.Addr().String(), err)
+		glog.Errorf("failed connection e:%v\n", err)
+		return
 	}
 	glog.Infof("Connected to %s", conn.LocalAddr().String())
 	for {
@@ -252,7 +258,11 @@ func handlePbMsg(msg *pb.Msg) error {
 		if conn != nil {
 			conn.Close()
 		}
-		SatelliteTCPHandlerInit(config.CommonConfig.SatelliteTCPPort)
+		var err error
+		conn, err = newConn(config.CommonConfig.SatelliteTCPPort)
+		if err != nil {
+			return err
+		}
 	case pb.MsgType_ApiSpeech:
 		wave, err := sdk.DecodeWav(msg.Data)
 		if err != nil {
@@ -268,7 +278,7 @@ func handlePbMsg(msg *pb.Msg) error {
 			return fmt.Errorf(res.StatucMesaage)
 		}
 		glog.Infof("received speech word %v\n", res.Result)
-		p := parseWAVCmd(res.Result.([]string))
+		p := parseWAVCmd(res.Result.([]interface{}))
 		if p == "" {
 			return fmt.Errorf("received speech word not found")
 		}
@@ -322,10 +332,11 @@ func handlePic() error {
 	return nil
 }
 
-func parseWAVCmd(result []string) string {
+func parseWAVCmd(result []interface{}) string {
 	for _, v := range result {
 		for k, val := range posMap {
-			if strings.Contains(v, val) {
+			vs := fmt.Sprintf("%v", v)
+			if strings.Contains(vs, val) {
 				return k
 			}
 		}
