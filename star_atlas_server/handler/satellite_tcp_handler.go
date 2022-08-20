@@ -245,7 +245,7 @@ func handleMsg(conn net.Conn, data []byte) {
 		glog.Errorf("go Unmarshal tcp Msg error: %v\n", err)
 		return
 	}
-	glog.Infof("go Unmarshal tcp Msg: %v\n", msg)
+	glog.Infof("go Unmarshal tcp Msg: %v\n", msg.GetType())
 	if err = handlePbMsg(msg); err != nil {
 		glog.Errorf("go handlePbMsg failed err: %v\n", err)
 		return
@@ -268,7 +268,7 @@ func handlePbMsg(msg *pb.Msg) error {
 		if err != nil {
 			return err
 		}
-		glog.Infof("wave bytes:%v\n", wave.GetRawSamples())
+		// glog.Infof("wave bytes:%v\n", wave.GetRawSamples())
 		res, err := RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, CSpeechType)
 		if err != nil {
 			return err
@@ -336,6 +336,7 @@ func parseWAVCmd(result []interface{}) string {
 	for _, v := range result {
 		for k, val := range posMap {
 			vs := fmt.Sprint(v)
+			glog.Infof("debug vs:%s and key:%s value:%s\n", vs, k, val)
 			if strings.Contains(vs, val) {
 				return k
 			}
