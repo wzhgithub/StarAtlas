@@ -2,6 +2,6 @@ db_name: test
 db_uri: mongodb://docker:mongopw@mongodb:27017 
 udp_port: 9191
 satellite_tcp_port: 9192
-speech_url: http://127.0.0.1:20001
+speech_url: http://speech_recognition_server:20001
 db_topo_table_name: topo_table
 db_vmcdata_table_name: vmcdata

@@ -18,7 +18,7 @@ char* get_cur_dir(char* dir, size_t sz) {
 size_t get_vmc_conf(const char* dir_name, vector<string>& arr, const char* _prefix, size_t _len) {
   struct stat s;
   lstat(dir_name, &s);
-  assert (S_ISDIR(s.st_mode));
+  //assert (S_ISDIR(s.st_mode));
   DIR* dir;
   dir = opendir(dir_name);
 

@@ -11,6 +11,7 @@
 
 <script>
 // import text from "@/assets/data/linejson.json";
+import { getVMCDataSeq } from "../api";
 export default {
   props: ["value", "color", "inref", "indexNow"],
   name: "selflineNewless",
@@ -23,6 +24,10 @@ export default {
     };
   },
   methods: {
+    async getRawData() {
+      let res = await getVMCDataSeq(200);
+      console.log(res); //就一个点？
+    },
     setDatanow() {
       this.lineData = [];
       this.category = [];
@@ -158,6 +163,7 @@ export default {
     },
   },
   mounted() {
+    this.getRawData();
     const that = this;
     setTimeout(() => {
       if (that.indexNow !== 1) {
