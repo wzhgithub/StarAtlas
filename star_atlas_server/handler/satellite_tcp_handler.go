@@ -324,17 +324,16 @@ func parseWAVCmd(result []string) string {
 		for idx, p := range pos {
 			for _, o := range p {
 				if strings.Contains(v, o) {
-					break
-				}
-				switch idx {
-				case 0:
-					return "W"
-				case 1:
-					return "S"
-				case 2:
-					return "A"
-				case 3:
-					return "D"
+					switch idx {
+					case 0:
+						return "W"
+					case 1:
+						return "S"
+					case 2:
+						return "A"
+					case 3:
+						return "D"
+					}
 				}
 			}
 		}
