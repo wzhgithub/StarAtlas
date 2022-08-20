@@ -18,11 +18,7 @@ import (
 
 var conn net.Conn
 
-var up = []string{"san", "shan", "shang", "sang"}
-var down = []string{"xia"}
-var left = []string{"zuo", "zhuo"}
-var right = []string{"you", "yong"}
-var pos = [][]string{up, down, left, right}
+var posMap = map[string]string{"san": "W", "shan": "W", "shang": "W", "sang": "W", "xia": "S", "zhuo": "A", "zuo": "A", "yong": "D", "you": "D"}
 
 const cBufferSize = 4096 * 1000
 const cStep = math.Pi / 36 // 5 dgree
@@ -321,20 +317,9 @@ func handlePic() error {
 
 func parseWAVCmd(result []string) string {
 	for _, v := range result {
-		for idx, p := range pos {
-			for _, o := range p {
-				if strings.Contains(v, o) {
-					switch idx {
-					case 0:
-						return "W"
-					case 1:
-						return "S"
-					case 2:
-						return "A"
-					case 3:
-						return "D"
-					}
-				}
+		for k, val := range posMap {
+			if strings.Contains(v, val) {
+				return k
 			}
 		}
 	}
