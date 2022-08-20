@@ -8,13 +8,21 @@ import (
 	"net"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"github.com/nl8590687/asrt-sdk-go/sdk"
 	"google.golang.org/protobuf/proto"
 )
 
 var conn net.Conn
+
+var up = []string{"san", "shan", "shang", "sang"}
+var down = []string{"xia"}
+var left = []string{"zuo", "zhuo"}
+var right = []string{"you", "yong"}
+var pos = [][]string{up, down, left, right}
 
 const cBufferSize = 4096 * 1000
 const cStep = math.Pi / 36 // 5 dgree
@@ -244,7 +252,11 @@ func handleMsg(conn net.Conn, data []byte) {
 func handlePbMsg(msg *pb.Msg) error {
 	switch msg.GetType() {
 	case pb.MsgType_ApiSpeech:
-		res, err := RecogniteByType(msg.Data, 16000, 1, 2, CSpeechType)
+		wave, err := sdk.DecodeWav(msg.Data)
+		if err != nil {
+			return err
+		}
+		res, err := RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, CSpeechType)
 		if err != nil {
 			return err
 		}
@@ -253,11 +265,32 @@ func handlePbMsg(msg *pb.Msg) error {
 			return fmt.Errorf(res.StatucMesaage)
 		}
 		glog.Infof("received speech word %v\n", res.Result)
-		return parseWAVCmd(res.Result)
+		p := parseWAVCmd(res.Result.([]string))
+		if p == "" {
+			return fmt.Errorf("received speech word not found")
+		}
+		return handleKeyboardOri(p)
+
 	case pb.MsgType_ApiKeyboard:
 		return handleKeyboardMessage(msg)
 	}
 
+	return nil
+}
+
+func handleKeyboardOri(key string) error {
+	ori, err := basePolar.OperationByKey(key)
+	if err != nil {
+		return err
+	}
+	oMsg, err := ori.ToProto()
+	if err != nil {
+		return err
+	}
+	glog.Infof("key:%v OrbitNormal:%v\n", key, oMsg)
+	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -269,20 +302,7 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 	if k.GetName() == "Return" {
 		return handlePic()
 	}
-	ori, err := basePolar.OperationByKey(k.GetName())
-	if err != nil {
-		return err
-	}
-	oMsg, err := ori.ToProto()
-	if err != nil {
-		return err
-	}
-	glog.Infof("key:%v OrbitNormal:%v\n", k, oMsg)
-	if err = sendMsg(conn, pb.MsgType_ApiOrbitNormal, oMsg); err != nil {
-		return err
-	}
-
-	return nil
+	return handleKeyboardOri(k.GetName())
 }
 
 func handlePic() error {
@@ -299,9 +319,27 @@ func handlePic() error {
 	return nil
 }
 
-func parseWAVCmd(result interface{}) error {
-
-	return nil
+func parseWAVCmd(result []string) string {
+	for _, v := range result {
+		for idx, p := range pos {
+			for _, o := range p {
+				if strings.Contains(v, o) {
+					break
+				}
+				switch idx {
+				case 0:
+					return "W"
+				case 1:
+					return "S"
+				case 2:
+					return "A"
+				case 3:
+					return "D"
+				}
+			}
+		}
+	}
+	return ""
 }
 
 func sendMsg(conn net.Conn, msgType pb.MsgType, msg proto.Message) error {

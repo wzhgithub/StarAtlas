@@ -47,8 +47,6 @@ func main() {
 		glog.Fatalf(err.Error())
 	}
 	glog.Infof("config:%+v\n", config.CommonConfig)
-	testWav()
-	return
 	err = db.Init()
 	if err != nil {
 		glog.Fatal(err)
