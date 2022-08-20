@@ -10,12 +10,31 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"github.com/nl8590687/asrt-sdk-go/sdk"
 )
 
 var configPath string
 
 func init() {
 	flag.StringVar(&configPath, "path", "./config.yaml", "yaml文件加载路径")
+}
+
+func testWav() {
+	filename := "test/record.wav"
+	byteData := sdk.LoadFile(filename)
+	wave, err := sdk.DecodeWav(byteData)
+	if err != nil {
+		fmt.Println(err)
+	}
+	res, err := handler.RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, "speech")
+	if err != nil {
+		fmt.Println(err)
+	}
+	glog.Infof("received speech from server %v\n", res)
+	if res.StatusCode != 200 {
+		fmt.Println(res.StatucMesaage)
+	}
+	glog.Infof("received speech word %v\n", res.Result)
 }
 
 func main() {
