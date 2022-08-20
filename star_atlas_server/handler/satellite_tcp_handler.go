@@ -252,12 +252,13 @@ func handlePbMsg(msg *pb.Msg) error {
 		if err != nil {
 			return err
 		}
+		glog.Infof("wave bytes:%v\n", wave.GetRawSamples())
 		res, err := RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, CSpeechType)
 		if err != nil {
 			return err
 		}
 		glog.Infof("received speech from server %v\n", res)
-		if res.StatusCode != 200 {
+		if res.StatusCode != 200000 {
 			return fmt.Errorf(res.StatucMesaage)
 		}
 		glog.Infof("received speech word %v\n", res.Result)
