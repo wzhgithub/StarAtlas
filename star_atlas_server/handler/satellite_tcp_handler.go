@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"net"
+	"star_atlas_server/config"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
 	"strings"
@@ -247,6 +248,11 @@ func handleMsg(conn net.Conn, data []byte) {
 
 func handlePbMsg(msg *pb.Msg) error {
 	switch msg.GetType() {
+	case pb.MsgType_ApiExit:
+		if conn != nil {
+			conn.Close()
+		}
+		SatelliteTCPHandlerInit(config.CommonConfig.SatelliteTCPPort)
 	case pb.MsgType_ApiSpeech:
 		wave, err := sdk.DecodeWav(msg.Data)
 		if err != nil {
