@@ -335,7 +335,7 @@ func handlePic() error {
 func parseWAVCmd(result []interface{}) string {
 	for _, v := range result {
 		for k, val := range posMap {
-			vs := fmt.Sprintf("%v", v)
+			vs := fmt.Sprint(v)
 			if strings.Contains(vs, val) {
 				return k
 			}
