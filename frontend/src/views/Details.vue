@@ -152,7 +152,7 @@
                 <span>机器历史状况</span>
               </p>
               <div class="canvasbox" id="linebox_">
-                <selflineNew inref="linebox_" />
+                <selflineNew inref="linebox_" :vmcid="vmcid" />
               </div>
             </div>
             <div class="aside_box_task">
@@ -184,6 +184,7 @@ import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import topNumber from "@/components/topNumber.vue";
 import { getVMCData } from "@/api";
+import { getVMCDataSeq } from "../api";
 export default {
   name: "details",
   components: {
@@ -210,6 +211,7 @@ export default {
       data_: "",
       asidvisiber: [true, false, false, false],
       topdata: [20, 86, 73, 67, 78],
+      vmcid: "",
       cpu: {
         name: "CPU信息详情",
         cpuuseage: 70,
@@ -437,6 +439,7 @@ export default {
   },
   mounted() {
     let that = this;
+    this.vmcid = this.$route.params.id;
     setInterval(() => {
       that.getTopData();
       // that.topdata = [

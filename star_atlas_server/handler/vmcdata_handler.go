@@ -134,6 +134,8 @@ func GetVMCSequence(c *gin.Context) {
 				MomoryUsage:          v.MemoryUsage,
 				DiskUsage:            v.TotalDiskUsage,
 				TotalUsage:           v.TotalCPUUsage,
+				GpuUsage:             v.TotalGPUUsage,
+				DspUsage:             v.TotalDSPUsage,
 			}
 			rsp.Data = append(rsp.Data, *vmc_status)
 		}

@@ -96,6 +96,8 @@ type VMCStatus struct {
 	MomoryUsage          uint8     `json:"memoryUsage"`          // 内存利用率
 	DiskUsage            uint8     `json:"diskUsage"`            // 外存利用率
 	TotalUsage           uint8     `json:"totalUsage"`           // 总利用率
+	GpuUsage             uint8     `json:"gpuUsage"`             // gpu利用率
+	DspUsage             uint8     `json:"dspUsage"`             // dsp利用率
 }
 
 type VMCData struct {
