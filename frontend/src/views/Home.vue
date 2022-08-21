@@ -49,25 +49,53 @@
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">VMC数量</div>
-                    <div class="mainNub">{{vmc_num}}</div>
+                    <div class="mainNub"> 
+                      <countTo
+                        class="nub"
+                        :startVal="0"
+                        :endVal="vmc_num"
+                        :duration="3000"
+                      ></countTo>
+                  </div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">计算单元</div>
-                    <div class="mainNub">{{cpu_num}}</div>
+                    <div class="mainNub">
+                      <countTo
+                        class="nub"
+                        :startVal="0"
+                        :endVal="cpu_num"
+                        :duration="3000"
+                      ></countTo>
+                    </div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">远置单元</div>
-                    <div class="mainNub">{{rtu_num}}</div>
+                    <div class="mainNub">
+                      <countTo
+                        class="nub"
+                        :startVal="0"
+                        :endVal="rtu_num"
+                        :duration="3000"
+                      ></countTo>
+                    </div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">交换机</div>
-                    <div class="mainNub">{{switch_num}}</div>
+                    <div class="mainNub">
+                      <countTo
+                        class="nub"
+                        :startVal="0"
+                        :endVal="switch_num"
+                        :duration="3000"
+                      ></countTo>
+                      </div>
                   </div>
                 </el-col>
               </el-row>
@@ -137,11 +165,13 @@
 // import HelloWorld from "@/components/HelloWorld.vue";
 import "@/lib/loaders.min.css";
 import { getTopoShow } from "@/api";
+import countTo from "vue-count-to";
 
 export default {
   name: "Home",
   components: {
     // HelloWorld,
+    countTo,
   },
   data() {
     return { 
@@ -217,13 +247,16 @@ export default {
           height: 100%;
           text-align: center;
           // background-color: aqua;
-          background: url("../assets/newpng/center_top_main_little_bgi.png")
+          // background: url("../assets/newpng/center_top_main_little_bgi.png")
+          //   no-repeat center;
+          background: url("../assets/tt.gif")
             no-repeat center;
           background-size: 100% 100%;
-          color: #fff;
+          //color: rgba(126, 225, 50, 0.823);
+          color: #94f0e7;
           font-size: 1.5rem;
           .toptitle {
-            font-size: 1rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: bold;
           }
