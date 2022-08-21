@@ -5,3 +5,4 @@ satellite_tcp_port: 9192
 speech_url: http://speech_recognition_server:20001
 db_topo_table_name: topo_table
 db_vmcdata_table_name: vmcdata
+db_sender_table_name: sender

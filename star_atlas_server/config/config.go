@@ -13,6 +13,7 @@ type Config struct {
 	SpeechURL          string `mapstructure:"speech_url"`
 	DBVMCDataTableName string `mapstructure:"db_vmcdata_table_name"`
 	DBTopoTableName    string `mapstructure:"db_topo_table_name"`
+	DBSenderTableName  string `mapstructure:"db_sender_table_name"`
 }
 
 var CommonConfig Config
