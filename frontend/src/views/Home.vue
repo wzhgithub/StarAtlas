@@ -49,25 +49,25 @@
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">VMC数量</div>
-                    <div class="mainNub">{{vmc_num}}</div>
+                    <div class="mainNub">{{ vmc_num }}</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">计算单元</div>
-                    <div class="mainNub">{{cpu_num}}</div>
+                    <div class="mainNub">{{ cpu_num }}</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">远置单元</div>
-                    <div class="mainNub">{{rtu_num}}</div>
+                    <div class="mainNub">{{ rtu_num }}</div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">交换机</div>
-                    <div class="mainNub">{{switch_num}}</div>
+                    <div class="mainNub">{{ switch_num }}</div>
                   </div>
                 </el-col>
               </el-row>
@@ -86,6 +86,11 @@
             <div class="linkrightbox">
               <router-link class="link_btn" to="/disasterrecovery">
                 任务容灾
+              </router-link>
+            </div>
+            <div class="linkrightbox_">
+              <router-link class="link_btn" to="/disasterrecovery">
+                任务容灾1
               </router-link>
             </div>
             <div class="bigbox">
@@ -144,7 +149,7 @@ export default {
     // HelloWorld,
   },
   data() {
-    return { 
+    return {
       loading: true,
       vmc_num: 0,
       cpu_num: 0,
@@ -160,23 +165,22 @@ export default {
         this.cpu_num = 0;
         this.rtu_num = 0;
         this.switch_num = 0;
-        this.vmcs = data.data.node
-          .map((item) => {
-            // return item.device_type == "vmc" || item.device_type == "cpu";
-            if (item.device_type == "vmc") {
-              this.vmc_num += 1;
-            } else if (item.device_type == "sw") {
-              this.switch_num += 1;
-            } else if (item.device_type == "rtu") {
-              this.rtu_num += 1;
-            } else {
-              this.cpu_num += item.other_info[0].value.length;
-            }
-            return item;
-          });
+        this.vmcs = data.data.node.map((item) => {
+          // return item.device_type == "vmc" || item.device_type == "cpu";
+          if (item.device_type == "vmc") {
+            this.vmc_num += 1;
+          } else if (item.device_type == "sw") {
+            this.switch_num += 1;
+          } else if (item.device_type == "rtu") {
+            this.rtu_num += 1;
+          } else {
+            this.cpu_num += item.other_info[0].value.length;
+          }
+          return item;
+        });
         // console.log(this.vmcs);
       }
-    }
+    },
   },
   mounted() {
     let that = this;
@@ -252,7 +256,7 @@ export default {
         // background-color: #fff;
         position: absolute;
         top: 20%;
-        left: 25%;
+        right: 25%;
         background: url("../assets/newpng/center_mian_big_bgi.png") no-repeat
           center;
         background-size: 100% 100%;
@@ -264,8 +268,8 @@ export default {
         height: 15%;
         // background-color: #fff;
         position: absolute;
-        bottom: 25%;
-        left: 0%;
+        top: 45%;
+        left: -10%;
         background: url("../assets/newpng/center_mian_big_bgi.png") no-repeat
           center;
         background-size: 100% 100%;
@@ -277,8 +281,20 @@ export default {
         height: 15%;
         // background-color: #fff;
         position: absolute;
-        bottom: 25%;
-        right: 0%;
+        top: 45%;
+        right: -10%;
+        background: url("../assets/newpng/center_mian_big_bgi.png") no-repeat
+          center;
+        background-size: 100% 100%;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .linkrightbox_ {
+        width: 50%;
+        height: 15%;
+        position: absolute;
+        bottom: 15%;
+        right: 25%;
         background: url("../assets/newpng/center_mian_big_bgi.png") no-repeat
           center;
         background-size: 100% 100%;
@@ -435,7 +451,7 @@ export default {
       top: 35%;
       left: 10%;
       font-size: 1.25rem;
-      ul li{
+      ul li {
         list-style: disc;
         text-align: left;
       }
@@ -444,12 +460,8 @@ export default {
     .typing {
       font-size: 1.1rem;
       color: #fff;
-      text-shadow:
-          0 0 10px #0ebeff,
-          0 0 20px #0ebeff,
-          0 0 50px #0ebeff,
-          0 0 100px #0ebeff,
-          0 0 200px #0ebeff;
+      text-shadow: 0 0 10px #0ebeff, 0 0 20px #0ebeff, 0 0 50px #0ebeff,
+        0 0 100px #0ebeff, 0 0 200px #0ebeff;
       padding: 0.75rem;
       box-sizing: border-box;
     }
