@@ -21,27 +21,47 @@ export default {
       category: [],
       lineData: [],
       barData: [],
+      allData: [],
+      cpu: [],
+      gpu: [],
+      dps: [],
     };
   },
   methods: {
     async getRawData() {
-      let res = await getVMCDataSeq(200);
-      console.log(res); //就一个点？
+      let res = await getVMCDataSeq(this.indexNow);
+      if (res.status == 200 && res.data.code == 0) {
+        this.allData = res.data.data;
+        // console.log(this.allData);
+      }
     },
     setDatanow() {
-      this.lineData = [];
+      // this.lineData = [];
+      // this.category = [];
+      // this.barData = [];
+      // let dottedBase = +new Date();
+      // for (let i = 0; i < 15; i++) {
+      //   let date = new Date((dottedBase -= 3600 * 24 * 1000));
+      //   this.category.push(
+      //     [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
+      //   );
+      //   let b = Math.random() * 200;
+      //   let d = Math.random() * 200;
+      //   this.barData.push(b);
+      //   this.lineData.push(d + b);
+      // }
+      this.cpu = [];
+      this.gpu = [];
+      this.dsp = [];
       this.category = [];
-      this.barData = [];
-      let dottedBase = +new Date();
-      for (let i = 0; i < 15; i++) {
-        let date = new Date((dottedBase -= 3600 * 24 * 1000));
-        this.category.push(
-          [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
-        );
-        let b = Math.random() * 200;
-        let d = Math.random() * 200;
-        this.barData.push(b);
-        this.lineData.push(d + b);
+      for (var i = this.allData.length - 1; i >= 0; i--) {
+          let date = new Date(this.allData[i].time);
+          this.category.push(
+            [date.getHours(), date.getMinutes(), date.getSeconds()].join(":")
+          );
+          this.cpu.push(this.allData[i].totalUsage);
+          this.gpu.push(this.allData[i].gpuUsage);
+          this.dsp.push(this.allData[i].dspUsage);
       }
     },
     drawEcharts() {
@@ -58,7 +78,8 @@ export default {
           },
         },
         legend: {
-          data: ["峰值算力", "峰值带宽", "bar", "line_"],
+          // data: ["峰值算力", "峰值带宽", "bar", "line_"],
+          data: ["cpu利用率", "gpu利用率", "dsp利用率"],
           textStyle: {
             color: "#ccc",
           },
@@ -80,26 +101,56 @@ export default {
           },
         },
         series: [
+          // {
+          //   name: "峰值算力",
+          //   type: "line",
+          //   smooth: true,
+          //   showAllSymbol: true,
+          //   symbol: "emptyCircle",
+          //   symbolSize: 3,
+          //   data: this.lineData,
+          //   itemStyle: {
+          //     color: "#72eedd",
+          //   },
+          // },
+          // {
+          //   name: "峰值带宽",
+          //   type: "line",
+          //   smooth: true,
+          //   showAllSymbol: true,
+          //   symbol: "emptyCircle",
+          //   symbolSize: 3,
+          //   data: this.barData,
+          // },
           {
-            name: "峰值算力",
+            name: "cpu利用率",
             type: "line",
             smooth: true,
             showAllSymbol: true,
             symbol: "emptyCircle",
             symbolSize: 3,
-            data: this.lineData,
+            data: this.cpu,
             itemStyle: {
               color: "#72eedd",
             },
           },
           {
-            name: "峰值带宽",
+            name: "gpu利用率",
             type: "line",
             smooth: true,
             showAllSymbol: true,
             symbol: "emptyCircle",
             symbolSize: 3,
-            data: this.barData,
+            data: this.gpu,
+          },
+          {
+            name: "dsp利用率",
+            type: "line",
+            smooth: true,
+            showAllSymbol: true,
+            symbol: "emptyCircle",
+            symbolSize: 3,
+            data: this.dsp,
           },
           // {
           //   name: "bar",
@@ -163,14 +214,19 @@ export default {
     },
   },
   mounted() {
-    this.getRawData();
     const that = this;
     setTimeout(() => {
-      if (that.indexNow !== 1) {
+      //if (that.indexNow !== 1) {
+        that.getRawData();
         that.setDatanow();
-      }
+      //}
       that.drawEcharts();
     }, 500);
+    setInterval(() => {
+      that.getRawData();
+      that.setDatanow();
+      that.drawEcharts();
+    }, 3000);
   },
 };
 </script>

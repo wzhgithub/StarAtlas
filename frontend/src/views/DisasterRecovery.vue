@@ -34,11 +34,11 @@
               </p>
               <div class="content" style="width: 100%; height: 80%">
                 <el-carousel :interval="5000" class="carousel" trigger="click">
-                  <el-carousel-item v-for="item in 3" :key="item">
-                    <div class="canvasbox" :id="`linebox_${item}`">
+                  <el-carousel-item v-for="item in vmcs" :key="item.id">
+                    <div class="canvasbox" :id="`linebox_${item.id}`">
                       <selflineNewless
-                        :inref="`linebox_${item}`"
-                        :indexNow="item"
+                        :inref="`linebox_${item.id}`"
+                        :indexNow="item.id"
                       />
                     </div>
                   </el-carousel-item>
@@ -88,15 +88,15 @@
                   @change="changeCarousle"
                 >
                   <el-carousel-item
-                    v-for="item in vmcArr"
-                    :key="item"
+                    v-for="item in vmcs"
+                    :key="item.id"
                     style="height: 100%"
                   >
                     <div style="height: 100%">
                       <TableNow
                         style="height: 90%"
-                        :key="item"
-                        :indexNow="item"
+                        :key="item.id"
+                        :indexNow="item.id"
                       />
                     </div>
                   </el-carousel-item>
@@ -147,6 +147,7 @@ import selflineNewless from "@/components/selflineNewless.vue";
 import TableNow from "@/components/TableNow.vue";
 import imgvmc from "@/assets/newpng/VMC.svg";
 import messages from "@/assets/newpng/send_.svg";
+import { getTopoShow } from "@/api";
 const singletable = [
   {
     productName: "核心任务_12654_456",
@@ -208,13 +209,24 @@ export default {
       vmcedge: {},
       areaedge: {},
       Nowindex: "1",
-      vmcArr: [200, 100, 80, 140, 120, 160, 180],
+      vmcArr: [100, 80, 140, 120, 160, 180],
+      vmcs: [],
     };
   },
   computed: {
     ...mapState(["disVmc", "disArea"]),
   },
   methods: {
+    async getNameOAll() {
+      const { data } = await getTopoShow();
+      // console.log(data);
+      if (data.code == 0) {
+        this.vmcs = data.data.node
+          .filter((item) => {
+              return item.device_type == "vmc";
+          });
+      }
+    },
     changeCarousle(before, now) {
       this.Nowindex = before + 1;
     },
@@ -489,6 +501,7 @@ export default {
     setTimeout(() => {
       this.loading = false;
       setTimeout(() => {
+        this.getNameOAll();
         this.drawall();
       }, 500);
       this.speed = this.randomRange(1, 10);
