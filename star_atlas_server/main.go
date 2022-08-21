@@ -10,7 +10,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
-	"github.com/nl8590687/asrt-sdk-go/sdk"
 )
 
 var configPath string
@@ -19,26 +18,26 @@ func init() {
 	flag.StringVar(&configPath, "path", "./config.yaml", "yaml文件加载路径")
 }
 
-func testWav() {
-	filename := "/app/record.wav"
-	byteData := sdk.LoadFile(filename)
-	wave, err := sdk.DecodeWav(byteData)
-	if err != nil {
-		glog.Errorf("Failed to decode wave: %v\n", err)
-		return
-	}
-	res, err := handler.RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, "speech")
-	if err != nil {
-		glog.Errorf("Failed to recognize wave: %v\n", err)
-		return
-	}
-	glog.Infof("received speech from server %v\n", res)
-	if res.StatusCode != 200 {
-		glog.Infof("warnings received from server %v\n", res.StatucMesaage)
-		return
-	}
-	glog.Infof("received speech word %v\n", res.Result)
-}
+// func testWav() {
+// 	filename := "/app/record.wav"
+// 	byteData := sdk.LoadFile(filename)
+// 	wave, err := sdk.DecodeWav(byteData)
+// 	if err != nil {
+// 		glog.Errorf("Failed to decode wave: %v\n", err)
+// 		return
+// 	}
+// 	res, err := handler.RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, "speech")
+// 	if err != nil {
+// 		glog.Errorf("Failed to recognize wave: %v\n", err)
+// 		return
+// 	}
+// 	glog.Infof("received speech from server %v\n", res)
+// 	if res.StatusCode != 200 {
+// 		glog.Infof("warnings received from server %v\n", res.StatucMesaage)
+// 		return
+// 	}
+// 	glog.Infof("received speech word %v\n", res.Result)
+// }
 
 func main() {
 	flag.Parse()
@@ -88,6 +87,8 @@ func main() {
 	router.POST("/satellite/control/orbit_coordinate", handler.ApiOrbitCoordinate)
 	router.POST("/satellite/control/marker_coordinate", handler.ApiMarkerCoordinates)
 	router.POST("/satellite/control/show_picture", handler.ApiShowPicture)
+	router.POST("/post_sender", handler.ControlSender)
+	router.GET("/get_sender", handler.GetControlMsg)
 	router.Run(":9999")
 
 }
