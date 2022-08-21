@@ -1,7 +1,7 @@
 [
   {
-    "name":"part_21", 
-    "index":21,
+    "name":"part_1", 
+    "index":1,
     "duration":0,
     "time":0,
     "tasks":[
@@ -18,8 +18,8 @@
     "vmc":180
   },
   {
-    "name":"part_22", 
-    "index":22,
+    "name":"part_2", 
+    "index":2,
     "duration":0,
     "time":0,
     "tasks":[
@@ -36,8 +36,8 @@
     "vmc":180
   },
   {
-    "name":"part_23", 
-    "index":23,
+    "name":"part_3", 
+    "index":3,
     "duration":0,
     "time":0,
     "tasks":[
@@ -54,8 +54,8 @@
     "vmc":180
   },
   {
-    "name":"part_24", 
-    "index":24,
+    "name":"part_4", 
+    "index":4,
     "duration":0,
     "time":0,
     "tasks":[
@@ -72,8 +72,8 @@
     "vmc":180
   },
   {
-    "name":"part_25", 
-    "index":25,
+    "name":"part_5", 
+    "index":5,
     "duration":0,
     "time":0,
     "tasks":[
@@ -90,8 +90,8 @@
     "vmc":180
   },
   {
-    "name":"part_26", 
-    "index":26,
+    "name":"part_6", 
+    "index":6,
     "duration":0,
     "time":0,
     "tasks":[
