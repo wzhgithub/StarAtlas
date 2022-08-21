@@ -13,6 +13,7 @@ export default {
       category: [],
       lineData: [],
       barData: [],
+      allData: [],
       memory: [],
       disk: [],
       cpu: [],
@@ -22,11 +23,11 @@ export default {
   },
   methods: {
     async getRawData() {
-      console.log(this.vmcid);
+      // console.log(this.vmcid);
       let res = await getVMCDataSeq(this.vmcid);
       if (res.status == 200 && res.data.code == 0) {
         this.allData = res.data.data;
-        console.log(this.allData);
+        // console.log(this.allData);
       }
     },
     setDatanow() {
