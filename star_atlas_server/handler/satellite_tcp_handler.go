@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"net"
+	"star_atlas_server/config"
 	"star_atlas_server/model"
 	"star_atlas_server/pb"
 	"strings"
@@ -195,16 +196,22 @@ func ApiShowPicture(ctx *gin.Context) {
 	ctx.JSON(200, model.NewCommonResponseSucc("ApiShowPicture success"))
 }
 
-func SatelliteTCPHandlerInit(tcpPort int) {
-	glog.Infof("SatelliteTCPHandlerInit called port:%d\n", tcpPort)
+func newConn(tcpPort int) (net.Conn, error) {
 	l, err := net.Listen("tcp", fmt.Sprintf(":%d", tcpPort))
 	if err != nil {
 		glog.Errorf("Failed to listen tcp port: %v err: %v\n", tcpPort, err)
-		return
+		return nil, err
 	}
-	conn, err = l.Accept()
+	return l.Accept()
+}
+
+func SatelliteTCPHandlerInit(tcpPort int) {
+	glog.Infof("SatelliteTCPHandlerInit called port:%d\n", tcpPort)
+	var err error
+	conn, err = newConn(tcpPort)
 	if err != nil {
-		glog.Errorf("Failed to accept connection: %v err: %v\n", l.Addr().String(), err)
+		glog.Errorf("failed connection e:%v\n", err)
+		return
 	}
 	glog.Infof("Connected to %s", conn.LocalAddr().String())
 	for {
@@ -238,7 +245,7 @@ func handleMsg(conn net.Conn, data []byte) {
 		glog.Errorf("go Unmarshal tcp Msg error: %v\n", err)
 		return
 	}
-	glog.Infof("go Unmarshal tcp Msg: %v\n", msg)
+	glog.Infof("go Unmarshal tcp Msg: %v\n", msg.GetType())
 	if err = handlePbMsg(msg); err != nil {
 		glog.Errorf("go handlePbMsg failed err: %v\n", err)
 		return
@@ -247,12 +254,21 @@ func handleMsg(conn net.Conn, data []byte) {
 
 func handlePbMsg(msg *pb.Msg) error {
 	switch msg.GetType() {
+	case pb.MsgType_ApiExit:
+		if conn != nil {
+			conn.Close()
+		}
+		var err error
+		conn, err = newConn(config.CommonConfig.SatelliteTCPPort)
+		if err != nil {
+			return err
+		}
 	case pb.MsgType_ApiSpeech:
 		wave, err := sdk.DecodeWav(msg.Data)
 		if err != nil {
 			return err
 		}
-		glog.Infof("wave bytes:%v\n", wave.GetRawSamples())
+		// glog.Infof("wave bytes:%v\n", wave.GetRawSamples())
 		res, err := RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, CSpeechType)
 		if err != nil {
 			return err
@@ -262,7 +278,7 @@ func handlePbMsg(msg *pb.Msg) error {
 			return fmt.Errorf(res.StatucMesaage)
 		}
 		glog.Infof("received speech word %v\n", res.Result)
-		p := parseWAVCmd(res.Result.([]string))
+		p := parseWAVCmd(res.Result.([]interface{}))
 		if p == "" {
 			return fmt.Errorf("received speech word not found")
 		}
@@ -316,10 +332,12 @@ func handlePic() error {
 	return nil
 }
 
-func parseWAVCmd(result []string) string {
+func parseWAVCmd(result []interface{}) string {
 	for _, v := range result {
 		for k, val := range posMap {
-			if strings.Contains(v, val) {
+			vs := fmt.Sprint(v)
+			glog.Infof("debug vs:%s and key:%s value:%s\n", vs, k, val)
+			if strings.Contains(vs, val) {
 				return k
 			}
 		}

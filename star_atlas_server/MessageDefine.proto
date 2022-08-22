@@ -8,6 +8,7 @@ enum MsgType {
     ApiShowPicture = 3;
     ApiKeyboard = 4;
     ApiSpeech = 5;
+    ApiExit = 6;
 }
 
 message Msg {
