@@ -15,12 +15,18 @@
     <el-drawer
       class="drawer_info"
       size="40%"
-      :title="`设备：${devicename}的详情`"
+      :title="`设备：${activeNodeInfo.name}的详情`"
       :visible.sync="drawer"
       :modal="false"
     >
-      <div v-if="devicename === 'cpu'" class="mainbox">
+      <div v-if="activeNodeInfo.device_type === 'cpu'" class="mainbox">
         <div class="aside_box">
+          <img
+            v-if="activeNodeInfo.device_type === 'cpu'"
+            class="miansvg"
+            src="../assets/newpng/CPU.svg"
+            alt=""
+          />
           <CpuInfo :cpuNow="cpu" />
         </div>
         <div class="aside_box_line_bar">
@@ -47,61 +53,61 @@
             <button @click="mockError(0)">模拟分区故障</button>
           </div>
           <img
-            v-if="deviceType === 'SW'"
+            v-if="activeNodeInfo.device_type === 'sw'"
             class="miansvg"
             src="../assets/newpng/sw.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'CPU'"
+            v-if="activeNodeInfo.device_type === 'cpu'"
             class="miansvg"
             src="../assets/newpng/CPU.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'GPU'"
+            v-if="activeNodeInfo.device_type === 'gpu'"
             class="miansvg"
             src="../assets/newpng/GPU.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'DSP'"
+            v-if="activeNodeInfo.device_type === 'dsp'"
             class="miansvg"
             src="../assets/newpng/DSP.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'FPGA'"
+            v-if="activeNodeInfo.device_type === 'fpga'"
             class="miansvg"
             src="../assets/newpng/FPGA.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'VMC'"
+            v-if="activeNodeInfo.device_type === 'vmc'"
             class="miansvg"
             src="../assets/newpng/VMC.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP1'"
+            v-if="deviceType === 'rtu_0'"
             class="miansvg"
             src="../assets/newpng/op_1.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP2'"
+            v-if="deviceType === 'rtu_1'"
             class="miansvg"
             src="../assets/newpng/op_2.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP3'"
+            v-if="deviceType === 'rtu_2'"
             class="miansvg"
             src="../assets/newpng/op_3.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP4'"
+            v-if="deviceType === 'rtu_3'"
             class="miansvg"
             src="../assets/newpng/op_4.svg"
             alt=""
@@ -260,6 +266,7 @@ export default {
         rtu_2: imgop3,
         rtu_3: imgop4,
       },
+      activeNodeInfo: {},
     };
   },
   methods: {
@@ -654,41 +661,19 @@ export default {
       // graph.isMovable = false;
       // graph.enableWheelZoom = false;
       graph.onclick = function (evt) {
-        if (evt.getData()) {
-          if (evt.getData().nodesType) {
-            that.deviceType = evt.getData().nodesType;
-            that.drawer = true;
-            if (evt.getData().nodesType === "SW") {
-              that.devicename = "交换机_60002";
-            }
-            if (evt.getData().nodesType === "VMC") {
-              that.devicename = "VMC_10000";
-            }
-            if (evt.getData().nodesType === "CPU") {
-              that.devicename = "CPU_2001";
-            }
-            if (evt.getData().nodesType === "GPU") {
-              that.devicename = "GPU_2002";
-            }
-            if (evt.getData().nodesType === "DSP") {
-              that.devicename = "DSP_2003";
-            }
-            if (evt.getData().nodesType === "FPGA") {
-              that.devicename = "FPGA_2004";
-            }
-            if (evt.getData().nodesType === "OP1") {
-              that.devicename = "相机_3001";
-            }
-            if (evt.getData().nodesType === "OP2") {
-              that.devicename = "激光扫描仪_3002";
-            }
-            if (evt.getData().nodesType === "OP3") {
-              that.devicename = "激光雷达_3003";
-            }
-            if (evt.getData().nodesType === "OP4") {
-              that.devicename = "推进器_3004";
-            }
+        if (evt.getData().moreInfo) {
+          that.activeNodeInfo = evt.getData().moreInfo;
+          that.drawer = true;
+          if (
+            evt.getData().moreInfo.other_info &&
+            evt.getData().moreInfo.other_info.length &&
+            evt.getData().moreInfo.other_info[0].value[0]
+          ) {
+            that.deviceType = `${evt.getData().moreInfo.device_type}_${
+              evt.getData().moreInfo.other_info[0].value[0]
+            }`;
           }
+          console.log(evt.getData().moreInfo);
         }
       };
     },
