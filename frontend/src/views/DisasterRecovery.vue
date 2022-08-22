@@ -4,7 +4,6 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <!-- 123 -->
-
     <div v-if="loading" class="loadingbox">
       <div data-loader="jumping"></div>
     </div>
@@ -425,7 +424,7 @@ export default {
       const graph = this.creatGraph();
       const FlowingSupport = this.createFlow(graph);
       const VPNFlexEdgeUI = this.createEdegUi(graph);
-      that.vmcs.map((items, index) => {
+      let endarr = that.vmcs.map((items, index) => {
         return that.createNode(
           graph,
           imgvmc,
