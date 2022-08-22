@@ -145,7 +145,6 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 // import "@/lib/loaders.min.css";
-import { getTopoShow } from "@/api";
 import { mapState } from "vuex";
 import selflineNewless from "@/components/selflineNewless.vue";
 import TableNow from "@/components/TableNow.vue";
