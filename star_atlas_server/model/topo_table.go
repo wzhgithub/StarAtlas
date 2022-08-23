@@ -232,13 +232,11 @@ func (v *VMCData) parseRTU(nodes *pNodesArr) {
 	}
 }
 
-func NewNodes(v *VMCData, isFirst bool) pNodesArr {
+func NewNodes(v *VMCData) pNodesArr {
 	nodes := make(pNodesArr, 0)
 	v.parseVMC(&nodes)
-	if isFirst {
-		v.parseSwitch(&nodes)
-		v.parseRTU(&nodes)
-	}
+	v.parseSwitch(&nodes)
+	v.parseRTU(&nodes)
 	return nodes
 }
 
@@ -246,10 +244,10 @@ func NewTransferInfos(v *VMCData) []*TransferInfos {
 	return nil
 }
 
-func NewTopoTable(v *VMCData, isFirst bool) *TopoTable {
+func NewTopoTable(v *VMCData) *TopoTable {
 	return &TopoTable{
 		Id:           CTopoID,
-		Node:         NewNodes(v, isFirst),
+		Node:         NewNodes(v),
 		TransferInfo: NewTransferInfos(v),
 	}
 }
@@ -262,18 +260,18 @@ func (t *TopoTable) CreateOp(v *VMCData) error {
 	glog.Infof("[CreateOp] topo id = %s", t.Id)
 	if t.Id == "" {
 		glog.Infof("[CreateOp] new topoTable")
-		t = NewTopoTable(v, true)
+		t = NewTopoTable(v)
 		glog.Infof("[CreateOp] new topo: %+v", t)
 		return mgm.CollectionByName(config.CommonConfig.DBTopoTableName).Create(t)
 	}
 
 	newNodes := make([]*Nodes, 0)
 	for _, node := range t.Node {
-		if node.Id != int64(v.VMCID) && node.ParentId != uint16(v.VMCID) {
+		if node.Id != int64(v.VMCID) && node.ParentId != uint16(v.VMCID) && node.DeviceType != "sw" && node.DeviceType != "rtu" {
 			newNodes = append(newNodes, node)
 		}
 	}
-	newNodes = append(newNodes, NewNodes(v, false)...)
+	newNodes = append(newNodes, NewNodes(v)...)
 	t.Node = newNodes
 	return t.UpdateOp()
 }
