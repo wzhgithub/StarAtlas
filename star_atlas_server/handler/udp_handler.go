@@ -14,6 +14,7 @@ const (
 
 var limitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
+var vmcDataChan = make(chan *model.VMCData, CDataSize)
 
 func UdpDataRev(port int) {
 	glog.Infof("start listening on port:%d\n", port)
@@ -51,6 +52,32 @@ func udpProcess(conn *net.UDPConn) {
 	limitChan <- str
 }
 
+func UpdateVMC() {
+	defer func() {
+		if err := recover(); err != nil {
+			glog.Errorf("go UpdateVMC error: %v", err)
+		}
+	}()
+	for {
+		vmcData, ok := <-vmcDataChan
+		if !ok {
+			glog.Errorf("received vmcData failed")
+			continue
+		}
+		topoTable := &model.TopoTable{}
+		err := topoTable.CreateOp(vmcData)
+		if err != nil {
+			glog.Errorf("failed create topotable into db, error: %s\n", err.Error())
+			continue
+		}
+		err = vmcData.CreateData()
+		if err != nil {
+			glog.Errorf("failed create vmcdata into db, error: %s\n", err.Error())
+			continue
+		}
+	}
+}
+
 func ParseData() {
 
 	defer func() {
@@ -59,22 +86,19 @@ func ParseData() {
 		}
 	}()
 
-	topoTable := &model.TopoTable{}
 	for {
 		data, ok := <-limitChan
 		if !ok {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		vmcData, _ := model.NewVMCData(data)
-		err := topoTable.CreateOp(vmcData)
+		glog.Infof("recv data len: %v\n", len(data))
+		vmcData, err := model.NewVMCData(data)
 		if err != nil {
-			glog.Errorf("failed create topotable into db, error: %s\n", err.Error())
+			glog.Errorf("recv err: %v", err)
+			continue
 		}
-		err = vmcData.CreateData()
-		if err != nil {
-			glog.Errorf("failed create vmcdata into db, error: %s\n", err.Error())
-		}
+		vmcDataChan <- vmcData
 		<-doneChan
 	}
 }
