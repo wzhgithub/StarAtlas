@@ -18,25 +18,17 @@ func init() {
 	flag.StringVar(&configPath, "path", "./config.yaml", "yaml文件加载路径")
 }
 
-// func testWav() {
-// 	filename := "/app/record.wav"
-// 	byteData := sdk.LoadFile(filename)
-// 	wave, err := sdk.DecodeWav(byteData)
+// func testReadData(f string) {
+// 	dat, err := os.ReadFile(f)
 // 	if err != nil {
-// 		glog.Errorf("Failed to decode wave: %v\n", err)
+// 		glog.Errorf("read file error: %v\n", err)
 // 		return
 // 	}
-// 	res, err := handler.RecogniteByType(wave.GetRawSamples(), 16000, 1, 2, "speech")
+// 	_, err = model.NewVMCData(string(dat))
 // 	if err != nil {
-// 		glog.Errorf("Failed to recognize wave: %v\n", err)
+// 		glog.Errorf("NewVMCData error: %v\n", err)
 // 		return
 // 	}
-// 	glog.Infof("received speech from server %v\n", res)
-// 	if res.StatusCode != 200 {
-// 		glog.Infof("warnings received from server %v\n", res.StatucMesaage)
-// 		return
-// 	}
-// 	glog.Infof("received speech word %v\n", res.Result)
 // }
 
 func main() {
@@ -53,6 +45,7 @@ func main() {
 	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()
 	go handler.SatelliteTCPHandlerInit(config.CommonConfig.SatelliteTCPPort)
+	// testReadData("test/test.bin")
 	router := gin.New()
 	// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter
 	// By default gin.DefaultWriter = os.Stdout
