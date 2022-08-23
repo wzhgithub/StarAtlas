@@ -44,8 +44,9 @@ func main() {
 	}
 	go handler.UdpDataRev(config.CommonConfig.UDPPort)
 	go handler.ParseData()
+	go handler.UpdateVMC()
 	go handler.SatelliteTCPHandlerInit(config.CommonConfig.SatelliteTCPPort)
-	// testReadData("test/test.bin")
+
 	router := gin.New()
 	// LoggerWithFormatter middleware will write the logs to gin.DefaultWriter
 	// By default gin.DefaultWriter = os.Stdout
