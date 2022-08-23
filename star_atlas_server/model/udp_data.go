@@ -476,7 +476,7 @@ func parse(bytes []byte) (*VMCData, error) {
 	if remoteStart < fpgaEnd {
 		appIdx = fpgaEnd
 	}
-	glog.Infof("app idx: %d\n", appIdx)
+	glog.Infof("app idx: %d, app num: %d\n", appIdx, bytes[appIdx])
 
 	remoteSet, totalRemoteBytes := parseRemoteUnit(bytes, remoteStart, remoteEnd)
 	switchSet, totalSwitchDeviceBytes := parseSwitch(bytes, switchStart, switchEnd)
