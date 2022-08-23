@@ -1,6 +1,7 @@
 package model
 
 import (
+	bbytes "bytes"
 	"context"
 	"encoding/binary"
 	"fmt"
@@ -35,6 +36,8 @@ const (
 	cTAST_SIZE = 12
 
 	cMAX_DOCUMENT_NUM = 200
+
+	cSTR_END = 32
 )
 
 type DeviceData struct {
@@ -164,8 +167,10 @@ func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 		for i := 0; i < num; i++ {
 			si := i*cCPU_SIZE + ss
 			glog.Infof("cpu index %d num:%d\n", si, num)
+			name := bytes[si : si+10]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[si : si+10]),
+				Name:                string(name[:name_len]),
 				ID:                  bytes[si+10],
 				Type:                bytes[si+11],
 				Num:                 bytes[si+12],
@@ -200,8 +205,10 @@ func parseGPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 		for j := 0; j < num; j++ {
 			i := j*cGPU_SIZE + ss
 			glog.Infof("gpu i:%d num:%d\n", i, num)
+			name := bytes[i : i+10]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[i : i+10]),
+				Name:                string(name[:name_len]),
 				ID:                  bytes[i+10],
 				Type:                bytes[i+11],
 				Num:                 bytes[i+12],
@@ -235,8 +242,10 @@ func parseFPGADevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 		for j := 0; j < num; j++ {
 			i := j*cFPGA_SIZE + ss
 			glog.Infof("fpga i:%d num:%d\n", i, num)
+			name := bytes[i : i+10]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			DeviceData := &DeviceData{
-				Name: string(bytes[i : i+10]),
+				Name: string(name[:name_len]),
 				ID:   bytes[i+10],
 				Type: bytes[i+11],
 			}
@@ -265,8 +274,10 @@ func parseDSPDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 		for i := 0; i < num; i++ {
 			si := i*cDSP_SIZE + ss
 			glog.Infof("dsp index %d num:%d\n", si, num)
+			name := bytes[i : i+10]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[si : si+10]),
+				Name:                string(name[:name_len]),
 				ID:                  bytes[si+10],
 				Type:                bytes[si+11],
 				Num:                 bytes[si+12],
@@ -299,8 +310,10 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 		for j := 0; j < taskNum; j++ {
 			i := j * cTAST_SIZE
 			glog.Infof("task start index: %d", i)
+			name := bytes[i : 2+i]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			t := &Task{
-				Name:        string(bytes[i : 2+i]),
+				Name:        string(name[:name_len]),
 				ID:          binary.BigEndian.Uint16(bytes[i+2 : i+4]),
 				TaskType:    bytes[i+4],
 				TaskStatus:  bytes[i+5],
@@ -332,7 +345,9 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 		if appStart >= length {
 			break
 		}
-		name := string(bytes[appStart : appStart+10])
+		b_name := bytes[appStart : appStart+10]
+		name_len := bbytes.IndexByte(b_name[:], cSTR_END)
+		name := string(b_name[:name_len])
 		taskNum := bytes[appStart+10]
 		runPeriod := binary.BigEndian.Uint16(bytes[appStart+11 : appStart+13])
 		dispatchTime := binary.BigEndian.Uint16(bytes[appStart+13 : appStart+15])
@@ -378,8 +393,10 @@ func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
 		arr := make([]*RemoteUnit, num)
 		for i := 0; i < int(num); i++ {
 			t := i*cREMOTE_SIZE + idx
+			name := bytes[t : t+10]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			r := &RemoteUnit{
-				RemoteUnitName:  string(bytes[t : t+10]),
+				RemoteUnitName:  string(name[:name_len]),
 				RemoteUnitOrder: bytes[t+10],
 				RemoteUnitType:  bytes[t+11],
 				LinkTo:          bytes[t+12],
@@ -409,8 +426,10 @@ func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
 		arr := make([]*SwitchDevice, num)
 		for i := 0; i < int(num); i++ {
 			t := i*cSWITCH_SIZE + idx
+			name := bytes[t : t+10]
+			name_len := bbytes.IndexByte(name[:], cSTR_END)
 			r := &SwitchDevice{
-				SwitchName:  string(bytes[t : t+10]),
+				SwitchName:  string(name[:name_len]),
 				SwitchOrder: bytes[t+10],
 				SwitchType:  bytes[t+11],
 				LinkTo:      bytes[t+12],
@@ -466,12 +485,14 @@ func parse(bytes []byte) (*VMCData, error) {
 	gpuSet, totalGpuBytes := parseGPUDevice(bytes, gpusStart, gpusEnd)
 	fpagSet, totalFpagBytes := parseFPGADevice(bytes, fpgaStart, fpgaEnd)
 	appSet, vmcStatus := parseApp(bytes, appIdx+1, l-1)
+	name := bytes[4:14]
+	name_len := bbytes.IndexByte(name[:], cSTR_END)
 
 	v := &VMCData{
 		frameHeader:      bytes[0],
 		length:           binary.BigEndian.Uint16(bytes[1:3]),
 		protoType:        bytes[3],
-		VMCName:          string(bytes[4:14]),
+		VMCName:          string(name[:name_len]),
 		VMCID:            bytes[14],
 		CPUNumber:        bytes[15],
 		DSPNumber:        bytes[16],
