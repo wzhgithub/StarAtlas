@@ -150,7 +150,7 @@ import selflineNewless from "@/components/selflineNewless.vue";
 import TableNow from "@/components/TableNow.vue";
 import imgvmc from "@/assets/newpng/VMC.svg";
 import messages from "@/assets/newpng/send_.svg";
-import { getTopoShow } from "@/api";
+import { getTopoShow, filterName } from "@/api";
 const singletable = [
   {
     productName: "核心任务_12654_456",
@@ -212,14 +212,15 @@ export default {
       vmcedge: {},
       areaedge: {},
       Nowindex: "1",
-      vmcArr: [100, 80, 140, 120, 160, 180],
       vmcs: [],
+      vmcNode: {},
     };
   },
   computed: {
     ...mapState(["disVmc", "disArea"]),
   },
   methods: {
+    filterName,
     async getNameOAll() {
       const { data } = await getTopoShow();
       if (data.code == 0) {
@@ -392,8 +393,8 @@ export default {
         errType === "vmc" ? "整机迁移" : "分区迁移"
       }\n 迁移开始时间：${
         errType === "vmc"
-          ? new Date(parseInt(this.disVmc)).toLocaleString()
-          : new Date(parseInt(this.disArea)).toLocaleString()
+          ? new Date(parseInt(this.disVmc.time)).toLocaleString()
+          : new Date(parseInt(this.disArea.time)).toLocaleString()
       }`;
       return edge;
     },
@@ -424,22 +425,24 @@ export default {
       const FlowingSupport = this.createFlow(graph);
       const VPNFlexEdgeUI = this.createEdegUi(graph);
       let endarr = that.vmcs.map((items, index) => {
-        return that.createNode(
+        let tempnode = that.createNode(
           graph,
           imgvmc,
           index * 100,
           (index % 2) * 80,
-          items.name,
+          that.filterName(items.name),
           null,
           true
         );
+        that.vmcNode[items.id] = tempnode;
+        return tempnode;
       });
       var flowingSupport = new FlowingSupport(graph);
-      if (this.disVmc) {
+      if (this.disVmc.time) {
         var edge1 = this.createEdge(
           graph,
-          vmc3,
-          vmc2,
+          that.vmcNode[this.disVmc.id],
+          that.vmcNode[180],
           null,
           true,
           "任务迁移流1",
@@ -447,11 +450,11 @@ export default {
         );
         flowingSupport.addFlowing(edge1, 1, false);
       }
-      if (this.disArea) {
+      if (this.disArea.time) {
         var edge2 = this.createEdge(
           graph,
-          vmc3,
-          vmc1,
+          that.vmcNode[this.disArea.id],
+          that.vmcNode[180],
           null,
           true,
           "任务迁移流2",

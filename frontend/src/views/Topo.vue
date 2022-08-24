@@ -15,26 +15,31 @@
     <el-drawer
       class="drawer_info"
       size="40%"
-      :title="`设备：${activeNodeInfo.name}的详情`"
+      :title="`设备：${filterName(activeNodeInfo.name)}的详情`"
       :visible.sync="drawer"
       :modal="false"
     >
-      <div v-if="activeNodeInfo.device_type === 'cpu'" class="mainbox">
+      <div v-if="activeNodeInfo.device_type === 'vmc'" class="mainbox">
         <div class="aside_box">
+          <div class="grid-content_btn">
+            <button @click="mockError(1)">模拟整机故障</button>
+          </div>
+          <div class="grid-content_btn">
+            <button @click="mockError(0)">模拟分区故障</button>
+          </div>
           <img
-            v-if="activeNodeInfo.device_type === 'cpu'"
+            v-if="activeNodeInfo.device_type === 'vmc'"
             class="miansvg"
-            src="../assets/newpng/CPU.svg"
+            src="../assets/newpng/VMC.svg"
             alt=""
           />
-          <CpuInfo :cpuNow="cpu" />
         </div>
         <div class="aside_box_line_bar">
           <p class="title">
             <span>机器性能历史状况</span>
           </p>
           <div class="canvasbox" id="linebox_">
-            <selflineNew inref="linebox_" />
+            <selflineNew inref="linebox_" :vmcid="activeNodeInfo.id" />
           </div>
         </div>
         <div class="aside_box_task">
@@ -44,14 +49,8 @@
           <scrolltable :data="tableData" />
         </div>
       </div>
-      <div v-else class="mainbox">
+      <div v-show="activeNodeInfo.device_type !== 'vmc'" class="mainbox">
         <div class="aside_box">
-          <div class="grid-content_btn">
-            <button @click="mockError(1)">模拟整机故障</button>
-          </div>
-          <div class="grid-content_btn">
-            <button @click="mockError(0)">模拟分区故障</button>
-          </div>
           <img
             v-if="activeNodeInfo.device_type === 'sw'"
             class="miansvg"
@@ -117,39 +116,13 @@
           <p class="title">
             <span>机器信息</span>
           </p>
-          <div class="canvasbox">
-            <!-- <selflineNew inref="linebox_" /> -->
-            <p>
-              信息字段1:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段5:
-              信息信息
-            </p>
-            <p>
-              信息字段2:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段6:
-              信息信息
-            </p>
-            <p>
-              信息字段3:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段7:
-              信息信息
-            </p>
-            <p>
-              信息字段4:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段8:
-              信息信息
-            </p>
-            <!-- <p>信息字段5: 信息信息</p> -->
+          <div class="infoBox">
+            <p>设备名：{{ filterName(activeNodeInfo.name) }}</p>
+            <p>设备ID：{{ activeNodeInfo.id }}</p>
+            <p>设备状态：{{ activeNodeInfo.device_status }}</p>
+            <p>设备数量：{{ activeNodeInfo.device_num }}</p>
           </div>
         </div>
-        <!-- <div class="aside_box_task">
-          <p class="title">
-            <span>交换机历史数据信息</span>
-          </p>
-          <div class="boxForline" id="linebox">
-            <selfline inref="linebox" />
-          </div>
-        </div> -->
       </div>
     </el-drawer>
   </div>
@@ -172,7 +145,7 @@ import router from "@/assets/network/router_a.png";
 import pc from "@/assets/network/pc_a.png";
 import flow from "@/assets/flow.png";
 import cloud from "@/assets/network/cloud.png";
-import { getTopoShow } from "@/api";
+import { getTopoShow, filterName } from "@/api";
 // import text from "../assets/data/topo.json";
 import imgcpu from "@/assets/newpng/CPU.svg";
 import imggpu from "@/assets/newpng/GPU.svg";
@@ -266,10 +239,13 @@ export default {
         rtu_2: imgop3,
         rtu_3: imgop4,
       },
-      activeNodeInfo: {},
+      activeNodeInfo: {
+        name: "",
+      },
     };
   },
   methods: {
+    filterName,
     ...mapMutations(["setDisVmc", "setDisArea"]),
     async getTopoData() {
       const { data } = await getTopoShow();
@@ -1435,16 +1411,26 @@ export default {
       this.drawer = false;
       if (type) {
         this.$message({
-          message: "模拟整机故障触发成功，可前往容灾演示页面查看任务迁移详情",
+          message:
+            "模拟整机故障触发成功，已为您重定向到容灾演示页面查看任务迁移详情",
           type: "success",
         });
-        this.setDisVmc(new Date().valueOf());
+        this.setDisVmc({
+          ...this.activeNodeInfo,
+          time: new Date().valueOf(),
+        });
+        this.$router.push("/disasterrecovery");
       } else {
         this.$message({
-          message: "模拟分区故障触发成功，可前往容灾演示页面查看任务迁移详情",
+          message:
+            "模拟分区故障触发成功，已为您重定向到容灾演示页面查看任务迁移详情",
           type: "success",
         });
-        this.setDisArea(new Date().valueOf());
+        this.setDisArea({
+          ...this.activeNodeInfo,
+          time: new Date().valueOf(),
+        });
+        this.$router.push("/disasterrecovery");
       }
     },
   },
@@ -1514,6 +1500,15 @@ export default {
   height: 28vh;
   // background-color: #fff;
   .canvasbox {
+    height: 85%;
+    width: 100%;
+    p {
+      color: #fff;
+      margin-left: 10%;
+      font-size: 1rem;
+    }
+  }
+  .infoBox {
     height: 85%;
     width: 100%;
     p {
