@@ -70,7 +70,7 @@ class CurlPSImpl {
 
  private:
   CURL* _curl;
-  uint32_t _max_timeout = 100; // ms 
+  uint32_t _max_timeout = 1000; // ms 
   bool _verbose = true;
 };
 
