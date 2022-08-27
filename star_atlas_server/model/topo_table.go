@@ -25,7 +25,8 @@ const (
 )
 
 // var appStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
-var vmcStatus = []string{"TIMEOUT", "ERROR", "RUN", "RUN"}
+// var vmcStatus = []string{"TIMEOUT", "ERROR", "RUN", "RUN"}
+var vmcStatus = []string{"RUN", "RUN", "RUN", "RUN"}
 
 type TransferInfos struct {
 	FromId     uint16        `json:"from_id" bson:"from_id"`
