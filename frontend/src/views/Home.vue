@@ -49,14 +49,14 @@
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
                     <div class="toptitle">VMC数量</div>
-                    <div class="mainNub"> 
+                    <div class="mainNub">
                       <countTo
                         class="nub"
                         :startVal="0"
                         :endVal="vmc_num"
                         :duration="3000"
                       ></countTo>
-                  </div>
+                    </div>
                   </div>
                 </el-col>
                 <el-col :span="5" style="height: 100%">
@@ -95,13 +95,14 @@
                         :endVal="switch_num"
                         :duration="3000"
                       ></countTo>
-                      </div>
+                    </div>
                   </div>
                 </el-col>
               </el-row>
             </div>
             <div class="boxMainTitleInfo">
-              <h3>星辰算力</h3>
+              <h3>{{ dayStr ? `${dayStr}天` : "" }}</h3>
+              <h3 :class="dayStr ? '' : 'nullday'">{{ timeStr }}</h3>
             </div>
             <div class="linktopbox">
               <router-link class="link_btn" to="/topo"> 拓扑结构 </router-link>
@@ -117,9 +118,7 @@
               </router-link>
             </div>
             <div class="linkrightbox_">
-              <router-link class="link_btn" to="/disasterrecovery">
-                任务容灾1
-              </router-link>
+              <a class="link_btn" href="Satellite:">3D演示</a>
             </div>
             <div class="bigbox">
               <div class="middlebox">
@@ -185,6 +184,9 @@ export default {
       cpu_num: 0,
       rtu_num: 0,
       switch_num: 0,
+      time: 10000 * 1000 * 60 * 60 + 1000 * 60 * 59 + 50000,
+      timeStr: "0秒",
+      dayStr: 1,
     };
   },
   methods: {
@@ -211,15 +213,60 @@ export default {
         // console.log(this.vmcs);
       }
     },
+    dealWithTime(time) {
+      // if (time >= 1000 * 60 * 60 * 24) {
+      let day = Math.floor(time / (1000 * 60 * 60 * 24));
+      let day_ = time % (1000 * 60 * 60 * 24);
+      let h = Math.floor(day_ / (1000 * 60 * 60));
+      let h_ = day_ % (1000 * 60 * 60);
+      let m = Math.floor(h_ / (1000 * 60));
+      let m_ = h_ % (1000 * 60);
+      let s = Math.floor(m_ / 1000);
+      this.dayStr = day;
+      this.timeStr = `${this.dealWithTimeEnd(h)}时${this.dealWithTimeEnd(
+        m
+      )}分${this.dealWithTimeEnd(s)}秒`;
+      //   return;
+      // }
+      // if (time >= 1000 * 60 * 60) {
+      //   let h = Math.floor(time / (1000 * 60 * 60));
+      //   let h_ = time % (1000 * 60 * 60);
+      //   let m = Math.floor(h_ / (1000 * 60));
+      //   let m_ = h_ % (1000 * 60);
+      //   let s = Math.floor(m_ / 1000);
+      //   this.timeStr = `${this.dealWithTimeEnd(h)}:${this.dealWithTimeEnd(
+      //     m
+      //   )}:${this.dealWithTimeEnd(s)}`;
+      //   return;
+      // }
+      // if (time >= 1000 * 60) {
+      //   let m = Math.floor(time / (1000 * 60));
+      //   let m_ = time % (1000 * 60);
+      //   let s = Math.floor(m_ / 1000);
+      //   this.timeStr = `${this.dealWithTimeEnd(m)}:${this.dealWithTimeEnd(s)}`;
+      //   return;
+      // }
+      // this.timeStr = `${this.dealWithTimeEnd(Math.floor(time / 1000))}秒`;
+    },
+    dealWithTimeEnd(nub) {
+      if (nub < 10) {
+        return `0${nub}`;
+      }
+      return nub;
+    },
   },
   mounted() {
     let that = this;
     setTimeout(() => {
       that.loading = false;
       that.getNameOAll();
+      that.dealWithTime(that.time);
     }, 3000);
+    setInterval(() => {
+      that.time = that.time + 1000;
+      that.dealWithTime(that.time);
+    }, 1000);
   },
-
   created() {},
 };
 </script>
@@ -253,8 +300,7 @@ export default {
           // background-color: aqua;
           // background: url("../assets/newpng/center_top_main_little_bgi.png")
           //   no-repeat center;
-          background: url("../assets/tt.gif")
-            no-repeat center;
+          background: url("../assets/tt.gif") no-repeat center;
           background-size: 100% 100%;
           //color: rgba(126, 225, 50, 0.823);
           color: #94f0e7;
@@ -273,14 +319,23 @@ export default {
       .boxMainTitleInfo {
         width: 100%;
         position: absolute;
-        top: 42%;
+        top: 43%;
         text-align: center;
         // left: 45%;
         color: #fff;
 
         h3 {
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 700;
+          margin-bottom: 0 !important;
+          margin-top: 0 !important;
+          line-height: 2.5rem;
+          padding-bottom: 0 !important;
+          padding-top: 0 !important;
+          color: #fffb00;
+        }
+        .nullday {
+          margin-top: 3rem !important;
         }
       }
       .linktopbox {
