@@ -125,6 +125,15 @@
         </div>
       </div>
     </el-drawer>
+    <el-drawer
+      class="drawer_info_left"
+      size="40%"
+      :title="`设备：${filterName(activeNodeInfo.name)}的详情`"
+      :visible.sync="drawer"
+      :modal="false"
+      direction="ltr"
+    >
+    </el-drawer>
   </div>
 </template>
 
@@ -165,7 +174,6 @@ import CpuInfo from "@/components/CpuInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import selfline from "@/components/selfline.vue";
-
 export default {
   name: "Topo",
   components: {
@@ -248,6 +256,91 @@ export default {
     filterName,
     ...mapMutations(["setDisVmc", "setDisArea"]),
     async getTopoData() {
+      // const str = {
+      //   code: 0,
+      //   data: {
+      //     created_at: "2022-08-23T10:11:25.066Z",
+      //     updated_at: "2022-08-23T10:11:40Z",
+      //     id: "topo_table",
+      //     node: [
+      //       {
+      //         id: 1000000,
+      //         name: "cpu_all",
+      //         device_type: "cpu",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "cpu_ids", value: ["0", "1"] },
+      //           { key: "cpu_names", value: ["CPU0      ", "CPU1      "] },
+      //           { key: "cpu_types", value: ["0", "0"] },
+      //           { key: "cpu_cores", value: ["1", "1"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 2000000,
+      //         name: "gpu_all",
+      //         device_type: "gpu",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "gpu_ids", value: ["0", "1"] },
+      //           { key: "gpu_names", value: ["GPU0      ", "GPU1      "] },
+      //           { key: "gpu_types", value: ["0", "0"] },
+      //           { key: "gpu_cores", value: ["8", "8"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 3000000,
+      //         name: "dsp_all",
+      //         device_type: "dsp",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "dsp_ids", value: ["0", "1"] },
+      //           { key: "dsp_names", value: ["DSP0      ", "DSP1      "] },
+      //           { key: "dsp_types", value: ["0", "0"] },
+      //           { key: "dsp_cores", value: ["8", "8"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 4000000,
+      //         name: "fpga_all",
+      //         device_type: "fpga",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "fpga_ids", value: ["0", "1"] },
+      //           { key: "fpga_names", value: ["FPGA0     ", "FPGA1     "] },
+      //           { key: "fpga_types", value: ["0", "0"] },
+      //           { key: "fpga_cores", value: ["0", "0"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 0,
+      //         name: "VMC0      ",
+      //         device_type: "vmc",
+      //         parent_id: 0,
+      //         upstream_id: 50,
+      //         device_status: "ERROR",
+      //         device_num: 0,
+      //         other_info: [{ key: "proto_type", value: ["85"] }],
+      //       },
+      //     ],
+      //     transfer_info: null,
+      //   },
+      //   msg: "success",
+      // };
+      // const { data } = JSON.parse(JSON.stringify(str));
+      // console.log(data);
+      // this.topoData = data.data.node || [];
       const { data } = await getTopoShow();
       this.topoData = data.data.node || [];
     },
@@ -278,7 +371,7 @@ export default {
       if (group) {
         group.addChild(node);
       }
-      node.randomAble = randomFlag || false;
+      node.randomAble = true;
       node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
       node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
@@ -286,6 +379,16 @@ export default {
       node.nodesType = nodesType;
       node.moreInfo = otherInfo;
       return node;
+    },
+    createGroup(graph, otherInfo) {
+      var group = graph.createGroup();
+      group.image = this.imgObg.vmc;
+      group.moreInfo = otherInfo;
+      group.size = { height: 80 };
+      group.setStyle(Q.Styles.GROUP_BACKGROUND_COLOR, "#040f21");
+      // group.setStyle(Q.Styles.GROUP_BACKGROUND_A, "#040f21");
+      group.setStyle(Q.Styles.ALPHA, 0.8);
+      return group;
     },
     createNode_center(graph, image, x, y, name, group, randomFlag, nodesType) {
       var node = graph.createNode(name, x, y);
@@ -589,10 +692,9 @@ export default {
       });
       /// 报警
       var AlarmSeverity = {
-        CRITICAL: { color: Q.toColor(0xeeff0000), sortName: "C" },
-        MAJOR: { color: Q.toColor(0xeeffaa00), sortName: "M" },
-        MINOR: { color: Q.toColor(0xeeffff00), sortName: "m" },
-        WARNING: { color: Q.toColor(0xee00ffff), sortName: "W" },
+        RUN: { color: Q.toColor(0x7fff00), sortName: "R" },
+        WARNING: { color: Q.toColor(0xffa500), sortName: "W" },
+        Err: { color: Q.toColor(0xff0000), sortName: "E" },
       };
       var all = [];
       for (var name in AlarmSeverity) {
@@ -615,8 +717,12 @@ export default {
             element.alarmColor = null;
             return;
           }
-          if (element.randomAble) {
-            // var alarmSeverity = AlarmSeverity.random;
+          if (element.randomAble === true && element.moreInfo !== undefined) {
+            var alarmSeverity = AlarmSeverity[element.moreInfo.device_status];
+            element.alarmColor = alarmSeverity.color;
+            // if (element.randomAble === true) {
+            //   element.alarmColor = alarmSeverity.color;
+            // }
             // element.alarmLabel =
             //   "" +
             //   (1 + Q.randomInt(100)) +
@@ -1093,22 +1199,24 @@ export default {
                 x: item.x - 100,
                 y: item.y + tempy,
               });
-              tempy = tempy + 100;
+              tempy = tempy + 140;
             }
           });
           let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+            let vmcGroup = this.createGroup(graph, { test: "group" });
             let tempnode = this.createNode(
               graph,
               imgvmc,
               vmcitem.x,
               vmcitem.y,
               null,
-              null,
+              vmcGroup,
               null,
               "VMC",
               vmcitem
             );
             this.createEdge(graph, tempnode, item);
+            tempnode.GroupSNow = vmcGroup;
             return tempnode;
           });
           let opArr = vmcArr1.map((vmcnode) => {
@@ -1136,7 +1244,7 @@ export default {
                 calitem.x,
                 calitem.y,
                 null,
-                null,
+                vmcnode.GroupSNow,
                 null,
                 calitem.device_type,
                 calitem
@@ -1160,22 +1268,24 @@ export default {
                   x: item.x - 100,
                   y: item.y + tempy,
                 });
-                tempy = tempy + 100;
+                tempy = tempy + 140;
               }
             });
             let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+              let vmcGroup = this.createGroup(graph, { test: "group" });
               let tempnode = this.createNode(
                 graph,
                 imgvmc,
                 vmcitem.x,
                 vmcitem.y,
                 null,
-                null,
+                vmcGroup,
                 null,
                 "VMC",
                 vmcitem
               );
               this.createEdge(graph, tempnode, item);
+              tempnode.GroupSNow = vmcGroup;
               return tempnode;
             });
             let opArr = vmcArr1.map((vmcnode) => {
@@ -1203,7 +1313,7 @@ export default {
                   calitem.x,
                   calitem.y,
                   null,
-                  null,
+                  vmcnode.GroupSNow,
                   null,
                   calitem.device_type,
                   calitem
@@ -1226,22 +1336,24 @@ export default {
                   x: item.x + 100,
                   y: item.y - tempy,
                 });
-                tempy = tempy + 100;
+                tempy = tempy + 140;
               }
             });
             let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+              let vmcGroup = this.createGroup(graph, { test: "group" });
               let tempnode = this.createNode(
                 graph,
                 imgvmc,
                 vmcitem.x,
                 vmcitem.y,
                 null,
-                null,
+                vmcGroup,
                 null,
                 "VMC",
                 vmcitem
               );
               this.createEdge(graph, tempnode, item);
+              tempnode.GroupSNow = vmcGroup;
               return tempnode;
             });
             let opArr = vmcArr1.map((vmcnode) => {
@@ -1269,7 +1381,7 @@ export default {
                   calitem.x,
                   calitem.y,
                   null,
-                  null,
+                  vmcnode.GroupSNow,
                   null,
                   calitem.device_type,
                   calitem
@@ -1454,6 +1566,10 @@ export default {
 }
 .el-drawer {
   background: rgba(0, 0, 0, 0.9) !important;
+}
+.drawer_info_left {
+  height: 40% !important;
+  color: #fff !important;
 }
 .mainbox {
   padding: 0;

@@ -184,7 +184,6 @@ import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import topNumber from "@/components/topNumber.vue";
 import { getVMCData } from "@/api";
-import { getVMCDataSeq } from "../api";
 export default {
   name: "details",
   components: {
@@ -319,8 +318,13 @@ export default {
     async getTopData() {
       const { data } = await getVMCData(this.$route.params.id);
       console.log(data);
-      this.topdata = [data.data.memory_usage, data.data.total_disk_usage,
-              data.data.total_cpu_usage, data.data.total_gpu_usage, data.data.total_dsp_usage];
+      this.topdata = [
+        data.data.memory_usage,
+        data.data.total_disk_usage,
+        data.data.total_cpu_usage,
+        data.data.total_gpu_usage,
+        data.data.total_dsp_usage,
+      ];
       this.cpu = {
         name: "CPU信息详情",
         cpuuseage: data.data.total_cpu_usage,
@@ -330,15 +334,20 @@ export default {
         // alluse_: 32768,
         // canuse_: 32768 - data.data.cpu_set[0].int_computing_power,
         computeuseage: data.data.memory_usage,
-        canuse_: data.data.total_memory * (100 - data.data.memory_usage) / 100,
+        canuse_:
+          (data.data.total_memory * (100 - data.data.memory_usage)) / 100,
         alluse_: data.data.total_memory,
         canusecore: data.data.cpu_number,
         allcore: data.data.cpu_number,
-        canusemb: data.data.cpu_set[0].float_computing_power ? data.data.cpu_set[0].float_computing_power : 0,
-        allmb: data.data.cpu_set[0].int_computing_power ? data.data.cpu_set[0].float_computing_power : 0,
+        canusemb: data.data.cpu_set[0].float_computing_power
+          ? data.data.cpu_set[0].float_computing_power
+          : 0,
+        allmb: data.data.cpu_set[0].int_computing_power
+          ? data.data.cpu_set[0].float_computing_power
+          : 0,
         // canusemb: data.data.total_memory * (100 - data.data.memory_usage) / 100,
         // allmb: data.data.total_memory
-      }
+      };
       this.gpu = {
         name: data.data.gpu_set[0].name,
         float_power: data.data.gpu_set[0].float_computing_power,
@@ -348,7 +357,7 @@ export default {
         total_memory: data.data.gpu_set[0].total_memory,
         type: "NIDIA AGX",
         status: "健康",
-      }
+      };
       this.dsp = {
         name: data.data.dsp_set[0].name,
         float_power: data.data.dsp_set[0].float_computing_power,
@@ -359,7 +368,7 @@ export default {
         total_memory: data.data.dsp_set[0].total_memory,
         type: data.data.dsp_set[0].type,
         status: "健康",
-      }
+      };
       this.fpga = {
         name: data.data.fpga_set[0].name,
         float_power: data.data.fpga_set[0].float_computing_power,
@@ -370,7 +379,7 @@ export default {
         total_memory: data.data.fpga_set[0].total_memory,
         type: data.data.fpga_set[0].type,
         status: "健康",
-      }
+      };
     },
     dealWithTypeClick(num) {
       // this.asidvisiber = [false,false,false,false]
