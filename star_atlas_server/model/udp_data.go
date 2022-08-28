@@ -106,6 +106,7 @@ type App struct {
 	ID           uint8   `json:"id" bson:"id"`                       //
 	ResetNumber  uint8   `json:"reset_number" bson:"reset_number"`
 	BelongsTo    uint8   `json:"belongs_to" bson:"belongs_to"`
+	DeviceId     uint8	 `json:"device_id" bson:"device_id"`
 	TaskSet      []*Task `json:"task_set" bson:"task_set"`
 	AppStatus    uint8   `json:"app_status" bson:"app_status"`
 	IsTransfer   bool    `json:"is_transfer" bson:"is_transfer"`
@@ -409,7 +410,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 	appStart := 0
 	var vmcStatus uint8
 	for {
-		glog.Infof("app start: %d", appStart)
+		glog.Infof("app start: %d len:%d", appStart, length)
 		if appStart >= length {
 			break
 		}
@@ -420,8 +421,9 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 		id := bytes[appStart+15]
 		resetNumber := bytes[appStart+16]
 		vmcId := bytes[appStart+17]
+		did := bytes[appStart+18]
 		taskLen := uint8(taskNum) * cTAST_SIZE
-		taskStart := appStart + 18
+		taskStart := appStart + 19
 		taskEnd := taskStart + int(taskLen)
 		glog.Infof("task start: %d, task end: %d", taskStart, taskEnd)
 		taskSet, appStatus := parseTask(bytes, taskStart, taskEnd)
@@ -436,6 +438,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 			BelongsTo:    vmcId,
 			TaskSet:      taskSet,
 			AppStatus:    appStatus,
+			DeviceId: 	  did,
 		}
 		appStart = taskEnd
 		glog.Infof("app details: %+v\n", a)
@@ -548,7 +551,9 @@ func parse(bytes []byte) (*VMCData, error) {
 	// sys time
 	sysRunTimeEnd := sysRunTimeStart + 4
 	timeUnitStart := sysRunTimeEnd
-	glog.Infof("sysRunTimeStart idx: %d, timeUnitStart idx: %d\n", sysRunTimeStart, timeUnitStart)
+	sysTime := binary.BigEndian.Uint32(bytes[sysRunTimeStart:sysRunTimeEnd])
+	tu := bytes[timeUnitStart]
+	glog.Infof("sysRunTimeStart idx: %d, timeUnitStart idx: %d systime:%d tu:%d\n", sysRunTimeStart, timeUnitStart, sysTime, tu)
 	// app
 	appIdx := timeUnitStart + 1
 	glog.Infof("app idx: %d, app num: %d\n", appIdx, bytes[appIdx])
@@ -594,8 +599,8 @@ func parse(bytes []byte) (*VMCData, error) {
 		TotalFPGABytes: totalFpagBytes,
 		FPGASet:        fpagSet,
 
-		SystemRunTime: binary.BigEndian.Uint32(bytes[sysRunTimeStart:sysRunTimeEnd]),
-		TimeUnit:      bytes[timeUnitStart],
+		SystemRunTime: sysTime,
+		TimeUnit:     tu,
 
 		APPNum:  bytes[appIdx],
 		APPInfo: appSet,
