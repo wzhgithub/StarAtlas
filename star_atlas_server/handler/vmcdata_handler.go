@@ -11,20 +11,6 @@ import (
 	"github.com/kamva/mgm/v3"
 )
 
-type FailureOverInfo struct {
-	VMCID  string `json:"vmc_id" bson:"vmc_id"`
-	AppID  string `json:"app_id" bson:"app_id"`
-	TaskID string `json:"task_id" bson:"task_id"`
-}
-
-type FailureOverRequest struct {
-	mgm.DefaultModel `bson:",inline"`
-	From             FailureOverInfo `json:"from" bson:"from"`
-	To               FailureOverInfo `json:"to" bson:"to"`
-	TransStatus      uint            `json:"trans_status" bson:"trans_status"`
-	UniqueKey        string          `json:"unique_key" bson:"unique_key"`
-}
-
 type VMCDataRspJson struct {
 	Success bool              `json:"success"`
 	Data    model.VMCDataJson `json:"data"`
@@ -151,7 +137,7 @@ func GetVMCSequence(c *gin.Context) {
 }
 
 func FailureOver(c *gin.Context) {
-	req := &FailureOverRequest{}
+	req := &model.FailureOverRequest{}
 	if err := c.ShouldBindJSON(req); err != nil {
 		c.JSON(500, model.NewCommonResponseFail(err))
 		return

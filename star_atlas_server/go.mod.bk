@@ -1,0 +1,3 @@
+module star_atlas_server
+
+go 1.18

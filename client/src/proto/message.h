@@ -47,6 +47,10 @@ public:
   // block
   std::weak_ptr< vector<Partition> > m_partitions;
 
+  // patch 08/28/2022
+  uint32_t m_runtime;
+  uint8_t m_time_unit;
+
 public:
   TeleMessage();
   ~TeleMessage();

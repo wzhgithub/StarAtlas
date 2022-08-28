@@ -28,6 +28,7 @@ go.sum
 main
 main.exe
 .idea/
+.vscode/
 star_atlas_server/utest
 client/bin/utest
 star_atlas_server/trans

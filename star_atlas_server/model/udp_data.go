@@ -1,6 +1,7 @@
 package model
 
 import (
+	bbytes "bytes"
 	"context"
 	"encoding/binary"
 	"fmt"
@@ -35,7 +36,43 @@ const (
 	cTAST_SIZE = 12
 
 	cMAX_DOCUMENT_NUM = 200
+
+	cSTR_END = 32
 )
+
+type FailureOverInfo struct {
+	VMCID    string `json:"vmc_id" bson:"vmc_id"`
+	AppID    string `json:"app_id" bson:"app_id"`
+	TaskID   string `json:"task_id" bson:"task_id"`
+	DeviceId string `json:"device_id" bson:"device_id"`
+}
+
+type FailureOverRequest struct {
+	mgm.DefaultModel `bson:",inline"`
+	From             FailureOverInfo `json:"from" bson:"from"`
+	To               FailureOverInfo `json:"to" bson:"to"`
+	TransStatus      uint            `json:"trans_status" bson:"trans_status"`
+	UniqueKey        string          `json:"unique_key" bson:"unique_key"`
+}
+type FailureTask struct {
+	FailureName uint16 `json:"failure_name" bson:"failure_name"`
+	FailureDesc uint8  `json:"failure_type" bson:"failure_type"`
+	AppId       uint8  `json:"app_id" bson:"app_id"`
+	IsFault     uint8  `json:"is_fault" bson:"is_fault"`
+}
+
+type VMCController struct {
+	mgm.DefaultModel `bson:",inline"`
+	FrameHeader      uint8       `json:"frame_header" bson:"frame_header"`
+	Length           uint16      `json:"length" bson:"length"`
+	DataType         uint8       `json:"data_type" bson:"data_type"`
+	FromVmc          uint8       `json:"from_vmc" bson:"from_vmc"`
+	FromDevice       uint8       `json:"from_device" bson:"from_device"`
+	ToVmc            uint8       `json:"to_vmc" bson:"to_vmc"`
+	ToDevice         uint8       `json:"to_device" bson:"to_device"`
+	Task             FailureTask `json:"failure_task" bson:"failure_task"`
+	Sum              uint8       `json:"sum" bson:"sum"`
+}
 
 type DeviceData struct {
 	Name string `json:"name" bson:"name"` // 10bytes
@@ -140,12 +177,56 @@ type VMCData struct {
 	// fpga
 	TotalFPGABytes uint8         `json:"total_fpga_bytes" bson:"total_fpga_bytes"`
 	FPGASet        []*DeviceData `json:"fpga_set" bson:"fpga_set"` // 12bytes
+	//system time
+	SystemRunTime uint32 `json:"system_run_time" bson:"system_run_time"` //
+	TimeUnit      uint8  `json:"time_unit" bson:"time_unit"`
 	// app
 	APPNum     uint8  `json:"app_num" bson:"app_num"`
 	APPInfo    []*App `json:"app_info" bson:"app_info"`
 	Sum        uint8  `json:"sum" bson:"sum"`
 	Status     uint8  `json:"status" bson:"status"`
 	IsTransfer bool   `json:"is_transfer" bson:"is_transfer"`
+}
+
+const cFailureOverTable = "failure_over_log"
+
+func (controller *VMCController) SaveSelf() error {
+	return mgm.CollectionByName("vmc_controller_data").Create(controller)
+}
+
+func (controller *VMCController) FindAndSetFailureEntity() error {
+	uiq := controller.getControllerUnique()
+	uniqFilter := bson.M{"unique_key": uiq}
+	statusFilter := bson.M{"trans_status": 500}
+	filter := bson.M{"$and": []bson.M{uniqFilter, statusFilter}}
+	updateM := bson.M{"$set": []bson.M{{"to": FailureOverInfo{
+		VMCID:    fmt.Sprintf("%d", controller.ToVmc),
+		AppID:    fmt.Sprintf("%d", controller.Task.AppId),
+		DeviceId: fmt.Sprintf("%d", controller.ToDevice),
+	}}, {"trans_status": 200}}}
+	res, err := mgm.CollectionByName(cFailureOverTable).UpdateOne(mgm.Ctx(), filter, updateM)
+	if err != nil {
+		return err
+	}
+	glog.Infof("update result:%+v\n", res)
+	return nil
+}
+
+func (controller *VMCController) getControllerUnique() string {
+	trans := uint8(1)
+	if controller.FromVmc != controller.ToVmc {
+		trans = uint8(0)
+	}
+
+	return fmt.Sprintf("%d_%d_%d", trans, controller.FromVmc, controller.FromDevice)
+}
+
+func nameHandler(b_name []byte) string {
+	name_len := bbytes.IndexByte(b_name[:], cSTR_END)
+	if name_len < 0 {
+		return string(b_name)
+	}
+	return string(b_name[:name_len])
 }
 
 func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
@@ -165,7 +246,7 @@ func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 			si := i*cCPU_SIZE + ss
 			glog.Infof("cpu index %d num:%d\n", si, num)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[si : si+10]),
+				Name:                nameHandler(bytes[si : si+10]),
 				ID:                  bytes[si+10],
 				Type:                bytes[si+11],
 				Num:                 bytes[si+12],
@@ -201,7 +282,7 @@ func parseGPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 			i := j*cGPU_SIZE + ss
 			glog.Infof("gpu i:%d num:%d\n", i, num)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[i : i+10]),
+				Name:                nameHandler(bytes[i : i+10]),
 				ID:                  bytes[i+10],
 				Type:                bytes[i+11],
 				Num:                 bytes[i+12],
@@ -236,7 +317,7 @@ func parseFPGADevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 			i := j*cFPGA_SIZE + ss
 			glog.Infof("fpga i:%d num:%d\n", i, num)
 			DeviceData := &DeviceData{
-				Name: string(bytes[i : i+10]),
+				Name: nameHandler(bytes[i : i+10]),
 				ID:   bytes[i+10],
 				Type: bytes[i+11],
 			}
@@ -266,7 +347,7 @@ func parseDSPDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 			si := i*cDSP_SIZE + ss
 			glog.Infof("dsp index %d num:%d\n", si, num)
 			DeviceData := &DeviceData{
-				Name:                string(bytes[si : si+10]),
+				Name:                nameHandler(bytes[si : si+10]),
 				ID:                  bytes[si+10],
 				Type:                bytes[si+11],
 				Num:                 bytes[si+12],
@@ -300,7 +381,7 @@ func parseTask(bytes []byte, start, end int) ([]*Task, uint8) {
 			i := j * cTAST_SIZE
 			glog.Infof("task start index: %d", i)
 			t := &Task{
-				Name:        string(bytes[i : 2+i]),
+				Name:        nameHandler(bytes[i : i+2]),
 				ID:          binary.BigEndian.Uint16(bytes[i+2 : i+4]),
 				TaskType:    bytes[i+4],
 				TaskStatus:  bytes[i+5],
@@ -332,7 +413,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 		if appStart >= length {
 			break
 		}
-		name := string(bytes[appStart : appStart+10])
+		name := nameHandler(bytes[appStart : appStart+10])
 		taskNum := bytes[appStart+10]
 		runPeriod := binary.BigEndian.Uint16(bytes[appStart+11 : appStart+13])
 		dispatchTime := binary.BigEndian.Uint16(bytes[appStart+13 : appStart+15])
@@ -379,7 +460,7 @@ func parseRemoteUnit(bytes []byte, start, end int) ([]*RemoteUnit, uint8) {
 		for i := 0; i < int(num); i++ {
 			t := i*cREMOTE_SIZE + idx
 			r := &RemoteUnit{
-				RemoteUnitName:  string(bytes[t : t+10]),
+				RemoteUnitName:  nameHandler(bytes[t : t+10]),
 				RemoteUnitOrder: bytes[t+10],
 				RemoteUnitType:  bytes[t+11],
 				LinkTo:          bytes[t+12],
@@ -410,7 +491,7 @@ func parseSwitch(bytes []byte, start, end int) ([]*SwitchDevice, uint8) {
 		for i := 0; i < int(num); i++ {
 			t := i*cSWITCH_SIZE + idx
 			r := &SwitchDevice{
-				SwitchName:  string(bytes[t : t+10]),
+				SwitchName:  nameHandler(bytes[t : t+10]),
 				SwitchOrder: bytes[t+10],
 				SwitchType:  bytes[t+11],
 				LinkTo:      bytes[t+12],
@@ -438,7 +519,6 @@ func calcStartEnd(start int, num uint8, l int) (int, int) {
 
 // todo
 func parse(bytes []byte) (*VMCData, error) {
-
 	l := len(bytes)
 	deviceIdx := 31
 	remoteStart, remoteEnd := calcStartEnd(deviceIdx, uint8(bytes[30]), 13)
@@ -453,11 +533,11 @@ func parse(bytes []byte) (*VMCData, error) {
 	glog.Infof("gpu start:%d gpus end:%d\n", gpusStart, gpusEnd)
 	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[18]), 12)
 	glog.Infof("fpga start:%d fpga end:%d\n", fpgaStart, fpgaEnd)
-	appIdx := remoteEnd
+
+	sysRunTimeStart := remoteEnd
 	if remoteStart < fpgaEnd {
-		appIdx = fpgaEnd
+		sysRunTimeStart = fpgaEnd
 	}
-	glog.Infof("app idx: %d\n", appIdx)
 
 	remoteSet, totalRemoteBytes := parseRemoteUnit(bytes, remoteStart, remoteEnd)
 	switchSet, totalSwitchDeviceBytes := parseSwitch(bytes, switchStart, switchEnd)
@@ -465,13 +545,21 @@ func parse(bytes []byte) (*VMCData, error) {
 	dspSet, totalDspDeviceBytes := parseDSPDevice(bytes, dspStart, dspEnd)
 	gpuSet, totalGpuBytes := parseGPUDevice(bytes, gpusStart, gpusEnd)
 	fpagSet, totalFpagBytes := parseFPGADevice(bytes, fpgaStart, fpgaEnd)
+	// sys time
+	sysRunTimeEnd := sysRunTimeStart + 4
+	timeUnitStart := sysRunTimeEnd
+	glog.Infof("sysRunTimeStart idx: %d, timeUnitStart idx: %d\n", sysRunTimeStart, timeUnitStart)
+	// app
+	appIdx := timeUnitStart + 1
+	glog.Infof("app idx: %d, app num: %d\n", appIdx, bytes[appIdx])
+
 	appSet, vmcStatus := parseApp(bytes, appIdx+1, l-1)
 
 	v := &VMCData{
 		frameHeader:      bytes[0],
 		length:           binary.BigEndian.Uint16(bytes[1:3]),
 		protoType:        bytes[3],
-		VMCName:          string(bytes[4:14]),
+		VMCName:          nameHandler(bytes[4:14]),
 		VMCID:            bytes[14],
 		CPUNumber:        bytes[15],
 		DSPNumber:        bytes[16],
@@ -505,6 +593,9 @@ func parse(bytes []byte) (*VMCData, error) {
 
 		TotalFPGABytes: totalFpagBytes,
 		FPGASet:        fpagSet,
+
+		SystemRunTime: binary.BigEndian.Uint32(bytes[sysRunTimeStart:sysRunTimeEnd]),
+		TimeUnit:      bytes[timeUnitStart],
 
 		APPNum:  bytes[appIdx],
 		APPInfo: appSet,
@@ -553,6 +644,30 @@ func (src *VMCData) TransferVMCDataToJson() *VMCDataJson {
 	dst.TotalDiskUsage = src.TotalDiskUsage
 
 	return dst
+}
+
+func NewVMCController(raw []byte) (*VMCController, error) {
+	if len(raw) != 14 {
+		return nil, fmt.Errorf("invalidate data length: %d", len(raw))
+	}
+	controller := &VMCController{
+		FrameHeader: raw[0],
+		Length:      binary.BigEndian.Uint16(raw[1:3]),
+		DataType:    raw[3],
+		FromVmc:     raw[4],
+		FromDevice:  raw[5],
+		ToVmc:       raw[6],
+		ToDevice:    raw[7],
+		Task: FailureTask{
+			FailureName: binary.BigEndian.Uint16(raw[8:10]),
+			FailureDesc: raw[10],
+			AppId:       raw[11],
+			IsFault:     raw[12],
+		},
+		Sum: raw[13],
+	}
+
+	return controller, nil
 }
 
 // read bytes from udp
