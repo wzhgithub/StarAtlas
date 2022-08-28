@@ -129,11 +129,28 @@
       class="drawer_info_left"
       size="40%"
       :title="`设备：${filterName(activeNodeInfo.name)}的详情`"
-      :visible.sync="drawer"
+      :visible.sync="drawerText"
       :modal="false"
       direction="ltr"
     >
     </el-drawer>
+    <el-dialog
+      title="容灾迁移计算中..."
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose"
+    >
+      <div style="height: 300px; padding: 24px">
+        <el-steps direction="vertical" :active="1">
+          <el-step title="步骤 1"></el-step>
+          <el-step title="步骤 2"></el-step>
+          <el-step
+            title="步骤 3"
+            description="这是一段很长很长很长的描述性文字"
+          ></el-step>
+        </el-steps>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -192,6 +209,8 @@ export default {
       flowColor_: "#ffffff",
       flowColor_vpn: "#00FF00",
       drawer: false,
+      drawerText: false,
+      dialogVisible: true,
       devicename: "",
       deviceType: "",
       topoData: [],
@@ -746,6 +765,7 @@ export default {
         if (evt.getData().moreInfo) {
           that.activeNodeInfo = evt.getData().moreInfo;
           that.drawer = true;
+          that.drawerText = true;
           if (
             evt.getData().moreInfo.other_info &&
             evt.getData().moreInfo.other_info.length &&
@@ -755,7 +775,9 @@ export default {
               evt.getData().moreInfo.other_info[0].value[0]
             }`;
           }
-          console.log(evt.getData().moreInfo);
+        }
+        if (evt.getData().textArea) {
+          that.drawerText = true;
         }
       };
     },
@@ -1012,8 +1034,16 @@ export default {
       let mostleftpoint = line1[0];
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
-      let sheapcenter = Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, 15, 15, 1, 1);
-      let centerNode = this.createNode_center(graph, sheapcenter, 0, 0);
+      // let sheapcenter = Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, 15, 15, 1, 1);
+      var centerNode = graph.createText("TTE", 0, 0);
+      centerNode.setStyle(Q.Styles.LABEL_COLOR, "#FFF");
+      centerNode.setStyle(Q.Styles.LABEL_BACKGROUND_COLOR, "#9bcfee");
+      // centerNode.setStyle(Q.Styles.LABEL_RADIUS, 120);
+      centerNode.setStyle(Q.Styles.LABEL_FONT_SIZE, 50);
+      centerNode.setStyle(Q.Styles.LABEL_FONT_STYLE, "italic lighter");
+      centerNode.zIndex = 9999;
+      centerNode.textArea = true;
+      // let centerNode = this.createNode_center(graph, textNode, 0, 0);
       let line1Edge = null;
       let line2Edge = null;
       let line3Edge = null;
@@ -1024,7 +1054,7 @@ export default {
           mostleftpoint.x,
           mostleftpoint.y
         );
-        leftnNode.zIndex = 999;
+        leftnNode.zIndex = 99;
         line1Edge = this.createBus(graph);
         line1.map((item, index) => {
           if (index === 0) {
@@ -1042,7 +1072,7 @@ export default {
           mostrightToppoint.x,
           mostrightToppoint.y
         );
-        rightTopNode.zIndex = 999;
+        rightTopNode.zIndex = 99;
         line2Edge = this.createBus(graph, rightTopNode, centerNode);
         line2.map((item, index) => {
           if (index === 0) {
@@ -1060,7 +1090,7 @@ export default {
           mostrightBottompoint.x,
           mostrightBottompoint.y
         );
-        rightBottomNode.zIndex = 999;
+        rightBottomNode.zIndex = 99;
         line3Edge = this.createBus(graph, rightBottomNode, centerNode);
         line3.map((item, index) => {
           if (index === 0) {
@@ -1566,6 +1596,16 @@ export default {
 }
 .el-drawer {
   background: rgba(0, 0, 0, 0.9) !important;
+}
+.el-dialog {
+  background: #0d2043 !important;
+  .el-dialog__title {
+    color: #fff !important;
+  }
+  .el-dialog__body {
+    color: #fff !important;
+    padding: 24px;
+  }
 }
 .drawer_info_left {
   height: 40% !important;

@@ -524,7 +524,6 @@ export default {
       }, 500);
       this.speed = this.randomRange(1, 10);
       this.getNameOAll();
-      console.log(this.vmcs);
     }, 3000);
   },
 
