@@ -1,0 +1,10 @@
+Windows Registry Editor Version 5.00
+[HKEY_CLASSES_ROOT\Satellite]
+"URL Protocol"="E:\\yiyun\\Satellite\\Satellite.exe"
+@="Satellite"
+[HKEY_CLASSES_ROOT\Satellite\DefaultIcon]
+@="E:\\yiyun\\Satellite\\Satellite.exe,1"
+[HKEY_CLASSES_ROOT\Satellite\shell]
+[HKEY_CLASSES_ROOT\Satellite\shell\open]
+[HKEY_CLASSES_ROOT\Satellite\shell\open\command]
+@="\"E:\\yiyun\\Satellite\\Satellite.exe\" \"%1\""
