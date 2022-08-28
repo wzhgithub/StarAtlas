@@ -55,7 +55,7 @@ func GetAppInfo(c *gin.Context) {
 	}
 
 	// check failure over database
-	fr_list := []FailureOverRequest{}
+	fr_list := []model.FailureOverRequest{}
 	apps := []model.App{}
 	app_info_rsp := AppInfoRsp{IsTransfer: false, Apps: apps}
 

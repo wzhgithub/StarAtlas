@@ -75,6 +75,11 @@ func main() {
 	router.POST("/topo/insert", handler.TopoInsert)
 	router.POST("/topo/delete", handler.TopoDelete)
 	router.POST("/vmc/failure_over", handler.FailureOver)
+	// 执行迁移
+	router.POST("/vmc/do_failure_over", handler.DoFailureOver)
+	// 异步轮训迁移结果
+	router.POST("/vmc/failure_over_result", handler.DoFailureOver)
+
 	router.GET("/vmcdata/get_failure_over_info", handler.GetFailureOverInfo)
 	router.GET("/vmcdata/get_failure_over_vmcdata", handler.GetFailureOverVMCData)
 	router.POST("/satellite/control/orbit_normal", handler.ApiOrbitNormal)

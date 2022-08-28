@@ -92,7 +92,30 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		glog.Infof("recv data len: %v\n", len(data))
+		ld := len(data)
+		glog.Infof("recv data len: %v\n", ld)
+		if ld < 4 {
+			glog.Warningf("received data length %d err\n", ld)
+			continue
+		}
+		raw := []byte(data)
+		p := raw[3]
+		if p == 0xaa {
+			controller, err := model.NewVMCController(raw)
+			if err != nil {
+				glog.Errorf("failed create vmc controller, error: %s\n", err.Error())
+				continue
+			}
+			err = controller.SaveSelf()
+			if err != nil {
+				glog.Errorf("failed save controller data, error: %s\n", err.Error())
+			}
+			err = controller.FindAndSetFailureEntity()
+			if err != nil {
+				glog.Errorf("failed FindAndSetFailureEntity, error: %s\n", err.Error())
+			}
+			continue
+		}
 		vmcData, err := model.NewVMCData(data)
 		if err != nil {
 			glog.Errorf("recv err: %v", err)
