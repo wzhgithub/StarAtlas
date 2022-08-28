@@ -502,26 +502,36 @@ public:
 // control message
 class FaultMsg {
 public:
-  uint8_t m_action;
+  uint8_t m_vmc_from;
+  uint8_t m_device_from;
+  uint8_t m_vmc_to;
+  uint8_t m_device_to;
+
+  char m_szTaskName[2];
   uint8_t m_taskType;
   uint8_t m_idxPart;
-  uint8_t m_status; //  4 bytes
-  char m_szTaskName[2]; // 2 bytes
-  uint16_t m_size;
+
+  uint8_t m_bFault;
+
+  uint8_t m_size;
 
 public:
   FaultMsg() {
-    m_action = m_taskType = m_idxPart = m_status =0;
+    m_vmc_from = m_device_from = m_vmc_to = m_device_to = 0;
     m_szTaskName[0] = m_szTaskName[1] = '\0';
-    m_size = 6;
+    m_taskType = m_idxPart = 0;
+    m_size = 9;
   }
   int pack(char* buf) {
     char* p = buf;
-    ((uint8_t*)p++)[0] = m_action;
+    ((uint8_t*)p++)[0] = m_vmc_from;
+    ((uint8_t*)p++)[0] = m_device_from;
+    ((uint8_t*)p++)[0] = m_vmc_to;
+    ((uint8_t*)p++)[0] = m_device_to;
     memcpy(p, m_szTaskName, sizeof(m_szTaskName)); p+=sizeof(m_szTaskName);
     ((uint8_t*)p++)[0] = m_taskType;
     ((uint8_t*)p++)[0] = m_idxPart;
-    ((uint8_t*)p++)[0] = m_status;
+    ((uint8_t*)p++)[0] = m_bFault;
     return int(p-buf);
   }
 };
@@ -531,15 +541,13 @@ private:
   uint8_t m_tag;
   uint16_t m_size;
   uint8_t m_type;  // 4 bytes
-  uint8_t m_index;
-  uint8_t m_cpu_index;
   uint8_t m_crc; // 7 bytes
 
   FaultMsg m_msg;
 public:
   ControlMessage() {
     m_tag = 0xeb;
-    m_size = 7;
+    m_size = 5;
     m_size += m_msg.m_size; // 13 bytes;
     m_type = 0xAA;
   }
@@ -549,14 +557,30 @@ public:
     ((uint8_t*)p++)[0] = m_tag;
     ((uint16_t*)p)[0] = htons(m_size); p+=2;
     ((uint8_t*)p++)[0] = m_type;
-    ((uint8_t*)p++)[0] = m_index;
-    ((uint8_t*)p++)[0] = m_cpu_index;
     p+=m_msg.pack(p);
 
     m_crc = crc_calculate((uint8_t*)buf, m_size-1);
     ((uint8_t*)p++)[0] = m_crc;
     return int(p-buf);
   }
+
+  void setMessage(uint8_t _from, uint8_t _fault) {
+    m_msg.m_vmc_from = _from;
+    m_msg.m_bFault = _fault;
+  }
+
+  void setMessage(uint8_t _from, uint8_t _from_dev, const char* _task_name, 
+    uint8_t _type, uint8_t _idx, uint8_t _fault) {
+
+    m_msg.m_vmc_from = _from;
+    m_msg.m_device_from = _from_dev;
+    memcpy(m_msg.m_szTaskName, _task_name, sizeof(m_msg.m_szTaskName));
+    m_msg.m_taskType = _type;
+    m_msg.m_idxPart = _idx;
+    m_msg.m_bFault = _fault;
+  }
+public:
+  uint8_t getSize() const {return m_size;}
 };
 
 
