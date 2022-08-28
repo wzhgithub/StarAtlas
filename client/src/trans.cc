@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     exit(0);
   }
 
-  const char* ip = "127.0.0.1";
+  const char* ip = "192.168.1.1";
   unsigned short port = 9191;
   const char* _url = "http://127.0.0.1:9999/get_sender";
   int _dtype = 0;
@@ -47,15 +47,20 @@ int main(int argc, char* argv[]) {
   // replace ip & port
   rapidjson::Document _doc;
   _doc.Parse(res.c_str(), res.length());
+
+  bool _bParsed = true;
   if (_doc.HasParseError() ||
     !_doc.HasMember("data") || !_doc["data"].IsObject()||
     !_doc["data"].HasMember("send_ip") || !_doc["data"].HasMember("send_port")) {
     cout<<"invalid json:"<<res<<endl;
-    exit(-1);
+    _bParsed = false;
+    //exit(-1);
   }
 
-  ip = _doc["data"]["send_ip"].GetString();
-  port = _doc["data"]["send_port"].GetInt();
+  if (_bParsed) {
+    ip = _doc["data"]["send_ip"].GetString();
+    port = _doc["data"]["send_port"].GetInt();
+  }
   cout<<"ip: "<<ip<<"; port: "<<port<<endl;
   
   // 1. send to central control
