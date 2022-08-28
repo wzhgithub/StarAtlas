@@ -44,6 +44,10 @@
             容灾演示
           </router-link>
         </li>
+        <li class="drop-down">
+          <!-- <router-link class="nav_btn" to="/topo"> 拓扑页 </router-link> -->
+          <a class="nav_btn" href="Satellite:">3D演示</a>
+        </li>
       </ul>
       <!-- 
       <router-link class="nav_btn" to="/about">About</router-link>
