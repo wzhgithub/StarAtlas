@@ -12,8 +12,8 @@ import (
 
 const (
 	CTopoID          = "topo_table"
-	CVMCBase         = int64(10e4)
-	CDdeviceTypeBase = int64(10e5)
+	CVMCBase         = int64(1e4)
+	CDdeviceTypeBase = int64(1e5)
 )
 
 // var appStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}

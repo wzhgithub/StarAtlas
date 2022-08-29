@@ -19,10 +19,10 @@ type details struct {
 }
 
 var deviceDetails = map[string]details{
-	"CPU":  {model.C_CPU_BASE, 5, 256},
-	"GPU":  {model.C_GPU_BASE, 1, 256},
-	"DSP":  {model.C_DSP_BASE, 3, 256},
-	"FPGA": {model.C_FPGA_BASE, 1, 1},
+	"CPU":  {100, 5, 256},
+	"GPU":  {200, 1, 256},
+	"DSP":  {300, 3, 256},
+	"FPGA": {400, 1, 1},
 }
 
 const cRange = 10
