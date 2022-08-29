@@ -151,6 +151,7 @@ int main(int argc, char* argv[]) {
       "gpu",
       "fpga",
     };
+
     for (int hh=0; hh<sizeof(_xpu_name)/sizeof(const char*); hh++) {
       if (!_xpu_doc.HasMember(_xpu_name[hh])) continue;
       int _n_dev = parseXpu(_xpu_doc[_xpu_name[hh]], _msg.getDevice(), hh, _msg.getBaseIndex(), nGlobalDev);

@@ -60,14 +60,16 @@ Partition::Partition() {
   m_index = 0;
   m_cnt_reset= 0;
   m_vmc_idx= 0;
+  m_device_idx= 0;
 }
 
 Partition::~Partition() {
 }
 
-void Partition::init(int idx, int vmc_idx, const char* name) {
+void Partition::init(int idx, int vmc_idx, int dev_idx, const char* name) {
   m_index = (uint8_t)idx;
   m_vmc_idx = (uint8_t)vmc_idx;
+  m_device_idx = (uint8_t)dev_idx;
   if (!name) {
     snprintf(m_name, _LEN_PARTITION_NAME_, "part_%02d", idx);
   } else {
@@ -86,6 +88,7 @@ int Partition::pack(char* buf) {
   ((uint8_t*)p++)[0] = m_index;
   ((uint8_t*)p++)[0] = m_cnt_reset;
   ((uint8_t*)p++)[0] = m_vmc_idx;
+  ((uint8_t*)p++)[0] = m_device_idx;
   for (size_t i=0; i<m_total_task; i++) {
     p += m_tasks[i].pack(p);
   }

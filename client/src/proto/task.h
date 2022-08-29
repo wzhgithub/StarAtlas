@@ -47,6 +47,7 @@ private:
   uint8_t m_index;
   uint8_t m_cnt_reset;
   uint8_t m_vmc_idx;
+  uint8_t m_device_idx;
 
   vector<Task> m_tasks;
 
@@ -58,7 +59,7 @@ public:
   virtual ~Partition();
 
 public:
-  void init(int idx, int vmc_idx, const char* name=nullptr);
+  void init(int idx, int vmc_idx, int dev_idx, const char* name=nullptr);
   int pack(char* buf);
 
 public:
