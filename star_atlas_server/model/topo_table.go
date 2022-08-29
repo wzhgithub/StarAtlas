@@ -11,17 +11,9 @@ import (
 )
 
 const (
-	CTopoID     = "topo_table"
-	CVMCBase    = int64(10e6)
-	CDeviceBase = int64(10e5)
-	CRTUBase    = int64(10e3)
-)
-
-const (
-	C_CPU_BASE  = 1 * CDeviceBase
-	C_GPU_BASE  = 2 * CDeviceBase
-	C_DSP_BASE  = 3 * CDeviceBase
-	C_FPGA_BASE = 4 * CDeviceBase
+	CTopoID          = "topo_table"
+	CVMCBase         = int64(10e4)
+	CDdeviceTypeBase = int64(10e5)
 )
 
 // var appStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
@@ -68,8 +60,11 @@ func NewOtherInfos(key string, vals []string) *OtherInfos {
 type pNodesArr []*Nodes
 
 func (v *VMCData) parseCPU(nodes *pNodesArr) {
+	if v.CPUNumber == 0 {
+		return
+	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + C_CPU_BASE,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.CPUSet[0].ID)/CDdeviceTypeBase,
 		Name:         "cpu_all",
 		DeviceType:   "cpu",
 		ParentId:     uint16(v.VMCID),
@@ -97,8 +92,11 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 }
 
 func (v *VMCData) parseGPU(nodes *pNodesArr) {
+	if v.GPUNumber == 0 {
+		return
+	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + C_GPU_BASE,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.GPUSet[0].ID)/CDdeviceTypeBase,
 		Name:         "gpu_all",
 		DeviceType:   "gpu",
 		ParentId:     uint16(v.VMCID),
@@ -126,8 +124,11 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 }
 
 func (v *VMCData) parseDSP(nodes *pNodesArr) {
+	if v.DSPNumber == 0 {
+		return
+	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + C_DSP_BASE,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.DSPSet[0].ID)/CDdeviceTypeBase,
 		Name:         "dsp_all",
 		DeviceType:   "dsp",
 		ParentId:     uint16(v.VMCID),
@@ -155,8 +156,11 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 }
 
 func (v *VMCData) parseFPGA(nodes *pNodesArr) {
+	if v.FPGANumber == 0 {
+		return
+	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + C_FPGA_BASE,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.FPGASet[0].ID)/CDdeviceTypeBase,
 		Name:         "fpga_all",
 		DeviceType:   "fpga",
 		ParentId:     uint16(v.VMCID),
@@ -220,7 +224,7 @@ func (v *VMCData) parseSwitch(nodes *pNodesArr) {
 func (v *VMCData) parseRTU(nodes *pNodesArr) {
 	for i := 0; i < int(v.RemoteUnitNumber); i++ {
 		n := &Nodes{
-			Id:           int64(v.RemoteUnitSet[i].LinkTo)*CRTUBase + int64(v.RemoteUnitSet[i].RemoteUnitOrder),
+			Id:           int64(v.RemoteUnitSet[i].RemoteUnitOrder),
 			Name:         v.RemoteUnitSet[i].RemoteUnitName,
 			DeviceType:   "rtu",
 			ParentId:     0,
