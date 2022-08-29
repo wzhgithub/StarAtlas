@@ -1,0 +1,12 @@
+{
+    "transType":0,
+    "fromVmcId":0,
+    "isFault": 0,
+    "deviceId": 0,
+    "taskName": "task",
+    "taskType":1,
+    "appId": 0
+}
+
+curl -i -X POST -H "Content-Type: application/json; charset=utf-8" -d@failure_app.json \
+"http://127.0.0.1:8088/vmc/do_failure_over"

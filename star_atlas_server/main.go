@@ -78,7 +78,7 @@ func main() {
 	// 执行迁移
 	router.POST("/vmc/do_failure_over", handler.DoFailureOver)
 	// 异步轮训迁移结果
-	router.POST("/vmc/failure_over_result", handler.DoFailureOver)
+	router.POST("/vmc/failure_over_result", handler.GetFailureOverInfo)
 
 	router.GET("/vmcdata/get_failure_over_info", handler.GetFailureOverInfo)
 	router.GET("/vmcdata/get_failure_over_vmcdata", handler.GetFailureOverVMCData)
