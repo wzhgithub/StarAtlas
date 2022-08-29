@@ -22,7 +22,7 @@
             <template v-for="(item, index) in vmcs">
               <li :key="item.id" @click="changeRoute('details')">
                 <router-link class="nav_btn_" :to="`/details/${item.id}`">
-                  {{ item.name || `vmc-${index}` }}</router-link
+                  {{ filterName(item.name) || `vmc-${index}` }}</router-link
                 >
               </li>
             </template>
@@ -43,6 +43,10 @@
           <router-link class="nav_btn" to="/disasterrecovery">
             容灾演示
           </router-link>
+        </li>
+        <li class="drop-down">
+          <!-- <router-link class="nav_btn" to="/topo"> 拓扑页 </router-link> -->
+          <a class="nav_btn" href="Satellite:">3D演示</a>
         </li>
       </ul>
       <!-- 
@@ -72,7 +76,7 @@
 </template>
 <script>
 import "@/lib/qunee-min.js";
-import { getTopoShow } from "@/api";
+import { getTopoShow, filterName } from "@/api";
 export default {
   data() {
     return {
@@ -81,6 +85,7 @@ export default {
     };
   },
   methods: {
+    filterName,
     changeRoute(key) {
       this.activenow = key;
       console.log(this.activenow);

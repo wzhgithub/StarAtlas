@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
+	"os/exec"
 	"star_atlas_server/model"
 	"strconv"
 
@@ -24,14 +26,14 @@ import (
 // @Router /accounts/{id} [get]
 
 // reture all of unfinished failure over requests
-func GetFailureOverInfo(c *gin.Context) {
+func GetFailureOverInfoList(c *gin.Context) {
 	fr_list, err := GetFailureOverRequestList(true)
 	if err != nil {
 		glog.Errorf("failed read failure over request list from db, error: %s\n", err.Error())
 		c.JSON(500, model.NewCommonResponseFail(err))
 		return
 	}
-	ret_fr_list := []FailureOverRequest{}
+	ret_fr_list := []model.FailureOverRequest{}
 	filter_map := make(map[string]bool)
 	for _, fr := range fr_list {
 		_, ok := filter_map[fr.UniqueKey]
@@ -42,6 +44,102 @@ func GetFailureOverInfo(c *gin.Context) {
 		ret_fr_list = append(ret_fr_list, fr)
 	}
 	c.JSON(200, model.NewCommonResponseSucc(ret_fr_list))
+}
+
+type DoFailureOverRequest struct {
+	TransType uint8  `json:"transType"`
+	FromVmcId uint8  `json:"fromVmcId"`
+	IsFault   uint8  `json:"isFault"` // [0, 1] false true
+	DeviceId  uint8  `json:"deviceId"`
+	TaskName  string `json:"taskName"`
+	TaskType  uint8  `json:"taskType"`
+	AppId     uint8  `json:"appId"`
+}
+
+func (dfr *DoFailureOverRequest) GenPack() (string, string, error) {
+	if dfr == nil {
+		return "", "", errors.New("DoFailureOverRequest nil objects")
+	}
+	if dfr.TransType == 0 {
+		return "0", fmt.Sprintf("%d|%d", dfr.FromVmcId, dfr.IsFault), nil
+	}
+	if dfr.TransType == 1 {
+		return "1", fmt.Sprintf("%d|%d|%s|%d|%d|%d", dfr.FromVmcId, dfr.DeviceId, dfr.TaskName, dfr.TaskType, dfr.AppId, dfr.IsFault), nil
+	}
+	return "", "", fmt.Errorf("DoFailureOverRequest unknown req:%v", dfr)
+}
+
+func (dfr *DoFailureOverRequest) GenUniqueKey() string {
+	if dfr == nil {
+		return ""
+	}
+
+	return fmt.Sprintf("%d_%d_%d", dfr.TransType, dfr.FromVmcId, dfr.DeviceId)
+}
+
+func (dfr *DoFailureOverRequest) ToFailureOverEntity() *model.FailureOverRequest {
+	foe := &model.FailureOverRequest{
+		From:        model.FailureOverInfo{},
+		To:          model.FailureOverInfo{},
+		TransStatus: 500,
+		UniqueKey:   "",
+	}
+
+	if dfr != nil {
+		foe.UniqueKey = dfr.GenUniqueKey()
+		foe.From.AppID = fmt.Sprintf("%d", dfr.AppId)
+		foe.From.DeviceId = fmt.Sprintf("%d", dfr.DeviceId)
+		foe.From.VMCID = fmt.Sprintf("%d", dfr.FromVmcId)
+	}
+
+	return foe
+}
+
+func GetFailureOverInfo(ctx *gin.Context) {
+	req := &DoFailureOverRequest{}
+	err := ctx.ShouldBindJSON(req)
+	if err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	ff := bson.M{"unique_key": req.GenUniqueKey()}
+	ts := bson.M{"trans_status": 200}
+	filter := bson.M{"$and": []bson.M{ff, ts}}
+	rsp := &model.FailureOverRequest{}
+	err = mgm.CollectionByName(cFailureOverTable).First(filter, rsp)
+	if err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	ctx.JSON(200, model.NewCommonResponseSucc(rsp))
+}
+
+// do failure over request
+func DoFailureOver(ctx *gin.Context) {
+	req := &DoFailureOverRequest{}
+	err := ctx.ShouldBindJSON(req)
+	if err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	a1, a2, err := req.GenPack()
+	if err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	cmd := exec.Command("./trans", a1, a2)
+	out, err := cmd.Output()
+	if err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	// save from entity state
+	f := req.ToFailureOverEntity()
+	if err = mgm.CollectionByName(cFailureOverTable).Create(f); err != nil {
+		ctx.JSON(500, model.NewCommonResponseFail(err))
+		return
+	}
+	ctx.JSON(200, model.NewCommonResponseSucc(out))
 }
 
 // reture the most recently failure over vmcdata
@@ -101,8 +199,8 @@ type FailureOverVMCData struct {
 	To   model.VMCData `json:"to"`
 }
 
-func GetFailureOverRequestList(unfinish_req bool) ([]FailureOverRequest, error) {
-	fr_list := []FailureOverRequest{}
+func GetFailureOverRequestList(unfinish_req bool) ([]model.FailureOverRequest, error) {
+	fr_list := []model.FailureOverRequest{}
 
 	findOptions := options.Find()
 	findOptions.SetSort(bson.D{{Key: "updated_at", Value: -1}})

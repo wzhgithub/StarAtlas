@@ -93,3 +93,8 @@ export const failureOver = (migrate_json) => {
     data: JSON.stringify(migrate_json)
   })
 }
+//  处理name非法字符的方法
+export const filterName = (name) => {
+  let arr = name.split('\u0000')
+  return arr[0]
+}

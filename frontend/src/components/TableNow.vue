@@ -5,7 +5,7 @@
         <el-table-column
           width="245"
           :key="index"
-          :label="`分区${item.zone || nub + 1}`"
+          :label="`分区${filterName(item.zone) || nub + 1}`"
           align="center"
           type="index"
           :prop="item"
@@ -13,8 +13,8 @@
           <template slot-scope="scope">
             <el-popover trigger="hover" placement="top">
               <p>任务详情</p>
-              <p>任务名: {{ scope.row[index].name }}</p>
-              <p>所在分区: {{ scope.row[index].zone }}</p>
+              <p>任务名: {{ filterName(scope.row[index].name) }}</p>
+              <p>所在分区: {{ filterName(scope.row[index].zone) }}</p>
               <p>任务类型: {{ getType(scope.row[index].task_type) }}</p>
               <p>任务状态: {{ getStatus(scope.row[index].task_status) }}</p>
               <div slot="reference" class="name-wrapper">
@@ -163,7 +163,7 @@
   </div>
 </template>
 <script>
-import { getAppInfo } from "../api";
+import { getAppInfo, filterName } from "../api";
 export default {
   name: "TableNow",
   props: ["indexNow"],
@@ -177,6 +177,7 @@ export default {
     };
   },
   methods: {
+    filterName,
     getType(typeName) {
       if (typeName === 0) {
         return "计算任务";

@@ -49,6 +49,7 @@ func udpProcess(conn *net.UDPConn) {
 	}
 	glog.Infof("received address:%+v\n", address)
 	str := string(data[:n])
+	glog.Infof("udp channel len:%d\n", len(limitChan))
 	limitChan <- str
 }
 
@@ -83,6 +84,7 @@ func ParseData() {
 	defer func() {
 		if err := recover(); err != nil {
 			glog.Errorf("go parse error: %v", err)
+			go ParseData()
 		}
 	}()
 
@@ -92,7 +94,38 @@ func ParseData() {
 			glog.Errorf("recv err\n")
 			continue
 		}
-		glog.Infof("recv data len: %v\n", len(data))
+		ld := len(data)
+		glog.Infof("recv data len: %v\n", ld)
+		if ld < 4 {
+			glog.Warningf("received data length %d err\n", ld)
+			continue
+		}
+		raw := []byte(data)
+		p := raw[3]
+		if p == 0xaa {
+			go func() {
+				defer func() {
+					if err := recover(); err != nil {
+						glog.Errorf("go controller handle error: %v\n", err)
+					}
+				}()
+				controller, err := model.NewVMCController(raw)
+				if err != nil {
+					glog.Errorf("failed create vmc controller, error: %s\n", err.Error())
+					return
+				}
+				err = controller.SaveSelf()
+				if err != nil {
+					glog.Errorf("failed save controller data, error: %s\n", err.Error())
+				}
+				err = controller.FindAndSetFailureEntity()
+				if err != nil {
+					glog.Errorf("failed FindAndSetFailureEntity, error: %s\n", err.Error())
+				}
+			}()
+			glog.Infof("controller async handle by p:%d\n", p)
+			continue
+		}
 		vmcData, err := model.NewVMCData(data)
 		if err != nil {
 			glog.Errorf("recv err: %v", err)

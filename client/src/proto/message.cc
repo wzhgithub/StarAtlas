@@ -16,6 +16,9 @@ TeleMessage::TeleMessage() {
   m_total_mem = m_total_disk = 0;
   m_mem_rate = m_cpu_rate = m_dsp_rate = m_gpu_rate = m_disk_rate = 0;
   m_cnt_exchange = m_cnt_remote = 0;
+
+  m_runtime = 0;
+  m_time_unit = 0;
 }
 
 TeleMessage::~TeleMessage() {
@@ -52,6 +55,7 @@ uint16_t TeleMessage::getSize() {
   for (size_t h=0; _parts && h<_parts->size(); h++) {
     m_size += (18+12*(*_parts)[h].task_count());
   } 
+  m_size += 5;
   m_size += 1; // crc
   return m_size;
 }
@@ -114,6 +118,9 @@ int TeleMessage::pack(char* buf) {
       p+=m_devices[i].pack(p);
     }
   }
+  // patch 08/28/2022
+  ((uint32_t*)p)[0] = htonl(m_runtime); p+=4;
+  ((uint8_t*)p++)[0] = m_time_unit;
 
   std::shared_ptr< vector<Partition> > _parts = m_partitions.lock();
   uint8_t m_total_partition = _parts?_parts->size():0;
@@ -192,6 +199,9 @@ void TeleMessage::updateRandom() {
 
   m_mem_rate = random() % 101;
   m_disk_rate = random() % 101;
+
+  m_runtime += 100;
+  m_time_unit += 10;
 }
 
 FaultMsg::FaultMsg() {

@@ -27,4 +27,4 @@ services:
     ports:
       - 9999:9999/tcp
       - 9192:9192/tcp
-      - 9191:9191/udp  # udp listener
+      - 192.168.1.231:9191:9191/udp  # udp listener

@@ -15,20 +15,31 @@
     <el-drawer
       class="drawer_info"
       size="40%"
-      :title="`设备：${devicename}的详情`"
+      :title="`设备：${filterName(activeNodeInfo.name)}的详情`"
       :visible.sync="drawer"
       :modal="false"
     >
-      <div v-if="devicename === 'cpu'" class="mainbox">
+      <div v-if="activeNodeInfo.device_type === 'vmc'" class="mainbox">
         <div class="aside_box">
-          <CpuInfo :cpuNow="cpu" />
+          <div class="grid-content_btn">
+            <button @click="mockError(1)">模拟整机故障</button>
+          </div>
+          <div class="grid-content_btn">
+            <button @click="mockError(0)">模拟分区故障</button>
+          </div>
+          <img
+            v-if="activeNodeInfo.device_type === 'vmc'"
+            class="miansvg"
+            src="../assets/newpng/VMC.svg"
+            alt=""
+          />
         </div>
         <div class="aside_box_line_bar">
           <p class="title">
             <span>机器性能历史状况</span>
           </p>
           <div class="canvasbox" id="linebox_">
-            <selflineNew inref="linebox_" />
+            <selflineNew inref="linebox_" :vmcid="activeNodeInfo.id" />
           </div>
         </div>
         <div class="aside_box_task">
@@ -38,70 +49,64 @@
           <scrolltable :data="tableData" />
         </div>
       </div>
-      <div v-else class="mainbox">
+      <div v-show="activeNodeInfo.device_type !== 'vmc'" class="mainbox">
         <div class="aside_box">
-          <div class="grid-content_btn">
-            <button @click="mockError(1)">模拟整机故障</button>
-          </div>
-          <div class="grid-content_btn">
-            <button @click="mockError(0)">模拟分区故障</button>
-          </div>
           <img
-            v-if="deviceType === 'SW'"
+            v-if="activeNodeInfo.device_type === 'sw'"
             class="miansvg"
             src="../assets/newpng/sw.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'CPU'"
+            v-if="activeNodeInfo.device_type === 'cpu'"
             class="miansvg"
             src="../assets/newpng/CPU.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'GPU'"
+            v-if="activeNodeInfo.device_type === 'gpu'"
             class="miansvg"
             src="../assets/newpng/GPU.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'DSP'"
+            v-if="activeNodeInfo.device_type === 'dsp'"
             class="miansvg"
             src="../assets/newpng/DSP.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'FPGA'"
+            v-if="activeNodeInfo.device_type === 'fpga'"
             class="miansvg"
             src="../assets/newpng/FPGA.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'VMC'"
+            v-if="activeNodeInfo.device_type === 'vmc'"
             class="miansvg"
             src="../assets/newpng/VMC.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP1'"
+            v-if="deviceType === 'rtu_0'"
             class="miansvg"
             src="../assets/newpng/op_1.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP2'"
+            v-if="deviceType === 'rtu_1'"
             class="miansvg"
             src="../assets/newpng/op_2.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP3'"
+            v-if="deviceType === 'rtu_2'"
             class="miansvg"
             src="../assets/newpng/op_3.svg"
             alt=""
           />
           <img
-            v-if="deviceType === 'OP4'"
+            v-if="deviceType === 'rtu_3'"
             class="miansvg"
             src="../assets/newpng/op_4.svg"
             alt=""
@@ -111,41 +116,41 @@
           <p class="title">
             <span>机器信息</span>
           </p>
-          <div class="canvasbox">
-            <!-- <selflineNew inref="linebox_" /> -->
-            <p>
-              信息字段1:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段5:
-              信息信息
-            </p>
-            <p>
-              信息字段2:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段6:
-              信息信息
-            </p>
-            <p>
-              信息字段3:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段7:
-              信息信息
-            </p>
-            <p>
-              信息字段4:
-              信息信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信息字段8:
-              信息信息
-            </p>
-            <!-- <p>信息字段5: 信息信息</p> -->
+          <div class="infoBox">
+            <p>设备名：{{ filterName(activeNodeInfo.name) }}</p>
+            <p>设备ID：{{ activeNodeInfo.id }}</p>
+            <p>设备状态：{{ activeNodeInfo.device_status }}</p>
+            <p>设备数量：{{ activeNodeInfo.device_num }}</p>
           </div>
         </div>
-        <!-- <div class="aside_box_task">
-          <p class="title">
-            <span>交换机历史数据信息</span>
-          </p>
-          <div class="boxForline" id="linebox">
-            <selfline inref="linebox" />
-          </div>
-        </div> -->
       </div>
     </el-drawer>
+    <el-drawer
+      class="drawer_info_left"
+      size="40%"
+      :title="`设备：${filterName(activeNodeInfo.name)}的详情`"
+      :visible.sync="drawerText"
+      :modal="false"
+      direction="ltr"
+    >
+    </el-drawer>
+    <el-dialog
+      title="容灾迁移计算中..."
+      :visible.sync="dialogVisible"
+      width="50%"
+      :before-close="handleClose"
+    >
+      <div style="height: 300px; padding: 24px">
+        <el-steps direction="vertical" :active="1">
+          <el-step title="步骤 1"></el-step>
+          <el-step title="步骤 2"></el-step>
+          <el-step
+            title="步骤 3"
+            description="这是一段很长很长很长的描述性文字"
+          ></el-step>
+        </el-steps>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -166,7 +171,7 @@ import router from "@/assets/network/router_a.png";
 import pc from "@/assets/network/pc_a.png";
 import flow from "@/assets/flow.png";
 import cloud from "@/assets/network/cloud.png";
-import { getTopoShow } from "@/api";
+import { getTopoShow, filterName } from "@/api";
 // import text from "../assets/data/topo.json";
 import imgcpu from "@/assets/newpng/CPU.svg";
 import imggpu from "@/assets/newpng/GPU.svg";
@@ -186,7 +191,6 @@ import CpuInfo from "@/components/CpuInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
 import scrolltable from "@/components/scrollTable.vue";
 import selfline from "@/components/selfline.vue";
-
 export default {
   name: "Topo",
   components: {
@@ -205,6 +209,8 @@ export default {
       flowColor_: "#ffffff",
       flowColor_vpn: "#00FF00",
       drawer: false,
+      drawerText: false,
+      dialogVisible: true,
       devicename: "",
       deviceType: "",
       topoData: [],
@@ -260,11 +266,100 @@ export default {
         rtu_2: imgop3,
         rtu_3: imgop4,
       },
+      activeNodeInfo: {
+        name: "",
+      },
     };
   },
   methods: {
+    filterName,
     ...mapMutations(["setDisVmc", "setDisArea"]),
     async getTopoData() {
+      // const str = {
+      //   code: 0,
+      //   data: {
+      //     created_at: "2022-08-23T10:11:25.066Z",
+      //     updated_at: "2022-08-23T10:11:40Z",
+      //     id: "topo_table",
+      //     node: [
+      //       {
+      //         id: 1000000,
+      //         name: "cpu_all",
+      //         device_type: "cpu",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "cpu_ids", value: ["0", "1"] },
+      //           { key: "cpu_names", value: ["CPU0      ", "CPU1      "] },
+      //           { key: "cpu_types", value: ["0", "0"] },
+      //           { key: "cpu_cores", value: ["1", "1"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 2000000,
+      //         name: "gpu_all",
+      //         device_type: "gpu",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "gpu_ids", value: ["0", "1"] },
+      //           { key: "gpu_names", value: ["GPU0      ", "GPU1      "] },
+      //           { key: "gpu_types", value: ["0", "0"] },
+      //           { key: "gpu_cores", value: ["8", "8"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 3000000,
+      //         name: "dsp_all",
+      //         device_type: "dsp",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "dsp_ids", value: ["0", "1"] },
+      //           { key: "dsp_names", value: ["DSP0      ", "DSP1      "] },
+      //           { key: "dsp_types", value: ["0", "0"] },
+      //           { key: "dsp_cores", value: ["8", "8"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 4000000,
+      //         name: "fpga_all",
+      //         device_type: "fpga",
+      //         parent_id: 0,
+      //         upstream_id: 0,
+      //         device_status: "ERROR",
+      //         device_num: 2,
+      //         other_info: [
+      //           { key: "fpga_ids", value: ["0", "1"] },
+      //           { key: "fpga_names", value: ["FPGA0     ", "FPGA1     "] },
+      //           { key: "fpga_types", value: ["0", "0"] },
+      //           { key: "fpga_cores", value: ["0", "0"] },
+      //         ],
+      //       },
+      //       {
+      //         id: 0,
+      //         name: "VMC0      ",
+      //         device_type: "vmc",
+      //         parent_id: 0,
+      //         upstream_id: 50,
+      //         device_status: "ERROR",
+      //         device_num: 0,
+      //         other_info: [{ key: "proto_type", value: ["85"] }],
+      //       },
+      //     ],
+      //     transfer_info: null,
+      //   },
+      //   msg: "success",
+      // };
+      // const { data } = JSON.parse(JSON.stringify(str));
+      // console.log(data);
+      // this.topoData = data.data.node || [];
       const { data } = await getTopoShow();
       this.topoData = data.data.node || [];
     },
@@ -295,7 +390,7 @@ export default {
       if (group) {
         group.addChild(node);
       }
-      node.randomAble = randomFlag || false;
+      node.randomAble = true;
       node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
       node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
@@ -303,6 +398,16 @@ export default {
       node.nodesType = nodesType;
       node.moreInfo = otherInfo;
       return node;
+    },
+    createGroup(graph, otherInfo) {
+      var group = graph.createGroup();
+      group.image = this.imgObg.vmc;
+      group.moreInfo = otherInfo;
+      group.size = { height: 80 };
+      group.setStyle(Q.Styles.GROUP_BACKGROUND_COLOR, "#040f21");
+      // group.setStyle(Q.Styles.GROUP_BACKGROUND_A, "#040f21");
+      group.setStyle(Q.Styles.ALPHA, 0.8);
+      return group;
     },
     createNode_center(graph, image, x, y, name, group, randomFlag, nodesType) {
       var node = graph.createNode(name, x, y);
@@ -606,10 +711,9 @@ export default {
       });
       /// 报警
       var AlarmSeverity = {
-        CRITICAL: { color: Q.toColor(0xeeff0000), sortName: "C" },
-        MAJOR: { color: Q.toColor(0xeeffaa00), sortName: "M" },
-        MINOR: { color: Q.toColor(0xeeffff00), sortName: "m" },
-        WARNING: { color: Q.toColor(0xee00ffff), sortName: "W" },
+        RUN: { color: Q.toColor(0x7fff00), sortName: "R" },
+        WARNING: { color: Q.toColor(0xffa500), sortName: "W" },
+        Err: { color: Q.toColor(0xff0000), sortName: "E" },
       };
       var all = [];
       for (var name in AlarmSeverity) {
@@ -632,8 +736,12 @@ export default {
             element.alarmColor = null;
             return;
           }
-          if (element.randomAble) {
-            // var alarmSeverity = AlarmSeverity.random;
+          if (element.randomAble === true && element.moreInfo !== undefined) {
+            var alarmSeverity = AlarmSeverity[element.moreInfo.device_status];
+            element.alarmColor = alarmSeverity.color;
+            // if (element.randomAble === true) {
+            //   element.alarmColor = alarmSeverity.color;
+            // }
             // element.alarmLabel =
             //   "" +
             //   (1 + Q.randomInt(100)) +
@@ -654,41 +762,22 @@ export default {
       // graph.isMovable = false;
       // graph.enableWheelZoom = false;
       graph.onclick = function (evt) {
-        if (evt.getData()) {
-          if (evt.getData().nodesType) {
-            that.deviceType = evt.getData().nodesType;
-            that.drawer = true;
-            if (evt.getData().nodesType === "SW") {
-              that.devicename = "交换机_60002";
-            }
-            if (evt.getData().nodesType === "VMC") {
-              that.devicename = "VMC_10000";
-            }
-            if (evt.getData().nodesType === "CPU") {
-              that.devicename = "CPU_2001";
-            }
-            if (evt.getData().nodesType === "GPU") {
-              that.devicename = "GPU_2002";
-            }
-            if (evt.getData().nodesType === "DSP") {
-              that.devicename = "DSP_2003";
-            }
-            if (evt.getData().nodesType === "FPGA") {
-              that.devicename = "FPGA_2004";
-            }
-            if (evt.getData().nodesType === "OP1") {
-              that.devicename = "相机_3001";
-            }
-            if (evt.getData().nodesType === "OP2") {
-              that.devicename = "激光扫描仪_3002";
-            }
-            if (evt.getData().nodesType === "OP3") {
-              that.devicename = "激光雷达_3003";
-            }
-            if (evt.getData().nodesType === "OP4") {
-              that.devicename = "推进器_3004";
-            }
+        if (evt.getData().moreInfo) {
+          that.activeNodeInfo = evt.getData().moreInfo;
+          that.drawer = true;
+          that.drawerText = true;
+          if (
+            evt.getData().moreInfo.other_info &&
+            evt.getData().moreInfo.other_info.length &&
+            evt.getData().moreInfo.other_info[0].value[0]
+          ) {
+            that.deviceType = `${evt.getData().moreInfo.device_type}_${
+              evt.getData().moreInfo.other_info[0].value[0]
+            }`;
           }
+        }
+        if (evt.getData().textArea) {
+          that.drawerText = true;
         }
       };
     },
@@ -945,8 +1034,16 @@ export default {
       let mostleftpoint = line1[0];
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
-      let sheapcenter = Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, 15, 15, 1, 1);
-      let centerNode = this.createNode_center(graph, sheapcenter, 0, 0);
+      // let sheapcenter = Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, 15, 15, 1, 1);
+      var centerNode = graph.createText("TTE", 0, 0);
+      centerNode.setStyle(Q.Styles.LABEL_COLOR, "#FFF");
+      centerNode.setStyle(Q.Styles.LABEL_BACKGROUND_COLOR, "#9bcfee");
+      // centerNode.setStyle(Q.Styles.LABEL_RADIUS, 120);
+      centerNode.setStyle(Q.Styles.LABEL_FONT_SIZE, 50);
+      centerNode.setStyle(Q.Styles.LABEL_FONT_STYLE, "italic lighter");
+      centerNode.zIndex = 9999;
+      centerNode.textArea = true;
+      // let centerNode = this.createNode_center(graph, textNode, 0, 0);
       let line1Edge = null;
       let line2Edge = null;
       let line3Edge = null;
@@ -957,7 +1054,7 @@ export default {
           mostleftpoint.x,
           mostleftpoint.y
         );
-        leftnNode.zIndex = 999;
+        leftnNode.zIndex = 99;
         line1Edge = this.createBus(graph);
         line1.map((item, index) => {
           if (index === 0) {
@@ -975,7 +1072,7 @@ export default {
           mostrightToppoint.x,
           mostrightToppoint.y
         );
-        rightTopNode.zIndex = 999;
+        rightTopNode.zIndex = 99;
         line2Edge = this.createBus(graph, rightTopNode, centerNode);
         line2.map((item, index) => {
           if (index === 0) {
@@ -993,7 +1090,7 @@ export default {
           mostrightBottompoint.x,
           mostrightBottompoint.y
         );
-        rightBottomNode.zIndex = 999;
+        rightBottomNode.zIndex = 99;
         line3Edge = this.createBus(graph, rightBottomNode, centerNode);
         line3.map((item, index) => {
           if (index === 0) {
@@ -1132,22 +1229,24 @@ export default {
                 x: item.x - 100,
                 y: item.y + tempy,
               });
-              tempy = tempy + 100;
+              tempy = tempy + 140;
             }
           });
           let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+            let vmcGroup = this.createGroup(graph, { test: "group" });
             let tempnode = this.createNode(
               graph,
               imgvmc,
               vmcitem.x,
               vmcitem.y,
               null,
-              null,
+              vmcGroup,
               null,
               "VMC",
               vmcitem
             );
             this.createEdge(graph, tempnode, item);
+            tempnode.GroupSNow = vmcGroup;
             return tempnode;
           });
           let opArr = vmcArr1.map((vmcnode) => {
@@ -1175,7 +1274,7 @@ export default {
                 calitem.x,
                 calitem.y,
                 null,
-                null,
+                vmcnode.GroupSNow,
                 null,
                 calitem.device_type,
                 calitem
@@ -1199,22 +1298,24 @@ export default {
                   x: item.x - 100,
                   y: item.y + tempy,
                 });
-                tempy = tempy + 100;
+                tempy = tempy + 140;
               }
             });
             let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+              let vmcGroup = this.createGroup(graph, { test: "group" });
               let tempnode = this.createNode(
                 graph,
                 imgvmc,
                 vmcitem.x,
                 vmcitem.y,
                 null,
-                null,
+                vmcGroup,
                 null,
                 "VMC",
                 vmcitem
               );
               this.createEdge(graph, tempnode, item);
+              tempnode.GroupSNow = vmcGroup;
               return tempnode;
             });
             let opArr = vmcArr1.map((vmcnode) => {
@@ -1242,7 +1343,7 @@ export default {
                   calitem.x,
                   calitem.y,
                   null,
-                  null,
+                  vmcnode.GroupSNow,
                   null,
                   calitem.device_type,
                   calitem
@@ -1265,22 +1366,24 @@ export default {
                   x: item.x + 100,
                   y: item.y - tempy,
                 });
-                tempy = tempy + 100;
+                tempy = tempy + 140;
               }
             });
             let vmcArr1 = getRelevanceVmc.map((vmcitem) => {
+              let vmcGroup = this.createGroup(graph, { test: "group" });
               let tempnode = this.createNode(
                 graph,
                 imgvmc,
                 vmcitem.x,
                 vmcitem.y,
                 null,
-                null,
+                vmcGroup,
                 null,
                 "VMC",
                 vmcitem
               );
               this.createEdge(graph, tempnode, item);
+              tempnode.GroupSNow = vmcGroup;
               return tempnode;
             });
             let opArr = vmcArr1.map((vmcnode) => {
@@ -1308,7 +1411,7 @@ export default {
                   calitem.x,
                   calitem.y,
                   null,
-                  null,
+                  vmcnode.GroupSNow,
                   null,
                   calitem.device_type,
                   calitem
@@ -1450,16 +1553,26 @@ export default {
       this.drawer = false;
       if (type) {
         this.$message({
-          message: "模拟整机故障触发成功，可前往容灾演示页面查看任务迁移详情",
+          message:
+            "模拟整机故障触发成功，已为您重定向到容灾演示页面查看任务迁移详情",
           type: "success",
         });
-        this.setDisVmc(new Date().valueOf());
+        this.setDisVmc({
+          ...this.activeNodeInfo,
+          time: new Date().valueOf(),
+        });
+        this.$router.push("/disasterrecovery");
       } else {
         this.$message({
-          message: "模拟分区故障触发成功，可前往容灾演示页面查看任务迁移详情",
+          message:
+            "模拟分区故障触发成功，已为您重定向到容灾演示页面查看任务迁移详情",
           type: "success",
         });
-        this.setDisArea(new Date().valueOf());
+        this.setDisArea({
+          ...this.activeNodeInfo,
+          time: new Date().valueOf(),
+        });
+        this.$router.push("/disasterrecovery");
       }
     },
   },
@@ -1483,6 +1596,20 @@ export default {
 }
 .el-drawer {
   background: rgba(0, 0, 0, 0.9) !important;
+}
+.el-dialog {
+  background: #0d2043 !important;
+  .el-dialog__title {
+    color: #fff !important;
+  }
+  .el-dialog__body {
+    color: #fff !important;
+    padding: 24px;
+  }
+}
+.drawer_info_left {
+  height: 40% !important;
+  color: #fff !important;
 }
 .mainbox {
   padding: 0;
@@ -1529,6 +1656,15 @@ export default {
   height: 28vh;
   // background-color: #fff;
   .canvasbox {
+    height: 85%;
+    width: 100%;
+    p {
+      color: #fff;
+      margin-left: 10%;
+      font-size: 1rem;
+    }
+  }
+  .infoBox {
     height: 85%;
     width: 100%;
     p {

@@ -4,7 +4,6 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <!-- 123 -->
-
     <div v-if="loading" class="loadingbox">
       <div data-loader="jumping"></div>
     </div>
@@ -78,7 +77,11 @@
           <div style="width: 100%; height: 100%">
             <div class="topboxforcanvas_">
               <p class="title_2">
-                <span>{{ `Vmc-${Nowindex}` }}相关任务</span>
+                <span
+                  >{{
+                    `${Nowindex.name || "未知名称"}-${Nowindex.id}`
+                  }}相关任务</span
+                >
               </p>
               <div class="content">
                 <el-carousel
@@ -147,7 +150,7 @@ import selflineNewless from "@/components/selflineNewless.vue";
 import TableNow from "@/components/TableNow.vue";
 import imgvmc from "@/assets/newpng/VMC.svg";
 import messages from "@/assets/newpng/send_.svg";
-import { getTopoShow } from "@/api";
+import { getTopoShow, filterName } from "@/api";
 const singletable = [
   {
     productName: "核心任务_12654_456",
@@ -209,26 +212,31 @@ export default {
       vmcedge: {},
       areaedge: {},
       Nowindex: "1",
-      vmcArr: [100, 80, 140, 120, 160, 180],
       vmcs: [],
+      vmcNode: {},
     };
   },
   computed: {
     ...mapState(["disVmc", "disArea"]),
   },
   methods: {
+    filterName,
     async getNameOAll() {
       const { data } = await getTopoShow();
-      // console.log(data);
       if (data.code == 0) {
-        this.vmcs = data.data.node
+        let tempdata = data.data.node
           .filter((item) => {
-              return item.device_type == "vmc";
+            return item.device_type == "vmc";
+          })
+          .sort((a, b) => {
+            return a.id - b.id;
           });
+        this.vmcs = tempdata;
+        this.Nowindex = tempdata[0];
       }
     },
     changeCarousle(before, now) {
-      this.Nowindex = before + 1;
+      this.Nowindex = this.vmcs[now];
     },
     randomRange(min, max) {
       // min最小值，max最大值
@@ -385,8 +393,8 @@ export default {
         errType === "vmc" ? "整机迁移" : "分区迁移"
       }\n 迁移开始时间：${
         errType === "vmc"
-          ? new Date(parseInt(this.disVmc)).toLocaleString()
-          : new Date(parseInt(this.disArea)).toLocaleString()
+          ? new Date(parseInt(this.disVmc.time)).toLocaleString()
+          : new Date(parseInt(this.disArea.time)).toLocaleString()
       }`;
       return edge;
     },
@@ -416,15 +424,25 @@ export default {
       const graph = this.creatGraph();
       const FlowingSupport = this.createFlow(graph);
       const VPNFlexEdgeUI = this.createEdegUi(graph);
-      var vmc3 = this.createNode(graph, imgvmc, -170, 0, "vmc1", null, true);
-      var vmc2 = this.createNode(graph, imgvmc, 0, 0, "vmc2", null, true);
-      var vmc1 = this.createNode(graph, imgvmc, 170, 0, "vmc3", null, true);
+      let endarr = that.vmcs.map((items, index) => {
+        let tempnode = that.createNode(
+          graph,
+          imgvmc,
+          index * 100,
+          (index % 2) * 80,
+          that.filterName(items.name),
+          null,
+          true
+        );
+        that.vmcNode[items.id] = tempnode;
+        return tempnode;
+      });
       var flowingSupport = new FlowingSupport(graph);
-      if (this.disVmc) {
+      if (this.disVmc.time) {
         var edge1 = this.createEdge(
           graph,
-          vmc3,
-          vmc2,
+          that.vmcNode[this.disVmc.id],
+          that.vmcNode[180],
           null,
           true,
           "任务迁移流1",
@@ -432,11 +450,11 @@ export default {
         );
         flowingSupport.addFlowing(edge1, 1, false);
       }
-      if (this.disArea) {
+      if (this.disArea.time) {
         var edge2 = this.createEdge(
           graph,
-          vmc3,
-          vmc1,
+          that.vmcNode[this.disArea.id],
+          that.vmcNode[180],
           null,
           true,
           "任务迁移流2",
@@ -505,6 +523,7 @@ export default {
         this.drawall();
       }, 500);
       this.speed = this.randomRange(1, 10);
+      this.getNameOAll();
     }, 3000);
   },
 

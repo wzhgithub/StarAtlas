@@ -5,8 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    disVmc: "",
-    disArea: ""
+    disVmc: {},
+    disArea: {}
   },
   mutations: {
     setDisVmc: (state, data) => {
