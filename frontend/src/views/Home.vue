@@ -48,7 +48,7 @@
               >
                 <el-col :span="5" style="height: 100%">
                   <div class="top_little_box">
-                    <div class="toptitle">VMC数量</div>
+                    <div class="toptitle">计算节点</div>
                     <div class="mainNub">
                       <countTo
                         class="nub"

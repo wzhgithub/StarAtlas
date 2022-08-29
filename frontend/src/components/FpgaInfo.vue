@@ -18,7 +18,6 @@
           <p>设备温度：54°C</p> -->
           <p>设备类型: {{nowdata.type}}</p>
           <p>设备状态: {{nowdata.status}}</p>
-          <p>浮点算力: {{nowdata.float_power}}</p>
           <p>FPGA利用率: {{nowdata.usage}}%</p>
           <p>内存利用率: {{nowdata.memory_usage}}%</p>
         </div>

@@ -115,7 +115,7 @@
                 :startVal="0"
                 :endVal="nowdata.allmb"
                 :duration="1000"
-                suffix="FP"/>
+                suffix=" TFLOPS"/>
             </span>
             <span class="title_span">
               <countTo
@@ -123,7 +123,7 @@
                 :startVal="0"
                 :endVal="nowdata.canusemb"
                 :duration="1000"
-                suffix="INT" />
+                suffix=" MIPS" />
             </span>
           </p>
           <div class="type_box">
@@ -133,10 +133,10 @@
               </el-col>
               <el-col :span="8" class="type_col_">
                 <p class="type_text_"></p>
-                <p class="type_text">ADM</p>
-                <p class="type_text active_text">龙芯</p>
-                <p class="type_text">Intel</p>
-                <p class="type_text">麒麟</p>
+                <p class="type_text">ARM</p>
+                <p class="type_text">MIPS</p>
+                <p class="type_text active_text">RISC_V</p>
+                <p class="type_text">SPARC</p>
               </el-col>
             </el-row>
           </div>

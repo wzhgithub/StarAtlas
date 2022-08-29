@@ -81,7 +81,7 @@
                   />
                 </div>
               </div>
-              <h3 class="h3_title">设备：vmc1</h3>
+              <h3 class="h3_title">{{this.$route.params.name}}</h3>
             </div>
           </el-row>
         </div>
@@ -326,7 +326,7 @@ export default {
         data.data.total_dsp_usage,
       ];
       this.cpu = {
-        name: "CPU信息详情",
+        name: data.data.cpu_set[0].name,
         cpuuseage: data.data.total_cpu_usage,
         canuse: 100 - data.data.total_cpu_usage,
         used: data.data.total_cpu_usage,
@@ -366,7 +366,8 @@ export default {
         usage: data.data.dsp_set[0].usage,
         memory_usage: data.data.dsp_set[0].memory_usage,
         total_memory: data.data.dsp_set[0].total_memory,
-        type: data.data.dsp_set[0].type,
+        //type: data.data.dsp_set[0].type,
+        type: 6678,
         status: "健康",
       };
       this.fpga = {
@@ -450,6 +451,7 @@ export default {
     let that = this;
     this.vmcid = this.$route.params.id;
     setInterval(() => {
+      this.vmcid = this.$route.params.id;
       that.getTopData();
       // that.topdata = [
       //   that.randomRange(0, 100),
@@ -589,7 +591,7 @@ export default {
   color: aqua;
   font-size: 2rem;
   font-weight: 700;
-  bottom: 0.8%;
-  left: 40%;
+  bottom: 3%;
+  left: 45%;
 }
 </style>

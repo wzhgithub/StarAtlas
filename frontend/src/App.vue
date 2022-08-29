@@ -13,16 +13,16 @@
           :class="activenow === 'topo' ? 'drop-down active' : 'drop-down'"
           @click="changeRoute('topo')"
         >
-          <router-link class="nav_btn" to="/topo"> 拓扑页 </router-link>
+          <router-link class="nav_btn" to="/topo"> 网络拓扑 </router-link>
         </li>
 
         <li :class="activenow === 'details' ? 'drop-down active' : 'drop-down'">
-          <a class="nav_btn">详情页</a>
+          <a class="nav_btn">实时监控</a>
           <ul class="drop-down-content">
             <template v-for="(item, index) in vmcs">
               <li :key="item.id" @click="changeRoute('details')">
-                <router-link class="nav_btn_" :to="`/details/${item.id}`">
-                  {{ filterName(item.name) || `vmc-${index}` }}</router-link
+                <router-link class="nav_btn_" :to="`/details/${item.id}/${item.name}`">
+                  {{ filterName(item.name) || `计算节点-${index}` }}</router-link
                 >
               </li>
             </template>

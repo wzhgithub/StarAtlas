@@ -32,7 +32,7 @@
           <p>设备类型: {{nowdata.type}}</p>
           <p>设备状态: {{nowdata.status}}</p>
           <p>GPU核数: {{nowdata.cores}}</p>
-          <p>浮点算力: {{nowdata.float_power}}</p>
+          <p>浮点算力: {{nowdata.float_power}} TFLOPS</p>
           <p>GPU利用率: {{nowdata.usage}}%</p>
           <p>显存利用率: {{nowdata.memory_usage}}%</p>
         </div>
