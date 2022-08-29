@@ -103,7 +103,12 @@ func ParseData() {
 		raw := []byte(data)
 		p := raw[3]
 		if p == 0xaa {
-			go func(){
+			go func() {
+				defer func() {
+					if err := recover(); err != nil {
+						glog.Errorf("go controller handle error: %v\n", err)
+					}
+				}()
 				controller, err := model.NewVMCController(raw)
 				if err != nil {
 					glog.Errorf("failed create vmc controller, error: %s\n", err.Error())
@@ -118,7 +123,7 @@ func ParseData() {
 					glog.Errorf("failed FindAndSetFailureEntity, error: %s\n", err.Error())
 				}
 			}()
-			
+			glog.Infof("controller async handle by p:%d\n", p)
 			continue
 		}
 		vmcData, err := model.NewVMCData(data)
