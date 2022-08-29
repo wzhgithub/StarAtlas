@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	CTopoID          = "topo_table"
-	CVMCBase         = int64(1e4)
-	CDdeviceTypeBase = int64(1e5)
+	CTopoID           = "topo_table"
+	CVMCBase          = 10
+	CDdeviceTypeShift = 5
 )
 
 // var appStatus = []string{"TIMEOUT", "ERROR", "RUN", "ERROR"}
@@ -64,7 +64,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 		return
 	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + int64(v.CPUSet[0].ID)/CDdeviceTypeBase,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.CPUSet[0].ID>>CDdeviceTypeShift),
 		Name:         "cpu_all",
 		DeviceType:   "cpu",
 		ParentId:     uint16(v.VMCID),
@@ -78,8 +78,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 	cpu_types := make([]string, 0)
 	cpu_cores := make([]string, 0)
 	for i := 0; i < int(v.CPUNumber); i++ {
-		cur_id := int64(v.VMCID)*CVMCBase + int64(v.CPUSet[i].ID)
-		cpu_ids = append(cpu_ids, fmt.Sprintf("%d", cur_id))
+		cpu_ids = append(cpu_ids, fmt.Sprintf("%d", v.CPUSet[i].ID))
 		cpu_names = append(cpu_names, v.CPUSet[i].Name)
 		cpu_types = append(cpu_types, fmt.Sprintf("%d", v.CPUSet[i].Type))
 		cpu_cores = append(cpu_cores, fmt.Sprintf("%d", v.CPUSet[i].Num))
@@ -96,7 +95,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 		return
 	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + int64(v.GPUSet[0].ID)/CDdeviceTypeBase,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.GPUSet[0].ID>>CDdeviceTypeShift),
 		Name:         "gpu_all",
 		DeviceType:   "gpu",
 		ParentId:     uint16(v.VMCID),
@@ -110,8 +109,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 	gpu_types := make([]string, 0)
 	gpu_cores := make([]string, 0)
 	for i := 0; i < int(v.GPUNumber); i++ {
-		cur_id := int64(v.VMCID)*CVMCBase + int64(v.GPUSet[i].ID)
-		gpu_ids = append(gpu_ids, fmt.Sprintf("%d", cur_id))
+		gpu_ids = append(gpu_ids, fmt.Sprintf("%d", v.GPUSet[i].ID))
 		gpu_names = append(gpu_names, v.GPUSet[i].Name)
 		gpu_types = append(gpu_types, fmt.Sprintf("%d", v.GPUSet[i].Type))
 		gpu_cores = append(gpu_cores, fmt.Sprintf("%d", v.GPUSet[i].Num))
@@ -128,7 +126,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 		return
 	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + int64(v.DSPSet[0].ID)/CDdeviceTypeBase,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.DSPSet[0].ID>>CDdeviceTypeShift),
 		Name:         "dsp_all",
 		DeviceType:   "dsp",
 		ParentId:     uint16(v.VMCID),
@@ -142,8 +140,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 	dsp_types := make([]string, 0)
 	dsp_cores := make([]string, 0)
 	for i := 0; i < int(v.DSPNumber); i++ {
-		cur_id := int64(v.VMCID)*CVMCBase + int64(v.DSPSet[i].ID)
-		dsp_ids = append(dsp_ids, fmt.Sprintf("%d", cur_id))
+		dsp_ids = append(dsp_ids, fmt.Sprintf("%d", v.DSPSet[i].ID))
 		dsp_names = append(dsp_names, v.DSPSet[i].Name)
 		dsp_types = append(dsp_types, fmt.Sprintf("%d", v.DSPSet[i].Type))
 		dsp_cores = append(dsp_cores, fmt.Sprintf("%d", v.DSPSet[i].Num))
@@ -160,7 +157,7 @@ func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 		return
 	}
 	n := &Nodes{
-		Id:           int64(v.VMCID)*CVMCBase + int64(v.FPGASet[0].ID)/CDdeviceTypeBase,
+		Id:           int64(v.VMCID)*CVMCBase + int64(v.FPGASet[0].ID>>CDdeviceTypeShift),
 		Name:         "fpga_all",
 		DeviceType:   "fpga",
 		ParentId:     uint16(v.VMCID),
@@ -174,8 +171,7 @@ func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 	fpga_types := make([]string, 0)
 	fpga_cores := make([]string, 0)
 	for i := 0; i < int(v.FPGANumber); i++ {
-		cur_id := int64(v.VMCID)*CVMCBase + int64(v.FPGASet[i].ID)
-		fpga_ids = append(fpga_ids, fmt.Sprintf("%d", cur_id))
+		fpga_ids = append(fpga_ids, fmt.Sprintf("%d", v.FPGASet[i].ID))
 		fpga_names = append(fpga_names, v.FPGASet[i].Name)
 		fpga_types = append(fpga_types, fmt.Sprintf("%d", v.FPGASet[i].Type))
 		fpga_cores = append(fpga_cores, fmt.Sprintf("%d", v.FPGASet[i].Num))
