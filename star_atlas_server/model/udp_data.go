@@ -106,7 +106,7 @@ type App struct {
 	ID           uint8   `json:"id" bson:"id"`                       //
 	ResetNumber  uint8   `json:"reset_number" bson:"reset_number"`
 	BelongsTo    uint8   `json:"belongs_to" bson:"belongs_to"`
-	DeviceId     uint8	 `json:"device_id" bson:"device_id"`
+	DeviceId     uint8   `json:"device_id" bson:"device_id"`
 	TaskSet      []*Task `json:"task_set" bson:"task_set"`
 	AppStatus    uint8   `json:"app_status" bson:"app_status"`
 	IsTransfer   bool    `json:"is_transfer" bson:"is_transfer"`
@@ -438,7 +438,7 @@ func parseApp(bytes []byte, start, end int) ([]*App, uint8) {
 			BelongsTo:    vmcId,
 			TaskSet:      taskSet,
 			AppStatus:    appStatus,
-			DeviceId: 	  did,
+			DeviceId:     did,
 		}
 		appStart = taskEnd
 		glog.Infof("app details: %+v\n", a)
@@ -600,7 +600,7 @@ func parse(bytes []byte) (*VMCData, error) {
 		FPGASet:        fpagSet,
 
 		SystemRunTime: sysTime,
-		TimeUnit:     tu,
+		TimeUnit:      tu,
 
 		APPNum:  bytes[appIdx],
 		APPInfo: appSet,
