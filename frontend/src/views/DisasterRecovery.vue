@@ -52,16 +52,14 @@
                 <span>迁移日志</span>
               </p>
               <p class="logp">
-                [当前线路]：整机迁移任务1002, From: Vmc1, To:Vmc2
+                [迁移开始]：容错迁移任务, From: {{this.from.name}}, To: {{this.to.name}}
               </p>
-              <p class="logp">[迁移开始时间]：2022/8/7 22:38:56</p>
+              <p class="logp">[迁移开始时间]: {{this.from.time}}</p>
               <p class="logp">==============================================</p>
               <p class="logp">
-                [迁移完成]：整机迁移任务1002, From: Vmc1, To:Vmc2
+                [迁移完成]：容错迁移任务, From: {{this.from.name}}, To: {{this.to.name}}
               </p>
-              <p class="logp">
-                [迁移完成时间]：整机迁移任务1002 2022/8/7 22:42:18
-              </p>
+              <p class="logp">[迁移完成时间]: {{this.from.to}}</p>
               <!-- <div class="boxforcanvas" ref="canvas"></div> -->
             </div>
           </div>
