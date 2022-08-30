@@ -219,6 +219,8 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 		n, err := conn.Read(data)
 		if err != nil {
 			glog.Errorf("Error reading %s: %v\n", conn.LocalAddr().String(), err)
+			conn.Close()
+			conn, _ = newConn(tcpPort)
 			continue
 		}
 		data = data[:n]
@@ -256,6 +258,7 @@ func handlePbMsg(msg *pb.Msg) error {
 	switch msg.GetType() {
 	case pb.MsgType_ApiExit:
 		if conn != nil {
+			glog.Infof("conn close: %v\n", conn)
 			conn.Close()
 		}
 		var err error
@@ -319,8 +322,8 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 }
 
 func handlePic() error {
-	idx := rand.Intn(13) + 1
-	imageName := fmt.Sprintf("image%d", idx)
+	idx := rand.Intn(10) + 1
+	imageName := fmt.Sprintf("port%d", idx)
 	msg := &pb.ShowPicture{
 		Name: imageName,
 	}
