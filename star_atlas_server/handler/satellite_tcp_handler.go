@@ -4,7 +4,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"math"
-	"math/rand"
+	// "math/rand"
 	"net"
 	"star_atlas_server/config"
 	"star_atlas_server/model"
@@ -18,6 +18,8 @@ import (
 )
 
 var conn net.Conn
+
+var picCnt = 0
 
 var posMap = map[string]string{"san": "W", "shan": "W", "shang": "W", "sang": "W", "xia": "S", "zhuo": "A", "zuo": "A", "yong": "D", "you": "D"}
 
@@ -224,7 +226,7 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 			continue
 		}
 		data = data[:n]
-		go handleMsg(conn, data)
+		handleMsg(conn, data)
 	}
 }
 
@@ -255,6 +257,11 @@ func handleMsg(conn net.Conn, data []byte) {
 }
 
 func handlePbMsg(msg *pb.Msg) error {
+	defer func() {
+		if err := recover(); err != nil {
+			glog.Errorf("go handlePbMsg error: %v", err)
+		}
+	}()
 	switch msg.GetType() {
 	case pb.MsgType_ApiExit:
 		if conn != nil {
@@ -322,8 +329,8 @@ func handleKeyboardMessage(msg *pb.Msg) error {
 }
 
 func handlePic() error {
-	idx := rand.Intn(10) + 1
-	imageName := fmt.Sprintf("port%d", idx)
+	idx := picCnt % 10
+	imageName := fmt.Sprintf("港口%d", idx)
 	msg := &pb.ShowPicture{
 		Name: imageName,
 	}
@@ -332,6 +339,7 @@ func handlePic() error {
 	if err != nil {
 		return err
 	}
+	picCnt += 1
 	return nil
 }
 
