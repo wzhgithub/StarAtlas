@@ -226,7 +226,7 @@ func SatelliteTCPHandlerInit(tcpPort int) {
 			continue
 		}
 		data = data[:n]
-		go handleMsg(conn, data)
+		handleMsg(conn, data)
 	}
 }
 
@@ -257,6 +257,11 @@ func handleMsg(conn net.Conn, data []byte) {
 }
 
 func handlePbMsg(msg *pb.Msg) error {
+	defer func() {
+		if err := recover(); err != nil {
+			glog.Errorf("go handlePbMsg error: %v", err)
+		}
+	}()
 	switch msg.GetType() {
 	case pb.MsgType_ApiExit:
 		if conn != nil {
