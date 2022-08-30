@@ -100,7 +100,7 @@ int parseRemote(rapidjson::Document& _document, vector<Device>& _device) {
   return n_remote;
 }
 
-int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ, uint8_t baseIndex, uint8_t globalDev) {
+int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ, uint8_t baseIndex, uint8_t globalDev, bool _use_idx) {
   if (!_document.IsArray()) {
     std::cerr << "Invalid xpu." << std::endl;
     return 0;
@@ -124,6 +124,9 @@ int parseXpu(rapidjson::Value& _document, vector<Device>& _device, uint8_t typ, 
     int _dev_index = baseIndex + (_item.HasMember("index")?
       uint8_t(_item["index"].GetInt()):
     (_device.size()-globalDev+1));
+    if (_use_idx && _item.HasMember("index")) {
+      _dev_index = _item["index"].GetInt();
+    }
     const char* _dev_name = _item["name"].GetString();
     const char* _auto_name = "@auto@";
     if (strcmp(_dev_name, _auto_name)==0) {
