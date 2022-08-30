@@ -19,7 +19,8 @@
       {"name":"al", "index": 1112, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":110}
     ],
     "reset":0,
-    "vmc":160
+    "vmc":160,
+    "device":17
   },
   {
     "name":"part_2", 
@@ -36,7 +37,8 @@
       {"name":"bg", "index": 1207, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":100}
     ],
     "reset":0,
-    "vmc":160
+    "vmc":160,
+    "device":18
   },
   {
     "name":"part_3", 
@@ -53,7 +55,8 @@
       {"name":"cg", "index": 1307, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":100}
     ],
     "reset":0,
-    "vmc":160
+    "vmc":160,
+    "device":19
   },
   {
     "name":"part_4", 
@@ -70,7 +73,8 @@
       {"name":"dg", "index": 1407, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":100}
     ],
     "reset":0,
-    "vmc":160
+    "vmc":160,
+    "device":20
   },
   {
     "name":"part_5", 
@@ -87,7 +91,8 @@
       {"name":"eg", "index": 1507, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":100}
     ],
     "reset":0,
-    "vmc":160
+    "vmc":160,
+    "device":33
   },
   {
     "name":"part_6", 
@@ -104,6 +109,7 @@
       {"name":"fg", "index": 1607, "type":0, "status":0, "exe_time": 0, "ret_code": 2, "start_time":100}
     ],
     "reset":0,
-    "vmc":160
+    "vmc":160,
+    "device":49
   }
 ]

@@ -13,7 +13,8 @@
       {"name":"f", "index": 1006, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":50}
     ],
     "reset":0,
-    "vmc":80
+    "vmc":80,
+    "device":17
   },
   {
     "name":"part_02", 
@@ -29,7 +30,8 @@
       {"name":"l", "index": 2006, "type":2, "status":0, "exe_time": 0, "ret_code": 2, "start_time":50}
     ],
     "reset":0,
-    "vmc":80
+    "vmc":80,
+    "device":17
   },
   {
     "name":"part_03", 
@@ -45,7 +47,8 @@
       {"name":"r", "index": 3006, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":50}
     ],
     "reset":0,
-    "vmc":80
+    "vmc":80,
+    "device":18
   },
   {
     "name":"part_04", 
@@ -61,7 +64,8 @@
       {"name":"x", "index": 4006, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":50}
     ],
     "reset":0,
-    "vmc":80
+    "vmc":80,
+    "device":18
   },
   {
     "name":"part_05", 
@@ -77,7 +81,8 @@
       {"name":"a4", "index": 5002, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":50}
     ],
     "reset":0,
-    "vmc":80
+    "vmc":80,
+    "device":33
   },
   {
     "name":"part_06", 
@@ -93,6 +98,7 @@
       {"name":"b1", "index": 6002, "type":1, "status":0, "exe_time": 0, "ret_code": 2, "start_time":50}
     ],
     "reset":0,
-    "vmc":80
+    "vmc":80,
+    "device":49
   }
 ]

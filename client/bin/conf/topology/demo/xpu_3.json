@@ -1,9 +1,9 @@
 {
   "cpu":[
-    {"name": "@auto@", "type":0, "core": 2, "inops": 20930, "flops": 20930, "mem": 32768, "mem_used": 25, "usage": 0},
-    {"name": "@auto@", "type":1, "core": 2, "inops": 24576, "flops": 24576, "mem": 32768, "mem_used": 25, "usage": 0}
+    {"name": "@auto@", "type":0, "core": 2, "inops": 20930, "flops": 20930, "mem": 32768, "mem_used": 25, "usage": 0, "index":17},
+    {"name": "@auto@", "type":1, "core": 2, "inops": 24576, "flops": 24576, "mem": 32768, "mem_used": 25, "usage": 0, "index":18}
   ],
   "gpu":[
-    {"name": "@auto@", "type":0, "core": 16, "inops": 57794, "flops": 57794, "mem": 65535, "mem_used": 25, "usage": 0}
+    {"name": "@auto@", "type":0, "core": 16, "inops": 57794, "flops": 57794, "mem": 65535, "mem_used": 25, "usage": 0, "index":49}
   ]
 }

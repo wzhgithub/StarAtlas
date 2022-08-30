@@ -1,15 +1,15 @@
 {
   "cpu":[
-    {"name": "@auto@", "type":0, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 25, "usage": 0},
-    {"name": "@auto@", "type":1, "core": 2, "inops": 24576, "flops": 24576, "mem": 32768, "mem_used": 25, "usage": 0}
+    {"name": "@auto@", "type":0, "core": 2, "inops": 32768, "flops": 32768, "mem": 32768, "mem_used": 25, "usage": 0, "index":17},
+    {"name": "@auto@", "type":1, "core": 2, "inops": 24576, "flops": 24576, "mem": 32768, "mem_used": 25, "usage": 0, "index":18}
   ],
   "dsp":[
-    {"name": "@auto@", "type":0, "core": 1, "inops": 16384, "flops": 16384, "mem": 32768, "mem_used": 25, "usage": 0}
+    {"name": "@auto@", "type":0, "core": 1, "inops": 16384, "flops": 16384, "mem": 32768, "mem_used": 25, "usage": 0, "index":33}
   ],
   "gpu":[
-    {"name": "@auto@", "type":0, "core": 16, "inops": 65535, "flops": 65535, "mem": 65535, "mem_used": 25, "usage": 0}
+    {"name": "@auto@", "type":0, "core": 16, "inops": 65535, "flops": 65535, "mem": 65535, "mem_used": 25, "usage": 0, "index":49}
   ],
   "fpga":[
-    {"name": "@auto@", "type":0}
+    {"name": "@auto@", "type":0, "index":65}
   ]
 }
