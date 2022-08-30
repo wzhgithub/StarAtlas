@@ -47,13 +47,13 @@ func GetFailureOverInfoList(c *gin.Context) {
 }
 
 type DoFailureOverRequest struct {
-	TransType uint8  `json:"transType"`
-	FromVmcId uint8  `json:"fromVmcId"`
+	TransType uint8  `json:"transType"` // 整机 0 分区 1 必填
+	FromVmcId uint8  `json:"fromVmcId"` // vmcid 必填
 	IsFault   uint8  `json:"isFault"` // [0, 1] false true
-	DeviceId  uint8  `json:"deviceId"`
-	TaskName  string `json:"taskName"`
-	TaskType  uint8  `json:"taskType"`
-	AppId     uint8  `json:"appId"`
+	DeviceId  uint8  `json:"deviceId"` // 分区 必填
+	TaskName  string `json:"taskName"` // 0
+	TaskType  uint8  `json:"taskType"` // 0
+	AppId     uint8  `json:"appId"`  // 必填
 }
 
 func (dfr *DoFailureOverRequest) GenPack() (string, string, error) {
