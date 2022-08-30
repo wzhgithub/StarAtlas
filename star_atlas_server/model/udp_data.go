@@ -200,11 +200,11 @@ func (controller *VMCController) FindAndSetFailureEntity() error {
 	uniqFilter := bson.M{"unique_key": uiq}
 	statusFilter := bson.M{"trans_status": 500}
 	filter := bson.M{"$and": []bson.M{uniqFilter, statusFilter}}
-	updateM := bson.M{"$set": []bson.M{{"to": FailureOverInfo{
+	updateM := bson.M{"$set": bson.M{"to": FailureOverInfo{
 		VMCID:    fmt.Sprintf("%d", controller.ToVmc),
 		AppID:    fmt.Sprintf("%d", controller.Task.AppId),
 		DeviceId: fmt.Sprintf("%d", controller.ToDevice),
-	}}, {"trans_status": 200}}}
+	}, "trans_status": 200}}
 	res, err := mgm.CollectionByName(cFailureOverTable).UpdateOne(mgm.Ctx(), filter, updateM)
 	if err != nil {
 		return err
