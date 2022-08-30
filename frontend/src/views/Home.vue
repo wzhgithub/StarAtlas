@@ -108,13 +108,13 @@
               <router-link class="link_btn" to="/topo"> 拓扑结构 </router-link>
             </div>
             <div class="linkleftbox">
-              <router-link class="link_btn" to="/details">
-                设备详情
+              <router-link class="link_btn" to="/details/0/CMU0">
+                实时监控
               </router-link>
             </div>
             <div class="linkrightbox">
               <router-link class="link_btn" to="/disasterrecovery">
-                任务容灾
+                任务容错
               </router-link>
             </div>
             <div class="linkrightbox_">
@@ -135,11 +135,11 @@
           <div class="rightasid">
             <div class="boxRight">
               <p class="title_new_right">
-                <span>多级容灾</span>
+                <span>多级容错</span>
               </p>
               <div class="contentBox">
                 <ul>
-                  <li>支持三级故障容灾</li>
+                  <li>支持三级故障容错</li>
                   <li>任务、分区、整机级</li>
                   <li>支持主备、多活计算</li>
                 </ul>
