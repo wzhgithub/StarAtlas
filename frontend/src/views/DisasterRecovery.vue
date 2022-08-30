@@ -19,7 +19,7 @@
           <div style="width: 100%; height: 100%">
             <div class="topboxforcanvas">
               <p class="title">
-                <span>迁移视图</span>
+                <span>计算节点故障容错能力</span>
               </p>
               <div class="boxforcanvas" ref="canvas"></div>
             </div>
