@@ -98,3 +98,21 @@ export const filterName = (name) => {
   let arr = name.split('\u0000')
   return arr[0]
 }
+// 故障模拟
+// migrate_json = { "transType": '', "fromVmcId": 80,"isFault":0,"deviceId":111,"taskName":'',"taskType":'',"appId":100 }
+export const doFailureOver = (migrate_json) => {
+  return request({
+    method: 'POST',
+    url: '/api/vmc/do_failure_over',
+    data: JSON.stringify(migrate_json)
+  })
+}
+// 轮训结果
+// migrate_json = { "from": {"vimd_id": "1"}, "to": {"vimd_id": "2"} }
+export const getFailureResult = (migrate_json) => {
+  return request({
+    method: 'POST',
+    url: '/api/vmc/failure_over_result',
+    data: JSON.stringify(migrate_json)
+  })
+}
