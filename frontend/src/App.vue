@@ -2,7 +2,7 @@
   <div id="app">
     <div class="nav_box">
       <ul class="nav">
-        <li class="home_title">高性能星算平台演示系统</li>
+        <li class="home_title">高性能计算平台演示系统</li>
         <li
           :class="activenow === 'home' ? 'drop-down active' : 'drop-down'"
           @click="changeRoute('home')"

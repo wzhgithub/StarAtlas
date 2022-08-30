@@ -133,9 +133,9 @@
               </el-col>
               <el-col :span="8" class="type_col_">
                 <p class="type_text_"></p>
-                <p class="type_text">ARM</p>
+                <p class="type_text  active_text">ARM</p>
                 <p class="type_text">MIPS</p>
-                <p class="type_text active_text">RISC_V</p>
+                <p class="type_text">RISC_V</p>
                 <p class="type_text">SPARC</p>
               </el-col>
             </el-row>
