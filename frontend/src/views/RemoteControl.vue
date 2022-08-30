@@ -6,9 +6,9 @@
     </div>
     <div class="typeBox">
       指令类型：&nbsp;&nbsp;&nbsp;<el-radio-group v-model="type">
-        <el-radio-button label="type1">容灾模拟（整机故障）</el-radio-button>
+        <el-radio-button label="type1">容错模拟（整机故障）</el-radio-button>
         <el-radio-button disabled label="type2"
-          >容灾模拟（分区故障）</el-radio-button
+          >容错模拟（分区故障）</el-radio-button
         >
         <el-radio-button disabled label="type3">性能测试</el-radio-button>
       </el-radio-group>

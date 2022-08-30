@@ -41,7 +41,7 @@
           @click="changeRoute('disasterrecovery')"
         >
           <router-link class="nav_btn" to="/disasterrecovery">
-            容灾演示
+            容错演示
           </router-link>
         </li>
         <li
