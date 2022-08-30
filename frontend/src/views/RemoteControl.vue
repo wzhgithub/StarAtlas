@@ -6,8 +6,8 @@
     </div>
     <div class="typeBox">
       指令类型：&nbsp;&nbsp;&nbsp;<el-radio-group v-model="type">
-        <el-radio-button label="type1">容灾模拟（整机故障）</el-radio-button>
-        <el-radio-button label="type2">容灾模拟（分区故障）</el-radio-button>
+        <el-radio-button label="type1">容错模拟（整机故障）</el-radio-button>
+        <el-radio-button label="type2">容错模拟（分区故障）</el-radio-button>
         <el-radio-button label="type3">性能测试</el-radio-button>
       </el-radio-group>
     </div>
@@ -54,7 +54,7 @@
       >
       <el-button-group style="width: 20%" v-if="type === 'type3'">
         <el-button round style="width: 50%" type="primary" @click="handlerDo(1)"
-          >整形算力测试</el-button
+          >整型算力测试</el-button
         >
         <el-button round style="width: 50%" type="primary" @click="handlerDo(2)"
           >浮点算力测试</el-button
@@ -161,6 +161,7 @@
                 :endVal="value_b"
                 :duration="3000"
                 suffix="TFLOPS"
+                :decimals="3"
               ></countTo>
               <p>浮点算力</p>
             </div>
@@ -234,7 +235,13 @@ export default {
       let res = await getFailureResult(data);
       return res;
     },
-    randomNum(minNum, maxNum) {
+    randomNum(minNum, maxNum, decimalNum) {
+      var max = 0,
+        min = 0;
+      minNum <= maxNum
+        ? ((min = minNum), (max = maxNum))
+        : ((min = maxNum), (max = minNum));
+      return (Math.random() * (max - min) + min).toFixed(decimalNum);
       return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
     },
     romoteGetResult(data) {
@@ -355,7 +362,7 @@ export default {
         setTimeout(() => {
           this.$message({
             message:
-              "迁移目标计算成功，已为您重定向到容灾演示页面查看任务迁移详情",
+              "迁移目标计算成功，已为您重定向到容错演示页面查看任务迁移详情",
             type: "success",
           });
           this.$router.push("/disasterrecovery");
@@ -376,62 +383,62 @@ export default {
         }, 1500);
         setTimeout(() => {
           that.description3 = "正在选择相关算法。。。";
-        }, 2000);
-        setTimeout(() => {
-          that.description3 = "正在选择相关算法。。。";
         }, 2500);
+        setTimeout(() => {
+          that.description3 = "正在选择相关算法。。。。";
+        }, 4500);
         setTimeout(() => {
           that.stepNow_ = 2;
           that.description3 = "已成功选择算法【drystone】，算法准备成功！";
           that.description4 = "平台正在进行算力测试。。。。";
-        }, 3000);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（10%）";
-        }, 3500);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（15%）";
-        }, 4000);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（25%）";
-        }, 4500);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（35%）";
         }, 5000);
         setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（10%）";
+        }, 7500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（15%）";
+        }, 9000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（25%）";
+        }, 11000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（35%）";
+        }, 12000);
+        setTimeout(() => {
           that.description4 = "平台正在进行算力测试（55%）";
-        }, 5500);
+        }, 13000);
         setTimeout(() => {
           that.description4 = "平台正在进行算力测试（75%）";
-        }, 6000);
+        }, 14000);
         setTimeout(() => {
           that.description4 = "平台正在进行算力测试（95%）";
-        }, 6500);
+        }, 15500);
         setTimeout(() => {
           that.description4 = "平台正在进行算力测试（100%）";
-        }, 7000);
+        }, 16000);
         setTimeout(() => {
           that.description4 = "算力测试完成，正在输出相关指标";
-        }, 7500);
+        }, 17500);
         setTimeout(() => {
           that.stepNow_ = 3;
           that.description4 = "算力测试完成，相关指标已输出";
           that.description5 = "输出结果校验中";
-        }, 8000);
+        }, 18000);
         setTimeout(() => {
           that.description5 = "输出结果校验中。";
-        }, 8500);
+        }, 18500);
         setTimeout(() => {
           that.description5 = "输出结果校验中。。";
-        }, 9000);
+        }, 19000);
         setTimeout(() => {
           that.description5 = "输出结果校验中。。。";
-        }, 9500);
+        }, 19500);
         setTimeout(() => {
-          let nub = that.randomNum(1510, 1790);
+          let nub = that.randomNum(1510, 1790, 0);
           that.stepNow_ = 4;
           that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的整型算力为【${nub}MIPS】`;
           that.value_a = nub;
-        }, 10000);
+        }, 20000);
       }
       if (flag === 3) {
         setTimeout(() => {
@@ -442,68 +449,68 @@ export default {
         }, 500);
         setTimeout(() => {
           that.description3 = "正在选择相关算法。";
-        }, 1000);
-        setTimeout(() => {
-          that.description3 = "正在选择相关算法。。";
-        }, 1500);
-        setTimeout(() => {
-          that.description3 = "正在选择相关算法。。。";
         }, 2000);
         setTimeout(() => {
+          that.description3 = "正在选择相关算法。。";
+        }, 3500);
+        setTimeout(() => {
           that.description3 = "正在选择相关算法。。。";
-        }, 2500);
+        }, 4000);
+        setTimeout(() => {
+          that.description3 = "正在选择相关算法。。。";
+        }, 5500);
         setTimeout(() => {
           that.stepNow_ = 2;
           that.description3 = "已成功选择算法【whetstone】，算法准备成功！";
           that.description4 = "平台正在进行算力测试。。。。";
-        }, 3000);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（10%）";
-        }, 3500);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（15%）";
-        }, 4000);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（25%）";
-        }, 4500);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（35%）";
-        }, 5000);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（55%）";
-        }, 5500);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（75%）";
-        }, 6000);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（95%）";
-        }, 6500);
-        setTimeout(() => {
-          that.description4 = "平台正在进行算力测试（100%）";
         }, 7000);
         setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（10%）";
+        }, 8500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（15%）";
+        }, 9000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（25%）";
+        }, 10000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（35%）";
+        }, 11000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（55%）";
+        }, 13500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（75%）";
+        }, 14000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（95%）";
+        }, 15500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（100%）";
+        }, 16000);
+        setTimeout(() => {
           that.description4 = "算力测试完成，正在输出相关指标";
-        }, 7500);
+        }, 17500);
         setTimeout(() => {
           that.stepNow_ = 3;
           that.description4 = "算力测试完成，相关指标已输出";
           that.description5 = "输出结果校验中";
-        }, 8000);
+        }, 18000);
         setTimeout(() => {
           that.description5 = "输出结果校验中。";
-        }, 8500);
+        }, 18500);
         setTimeout(() => {
           that.description5 = "输出结果校验中。。";
-        }, 9000);
+        }, 19000);
         setTimeout(() => {
           that.description5 = "输出结果校验中。。。";
-        }, 9500);
+        }, 19500);
         setTimeout(() => {
-          let nub = that.randomNum(1.1, 1.38);
+          let nub = that.randomNum(1.1, 1.38, 3);
           that.stepNow_ = 4;
           that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的浮点算力为【${nub}TFLOPS】`;
           that.value_b = nub;
-        }, 10000);
+        }, 20000);
       }
     },
     handlerDo(types) {
@@ -671,7 +678,7 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .disasterrecovery {
   padding: 24px;
   box-sizing: border-box;
@@ -738,6 +745,12 @@ export default {
         }
       }
     }
+  }
+  .el-step__title {
+    font-size: 1.5rem !important;
+  }
+  .el-step__description {
+    font-size: 1rem !important;
   }
 }
 </style>
