@@ -248,41 +248,45 @@ export default {
       setTimeout(() => {
         let end = this.getDoFailureRuselt(data);
         let res = {};
-        end.then((resault) => {
-          res = resault;
-          if (res.code !== 200) {
-            that.romoteGetResult(data);
-          } else {
-            let objTep = {};
-            let divicedata = {};
-            that.allNodes.map((item) => {
-              if (item.id === res.data.to.vmc_id) {
-                objTep = item;
-              }
-            });
-            objTep.id &&
-              objTep.chArr.map((item) => {
-                if (item.value === res.data.to.device_id) {
-                  divicedata = item;
+        end
+          .then((resault) => {
+            res = resault;
+            if (res.code !== 200) {
+              that.romoteGetResult(data);
+            } else {
+              let objTep = {};
+              let divicedata = {};
+              that.allNodes.map((item) => {
+                if (item.id === res.data.to.vmc_id) {
+                  objTep = item;
                 }
               });
-            if (type === "vmc") {
-              that.setTo({
-                id: res.data.to.vmc_id,
-                type: type,
-                parent_id: null,
-                name: that.filterName(objTep.name),
-              });
-            } else {
-              that.setTo({
-                id: res.data.to.device_id,
-                type: type,
-                parent_id: res.data.to.vmc_id,
-                name: that.filterName(divicedata.label),
-              });
+              objTep.id &&
+                objTep.chArr.map((item) => {
+                  if (item.value === res.data.to.device_id) {
+                    divicedata = item;
+                  }
+                });
+              if (type === "vmc") {
+                that.setTo({
+                  id: res.data.to.vmc_id,
+                  type: type,
+                  parent_id: null,
+                  name: that.filterName(objTep.name),
+                });
+              } else {
+                that.setTo({
+                  id: res.data.to.device_id,
+                  type: type,
+                  parent_id: res.data.to.vmc_id,
+                  name: that.filterName(divicedata.label),
+                });
+              }
             }
-          }
-        });
+          })
+          .catch(() => {
+            that.romoteGetResult(data);
+          });
       }, 1000);
     },
     mcokLoading(flag) {
@@ -562,6 +566,7 @@ export default {
             type: "vmc",
             parent_id: null,
             name: objTep.name,
+            time: new Date().valueOf(),
           });
           this.postDoFailureOver(
             {
@@ -598,6 +603,7 @@ export default {
             type: divicedata.label.split("_")[0],
             parent_id: this.target[0],
             name: this.filterName(divicedata.label),
+            time: new Date().valueOf(),
           });
           this.postDoFailureOver(
             {
