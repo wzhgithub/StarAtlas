@@ -52,14 +52,16 @@
                 <span>迁移日志</span>
               </p>
               <p class="logp">
-                [迁移开始]：容错迁移任务, From: {{this.from.name}}, To: {{this.to.name}}
+                [迁移开始]：容错迁移任务, From: {{ this.from.name }}, To:
+                {{ this.to.name }}
               </p>
-              <p class="logp">[迁移开始时间]: {{this.from.time}}</p>
+              <p class="logp">[迁移开始时间]: {{ this.from.time }}</p>
               <p class="logp">==============================================</p>
               <p class="logp">
-                [迁移完成]：容错迁移任务, From: {{this.from.name}}, To: {{this.to.name}}
+                [迁移完成]：容错迁移任务, From: {{ this.from.name }}, To:
+                {{ this.to.name }}
               </p>
-              <p class="logp">[迁移完成时间]: {{this.from.to}}</p>
+              <p class="logp">[迁移完成时间]: {{ this.from.to }}</p>
               <!-- <div class="boxforcanvas" ref="canvas"></div> -->
             </div>
           </div>
@@ -649,6 +651,7 @@ export default {
       }, 500);
       this.speed = this.randomRange(1, 10);
       this.getNameOAll();
+      console.log(this.from, this.to);
     }, 3000);
   },
   created() {},

@@ -220,6 +220,7 @@ export default {
       allTasks: [],
       value_a: 0,
       value_b: 0,
+      updateFlag: false,
     };
   },
   methods: {
@@ -254,32 +255,19 @@ export default {
             if (res.code !== 200) {
               that.romoteGetResult(data);
             } else {
-              let objTep = {};
-              let divicedata = {};
-              that.allNodes.map((item) => {
-                if (item.id === res.data.to.vmc_id) {
-                  objTep = item;
-                }
-              });
-              objTep.id &&
-                objTep.chArr.map((item) => {
-                  if (item.value === res.data.to.device_id) {
-                    divicedata = item;
-                  }
-                });
               if (type === "vmc") {
                 that.setTo({
                   id: res.data.to.vmc_id,
                   type: type,
                   parent_id: null,
-                  name: that.filterName(objTep.name),
+                  name: `cmu_${res.data.to.vmc_id - 1}`,
                 });
               } else {
                 that.setTo({
                   id: res.data.to.device_id,
                   type: type,
                   parent_id: res.data.to.vmc_id,
-                  name: that.filterName(divicedata.label),
+                  name: `cmu_${res.data.to.device_id - 1}`,
                 });
               }
             }
