@@ -65,7 +65,7 @@ func (v *VMCData) parseCPU(nodes *pNodesArr) {
 	}
 	n := &Nodes{
 		Id:           int64(v.VMCID)*CVMCBase + int64(v.CPUSet[0].ID>>CDdeviceTypeShift),
-		Name:         "cpu_all",
+		Name:         "SOC-2018B",
 		DeviceType:   "cpu",
 		ParentId:     uint16(v.VMCID),
 		UpstreamId:   0,
@@ -96,7 +96,7 @@ func (v *VMCData) parseGPU(nodes *pNodesArr) {
 	}
 	n := &Nodes{
 		Id:           int64(v.VMCID)*CVMCBase + int64(v.GPUSet[0].ID>>CDdeviceTypeShift),
-		Name:         "gpu_all",
+		Name:         "NVIDIA-AGX",
 		DeviceType:   "gpu",
 		ParentId:     uint16(v.VMCID),
 		UpstreamId:   0,
@@ -127,7 +127,7 @@ func (v *VMCData) parseDSP(nodes *pNodesArr) {
 	}
 	n := &Nodes{
 		Id:           int64(v.VMCID)*CVMCBase + int64(v.DSPSet[0].ID>>CDdeviceTypeShift),
-		Name:         "dsp_all",
+		Name:         "FT-6678",
 		DeviceType:   "dsp",
 		ParentId:     uint16(v.VMCID),
 		UpstreamId:   0,
@@ -158,7 +158,7 @@ func (v *VMCData) parseFPGA(nodes *pNodesArr) {
 	}
 	n := &Nodes{
 		Id:           int64(v.VMCID)*CVMCBase + int64(v.FPGASet[0].ID>>CDdeviceTypeShift),
-		Name:         "fpga_all",
+		Name:         "V7-690T",
 		DeviceType:   "fpga",
 		ParentId:     uint16(v.VMCID),
 		UpstreamId:   0,

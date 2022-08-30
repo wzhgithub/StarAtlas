@@ -268,6 +268,7 @@ func handlePbMsg(msg *pb.Msg) error {
 			glog.Infof("conn close: %v\n", conn)
 			conn.Close()
 		}
+		picCnt = 0
 		var err error
 		conn, err = newConn(config.CommonConfig.SatelliteTCPPort)
 		if err != nil {
