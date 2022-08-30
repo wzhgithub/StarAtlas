@@ -256,18 +256,19 @@ export default {
               that.romoteGetResult(data);
             } else {
               if (type === "vmc") {
+                var to = that.from.vmc_id == 1? 2 : 1;
                 that.setTo({
-                  id: res.data.to.vmc_id,
+                  id: to,//res.data.to.vmc_id,
                   type: type,
                   parent_id: null,
-                  name: `cmu_${res.data.to.vmc_id - 1}`,
+                  name: `CMU_${to - 1}`, //`CMU_${res.data.to.vmc_id - 1}`,
                 });
               } else {
                 that.setTo({
                   id: res.data.to.device_id,
                   type: type,
                   parent_id: res.data.to.vmc_id,
-                  name: `cmu_${res.data.to.device_id - 1}`,
+                  name: `CMU_${res.data.to.device_id - 1}`,
                 });
               }
             }
