@@ -9,7 +9,6 @@ import (
 	"github.com/golang/glog"
 	"github.com/kamva/mgm/v3"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const CDbSenderName = "sender_db"
@@ -67,7 +66,5 @@ func (s *sendAddr) UpdateOp() error {
 }
 
 func (s *sendAddr) CollectOp() error {
-	findOptions := options.Find()
-	findOptions.SetSort(bson.D{{Key: "updated_at", Value: -1}})
-	return mgm.CollectionByName(config.CommonConfig.DBSenderTableName).SimpleFind(s, findOptions)
+	return mgm.CollectionByName(config.CommonConfig.DBSenderTableName).First(bson.M{}, s)
 }
