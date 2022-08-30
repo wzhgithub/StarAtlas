@@ -379,24 +379,24 @@ export default {
         setTimeout(() => {
           that.stepNow = 4;
           that.description2 = "数据中返回成功，目标迁移设备已确定";
-          if (!that.to.type && that.target.length === 1) {
-            that.setTo({
-              id: that.options[0].value,
-              type: that.from.type,
-              parent_id: null,
-              name: "for_test",
-              time: "",
-            });
-          }
-          if (!that.to.type && that.target.length > 1) {
-            that.setTo({
-              id: 999,
-              type: that.from.type,
-              parent_id: that.target[0],
-              name: "for_test",
-              time: "",
-            });
-          }
+          // if (!that.to.type && that.target.length === 1) {
+          //   that.setTo({
+          //     id: that.options[0].value,
+          //     type: that.from.type,
+          //     parent_id: null,
+          //     name: "for_test",
+          //     time: "",
+          //   });
+          // }
+          // if (!that.to.type && that.target.length > 1) {
+          //   that.setTo({
+          //     id: 999,
+          //     type: that.from.type,
+          //     parent_id: that.target[0],
+          //     name: "for_test",
+          //     time: "",
+          //   });
+          // }
         }, 11500);
         setTimeout(() => {
           this.$message({
