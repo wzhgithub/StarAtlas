@@ -44,6 +44,16 @@
             容灾演示
           </router-link>
         </li>
+        <li
+          :class="
+            activenow === 'remoteControl' ? 'drop-down active' : 'drop-down'
+          "
+          @click="changeRoute('remoteControl')"
+        >
+          <router-link class="nav_btn" to="/remoteControl">
+            遥测指令
+          </router-link>
+        </li>
         <li class="drop-down">
           <!-- <router-link class="nav_btn" to="/topo"> 拓扑页 </router-link> -->
           <a class="nav_btn" href="Satellite:">3D演示</a>
@@ -211,11 +221,12 @@ ul {
 .drop-down-content {
   opacity: 0;
   height: 0;
-  // overflow: hidden;
+  overflow: hidden;
   transition: all 1s ease;
 }
 
 .nav .drop-down:hover .drop-down-content {
+  overflow: visible;
   opacity: 1;
   height: 100%;
   z-index: 999;

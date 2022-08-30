@@ -6,7 +6,20 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     disVmc: {},
-    disArea: {}
+    disArea: {},
+    from: {
+      id: 80000,
+      type: 'cpu',
+      parent_id: 120,
+      name: 'cpu_123',
+      time: '',
+    },
+    to: {
+      id: 180000,
+      type: 'vmc',
+      parent_id: null,
+      name: '测试',
+    },
   },
   mutations: {
     setDisVmc: (state, data) => {
@@ -14,6 +27,12 @@ export default new Vuex.Store({
     },
     setDisArea: (state, data) => {
       state.disArea = data;
+    },
+    setFrom: (state, data) => {
+      state.from = data;
+    },
+    setTo: (state, data) => {
+      state.to = data;
     }
   },
   actions: {

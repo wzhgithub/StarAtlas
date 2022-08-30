@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Topo from '../views/Topo.vue'
 import DisasterRecovery from '../views/DisasterRecovery.vue'
+import RemoteControl from '../views/RemoteControl.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/disasterrecovery',
     name: 'DisasterRecovery',
     component: DisasterRecovery
+  },
+  {
+    path: '/remoteControl',
+    name: 'RemoteControl',
+    component: RemoteControl
   },
   // {
   //   path: '/about',
