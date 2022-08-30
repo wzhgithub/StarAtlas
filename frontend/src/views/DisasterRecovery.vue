@@ -387,7 +387,7 @@ export default {
       const FlowingSupport = this.createFlow(graph);
       const VPNFlexEdgeUI = this.createEdegUi(graph);
       var flowingSupport = new FlowingSupport(graph);
-      if (this.from.id && this.to.id) {
+      if (this.from.type && this.to.type) {
         if (this.from.parent_id === this.to.parent_id && this.to.parent_id) {
           let endarr = that.vmcs.map((items, index) => {
             if (items.id === this.from.parent_id) {

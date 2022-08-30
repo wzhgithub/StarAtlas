@@ -233,7 +233,7 @@ export default {
     },
     async getDoFailureRuselt(data) {
       let res = await getFailureResult(data);
-      return res;
+      return res.data;
     },
     randomNum(minNum, maxNum, decimalNum) {
       var max = 0,
@@ -244,39 +244,45 @@ export default {
       return (Math.random() * (max - min) + min).toFixed(decimalNum);
     },
     romoteGetResult(data, type) {
+      let that = this;
       setTimeout(() => {
-        let res = this.getDoFailureRuselt(data);
-        if (res.data.code !== 200) {
-          this.romoteGetResult(data);
-        } else {
-          let objTep = {};
-          let divicedata = {};
-          this.allNodes.map((item) => {
-            if (item.id === res.data.to.vmc_id) {
-              objTep = item;
-            }
-          });
-          objTep.chArr.map((item) => {
-            if (item.value === res.data.to.device_id) {
-              divicedata = item;
-            }
-          });
-          if (type === "vmc") {
-            this.setTo({
-              id: res.data.to.vmc_id,
-              type: type,
-              parent_id: null,
-              name: this.filterName(objTep.name),
-            });
+        let end = this.getDoFailureRuselt(data);
+        let res = {};
+        end.then((resault) => {
+          res = resault;
+          if (res.code !== 200) {
+            that.romoteGetResult(data);
           } else {
-            this.setTo({
-              id: res.data.to.device_id,
-              type: type,
-              parent_id: res.data.to.vmc_id,
-              name: this.filterName(divicedata.label),
+            let objTep = {};
+            let divicedata = {};
+            that.allNodes.map((item) => {
+              if (item.id === res.data.to.vmc_id) {
+                objTep = item;
+              }
             });
+            objTep.id &&
+              objTep.chArr.map((item) => {
+                if (item.value === res.data.to.device_id) {
+                  divicedata = item;
+                }
+              });
+            if (type === "vmc") {
+              that.setTo({
+                id: res.data.to.vmc_id,
+                type: type,
+                parent_id: null,
+                name: that.filterName(objTep.name),
+              });
+            } else {
+              that.setTo({
+                id: res.data.to.device_id,
+                type: type,
+                parent_id: res.data.to.vmc_id,
+                name: that.filterName(divicedata.label),
+              });
+            }
           }
-        }
+        });
       }, 1000);
     },
     mcokLoading(flag) {
@@ -369,8 +375,7 @@ export default {
         setTimeout(() => {
           that.stepNow = 4;
           that.description2 = "数据中返回成功，目标迁移设备已确定";
-          console.log(that.to);
-          if (!that.to.id && that.target.length === 1) {
+          if (!that.to.type && that.target.length === 1) {
             that.setTo({
               id: that.options[0].value,
               type: that.from.type,
@@ -379,7 +384,7 @@ export default {
               time: "",
             });
           }
-          if (!that.to.id && that.target.length > 1) {
+          if (!that.to.type && that.target.length > 1) {
             that.setTo({
               id: 999,
               type: that.from.type,
