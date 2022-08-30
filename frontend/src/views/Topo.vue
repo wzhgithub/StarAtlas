@@ -186,6 +186,7 @@ import pointsvg from "@/assets/newpng/point_new.svg";
 import inswsvg from "@/assets/newpng/sw_in.svg";
 // import obc from "@/assets/newpng/cloud.png";
 import imgvmc from "@/assets/newpng/VMC.svg";
+import ttevmc from "@/assets/newpng/TTE.svg";
 // import sw from "@/assets/newpng/cloud.png";
 import CpuInfo from "@/components/CpuInfo.vue";
 import selflineNew from "@/components/selflineNew.vue";
@@ -210,7 +211,7 @@ export default {
       flowColor_vpn: "#00FF00",
       drawer: false,
       drawerText: false,
-      dialogVisible: true,
+      dialogVisible: false,
       devicename: "",
       deviceType: "",
       topoData: [],
@@ -273,7 +274,7 @@ export default {
   },
   methods: {
     filterName,
-    ...mapMutations(["setDisVmc", "setDisArea"]),
+    ...mapMutations(["setDisVmc", "setDisArea", "setFrom", "setTo"]),
     async getTopoData() {
       // const str = {
       //   code: 0,
@@ -362,6 +363,10 @@ export default {
       // this.topoData = data.data.node || [];
       const { data } = await getTopoShow();
       this.topoData = data.data.node || [];
+      this.loading = false;
+      setTimeout(() => {
+        this.drawAllCanvas();
+      }, 500);
     },
     creatGraph() {
       graph = new Q.Graph(this.$refs.canvas);
@@ -417,7 +422,7 @@ export default {
         }
         node.image = image;
       }
-      node.size = { height: 20 };
+      node.size = { height: 80 };
       if (group) {
         group.addChild(node);
       }
@@ -1035,15 +1040,15 @@ export default {
       let mostrightToppoint = line2[0];
       let mostrightBottompoint = line3[0];
       // let sheapcenter = Q.Shapes.getShape(Q.Consts.SHAPE_CIRCLE, 15, 15, 1, 1);
-      var centerNode = graph.createText("TTE", 0, 0);
-      centerNode.setStyle(Q.Styles.LABEL_COLOR, "#FFF");
-      centerNode.setStyle(Q.Styles.LABEL_BACKGROUND_COLOR, "#9bcfee");
-      // centerNode.setStyle(Q.Styles.LABEL_RADIUS, 120);
-      centerNode.setStyle(Q.Styles.LABEL_FONT_SIZE, 50);
-      centerNode.setStyle(Q.Styles.LABEL_FONT_STYLE, "italic lighter");
-      centerNode.zIndex = 9999;
-      centerNode.textArea = true;
-      // let centerNode = this.createNode_center(graph, textNode, 0, 0);
+      // var centerNode = graph.createText("TTE", 0, 0);
+      // centerNode.setStyle(Q.Styles.LABEL_COLOR, "#FFF");
+      // centerNode.setStyle(Q.Styles.LABEL_BACKGROUND_COLOR, "#9bcfee");
+      // // centerNode.setStyle(Q.Styles.LABEL_RADIUS, 120);
+      // centerNode.setStyle(Q.Styles.LABEL_FONT_SIZE, 50);
+      // centerNode.setStyle(Q.Styles.LABEL_FONT_STYLE, "italic lighter");
+      // centerNode.zIndex = 9999;
+      // centerNode.textArea = true;
+      let centerNode = this.createNode_center(graph, ttevmc, 0, 0);
       let line1Edge = null;
       let line2Edge = null;
       let line3Edge = null;
@@ -1577,12 +1582,10 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => {
-      this.loading = false;
-      setTimeout(() => {
-        this.drawAllCanvas();
-      }, 500);
-    }, 2000);
+    this.loading = true;
+    setInterval(() => {
+      this.getTopoData();
+    }, 5000);
   },
   created() {
     this.getTopoData();

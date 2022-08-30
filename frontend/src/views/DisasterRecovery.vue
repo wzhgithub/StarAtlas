@@ -33,7 +33,7 @@
               </p>
               <div class="content" style="width: 100%; height: 80%">
                 <el-carousel :interval="5000" class="carousel" trigger="click">
-                  <el-carousel-item v-for="item in vmcs" :key="item.id">
+                  <el-carousel-item v-for="item in vmcNowArr" :key="item.id">
                     <div class="canvasbox" :id="`linebox_${item.id}`">
                       <selflineNewless
                         :inref="`linebox_${item.id}`"
@@ -77,11 +77,10 @@
           <div style="width: 100%; height: 100%">
             <div class="topboxforcanvas_">
               <p class="title_2">
-                <span
-                  >{{
-                    `${Nowindex.name || "未知名称"}-${Nowindex.id}`
-                  }}相关任务</span
-                >
+                <!-- <span
+                  >{{ `${Nowindex.name || "未知名称"}-${Nowindex.id}` }}相关任务
+                </span> -->
+                <span>关联任务</span>
               </p>
               <div class="content">
                 <el-carousel
@@ -91,7 +90,7 @@
                   @change="changeCarousle"
                 >
                   <el-carousel-item
-                    v-for="item in vmcs"
+                    v-for="item in vmcNowArr"
                     :key="item.id"
                     style="height: 100%"
                   >
@@ -110,33 +109,6 @@
           </div>
         </el-col>
       </el-row>
-      <!-- <el-row
-        type="flex"
-        class="row-bg"
-        justify="space-around"
-        style="width: 100%; height: 100%"
-      >
-        <el-col :span="16" style="width: 100%; height: 100%">
-          <div style="width: 100%; height: 100%">
-            <div class="topboxforcanvas">
-              <p class="title">
-                <span>迁移视图</span>
-              </p>
-              <div class="boxforcanvas" ref="canvas"></div>
-            </div>
-          </div>
-        </el-col>
-        <el-col :span="8" style="width: 100%; height: 100%">
-          <div style="width: 100%; height: 100%">
-            <div class="middleboxfortask">
-              
-            </div>
-            <div class="bottomboxforline">
-              
-            </div>
-          </div>
-        </el-col>
-      </el-row> -->
     </div>
   </div>
 </template>
@@ -149,52 +121,18 @@ import { mapState } from "vuex";
 import selflineNewless from "@/components/selflineNewless.vue";
 import TableNow from "@/components/TableNow.vue";
 import imgvmc from "@/assets/newpng/VMC.svg";
+import imgcpu from "@/assets/newpng/CPU.svg";
+import imggpu from "@/assets/newpng/GPU.svg";
+import imgdsp from "@/assets/newpng/DSP.svg";
+import imgfgpa from "@/assets/newpng/FPGA.svg";
+import imgsw from "@/assets/newpng/centersw_topo.svg";
+import imgop1 from "@/assets/newpng/op_1.svg";
+import imgop2 from "@/assets/newpng/op_2.svg";
+import imgop3 from "@/assets/newpng/op_3.svg";
+import imgop4 from "@/assets/newpng/op_4.svg";
+import inswsvg from "@/assets/newpng/sw_in.svg";
 import messages from "@/assets/newpng/send_.svg";
 import { getTopoShow, filterName } from "@/api";
-const singletable = [
-  {
-    productName: "核心任务_12654_456",
-    coreName: "执行完成",
-    publish: "james",
-    publishAmount: 23567,
-  },
-  {
-    productName: "核心任务_2654_456",
-    coreName: "执行完成",
-    publish: "james",
-    publishAmount: 356,
-  },
-  {
-    productName: "普通任务_654_456",
-    coreName: "执行完成",
-    publish: "james",
-    publishAmount: 56,
-  },
-  {
-    productName: "非必要任务_456",
-    coreName: "执行失败",
-    publish: "anna",
-    publishAmount: 6,
-  },
-  {
-    productName: "普通任务_12654_456",
-    coreName: "执行失败",
-    publish: "李明",
-    publishAmount: 678954,
-  },
-  {
-    productName: "核心任务_54_456",
-    coreName: "执行完成",
-    publish: "anna",
-    publishAmount: 5765489,
-  },
-  {
-    productName: "普通任务_1884_456",
-    coreName: "执行失败",
-    publish: "李明",
-    publishAmount: 773245,
-  },
-];
 export default {
   name: "DisasterRecovery",
   components: {
@@ -208,16 +146,30 @@ export default {
       loading: true,
       flaga: true,
       flagb: true,
-      tableData: [[...singletable], [], [...singletable]],
+      tableData: [],
       vmcedge: {},
       areaedge: {},
       Nowindex: "1",
       vmcs: [],
+      vmcNowArr: [],
       vmcNode: {},
+      imgObg: {
+        vmc: imgvmc,
+        sw: inswsvg,
+        sw_c: imgsw,
+        cpu: imgcpu,
+        gpu: imggpu,
+        dsp: imgdsp,
+        fpga: imgfgpa,
+        rtu_0: imgop1,
+        rtu_1: imgop2,
+        rtu_2: imgop3,
+        rtu_3: imgop4,
+      },
     };
   },
   computed: {
-    ...mapState(["disVmc", "disArea"]),
+    ...mapState(["disVmc", "disArea", "from", "to"]),
   },
   methods: {
     filterName,
@@ -232,6 +184,18 @@ export default {
             return a.id - b.id;
           });
         this.vmcs = tempdata;
+        let tempArr = [];
+        tempdata.map((item) => {
+          if (
+            this.from.id === item.id ||
+            this.from.parent_id === item.id ||
+            this.to.id === item.id ||
+            this.to.parent_id === item.id
+          ) {
+            tempArr.push(item);
+          }
+        });
+        this.vmcNowArr = tempArr;
         this.Nowindex = tempdata[0];
       }
     },
@@ -365,13 +329,13 @@ export default {
         }
         node.image = image;
       }
-      node.size = { height: 70 };
+      node.size = { height: 40 };
       if (group) {
         group.addChild(node);
       }
       node.randomAble = randomFlag || false;
       node.setStyle(Q.Styles.LABEL_COLOR, "#ffffff");
-      node.setStyle(Q.Styles.LABEL_FONT_SIZE, 25);
+      node.setStyle(Q.Styles.LABEL_FONT_SIZE, 16);
       node.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_TOP);
       node.setStyle(Q.Styles.LABEL_ANCHOR_POSITION, Q.Position.CENTER_BOTTOM);
       // node.setStyle(Q.Styles., 25);
@@ -424,51 +388,226 @@ export default {
       const graph = this.creatGraph();
       const FlowingSupport = this.createFlow(graph);
       const VPNFlexEdgeUI = this.createEdegUi(graph);
-      let endarr = that.vmcs.map((items, index) => {
-        let tempnode = that.createNode(
-          graph,
-          imgvmc,
-          index * 100,
-          (index % 2) * 80,
-          that.filterName(items.name),
-          null,
-          true
-        );
-        that.vmcNode[items.id] = tempnode;
-        return tempnode;
-      });
       var flowingSupport = new FlowingSupport(graph);
-      if (this.disVmc.time) {
-        var edge1 = this.createEdge(
-          graph,
-          that.vmcNode[this.disVmc.id],
-          that.vmcNode[180],
-          null,
-          true,
-          "任务迁移流1",
-          "vmc"
-        );
-        flowingSupport.addFlowing(edge1, 1, false);
+      if (this.from.id && this.to.id) {
+        if (this.from.parent_id === this.to.parent_id && this.to.parent_id) {
+          let endarr = that.vmcs.map((items, index) => {
+            if (items.id === this.from.parent_id) {
+              let tempnode = that.createNode(
+                graph,
+                imgvmc,
+                index * 100,
+                (index % 2) * 80,
+                that.filterName(items.name),
+                null,
+                true
+              );
+              that.vmcNode[items.id] = tempnode;
+            }
+          });
+        } else if (
+          this.from.parent_id !== this.to.parent_id &&
+          this.from.parent_id &&
+          this.to.parent_id
+        ) {
+          let endarr = that.vmcs.map((items, index) => {
+            if (
+              items.id === this.from.parent_id ||
+              items.id === this.to.parent_id
+            ) {
+              let tempnode = that.createNode(
+                graph,
+                imgvmc,
+                index * 100,
+                (index % 2) * 80,
+                that.filterName(items.name),
+                null,
+                true
+              );
+              that.vmcNode[items.id] = tempnode;
+            }
+          });
+        }
+        if (this.from.type !== "vmc") {
+          if (this.from.parent_id === this.to.parent_id) {
+            let fromNode = that.createNode(
+              graph,
+              this.imgObg[this.from.type],
+              this.vmcNode[this.from.parent_id].x - 80,
+              this.vmcNode[this.from.parent_id].y + 100,
+              that.filterName(this.from.name),
+              null,
+              true
+            );
+            let toNode = that.createNode(
+              graph,
+              this.imgObg[this.to.type],
+              this.vmcNode[this.to.parent_id].x + 80,
+              this.vmcNode[this.to.parent_id].y + 100,
+              that.filterName(this.to.name),
+              null,
+              true
+            );
+            fromNode.setStyle(
+              Q.Styles.LABEL_POSITION,
+              Q.Position.CENTER_BOTTOM
+            );
+            fromNode.setStyle(
+              Q.Styles.LABEL_ANCHOR_POSITION,
+              Q.Position.CENTTER_TOP
+            );
+            toNode.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_BOTTOM);
+            toNode.setStyle(
+              Q.Styles.LABEL_ANCHOR_POSITION,
+              Q.Position.CENTTER_TOP
+            );
+            var edge1_ = this.createEdge(
+              graph,
+              this.vmcNode[this.from.parent_id],
+              fromNode,
+              null,
+              false,
+              "",
+              ""
+            );
+            var edge1_1 = this.createEdge(
+              graph,
+              this.vmcNode[this.to.parent_id],
+              toNode,
+              null,
+              false,
+              "",
+              ""
+            );
+            edge1_.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+            edge1_1.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+            var edge1 = this.createEdge(
+              graph,
+              fromNode,
+              toNode,
+              null,
+              true,
+              "任务迁移流",
+              "vmc"
+            );
+            flowingSupport.addFlowing(edge1, 1, false);
+          } else {
+            let fromNode = that.createNode(
+              graph,
+              this.imgObg[this.from.type],
+              this.vmcNode[this.from.parent_id].x,
+              this.vmcNode[this.from.parent_id].y + 100,
+              that.filterName(this.from.name),
+              null,
+              true
+            );
+            let toNode = that.createNode(
+              graph,
+              this.imgObg[this.to.type],
+              this.vmcNode[this.to.parent_id].x,
+              this.vmcNode[this.to.parent_id].y + 100,
+              that.filterName(this.to.name),
+              null,
+              true
+            );
+            fromNode.setStyle(
+              Q.Styles.LABEL_POSITION,
+              Q.Position.CENTER_BOTTOM
+            );
+            fromNode.setStyle(
+              Q.Styles.LABEL_ANCHOR_POSITION,
+              Q.Position.CENTTER_TOP
+            );
+            toNode.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_BOTTOM);
+            toNode.setStyle(
+              Q.Styles.LABEL_ANCHOR_POSITION,
+              Q.Position.CENTTER_TOP
+            );
+            var edge1_ = this.createEdge(
+              graph,
+              this.vmcNode[this.from.parent_id],
+              fromNode,
+              null,
+              false,
+              "",
+              ""
+            );
+            var edge1_1 = this.createEdge(
+              graph,
+              this.vmcNode[this.to.parent_id],
+              toNode,
+              null,
+              false,
+              "",
+              ""
+            );
+            edge1_.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+            edge1_1.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+            var edge1 = this.createEdge(
+              graph,
+              fromNode,
+              toNode,
+              null,
+              true,
+              "任务迁移流",
+              "vmc"
+            );
+            flowingSupport.addFlowing(edge1, 1, false);
+          }
+        } else {
+          if (this.from.id !== this.to.id) {
+            let fromNode = that.createNode(
+              graph,
+              this.imgObg[this.from.type],
+              -80,
+              0,
+              that.filterName(this.from.name),
+              null,
+              true
+            );
+            let toNode = that.createNode(
+              graph,
+              this.imgObg[this.to.type],
+              80,
+              0,
+              that.filterName(this.to.name),
+              null,
+              true
+            );
+            var edge1 = this.createEdge(
+              graph,
+              fromNode,
+              toNode,
+              null,
+              true,
+              "任务迁移流",
+              "vmc"
+            );
+            flowingSupport.addFlowing(edge1, 1, false);
+          } else {
+            let fromNode = that.createNode(
+              graph,
+              this.imgObg[this.from.type],
+              -80,
+              0,
+              that.filterName(this.from.name),
+              null,
+              true
+            );
+            var edge1 = this.createEdge(
+              graph,
+              fromNode,
+              fromNode,
+              null,
+              true,
+              "任务迁移流",
+              "vmc"
+            );
+            flowingSupport.addFlowing(edge1, 1, false);
+          }
+        }
       }
-      if (this.disArea.time) {
-        var edge2 = this.createEdge(
-          graph,
-          that.vmcNode[this.disArea.id],
-          that.vmcNode[180],
-          null,
-          true,
-          "任务迁移流2",
-          "are"
-        );
-        edge2.uiClass = VPNFlexEdgeUI;
-        edge2.zIndex = -122;
-        flowingSupport.addFlowing(edge2, 1, false);
-      }
-      this.vmcedge = edge1;
-      this.areaedge = edge2;
-      // edge2.addPathSegment([-170, 100]);
-      // edge2.addPathSegment([170, 100]);
-      graph.zoomToOverview(0.5);
+      graph.zoomToOverview({}, 1.4);
       graph.callLater(function () {
         flowingSupport.start();
       });
@@ -482,28 +621,16 @@ export default {
           ).toLocaleString()}`;
         }
         const nowDate = new Date().valueOf();
-        if (that.disVmc) {
-          if (nowDate - that.disVmc >= 1000 * 60 * 3 + 1000 * 45) {
+        if (that.from.time) {
+          if (nowDate - that.from.time >= 1000 * 60 * 3 + 1000 * 45) {
             if (this.flaga) {
               this.$message({
                 message: "整机迁移已完成，共耗时3分45秒",
                 type: "success",
               });
               graph.removeElement(edge1);
-              that.tableData = [[], [...singletable], [...singletable]];
+              // that.tableData = [[], [...singletable], [...singletable]];
               this.flaga = false;
-            }
-          }
-        }
-        if (that.disArea) {
-          if (nowDate - that.disArea >= 1000 * 60 * 1 + 1000 * 25) {
-            if (this.flagb) {
-              this.$message({
-                message: "分区迁移已完成，共耗时1分25秒",
-                type: "success",
-              });
-              graph.removeElement(edge2);
-              this.flagb = false;
             }
           }
         }
@@ -526,7 +653,6 @@ export default {
       this.getNameOAll();
     }, 3000);
   },
-
   created() {},
 };
 </script>
@@ -655,7 +781,7 @@ export default {
     //   line-height: 8%;
     // }
     .boxforcanvas {
-      height: 92%;
+      height: 80%;
       width: 100%;
     }
   }
