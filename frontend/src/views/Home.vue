@@ -170,6 +170,7 @@
 import "@/lib/loaders.min.css";
 import { getTopoShow } from "@/api";
 import countTo from "vue-count-to";
+import { getVMCData } from "@/api";
 
 export default {
   name: "Home",
@@ -184,12 +185,16 @@ export default {
       cpu_num: 0,
       rtu_num: 0,
       switch_num: 0,
-      time: 10000 * 1000 * 60 * 60 + 1000 * 60 * 59 + 50000,
+      time: 0,
       timeStr: "0秒",
       dayStr: 1,
     };
   },
   methods: {
+    async getTopData() {
+      const { data } = await getVMCData(this.vmcs[0].parent_id);
+      this.time = data.data.system_run_time * data.data.time_unit;
+    },
     async getNameOAll() {
       const { data } = await getTopoShow();
       if (data.code == 0) {
@@ -260,10 +265,12 @@ export default {
     setTimeout(() => {
       that.loading = false;
       that.getNameOAll();
-      that.dealWithTime(that.time);
+      //that.getTopData();
+      //that.dealWithTime(that.time);
     }, 3000);
     setInterval(() => {
-      that.time = that.time + 1000;
+      //that.time = that.time + 1000;
+      that.getTopData();
       that.dealWithTime(that.time);
     }, 1000);
   },
