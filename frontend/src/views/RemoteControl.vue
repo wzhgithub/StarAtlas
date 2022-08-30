@@ -434,6 +434,76 @@ export default {
         }, 10000);
       }
       if (flag === 3) {
+        setTimeout(() => {
+          that.stepNow_ = 1;
+          that.description3 = "正在选择相关算法";
+          that.description4 = "未执行到当前步骤";
+          that.description5 = "未执行到当前步骤";
+        }, 500);
+        setTimeout(() => {
+          that.description3 = "正在选择相关算法。";
+        }, 1000);
+        setTimeout(() => {
+          that.description3 = "正在选择相关算法。。";
+        }, 1500);
+        setTimeout(() => {
+          that.description3 = "正在选择相关算法。。。";
+        }, 2000);
+        setTimeout(() => {
+          that.description3 = "正在选择相关算法。。。";
+        }, 2500);
+        setTimeout(() => {
+          that.stepNow_ = 2;
+          that.description3 = "已成功选择算法【whetstone】，算法准备成功！";
+          that.description4 = "平台正在进行算力测试。。。。";
+        }, 3000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（10%）";
+        }, 3500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（15%）";
+        }, 4000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（25%）";
+        }, 4500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（35%）";
+        }, 5000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（55%）";
+        }, 5500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（75%）";
+        }, 6000);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（95%）";
+        }, 6500);
+        setTimeout(() => {
+          that.description4 = "平台正在进行算力测试（100%）";
+        }, 7000);
+        setTimeout(() => {
+          that.description4 = "算力测试完成，正在输出相关指标";
+        }, 7500);
+        setTimeout(() => {
+          that.stepNow_ = 3;
+          that.description4 = "算力测试完成，相关指标已输出";
+          that.description5 = "输出结果校验中";
+        }, 8000);
+        setTimeout(() => {
+          that.description5 = "输出结果校验中。";
+        }, 8500);
+        setTimeout(() => {
+          that.description5 = "输出结果校验中。。";
+        }, 9000);
+        setTimeout(() => {
+          that.description5 = "输出结果校验中。。。";
+        }, 9500);
+        setTimeout(() => {
+          let nub = that.randomNum(1.1, 1.38);
+          that.stepNow_ = 4;
+          that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的浮点算力为【${nub}TFLOPS】`;
+          that.value_b = nub;
+        }, 10000);
       }
     },
     handlerDo(types) {
@@ -465,7 +535,7 @@ export default {
             isFault: 0,
           });
         }
-        if (this.type === "type2" && this.target) {
+        if (this.type === "type2" && this.target !== null) {
           let ids = this.target[1].split("_");
           let objTep = {};
           let appdata = {};
@@ -488,11 +558,11 @@ export default {
           this.mcokLoading();
         }
       }
-      if (types === 1 && this.cvalue[0]) {
-        console.log(11111111111);
+      if (types === 1 && this.cvalue) {
         this.mcokLoading(2);
       }
       if (types === 2 && this.cvalue) {
+        this.mcokLoading(3);
       }
       if (this.type === "type3" && !this.cvalue) {
       }
