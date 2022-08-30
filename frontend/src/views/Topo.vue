@@ -133,6 +133,9 @@
       :modal="false"
       direction="ltr"
     >
+      <span class="infoMassgSpan">{{
+        activemssagInfo[activeNodeInfo.device_type]
+      }}</span>
     </el-drawer>
     <el-dialog
       title="容灾迁移计算中..."
@@ -269,6 +272,14 @@ export default {
       },
       activeNodeInfo: {
         name: "",
+      },
+      activemssagInfo: {
+        vmc: "共由12块单板组件组成，整机浮点算力优于1TFLOPS，定点算力优于1500MIPS，整机重量小于15公斤。功耗小于200瓦。",
+        cpu: "选用SOC2018B, 双核ARM A9架构，理论算力2000MIPS，内部集成丰富的IO接口。",
+        dsp: "选用FT-6678，8核架构，理论算力浮点128GFLOPS, 定点算力32GMAC。",
+        fpga: "选用国产复旦微电子生产的V7系列690T，可支持高速的接口转换，数据处理加速等。",
+        gpu: "选用英伟达NAIDIA AGX，算力达30TOPS，可支持智能算法的部署。",
+        sw: "TTE交换机以国产复旦微电子生产的V7系列690T为核心，实现16口千兆TTE网络交换功能。",
       },
     };
   },
@@ -1714,5 +1725,9 @@ export default {
   // margin-top: 60px;
   width: 100%;
   height: 80%;
+}
+.infoMassgSpan {
+  padding: 4%;
+  font-size: 2rem;
 }
 </style>

@@ -242,20 +242,40 @@ export default {
         ? ((min = minNum), (max = maxNum))
         : ((min = maxNum), (max = minNum));
       return (Math.random() * (max - min) + min).toFixed(decimalNum);
-      return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
     },
-    romoteGetResult(data) {
+    romoteGetResult(data, type) {
       setTimeout(() => {
         let res = this.getDoFailureRuselt(data);
         if (res.data.code !== 200) {
           this.romoteGetResult(data);
         } else {
-          this.setTo({
-            id: res.data.id,
-            type: res.data.device_type,
-            parent_id: res.data.parent_id,
-            name: this.filterName(res.data.name),
+          let objTep = {};
+          let divicedata = {};
+          this.allNodes.map((item) => {
+            if (item.id === res.data.to.vmc_id) {
+              objTep = item;
+            }
           });
+          objTep.chArr.map((item) => {
+            if (item.value === res.data.to.device_id) {
+              divicedata = item;
+            }
+          });
+          if (type === "vmc") {
+            this.setTo({
+              id: res.data.to.vmc_id,
+              type: type,
+              parent_id: null,
+              name: this.filterName(objTep.name),
+            });
+          } else {
+            this.setTo({
+              id: res.data.to.device_id,
+              type: type,
+              parent_id: res.data.to.vmc_id,
+              name: this.filterName(divicedata.label),
+            });
+          }
         }
       }, 1000);
     },
@@ -348,13 +368,23 @@ export default {
         }, 10000);
         setTimeout(() => {
           that.stepNow = 4;
-          that.description2 = "数据中返回成功，目标迁移设备为“计算节点——测试”";
-          if (!that.to.id) {
+          that.description2 = "数据中返回成功，目标迁移设备已确定";
+          console.log(that.to);
+          if (!that.to.id && that.target.length === 1) {
             that.setTo({
               id: that.options[0].value,
               type: that.from.type,
               parent_id: null,
-              name: that.options[0].label,
+              name: "for_test",
+              time: "",
+            });
+          }
+          if (!that.to.id && that.target.length > 1) {
+            that.setTo({
+              id: 999,
+              type: that.from.type,
+              parent_id: that.target[0],
+              name: "for_test",
               time: "",
             });
           }
@@ -515,7 +545,7 @@ export default {
     },
     handlerDo(types) {
       if (types === 0) {
-        if (this.type === "type1" && this.target) {
+        if (this.type === "type1") {
           let objTep = {};
           this.allNodes.map((item) => {
             if (item.id === this.target[0]) {
@@ -536,33 +566,54 @@ export default {
             },
             0
           );
-          this.romoteGetResult({
-            transType: 0,
-            fromVmcId: this.target[0],
-            isFault: 0,
-          });
+          this.romoteGetResult(
+            {
+              transType: 0,
+              fromVmcId: this.target[0],
+              isFault: 0,
+            },
+            "vmc"
+          );
         }
-        if (this.type === "type2" && this.target !== null) {
-          let ids = this.target[1].split("_");
+        if (this.type === "type2") {
           let objTep = {};
-          let appdata = {};
+          let divicedata = {};
           this.allNodes.map((item) => {
             if (item.id === this.target[0]) {
               objTep = item;
             }
           });
-          objTep.apps.map((item) => {
-            if (item.id === ids[1]) {
-              appdata = item;
+          objTep.chArr.map((item) => {
+            if (item.value === this.target[1]) {
+              divicedata = item;
             }
           });
           this.setFrom({
-            id: appdata.id,
-            type: "cpu",
+            id: this.target[1],
+            type: divicedata.label.split("_")[0],
             parent_id: this.target[0],
-            name: this.filterName(appdata.app_name),
+            name: this.filterName(divicedata.label),
           });
-          this.mcokLoading();
+          this.postDoFailureOver(
+            {
+              transType: 1,
+              fromVmcId: this.target[0],
+              isFault: 0,
+              deviceId: this.target[1],
+              appId: this.target[2],
+            },
+            0
+          );
+          this.romoteGetResult(
+            {
+              transType: 1,
+              fromVmcId: this.target[0],
+              isFault: 0,
+              deviceId: this.target[1],
+              appId: this.target[2],
+            },
+            divicedata.label.split("_")[0]
+          );
         }
       }
       if (types === 1) {
@@ -570,8 +621,6 @@ export default {
       }
       if (types === 2) {
         this.mcokLoading(3);
-      }
-      if (this.type === "type3" && !this.cvalue) {
       }
     },
     dealWithOPs() {
@@ -595,7 +644,7 @@ export default {
               info.value.map((cpinfo) => {
                 arrTempCh.push({
                   label: `${info.key.split("_")[0]}_${cpinfo}`,
-                  value: cpinfo,
+                  value: Number(cpinfo),
                 });
               });
             }
@@ -610,7 +659,7 @@ export default {
             if (app.device_id == cpuinfo.value) {
               tempCpuinfoCharr.push({
                 label: this.filterName(app.app_name),
-                value: `${nodes.id}_${app.id}`,
+                value: app.id,
               });
             }
           });
