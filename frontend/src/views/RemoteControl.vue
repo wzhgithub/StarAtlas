@@ -558,10 +558,10 @@ export default {
           this.mcokLoading();
         }
       }
-      if (types === 1 && this.cvalue) {
+      if (types === 1) {
         this.mcokLoading(2);
       }
-      if (types === 2 && this.cvalue) {
+      if (types === 2) {
         this.mcokLoading(3);
       }
       if (this.type === "type3" && !this.cvalue) {
