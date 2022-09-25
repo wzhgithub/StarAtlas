@@ -343,7 +343,7 @@ export default {
           ? data.data.cpu_set[0].float_computing_power
           : 0,
         allmb: data.data.cpu_set[0].int_computing_power
-          ? data.data.cpu_set[0].float_computing_power
+          ? data.data.cpu_set[0].int_computing_power
           : 0,
         // canusemb: data.data.total_memory * (100 - data.data.memory_usage) / 100,
         // allmb: data.data.total_memory
