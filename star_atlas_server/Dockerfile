@@ -1,4 +1,4 @@
-FROM golang:1.18 as builder
+FROM golang:1.19 as builder
 
 # 启用go module
 ENV GO111MODULE=on \
@@ -8,7 +8,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod tidy && go build . \
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go mod tidy && go build . \
     && mkdir publish && cp star_atlas_server publish && cp config.yaml publish \
     && cp utest publish && cp gen_udp.sh publish && cp trans publish && cp -R conf publish
 
