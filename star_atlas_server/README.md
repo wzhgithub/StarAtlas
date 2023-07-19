@@ -24,15 +24,15 @@ docker ps -a
 docker exec -it [container_id] /bin/bash
 # connet mongo
 ```shell 
-mongo mongodb://docker:mongopw@127.0.0.1:27017
+mongosh mongodb://docker:mongopw@127.0.0.1:27017
 > show dbs
 admin   0.000GB
 config  0.000GB
 db      0.000GB
 local   0.000GB
 test    0.000GB
-> use db
-switched to db db
+> use $db
+switched to db $db
 > show collections
 myCollection
 > db.myCollection.insert({"x" :  7})
