@@ -1,3 +1,3 @@
 #!/bin/bash
-
-docker run -d -p 3000:80 fe_nginx
+docker rm -f fe
+docker run -d -p 80:80 --name fe fe_nginx
