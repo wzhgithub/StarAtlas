@@ -8,7 +8,7 @@ services:
     restart: on-failure:3
     platform: "linux/amd64"
     ports:
-      - 3000:80/tcp
+      - 80:80/tcp
   mongodb:
     image: mongo:latest
     environment:
