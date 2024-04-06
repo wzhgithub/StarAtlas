@@ -2,6 +2,10 @@ volumes:
   data:
 
 services:
+  fe_nginx:
+    image: fe_nginx:latest
+    ports:
+      - 80:80
   mongodb:
     image: mongo:latest
     environment:
