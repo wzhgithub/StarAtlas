@@ -153,12 +153,14 @@ type VMCData struct {
 	TotalMemory      uint16 `json:"total_memory" bson:"total_memory"`
 	TotalDisk        uint16 `json:"total_disk" bson:"total_disk"`
 	MemoryUsage      uint8  `json:"memory_usage" bson:"memory_usage"`
-	TotalCPUUsage    uint8  `json:"total_cpu_usage" bson:"total_cpu_usage"`
-	TotalDSPUsage    uint8  `json:"total_dsp_usage" bson:"total_dsp_usage"`
-	TotalGPUUsage    uint8  `json:"total_gpu_usage" bson:"total_gpu_usage"`
-	TotalDiskUsage   uint8  `json:"total_disk_usage" bson:"total_disk_usage"`
-	SwitchNumber     uint8  `json:"switch_number" bson:"switch_number"`
-	RemoteUnitNumber uint8  `json:"remote_unit_number" bson:"remote_unit_number"`
+	// todo uint8 to float32 uint32
+	// see https://blog.csdn.net/weiyuefei/article/details/77977734
+	TotalCPUUsage    uint8 `json:"total_cpu_usage" bson:"total_cpu_usage"`
+	TotalDSPUsage    uint8 `json:"total_dsp_usage" bson:"total_dsp_usage"`
+	TotalGPUUsage    uint8 `json:"total_gpu_usage" bson:"total_gpu_usage"`
+	TotalDiskUsage   uint8 `json:"total_disk_usage" bson:"total_disk_usage"`
+	SwitchNumber     uint8 `json:"switch_number" bson:"switch_number"`
+	RemoteUnitNumber uint8 `json:"remote_unit_number" bson:"remote_unit_number"`
 
 	TotalRemoteUnitBytes uint8         `json:"total_remote_unit_bytes" bson:"total_remote_unit_bytes"`
 	RemoteUnitSet        []*RemoteUnit `json:"remote_unit_set" bson:"remote_unit_set"`
@@ -554,8 +556,8 @@ func parse(bytes []byte) (*VMCData, error) {
 	sysTime := binary.BigEndian.Uint32(bytes[sysRunTimeStart:sysRunTimeEnd])
 	tu := bytes[timeUnitStart]
 	glog.Infof("sysRunTimeStart idx: %d, timeUnitStart idx: %d systime:%d tu:%d\n", sysRunTimeStart, timeUnitStart, sysTime, tu)
-	// app
-	appIdx := timeUnitStart + 1
+	// app skip sum
+	appIdx := timeUnitStart + 2
 	glog.Infof("app idx: %d, app num: %d\n", appIdx, bytes[appIdx])
 
 	appSet, vmcStatus := parseApp(bytes, appIdx+1, l-1)

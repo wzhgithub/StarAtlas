@@ -34,9 +34,9 @@ func TopoShow(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": -1,
-			"msg":  "Failed to collect topo from db",
+			"msg":  "Failed to collect topo from db" + err.Error(),
 		})
-		glog.Errorf("Failed to collect topo from db, error: %s\n", err.Error())
+		glog.Infof("Failed to collect topo from db, error: %s\n", err.Error())
 		return
 	}
 
