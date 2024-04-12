@@ -52,16 +52,22 @@
                 <span>迁移日志</span>
               </p>
               <p class="logp">
-                [迁移开始]：容错迁移任务, From: {{ this.from.name }}, To:
-                {{ this.to.name }}
+                [迁移开始]：容错迁移任务, From: {{ this.from.name || "---" }},
+                To:
+                {{ this.to.name || "---" }}
               </p>
-              <p class="logp">[迁移开始时间]: {{ this.from.time }}</p>
+              <p class="logp">
+                [迁移开始时间]: {{ formatTimestamp(this.from.time) || "---" }}
+              </p>
               <p class="logp">==============================================</p>
               <p class="logp">
-                [迁移完成]：容错迁移任务, From: {{ this.from.name }}, To:
-                {{ this.to.name }}
+                [迁移完成]：容错迁移任务, From: {{ this.from.name || "---" }},
+                To:
+                {{ this.to.name || "---" }}
               </p>
-              <p class="logp">[迁移完成时间]: {{ this.from.to }}</p>
+              <p class="logp">
+                [迁移完成时间]: {{ formatTimestamp(this.to.time) || "---" }}
+              </p>
               <!-- <div class="boxforcanvas" ref="canvas"></div> -->
             </div>
           </div>
@@ -117,7 +123,7 @@
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
 // import "@/lib/loaders.min.css";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import selflineNewless from "@/components/selflineNewless.vue";
 import TableNow from "@/components/TableNow.vue";
 import imgvmc from "@/assets/newpng/VMC.svg";
@@ -170,6 +176,7 @@ export default {
   },
   computed: {
     ...mapState(["disVmc", "disArea", "from", "to"]),
+    ...mapMutations(["setFrom", "setTo"]),
   },
   methods: {
     filterName,
@@ -495,7 +502,7 @@ export default {
             let fromNode = that.createNode(
               graph,
               this.imgObg[this.from.type],
-              this.vmcNode[this.from.parent_id].x,
+              this.vmcNode[this.from.parent_id].x - 80,
               this.vmcNode[this.from.parent_id].y + 100,
               that.filterName(this.from.name),
               null,
@@ -504,7 +511,7 @@ export default {
             let toNode = that.createNode(
               graph,
               this.imgObg[this.to.type],
-              this.vmcNode[this.to.parent_id].x,
+              this.vmcNode[this.to.parent_id].x + 80,
               this.vmcNode[this.to.parent_id].y + 100,
               that.filterName(this.to.name),
               null,
@@ -620,12 +627,19 @@ export default {
             parseInt(that.disVmc)
           ).toLocaleString()}`;
         }
+      }, 1000);
+      /// 销毁
+      function destroy() {
+        flowingSupport.stop();
+        clearInterval(timer);
+      }
+      setTimeout(() => {
         const nowDate = new Date().valueOf();
         if (that.from.time) {
-          if (nowDate - that.from.time >= 1000 * 60 * 3 + 1000 * 45) {
+          if (nowDate - that.from.time >= 1000 * 60 * 2 + 1000 * 31) {
             if (this.flaga) {
               this.$message({
-                message: "整机迁移已完成，共耗时3分45秒",
+                message: "整机迁移已完成，共耗时2分31秒",
                 type: "success",
               });
               graph.removeElement(edge1);
@@ -634,12 +648,24 @@ export default {
             }
           }
         }
-      }, 1000);
-      /// 销毁
-      function destroy() {
-        flowingSupport.stop();
-        clearInterval(timer);
-      }
+        this.setTo({
+          ...this.to,
+          time: new Date().valueOf(),
+        });
+      }, 1000 * 60 * 2 + 1000 * 31);
+    },
+    formatTimestamp(timestamp) {
+      const date = new Date(timestamp);
+
+      const year = date.getFullYear();
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const day = ("0" + date.getDate()).slice(-2);
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      const seconds = ("0" + date.getSeconds()).slice(-2);
+
+      const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      return formattedDate;
     },
   },
   mounted() {

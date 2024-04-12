@@ -688,7 +688,6 @@ export default {
         tempobj.vmcArrEnd,
         tempobj.rtuArrEnd
       );
-      console.log(allsw);
       let ends = this.drawEdgeForSw(
         graph,
         allsw.nodesOfsw,
@@ -1146,7 +1145,7 @@ export default {
         }
         return item;
       });
-      console.log(tempsarr, tempsarr_);
+      // console.log(tempsarr, tempsarr_);
       let nodesOfsw = tempsarr.map((item) => {
         return this.createNode(
           graph,
@@ -1445,6 +1444,7 @@ export default {
           let tempy = 80;
           let getRelevanceRtu = [];
           this.topoData.map((itemnow) => {
+            console.log("========>>>", itemnow);
             if (
               itemnow.upstream_id === item.moreInfo.id &&
               itemnow.device_type === "rtu"
@@ -1479,6 +1479,7 @@ export default {
             let tempy = 80;
             let getRelevanceRtu = [];
             this.topoData.map((itemnow) => {
+              console.log("========", itemnow);
               if (
                 itemnow.upstream_id === item.moreInfo.id &&
                 itemnow.device_type === "rtu"

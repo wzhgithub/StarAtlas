@@ -188,12 +188,14 @@ export default {
       time: 0,
       timeStr: "0秒",
       dayStr: 1,
+      mockTime: 0,
     };
   },
   methods: {
     async getTopData() {
       const { data } = await getVMCData(this.vmcs[0].parent_id);
       this.time = data.data.system_run_time * data.data.time_unit;
+      this.mockTime = this.mockTime + 1000;
     },
     async getNameOAll() {
       const { data } = await getTopoShow();
@@ -271,7 +273,7 @@ export default {
     setInterval(() => {
       //that.time = that.time + 1000;
       that.getTopData();
-      that.dealWithTime(that.time);
+      that.dealWithTime(that.time > 1000 ? that.time : that.mockTime);
     }, 1000);
   },
   created() {},

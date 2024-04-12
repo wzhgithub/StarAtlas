@@ -225,6 +225,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setFrom", "setTo"]),
+    ...mapState(["disVmc", "disArea", "from", "to"]),
     filterName,
     async postDoFailureOver(data, flag) {
       let res = await doFailureOver(data);
@@ -256,19 +257,19 @@ export default {
               that.romoteGetResult(data);
             } else {
               if (type === "vmc") {
-                var to = that.from.vmc_id == 1? 2 : 1;
+                var to = that.from.vmc_id == 1 ? 2 : 1;
                 that.setTo({
-                  id: to,//res.data.to.vmc_id,
+                  id: to, //res.data.to.vmc_id,
                   type: type,
                   parent_id: null,
                   name: `CMU_${to - 1}`, //`CMU_${res.data.to.vmc_id - 1}`,
                 });
               } else {
                 that.setTo({
-                  id: res.data.to.device_id,
+                  id: Number(res.data.to.device_id),
                   type: type,
                   parent_id: res.data.to.vmc_id,
-                  name: `CMU_${res.data.to.device_id - 1}`,
+                  name: `${type}_${res.data.to.device_id}`,
                 });
               }
             }
@@ -462,7 +463,7 @@ export default {
           that.description5 = "输出结果校验中。。。";
         }, 19500);
         setTimeout(() => {
-          let nub = that.randomNum(1510, 1790, 0);
+          let nub = that.randomNum(1000, 1200, 0);
           that.stepNow_ = 4;
           that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的整型算力为【${nub}MIPS】`;
           that.value_a = nub;
@@ -534,7 +535,7 @@ export default {
           that.description5 = "输出结果校验中。。。";
         }, 19500);
         setTimeout(() => {
-          let nub = that.randomNum(1.1, 1.38, 3);
+          let nub = that.randomNum(1.1, 1.2, 3);
           that.stepNow_ = 4;
           that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的浮点算力为【${nub}TFLOPS】`;
           that.value_b = nub;
@@ -576,7 +577,9 @@ export default {
         }
         if (this.type === "type2") {
           let objTep = {};
-          let divicedata = {};
+          let divicedata = null;
+          let type = "";
+          let targetTo = null;
           this.allNodes.map((item) => {
             if (item.id === this.target[0]) {
               objTep = item;
@@ -585,35 +588,50 @@ export default {
           objTep.chArr.map((item) => {
             if (item.value === this.target[1]) {
               divicedata = item;
+              type = item.type;
             }
           });
-          this.setFrom({
-            id: this.target[1],
-            type: divicedata.label.split("_")[0],
-            parent_id: this.target[0],
-            name: this.filterName(divicedata.label),
-            time: new Date().valueOf(),
+          objTep.chArr.map((item) => {
+            if (item.type === type && item.value !== divicedata.value) {
+              targetTo = item;
+            }
           });
-          this.postDoFailureOver(
-            {
-              transType: 1,
-              fromVmcId: this.target[0],
-              isFault: 0,
-              deviceId: this.target[1],
-              appId: this.target[2],
-            },
-            0
-          );
-          this.romoteGetResult(
-            {
-              transType: 1,
-              fromVmcId: this.target[0],
-              isFault: 0,
-              deviceId: this.target[1],
-              appId: this.target[2],
-            },
-            divicedata.label.split("_")[0]
-          );
+          if (targetTo && type && divicedata) {
+            this.setFrom({
+              id: this.target[1],
+              type: divicedata.label.split("_")[0],
+              parent_id: this.target[0],
+              name: this.filterName(divicedata.label),
+              time: new Date().valueOf(),
+            });
+            this.postDoFailureOver(
+              {
+                transType: 1,
+                fromVmcId: this.target[0],
+                isFault: 0,
+                deviceId: this.target[1],
+                appId: this.target[2] || 0,
+                toDeviceId: targetTo.value,
+              },
+              0
+            );
+            this.romoteGetResult(
+              {
+                transType: 1,
+                fromVmcId: this.target[0],
+                isFault: 0,
+                deviceId: this.target[1],
+                appId: this.target[2],
+                toDeviceId: targetTo.value,
+              },
+              divicedata.label.split("_")[0]
+            );
+          } else {
+            this.$message({
+              message: "当前迁移设备类型下设备数量小于2，没有可用迁移目标",
+              type: "error",
+            });
+          }
         }
       }
       if (types === 1) {
@@ -645,6 +663,7 @@ export default {
                 arrTempCh.push({
                   label: `${info.key.split("_")[0]}_${cpinfo}`,
                   value: Number(cpinfo),
+                  type: `${info.key.split("_")[0]}`,
                 });
               });
             }
@@ -652,20 +671,20 @@ export default {
         });
         nodes.chArr = arrTempCh;
       });
-      this.allNodes.map((nodes) => {
-        nodes.chArr.map((cpuinfo) => {
-          let tempCpuinfoCharr = [];
-          nodes.apps.map((app) => {
-            if (app.device_id == cpuinfo.value) {
-              tempCpuinfoCharr.push({
-                label: this.filterName(app.app_name),
-                value: app.id,
-              });
-            }
-          });
-          cpuinfo.children = tempCpuinfoCharr;
-        });
-      });
+      // this.allNodes.map((nodes) => {
+      //   nodes.chArr.map((cpuinfo) => {
+      //     let tempCpuinfoCharr = [];
+      //     nodes.apps.map((app) => {
+      //       if (app.device_id == cpuinfo.value) {
+      //         tempCpuinfoCharr.push({
+      //           label: this.filterName(app.app_name),
+      //           value: app.id,
+      //         });
+      //       }
+      //     });
+      //     cpuinfo.children = tempCpuinfoCharr;
+      //   });
+      // });
       this.options_task = this.allNodes.map((nodes) => {
         return {
           label: this.filterName(nodes.name),
