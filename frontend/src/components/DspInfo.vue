@@ -1,7 +1,8 @@
 <template>
   <div class="dsp_info_box">
     <p class="title_dsp">
-      <span>{{ this.dspNow.name || "DSP信息详情" }}</span>
+      <!-- <span>{{ this.dspNow.name || "DSP信息详情" }}</span> -->
+      <span>{{ "DSP信息详情" }}</span>
     </p>
     <el-row class="content">
       <el-col :span="8" class="content_col">
@@ -16,13 +17,13 @@
           <p>总算力：2376</p>
           <p>设备类型：INTERDSP 1800</p>
           <p>设备温度：24°C</p> -->
-          <p>设备类型: {{nowdata.type}}</p>
-          <p>设备状态: {{nowdata.status}}</p>
-          <p>DSP核数: {{nowdata.cores}}</p>
-          <p>浮点算力: {{nowdata.float_power}} TFLOPS</p>
-          <p>整型算力: {{nowdata.int_power}} MIPS</p>
-          <p>DSP利用率: {{nowdata.usage}}%</p>
-          <p>内存利用率: {{nowdata.memory_usage}}%</p>
+          <p>设备类型: {{ nowdata.type }}</p>
+          <p>设备数量: {{ nowdata.status }}</p>
+          <p>DSP核数: {{ nowdata.cores }}</p>
+          <p>浮点算力: {{ Number(nowdata.float_power) / 1000 }} TFLOPS</p>
+          <p>整型算力: {{ Number(nowdata.int_power) / 1000 }} MIPS</p>
+          <p>DSP利用率: {{ nowdata.usage }}%</p>
+          <p>内存利用率: {{ nowdata.memory_usage }}%</p>
         </div>
       </el-col>
     </el-row>
@@ -72,9 +73,9 @@ export default {
     },
   },
   computed: {
-    nowdata: function() {
-      return {...this.dspNow}
-    }
+    nowdata: function () {
+      return { ...this.dspNow };
+    },
   },
   mounted() {
     let that = this;
