@@ -463,7 +463,7 @@ export default {
           that.description5 = "输出结果校验中。。。";
         }, 19500);
         setTimeout(() => {
-          let nub = that.randomNum(1000, 1200, 0);
+          let nub = that.randomNum(1550, 1700, 0);
           that.stepNow_ = 4;
           that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的整型算力为【${nub}MIPS】`;
           that.value_a = nub;
@@ -535,7 +535,7 @@ export default {
           that.description5 = "输出结果校验中。。。";
         }, 19500);
         setTimeout(() => {
-          let nub = that.randomNum(1.1, 1.2, 3);
+          let nub = that.randomNum(1.1, 1.28, 3);
           that.stepNow_ = 4;
           that.description5 = `当前ID为【${that.cvalue[0]}】的计算设备的浮点算力为【${nub}TFLOPS】`;
           that.value_b = nub;
