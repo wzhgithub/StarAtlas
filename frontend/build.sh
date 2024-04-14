@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t fe_nginx .
+docker build --platform=linux/amd64 -t fe_nginx .

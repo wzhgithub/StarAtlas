@@ -47,13 +47,14 @@ func GetFailureOverInfoList(c *gin.Context) {
 }
 
 type DoFailureOverRequest struct {
-	TransType uint8  `json:"transType"` // 整机 0 分区 1 必填
-	FromVmcId uint8  `json:"fromVmcId"` // vmcid 必填
-	IsFault   uint8  `json:"isFault"` // [0, 1] false true
-	DeviceId  uint8  `json:"deviceId"` // 分区 必填
-	TaskName  string `json:"taskName"` // 0
-	TaskType  uint8  `json:"taskType"` // 0
-	AppId     uint8  `json:"appId"`  // 必填
+	TransType  uint8  `json:"transType"`  // 整机 0 分区 1 必填
+	FromVmcId  uint8  `json:"fromVmcId"`  // vmcid 必填
+	IsFault    uint8  `json:"isFault"`    // [0, 1] false true
+	DeviceId   uint8  `json:"deviceId"`   // 分区 必填
+	TaskName   string `json:"taskName"`   // 0
+	TaskType   uint8  `json:"taskType"`   // 0
+	AppId      uint8  `json:"appId"`      // 必填
+	ToDeviceId uint8  `json:"toDeviceId"` // 必填 转移到的设备绑卡
 }
 
 func (dfr *DoFailureOverRequest) GenPack() (string, string, error) {
@@ -74,14 +75,14 @@ func (dfr *DoFailureOverRequest) GenUniqueKey() string {
 		return ""
 	}
 
-	return fmt.Sprintf("%d_%d_%d", dfr.TransType, dfr.FromVmcId, dfr.DeviceId)
+	return fmt.Sprintf("%d_%d_%d_%d", dfr.TransType, dfr.FromVmcId, dfr.DeviceId, dfr.ToDeviceId)
 }
 
 func (dfr *DoFailureOverRequest) ToFailureOverEntity() *model.FailureOverRequest {
 	foe := &model.FailureOverRequest{
 		From:        model.FailureOverInfo{},
 		To:          model.FailureOverInfo{},
-		TransStatus: 500,
+		TransStatus: 200,
 		UniqueKey:   "",
 	}
 
@@ -90,6 +91,9 @@ func (dfr *DoFailureOverRequest) ToFailureOverEntity() *model.FailureOverRequest
 		foe.From.AppID = fmt.Sprintf("%d", dfr.AppId)
 		foe.From.DeviceId = fmt.Sprintf("%d", dfr.DeviceId)
 		foe.From.VMCID = fmt.Sprintf("%d", dfr.FromVmcId)
+		foe.To.AppID = fmt.Sprintf("%d", dfr.AppId)
+		foe.To.DeviceId = fmt.Sprintf("%d", dfr.ToDeviceId)
+		foe.To.VMCID = fmt.Sprintf("%d", dfr.FromVmcId)
 	}
 
 	return foe
