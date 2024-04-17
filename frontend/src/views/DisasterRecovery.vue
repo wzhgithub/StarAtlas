@@ -130,6 +130,7 @@ import imgvmc from "@/assets/newpng/VMC.svg";
 import imgcpu from "@/assets/newpng/CPU.svg";
 import imggpu from "@/assets/newpng/GPU.svg";
 import imgdsp from "@/assets/newpng/DSP.svg";
+import imgdspsolt from "@/assets/newpng/dspnew.svg";
 import imgfgpa from "@/assets/newpng/FPGA.svg";
 import imgsw from "@/assets/newpng/centersw_topo.svg";
 import imgop1 from "@/assets/newpng/op_1.svg";
@@ -396,7 +397,7 @@ export default {
       const FlowingSupport = this.createFlow(graph);
       const VPNFlexEdgeUI = this.createEdegUi(graph);
       var flowingSupport = new FlowingSupport(graph);
-      if (this.from.type && this.to.type) {
+      if (this.from.type && this.to.type && this.from.type !== "dsp") {
         if (this.from.parent_id === this.to.parent_id && this.to.parent_id) {
           let endarr = that.vmcs.map((items, index) => {
             if (items.id === this.from.parent_id) {
@@ -613,46 +614,616 @@ export default {
             flowingSupport.addFlowing(edge1, 1, false);
           }
         }
-      }
-      graph.zoomToOverview({}, 1.4);
-      graph.callLater(function () {
-        flowingSupport.start();
-      });
-      var timer = setInterval(() => {
-        if (edge1) {
-          edge1.tooltip = `当前线路: 整机迁移任务1002\n 当前速率：${that.randomRange(
-            128,
-            1024
-          )}MB/S\n 当前迁移类型：整机迁移\n 迁移开始时间：${new Date(
-            parseInt(that.disVmc)
-          ).toLocaleString()}`;
+        graph.zoomToOverview({}, 1.4);
+        graph.callLater(function () {
+          flowingSupport.start();
+        });
+        var timer = setInterval(() => {
+          if (edge1) {
+            edge1.tooltip = `当前线路: 整机迁移任务1002\n 当前速率：${that.randomRange(
+              128,
+              1024
+            )}MB/S\n 当前迁移类型：整机迁移\n 迁移开始时间：${new Date(
+              parseInt(that.disVmc)
+            ).toLocaleString()}`;
+          }
+        }, 1000);
+        /// 销毁
+        function destroy() {
+          flowingSupport.stop();
+          clearInterval(timer);
         }
-      }, 1000);
-      /// 销毁
-      function destroy() {
-        flowingSupport.stop();
-        clearInterval(timer);
-      }
-      setTimeout(() => {
-        const nowDate = new Date().valueOf();
-        if (that.from.time) {
-          if (nowDate - that.from.time >= 1000 * 60 * 2 + 1000 * 31) {
-            if (this.flaga) {
-              this.$message({
-                message: "整机迁移已完成，共耗时2分31秒",
-                type: "success",
-              });
-              graph.removeElement(edge1);
-              // that.tableData = [[], [...singletable], [...singletable]];
-              this.flaga = false;
+        setTimeout(() => {
+          const nowDate = new Date().valueOf();
+          if (that.from.time) {
+            if (nowDate - that.from.time >= 1000 * 60 * 2 + 1000 * 31) {
+              if (this.flaga) {
+                this.$message({
+                  message: "迁移已完成，共耗时2分31秒",
+                  type: "success",
+                });
+                graph.removeElement(edge1);
+                // that.tableData = [[], [...singletable], [...singletable]];
+                this.flaga = false;
+              }
             }
           }
-        }
-        this.setTo({
-          ...this.to,
-          time: new Date().valueOf(),
+          this.setTo({
+            ...this.to,
+            time: new Date().valueOf(),
+          });
+        }, 1000 * 60 * 2 + 1000 * 31);
+      } else if (this.from.type && this.to.type && this.from.type === "dsp") {
+        let cmunode = that.createNode(
+          graph,
+          imgvmc,
+          0,
+          -160,
+          "CMU0",
+          null,
+          true
+        );
+        let maindsp1node = that.createNode(
+          graph,
+          imgdspsolt,
+          -100,
+          -60,
+          "dsp板卡1",
+          null,
+          true
+        );
+        let maindsp2node = that.createNode(
+          graph,
+          imgdspsolt,
+          100,
+          -60,
+          "dsp板卡2",
+          null,
+          true
+        );
+
+        let dsp1node = that.createNode(
+          graph,
+          imgdsp,
+          -100,
+          40,
+          "dsp1",
+          null,
+          true
+        );
+        let dsp2node = that.createNode(
+          graph,
+          imgdsp,
+          -180,
+          40,
+          "dsp2",
+          null,
+          true
+        );
+        let dsp3node = that.createNode(
+          graph,
+          imgdsp,
+          -260,
+          40,
+          "dsp3",
+          null,
+          true
+        );
+        let dsp4node = that.createNode(
+          graph,
+          imgdsp,
+          -340,
+          40,
+          "dsp4",
+          null,
+          true
+        );
+        let dsp5node = that.createNode(
+          graph,
+          imgdsp,
+          -420,
+          40,
+          "dsp5",
+          null,
+          true
+        );
+        let dsp6node = that.createNode(
+          graph,
+          imgdsp,
+          -500,
+          40,
+          "dsp6",
+          null,
+          true
+        );
+
+        let dsp7node = that.createNode(
+          graph,
+          imgdsp,
+          100,
+          40,
+          "dsp7",
+          null,
+          true
+        );
+        let dsp8node = that.createNode(
+          graph,
+          imgdsp,
+          180,
+          40,
+          "dsp8",
+          null,
+          true
+        );
+        let dsp9node = that.createNode(
+          graph,
+          imgdsp,
+          260,
+          40,
+          "dsp9",
+          null,
+          true
+        );
+        let dsp10node = that.createNode(
+          graph,
+          imgdsp,
+          340,
+          40,
+          "dsp10",
+          null,
+          true
+        );
+        let dsp11node = that.createNode(
+          graph,
+          imgdsp,
+          420,
+          40,
+          "dsp11",
+          null,
+          true
+        );
+        let dsp12node = that.createNode(
+          graph,
+          imgdsp,
+          500,
+          40,
+          "dsp12",
+          null,
+          true
+        );
+
+        var edgec_ds1 = this.createEdge(
+          graph,
+          cmunode,
+          maindsp1node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgec_ds2 = this.createEdge(
+          graph,
+          cmunode,
+          maindsp2node,
+          null,
+          false,
+          "",
+          ""
+        );
+
+        var edgeds1_d1 = this.createEdge(
+          graph,
+          maindsp1node,
+          dsp1node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds1_d2 = this.createEdge(
+          graph,
+          maindsp1node,
+          dsp2node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds1_d3 = this.createEdge(
+          graph,
+          maindsp1node,
+          dsp3node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds1_d4 = this.createEdge(
+          graph,
+          maindsp1node,
+          dsp4node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds1_d5 = this.createEdge(
+          graph,
+          maindsp1node,
+          dsp5node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds1_d6 = this.createEdge(
+          graph,
+          maindsp1node,
+          dsp6node,
+          null,
+          false,
+          "",
+          ""
+        );
+
+        var edgeds2_d7 = this.createEdge(
+          graph,
+          maindsp2node,
+          dsp7node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds2_d8 = this.createEdge(
+          graph,
+          maindsp2node,
+          dsp8node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds2_d9 = this.createEdge(
+          graph,
+          maindsp2node,
+          dsp9node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds2_d10 = this.createEdge(
+          graph,
+          maindsp2node,
+          dsp10node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds2_d11 = this.createEdge(
+          graph,
+          maindsp2node,
+          dsp11node,
+          null,
+          false,
+          "",
+          ""
+        );
+        var edgeds2_d12 = this.createEdge(
+          graph,
+          maindsp2node,
+          dsp12node,
+          null,
+          false,
+          "",
+          ""
+        );
+
+        edgeds1_d1.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds1_d3.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds1_d4.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds1_d5.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds1_d6.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds2_d7.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds2_d9.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds2_d10.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds2_d11.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+        edgeds2_d12.edgeType = Q.Consts.EDGE_TYPE_ELBOW;
+
+        let label1 = new Q.LabelUI();
+        label1.position = Q.Position.CENTER_TOP;
+        label1.anchorPosition = Q.Position.CENTER_BOTTOM;
+        label1.data = "运行中";
+        label1.fontStyle = "bolder";
+        label1.border = 1;
+        label1.padding = new Q.Insets(2, 5);
+        label1.showPointer = true;
+        label1.backgroundColor = "#18c0c4";
+        label1.offsetY = -10;
+
+        let label2 = new Q.LabelUI();
+        label2.position = Q.Position.CENTER_TOP;
+        label2.anchorPosition = Q.Position.CENTER_BOTTOM;
+        label2.data = "故障迁出中";
+        label2.fontStyle = "bolder";
+        label2.border = 1;
+        label2.padding = new Q.Insets(2, 5);
+        label2.showPointer = true;
+        label2.backgroundColor = "#E21667";
+        label2.offsetY = -10;
+
+        let label3 = new Q.LabelUI();
+        label3.position = Q.Position.CENTER_TOP;
+        label3.anchorPosition = Q.Position.CENTER_BOTTOM;
+        label3.data = "容灾迁入中";
+        label3.fontStyle = "bolder";
+        label3.border = 1;
+        label3.padding = new Q.Insets(2, 5);
+        label3.showPointer = true;
+        label3.backgroundColor = "#21fa76";
+        label3.offsetY = -10;
+
+        let label4 = new Q.LabelUI();
+        label4.position = Q.Position.CENTER_TOP;
+        label4.anchorPosition = Q.Position.CENTER_BOTTOM;
+        label4.data = "故障中不可用";
+        label4.fontStyle = "bolder";
+        label4.border = 1;
+        label4.padding = new Q.Insets(2, 5);
+        label4.showPointer = true;
+        label4.backgroundColor = "#E21667";
+        label4.offsetY = -10;
+
+        graph.forEach((element) => {
+          if (
+            element.name &&
+            element.name.includes("dsp") &&
+            !element.name.includes("板卡")
+          ) {
+            element.setStyle(Q.Styles.LABEL_POSITION, Q.Position.CENTER_BOTTOM);
+            element.setStyle(
+              Q.Styles.LABEL_ANCHOR_POSITION,
+              Q.Position.CENTER_MIDDLE
+            );
+          }
+          if (
+            element.name &&
+            element.name.includes("dsp") &&
+            !element.name.includes("板卡") &&
+            element.x < 1
+          ) {
+            element.setStyle(Q.Styles.RENDER_COLOR, "#3eb65e");
+            element.setStyle(
+              Q.Styles.RENDER_COLOR_BLEND_MODE,
+              Q.Consts.BLEND_MODE_COLOR_BURN
+            );
+            element.addUI(label1);
+          }
+          if (element.name && ["dsp7", "dsp8", "dsp9"].includes(element.name)) {
+            element.setStyle(Q.Styles.RENDER_COLOR, "#E21667");
+            element.setStyle(
+              Q.Styles.RENDER_COLOR_BLEND_MODE,
+              Q.Consts.BLEND_MODE_SCREEN
+            );
+            element.addUI(label2);
+          }
+          if (
+            element.name &&
+            ["dsp10", "dsp11", "dsp12"].includes(element.name)
+          ) {
+            element.setStyle(Q.Styles.RENDER_COLOR, "#a1a09c");
+            element.setStyle(
+              Q.Styles.RENDER_COLOR_BLEND_MODE,
+              Q.Consts.BLEND_MODE_SCREEN
+            );
+            element.addUI(label3);
+          }
         });
-      }, 1000 * 60 * 2 + 1000 * 31);
+
+        var edge_1 = this.createEdge(
+          graph,
+          dsp7node,
+          dsp10node,
+          null,
+          true,
+          "任务迁移流",
+          "vmc"
+        );
+        var edge_2 = this.createEdge(
+          graph,
+          dsp8node,
+          dsp11node,
+          null,
+          true,
+          "任务迁移流",
+          "vmc"
+        );
+        var edge_3 = this.createEdge(
+          graph,
+          dsp9node,
+          dsp12node,
+          null,
+          true,
+          "任务迁移流",
+          "vmc"
+        );
+        edge_1.addPathSegment([100, 160]);
+        edge_1.addPathSegment([340, 160]);
+        edge_2.addPathSegment([180, 120]);
+        edge_2.addPathSegment([420, 120]);
+        edge_3.addPathSegment([260, 80]);
+        edge_3.addPathSegment([500, 80]);
+        flowingSupport.addFlowing(edge_1, 1, false);
+        flowingSupport.addFlowing(edge_2, 1, false);
+        flowingSupport.addFlowing(edge_3, 1, false);
+        // 运行中任务定时刷新
+        let showLabel1 = true;
+        let showLabel2 = true;
+        let showLabel3 = false;
+        let showLabel4 = false;
+        graph.callLater(() => {
+          flowingSupport.start();
+          let timer1 = setInterval(() => {
+            if (showLabel1) {
+              graph.forEach((element) => {
+                if (
+                  element.name &&
+                  element.name.includes("dsp") &&
+                  !element.name.includes("板卡") &&
+                  element.x < 1
+                ) {
+                  element.removeUI(label1);
+                }
+              });
+            } else {
+              graph.forEach((element) => {
+                if (
+                  element.name &&
+                  element.name.includes("dsp") &&
+                  !element.name.includes("板卡") &&
+                  element.x < 1
+                ) {
+                  element.addUI(label1);
+                }
+              });
+            }
+            showLabel1 = !showLabel1;
+          }, 800);
+          let timer2 = setInterval(() => {
+            if (showLabel2) {
+              graph.forEach((element) => {
+                if (
+                  element.name &&
+                  ["dsp7", "dsp8", "dsp9"].includes(element.name)
+                ) {
+                  element.removeUI(label2);
+                }
+              });
+            } else {
+              graph.forEach((element) => {
+                if (
+                  element.name &&
+                  ["dsp7", "dsp8", "dsp9"].includes(element.name)
+                ) {
+                  element.addUI(label2);
+                }
+              });
+            }
+            showLabel2 = !showLabel2;
+            if (showLabel2) {
+              graph.forEach((element) => {
+                if (
+                  element.name &&
+                  ["dsp10", "dsp11", "dsp12"].includes(element.name)
+                ) {
+                  element.removeUI(label3);
+                }
+              });
+            } else {
+              graph.forEach((element) => {
+                if (
+                  element.name &&
+                  ["dsp10", "dsp11", "dsp12"].includes(element.name)
+                ) {
+                  element.addUI(label3);
+                }
+              });
+            }
+          }, 400);
+
+          setTimeout(() => {
+            clearInterval(timer1);
+            clearInterval(timer2);
+            graph.forEach((element) => {
+              if (
+                element.name &&
+                ["dsp7", "dsp8", "dsp9"].includes(element.name)
+              ) {
+                element.setStyle(Q.Styles.RENDER_COLOR, "#a1a09c");
+                element.setStyle(
+                  Q.Styles.RENDER_COLOR_BLEND_MODE,
+                  Q.Consts.BLEND_MODE_GRAY
+                );
+                element.addUI(label4);
+                element.removeUI(label2);
+              }
+              if (
+                element.name &&
+                element.name.includes("dsp") &&
+                !element.name.includes("板卡") &&
+                element.x < 1
+              ) {
+                element.setStyle(Q.Styles.RENDER_COLOR, "#3eb65e");
+                element.setStyle(
+                  Q.Styles.RENDER_COLOR_BLEND_MODE,
+                  Q.Consts.BLEND_MODE_COLOR_BURN
+                );
+                element.addUI(label1);
+              }
+              if (
+                element.name &&
+                ["dsp10", "dsp11", "dsp12"].includes(element.name)
+              ) {
+                element.setStyle(Q.Styles.RENDER_COLOR, "#3eb65e");
+                element.setStyle(
+                  Q.Styles.RENDER_COLOR_BLEND_MODE,
+                  Q.Consts.BLEND_MODE_COLOR_BURN
+                );
+                element.removeUI(label1);
+                element.removeUI(label3);
+              }
+            });
+            graph.removeElement(edge_1);
+            graph.removeElement(edge_2);
+            graph.removeElement(edge_3);
+            setInterval(() => {
+              if (showLabel4) {
+                graph.forEach((element) => {
+                  if (
+                    element.name &&
+                    ["dsp7", "dsp8", "dsp9"].includes(element.name)
+                  ) {
+                    element.removeUI(label4);
+                  }
+                  if (
+                    element.name &&
+                    element.name.includes("dsp") &&
+                    !element.name.includes("板卡") &&
+                    !["dsp7", "dsp8", "dsp9"].includes(element.name)
+                  ) {
+                    element.addUI(label1);
+                  }
+                });
+              } else {
+                graph.forEach((element) => {
+                  if (
+                    element.name &&
+                    ["dsp7", "dsp8", "dsp9"].includes(element.name)
+                  ) {
+                    element.addUI(label4);
+                  }
+                  if (
+                    element.name &&
+                    element.name.includes("dsp") &&
+                    !element.name.includes("板卡") &&
+                    !["dsp7", "dsp8", "dsp9"].includes(element.name)
+                  ) {
+                    element.removeUI(label1);
+                  }
+                });
+              }
+              showLabel4 = !showLabel4;
+            }, 400);
+            this.$message({
+              message: "迁移已完成，共耗时2分45秒",
+              type: "success",
+            });
+          }, 1000 * 60 * 2 + 1000 * 45);
+        });
+        graph.zoomToOverview({}, 1.4);
+      }
     },
     formatTimestamp(timestamp) {
       const date = new Date(timestamp);
