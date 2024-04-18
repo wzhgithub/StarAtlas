@@ -113,17 +113,19 @@
               <countTo
                 class="nub"
                 :startVal="0"
-                :endVal="nowdata.allmb"
+                :endVal="nowdata.canusemb"
                 :duration="1000"
-                suffix=" TFLOPS"/>
+                suffix=" TFLOPS"
+              />
             </span>
             <span class="title_span">
               <countTo
                 class="nub"
                 :startVal="0"
-                :endVal="nowdata.canusemb"
+                :endVal="nowdata.allmb"
                 :duration="1000"
-                suffix=" MIPS" />
+                suffix=" MIPS"
+              />
             </span>
           </p>
           <div class="type_box">
@@ -133,7 +135,7 @@
               </el-col>
               <el-col :span="8" class="type_col_">
                 <p class="type_text_"></p>
-                <p class="type_text  active_text">ARM</p>
+                <p class="type_text active_text">ARM</p>
                 <p class="type_text">MIPS</p>
                 <p class="type_text">RISC_V</p>
                 <p class="type_text">SPARC</p>
@@ -185,9 +187,9 @@ export default {
     },
   },
   computed: {
-    nowdata: function() {
-      return {...this.cpuNow}
-    }
+    nowdata: function () {
+      return { ...this.cpuNow };
+    },
   },
   mounted() {
     let that = this;

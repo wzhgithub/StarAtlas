@@ -20,8 +20,8 @@
           <p>设备类型: {{ nowdata.type }}</p>
           <p>设备数量: {{ nowdata.status }}</p>
           <p>DSP核数: {{ nowdata.cores }}</p>
-          <p>浮点算力: {{ Number(nowdata.float_power) / 1000 }} TFLOPS</p>
-          <p>整型算力: {{ Number(nowdata.int_power) / 1000 }} MIPS</p>
+          <p>浮点算力: {{ Number(nowdata.float_power) }} TFLOPS</p>
+          <p>整型算力: {{ Number(nowdata.int_power) }} MIPS</p>
           <p>DSP利用率: {{ nowdata.usage }}%</p>
           <p>内存利用率: {{ nowdata.memory_usage }}%</p>
         </div>
