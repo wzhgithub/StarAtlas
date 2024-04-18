@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/binary"
 	"fmt"
+	"math"
 	"star_atlas_server/config"
 	"time"
 
@@ -15,10 +16,10 @@ import (
 )
 
 const (
-	cCPU_SIZE    = 21
-	cDSP_SIZE    = 21
+	cCPU_SIZE    = 25
+	cDSP_SIZE    = 25
 	cFPGA_SIZE   = 12
-	cGPU_SIZE    = 19
+	cGPU_SIZE    = 21
 	cREMOTE_SIZE = 13
 	cSWITCH_SIZE = 13
 
@@ -79,12 +80,12 @@ type DeviceData struct {
 	ID   uint8  `json:"id" bson:"id"`
 	Type uint8  `json:"type" bson:"type"` // ARM:0,RISC_V:1,SPARC:2,PPC:3,MIPS:4
 	// fpga don`t has below fields
-	Num                 uint8  `json:"num" bson:"num"`
-	IntComputingPower   uint16 `json:"int_computing_power" bson:"int_computing_power"` // gpu this feild is nil
-	FloatComputingPower uint16 `json:"float_computing_power" bson:"float_computing_power"`
-	TotalMemory         uint16 `json:"total_memory" bson:"total_memory"`
-	MemoryUsage         uint8  `json:"memory_usage" bson:"memory_usage"`
-	Usage               uint8  `json:"usage" bson:"usage"`
+	Num                 uint8   `json:"num" bson:"num"`
+	IntComputingPower   float32 `json:"int_computing_power" bson:"int_computing_power"` // gpu this feild is nil
+	FloatComputingPower float32 `json:"float_computing_power" bson:"float_computing_power"`
+	TotalMemory         uint16  `json:"total_memory" bson:"total_memory"`
+	MemoryUsage         uint8   `json:"memory_usage" bson:"memory_usage"`
+	Usage               uint8   `json:"usage" bson:"usage"`
 }
 
 type Task struct {
@@ -128,9 +129,9 @@ type SwitchDevice struct {
 
 type VMCStatus struct {
 	UpdatedAt            time.Time `json:"time"`                 // 时间
-	CPUComputingPower    uint16    `json:"cpuComputingPower"`    // cpu算力
-	GPUComputingPower    uint16    `json:"gpuComputingPower"`    // gpu算力
-	DSPIntComputingPower uint16    `json:"dspIntComputingPower"` // dsp算力
+	CPUComputingPower    float32   `json:"cpuComputingPower"`    // cpu算力
+	GPUComputingPower    float32   `json:"gpuComputingPower"`    // gpu算力
+	DSPIntComputingPower float32   `json:"dspIntComputingPower"` // dsp算力
 	MomoryUsage          uint8     `json:"memoryUsage"`          // 内存利用率
 	DiskUsage            uint8     `json:"diskUsage"`            // 外存利用率
 	TotalUsage           uint8     `json:"totalUsage"`           // 总利用率
@@ -253,11 +254,11 @@ func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 				ID:                  bytes[si+10],
 				Type:                bytes[si+11],
 				Num:                 bytes[si+12],
-				IntComputingPower:   binary.BigEndian.Uint16(bytes[si+13 : si+15]),
-				FloatComputingPower: binary.BigEndian.Uint16(bytes[si+15 : si+17]),
-				TotalMemory:         binary.BigEndian.Uint16(bytes[si+17 : si+19]),
-				MemoryUsage:         bytes[si+19],
-				Usage:               bytes[si+20],
+				IntComputingPower:   bytesFloat32(bytes[si+13 : si+17]),
+				FloatComputingPower: bytesFloat32(bytes[si+17 : si+21]),
+				TotalMemory:         binary.BigEndian.Uint16(bytes[si+21 : si+23]),
+				MemoryUsage:         bytes[si+23],
+				Usage:               bytes[si+24],
 			}
 			glog.Infof("cpu device %+v\n", DeviceData)
 			arr[i] = DeviceData
@@ -266,6 +267,12 @@ func parseCPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 		return arr, total
 	}
 	return nil, 0
+}
+
+func bytesFloat32(bytes []byte) float32 {
+	bits := binary.BigEndian.Uint32(bytes)
+	float := math.Float32frombits(bits)
+	return float
 }
 
 func parseGPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
@@ -290,10 +297,10 @@ func parseGPUDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 				Type:                bytes[i+11],
 				Num:                 bytes[i+12],
 				IntComputingPower:   0,
-				FloatComputingPower: binary.BigEndian.Uint16(bytes[i+13 : i+15]),
-				TotalMemory:         binary.BigEndian.Uint16(bytes[i+15 : i+17]),
-				MemoryUsage:         bytes[i+17],
-				Usage:               bytes[i+18],
+				FloatComputingPower: bytesFloat32(bytes[i+13 : i+17]), //binary.BigEndian.Uint16(bytes[i+13 : i+15]),
+				TotalMemory:         binary.BigEndian.Uint16(bytes[i+17 : i+19]),
+				MemoryUsage:         bytes[i+19],
+				Usage:               bytes[i+20],
 			}
 			glog.Infof("gpu: %+v\n", DeviceData)
 			arr[j] = DeviceData
@@ -354,11 +361,11 @@ func parseDSPDevice(bytes []byte, start, end int) ([]*DeviceData, uint8) {
 				ID:                  bytes[si+10],
 				Type:                bytes[si+11],
 				Num:                 bytes[si+12],
-				IntComputingPower:   binary.BigEndian.Uint16(bytes[si+13 : si+15]),
-				FloatComputingPower: binary.BigEndian.Uint16(bytes[si+15 : si+17]),
-				TotalMemory:         binary.BigEndian.Uint16(bytes[si+17 : si+19]),
-				MemoryUsage:         bytes[si+19],
-				Usage:               bytes[si+20],
+				IntComputingPower:   bytesFloat32(bytes[si+13 : si+17]),
+				FloatComputingPower: bytesFloat32(bytes[si+17 : si+21]),
+				TotalMemory:         binary.BigEndian.Uint16(bytes[si+21 : si+23]),
+				MemoryUsage:         bytes[si+23],
+				Usage:               bytes[si+24],
 			}
 			glog.Infof("dsp device %+v\n", DeviceData)
 			arr[i] = DeviceData
@@ -530,13 +537,13 @@ func parse(bytes []byte) (*VMCData, error) {
 	glog.Infof("remote unit start:%d cpu end:%d\n", remoteStart, remoteEnd)
 	switchStart, switchEnd := calcStartEnd(remoteEnd, uint8(bytes[29]), 13)
 	glog.Infof("switch start:%d cpu end:%d\n", switchStart, switchEnd)
-	cpuStart, cpuEnd := calcStartEnd(switchEnd, uint8(bytes[15]), 21)
+	cpuStart, cpuEnd := calcStartEnd(switchEnd, uint8(bytes[15]), cCPU_SIZE)
 	glog.Infof("cpu start:%d cpu end:%d\n", cpuStart, cpuEnd)
-	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[16]), 21)
+	dspStart, dspEnd := calcStartEnd(cpuEnd, uint8(bytes[16]), cDSP_SIZE)
 	glog.Infof("dsp start:%d dsp end:%d\n", dspStart, dspEnd)
-	gpusStart, gpusEnd := calcStartEnd(dspEnd, uint8(bytes[17]), 19)
+	gpusStart, gpusEnd := calcStartEnd(dspEnd, uint8(bytes[17]), cGPU_SIZE) // no int computer power
 	glog.Infof("gpu start:%d gpus end:%d\n", gpusStart, gpusEnd)
-	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[18]), 12)
+	fpgaStart, fpgaEnd := calcStartEnd(gpusEnd, uint8(bytes[18]), cFPGA_SIZE)
 	glog.Infof("fpga start:%d fpga end:%d\n", fpgaStart, fpgaEnd)
 
 	sysRunTimeStart := remoteEnd

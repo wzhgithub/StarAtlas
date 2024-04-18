@@ -1,3 +1,5 @@
+#!/bin/bash
+set -ex
 rm -fr ./log/*
 cp go.mod.bk go.mod
 go mod tidy

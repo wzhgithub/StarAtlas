@@ -100,15 +100,15 @@ func GetVMCSequence(c *gin.Context) {
 		rsp := &VMCSequenceRspJson{}
 		rsp.Success = true
 		for _, v := range vmcs {
-			var cpuComputingPower uint16
+			var cpuComputingPower float32
 			for _, e := range v.CPUSet {
 				cpuComputingPower += e.FloatComputingPower
 			}
-			var gpuComputingPower uint16
+			var gpuComputingPower float32
 			for _, e := range v.GPUSet {
 				gpuComputingPower += e.FloatComputingPower
 			}
-			var dspComputingPower uint16
+			var dspComputingPower float32
 			for _, e := range v.DSPSet {
 				dspComputingPower += e.IntComputingPower
 			}
