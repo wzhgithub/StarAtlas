@@ -87,6 +87,7 @@ func main() {
 	router.POST("/satellite/control/marker_coordinate", handler.ApiMarkerCoordinates)
 	router.POST("/satellite/control/show_picture", handler.ApiShowPicture)
 	router.POST("/post_sender", handler.ControlSender)
+	router.POST("/computer_power/report", handler.SendComputerPower)
 	router.GET("/get_sender", handler.GetControlMsg)
 	router.Run(":9999")
 

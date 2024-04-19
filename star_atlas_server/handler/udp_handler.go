@@ -1,9 +1,13 @@
 package handler
 
 import (
+	"encoding/binary"
+	"fmt"
+	"math"
 	"net"
 	"star_atlas_server/model"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 )
 
@@ -12,9 +16,17 @@ const (
 	CDataSize = 10240
 )
 
+type ComputerPowerInfo struct {
+	IntComputerPower   float32 `json:"intComputerPower"`
+	FloatComputerPower float32 `json:"floatComputerPower"`
+	FaultTolerance     float32 `json:"faultTolerance"`
+}
+
 var limitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
 var vmcDataChan = make(chan *model.VMCData, CDataSize)
+var srcAddress *net.UDPAddr = nil
+var connect *net.UDPConn = nil
 
 func UdpDataRev(port int) {
 	glog.Infof("start listening on port:%d\n", port)
@@ -33,11 +45,64 @@ func UdpDataRev(port int) {
 	if err != nil {
 		glog.Fatalf("read from connect failed, err:%s\n", err.Error())
 	}
-
+	connect = conn
 	for {
 		doneChan <- true
 		udpProcess(conn)
 	}
+}
+
+func float32ToBytes(float float32) []byte {
+	bits := math.Float32bits(float)
+	bytes := make([]byte, 4)
+	binary.BigEndian.PutUint32(bytes, bits)
+	return bytes
+}
+
+func (cp *ComputerPowerInfo) toBytes() []byte {
+	head := []byte{0xeb}
+	b1 := float32ToBytes(cp.IntComputerPower)
+	b2 := float32ToBytes(cp.FloatComputerPower)
+	b3 := float32ToBytes(cp.FaultTolerance)
+	data := append(append(b1, b2...), b3...)
+	data = append(head, data...)
+
+	var sum uint8 = 0
+	for _, v := range data {
+		sum += uint8(v)
+	}
+	data = append(data, byte(sum))
+	return data
+}
+
+func SendComputerPower(c *gin.Context) {
+	cp := &ComputerPowerInfo{}
+	if err := c.ShouldBindJSON(cp); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	glog.Infof("recv computer power data: %+v\n", cp)
+	data := cp.toBytes()
+	err := sendUDPData(data)
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"message": "success", "code": 0})
+}
+
+func sendUDPData(data []byte) error {
+	if srcAddress == nil || connect == nil {
+		glog.Errorf("send udp data failed, srcAddress or connect is nil\n")
+		return fmt.Errorf("send udp data failed, srcAddress or connect is nil")
+	}
+	if len(data) > CDataSize {
+		glog.Errorf("send udp data failed, data len is too long\n")
+		return fmt.Errorf("send udp data failed, data len is too long")
+	}
+	glog.Infof("send byte data:%+v\n", data)
+	_, err := connect.WriteToUDP(data, srcAddress)
+	return err
 }
 
 func udpProcess(conn *net.UDPConn) {
@@ -48,6 +113,9 @@ func udpProcess(conn *net.UDPConn) {
 		glog.Errorf("failed read udp msg, error:%s\n", err.Error())
 	}
 	glog.Infof("received address:%+v\n", address)
+	if address != nil {
+		srcAddress = address
+	}
 	str := string(data[:n])
 	glog.Infof("udp channel len:%d\n", len(limitChan))
 	limitChan <- str
