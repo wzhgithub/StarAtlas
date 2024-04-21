@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"math"
 	"net"
+	"os"
 	"star_atlas_server/model"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -26,7 +28,27 @@ var limitChan = make(chan string, CChanLen)
 var doneChan = make(chan bool, CChanLen)
 var vmcDataChan = make(chan *model.VMCData, CDataSize)
 var srcAddress *net.UDPAddr = nil
-var connect *net.UDPConn = nil
+var reportConnect *net.UDPConn = nil
+
+func initReportConn() {
+	p, err := strconv.Atoi(os.Getenv("REPORT_PORT"))
+	if err != nil {
+		glog.Errorf("failed parse report port, error: %s\n", err.Error())
+		return
+	}
+	ipStr := os.Getenv("REPORT_HOST")
+	ip := net.ParseIP(ipStr)
+	srcAddress = &net.UDPAddr{
+		IP:   ip,
+		Port: p,
+	}
+	reportConnect, err = net.ListenUDP("udp", srcAddress)
+	if err != nil {
+		glog.Errorf("failed init report connect, error: %s\n", err.Error())
+		return
+	}
+	glog.Infof("init report connect success ip: %+v port:%d\n", ip, p)
+}
 
 func UdpDataRev(port int) {
 	glog.Infof("start listening on port:%d\n", port)
@@ -45,7 +67,7 @@ func UdpDataRev(port int) {
 	if err != nil {
 		glog.Fatalf("read from connect failed, err:%s\n", err.Error())
 	}
-	connect = conn
+	go initReportConn()
 	for {
 		doneChan <- true
 		udpProcess(conn)
@@ -92,7 +114,7 @@ func SendComputerPower(c *gin.Context) {
 }
 
 func sendUDPData(data []byte) error {
-	if srcAddress == nil || connect == nil {
+	if srcAddress == nil || reportConnect == nil {
 		glog.Errorf("send udp data failed, srcAddress or connect is nil\n")
 		return fmt.Errorf("send udp data failed, srcAddress or connect is nil")
 	}
@@ -101,7 +123,7 @@ func sendUDPData(data []byte) error {
 		return fmt.Errorf("send udp data failed, data len is too long")
 	}
 	glog.Infof("send byte data:%+v\n", data)
-	_, err := connect.WriteToUDP(data, srcAddress)
+	_, err := reportConnect.WriteToUDP(data, srcAddress)
 	return err
 }
 

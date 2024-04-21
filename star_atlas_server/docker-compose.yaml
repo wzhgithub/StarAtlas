@@ -26,6 +26,9 @@ services:
   star_atlas_server:
     image: star_atlas_server:latest 
     container_name: "star_atlas_server"
+    environment:
+      - REPORT_PORT=12322
+      - REPORT_HOST=0.0.0.0
     restart: on-failure:3
     platform: "linux/amd64"
     ports:
